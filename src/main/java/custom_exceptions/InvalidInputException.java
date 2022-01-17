@@ -4,7 +4,8 @@ package custom_exceptions;
 public class InvalidInputException extends Exception{
 
 	/* This exception is called InvalidInputException 
-	 * and inherits from the Exception class.
+	 * and inherits from the Exception class. The method takes
+	 * a String parameter.
 	 */
     public InvalidInputException(String msg){
         super(msg);
