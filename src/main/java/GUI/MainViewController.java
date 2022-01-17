@@ -308,6 +308,7 @@ public class MainViewController extends Application {
 	private void previewButtonHandle() throws IOException {
 		System.out.println("Preview Button Clicked!");
 		// converter.getMusicXML() returns the MusicXML output as a String
+		//This is a change to be pushed (for lab 2)
 	}
 
 	public void refresh() {
