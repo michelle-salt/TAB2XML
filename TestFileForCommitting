@@ -1,4 +1,8 @@
 Test from Vincent
 
 Hi! this is Duaa attempting a push.
+<<<<<<< HEAD
 This is a perfect solution.
+=======
+This is another push, but this time by Duaa!
+>>>>>>> c671dc0 (Attempting Conflict)
