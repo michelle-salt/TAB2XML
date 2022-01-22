@@ -308,7 +308,6 @@ public class MainViewController extends Application {
 	private void previewButtonHandle() throws IOException {
 		System.out.println("Preview Button Clicked!");
 		// converter.getMusicXML() returns the MusicXML output as a String
-		//This should resolve the conflict for lab 3
 	}
 
 	public void refresh() {
