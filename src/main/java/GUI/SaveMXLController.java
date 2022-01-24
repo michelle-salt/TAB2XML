@@ -37,6 +37,7 @@ public class SaveMXLController extends Application {
         	Settings.getInstance().artist = artistField.getText();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save As");
+        //FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("MusicXML files", "*.musicxml", "*.xml", "*.mxl");
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("MusicXML files", "*.musicxml", "*.xml", "*.mxl");
         fileChooser.getExtensionFilters().add(extFilter);
 

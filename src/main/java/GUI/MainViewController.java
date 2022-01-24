@@ -15,6 +15,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiSystem;
+
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;
@@ -43,6 +46,12 @@ import javafx.stage.Window;
 import utility.Range;
 import utility.Settings;
 
+import org.jfugue.player.Player;
+import org.staccato.StaccatoParserListener;
+import org.jfugue.midi.MidiFileManager;
+import org.jfugue.midi.MidiParser;
+import org.jfugue.pattern.Pattern;
+
 public class MainViewController extends Application {
 	
 	private Preferences prefs;
@@ -69,6 +78,8 @@ public class MainViewController extends Application {
 	@FXML  Button previewButton;
 	@FXML  Button goToline;
 	@FXML  ComboBox<String> cmbScoreType;
+	
+	@FXML  Button playMusic;
 
 
 	public MainViewController() {
@@ -309,6 +320,26 @@ public class MainViewController extends Application {
 		System.out.println("Preview Button Clicked!");
 		// converter.getMusicXML() returns the MusicXML output as a String
 	}
+	
+	@FXML
+	private void playMusic() throws IOException, InvalidMidiDataException {
+		
+		//Pattern pattern = MidiFileManager.loadPatternFromMidi(new File("C:\\Users\\VinhA\\Desktop\\aot.mid"));
+		//Player player = new Player();
+		//player.play(pattern);
+		
+		MidiParser parser = new MidiParser();
+		StaccatoParserListener listener = new StaccatoParserListener();
+		
+		parser.addParserListener(listener);
+		parser.parse(MidiSystem.getSequence(new File("C:\\Users\\VinhA\\Desktop\\anothertest.mid")));
+		Pattern staccatoPattern = listener.getPattern();
+		staccatoPattern.setInstrument(24);
+		
+		Player player = new Player();
+		player.play(staccatoPattern);
+
+	}
 
 	public void refresh() {
         mainText.replaceText(new IndexRange(0, mainText.getText().length()), mainText.getText()+" ");
@@ -365,12 +396,14 @@ public class MainViewController extends Application {
                 	saveMXLButton.setDisable(true);
                 	previewButton.setDisable(true);
                 	showMXLButton.setDisable(true);
+                	playMusic.setDisable(true);
                 }
                 else
                 {
                 	saveMXLButton.setDisable(false);
                 	previewButton.setDisable(false);
                 	showMXLButton.setDisable(false);
+                	playMusic.setDisable(false);
                 }
                 return highlighter.computeHighlighting(text);
             }
