@@ -17,6 +17,7 @@ import java.util.prefs.Preferences;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiSystem;
+import javax.swing.JFrame;
 
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
@@ -318,6 +319,10 @@ public class MainViewController extends Application {
 	@FXML
 	private void previewButtonHandle() throws IOException {
 		System.out.println("Preview Button Clicked!");
+		JFrame frame = new JFrame();
+		frame.setSize(700,700);
+		frame.setLayout(null);
+		frame.setVisible(true);
 		// converter.getMusicXML() returns the MusicXML output as a String
 	}
 	
