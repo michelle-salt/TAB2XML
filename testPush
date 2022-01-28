@@ -1,4 +1,8 @@
 This is a push to my branch
 This is a new push
 vincent push
+<<<<<<< HEAD
 this is a new new push
+=======
+vincent test again
+>>>>>>> 7d6f045261ab06084fb150e6af53076c8e696329
