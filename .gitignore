@@ -8,3 +8,9 @@ build
 /bin/.gitignore
 /lib/.project
 /.settings/org.eclipse.jdt.core.prefs
+
+# Eclipse Gradle plugin generated files
+# Eclipse Core
+.project
+# JDI-specific (Eclipse Java Development Tools)
+.classpath
