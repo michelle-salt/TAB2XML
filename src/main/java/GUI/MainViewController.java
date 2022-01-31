@@ -18,6 +18,7 @@ import java.util.prefs.Preferences;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiSystem;
 import javax.swing.JFrame;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
@@ -44,11 +45,13 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import nu.xom.ParsingException;
 import utility.Range;
 import utility.Settings;
 
 import org.jfugue.player.Player;
 import org.staccato.StaccatoParserListener;
+import org.jfugue.integration.MusicXmlParser;
 import org.jfugue.midi.MidiFileManager;
 import org.jfugue.midi.MidiParser;
 import org.jfugue.pattern.Pattern;
@@ -81,6 +84,7 @@ public class MainViewController extends Application {
 	@FXML  ComboBox<String> cmbScoreType;
 	
 	@FXML  Button playMusic;
+	@FXML  Button playMusicMichelle;
 
 
 	public MainViewController() {
@@ -345,6 +349,21 @@ public class MainViewController extends Application {
 		player.play(staccatoPattern);
 
 	}
+	
+	@FXML
+	private void playMusicMichelle() throws ParserConfigurationException, ParsingException, IOException {
+		
+		MusicXmlParser parser = new MusicXmlParser();
+		StaccatoParserListener listener = new StaccatoParserListener();
+		parser.addParserListener(listener);
+		//Change the filepath as needed
+		parser.parse(new File("C:\\Users\\User\\Documents\\School\\Second Year\\EECS 2311\\DrumTab.musicxml"));
+		
+		Player player = new Player();
+		Pattern musicXMLPattern = listener.getPattern().setTempo(400);
+		player.play(musicXMLPattern);	
+
+	}
 
 	public void refresh() {
         mainText.replaceText(new IndexRange(0, mainText.getText().length()), mainText.getText()+" ");
@@ -402,6 +421,7 @@ public class MainViewController extends Application {
                 	previewButton.setDisable(true);
                 	showMXLButton.setDisable(true);
                 	playMusic.setDisable(true);
+                	playMusicMichelle.setDisable(true);
                 }
                 else
                 {
@@ -409,6 +429,7 @@ public class MainViewController extends Application {
                 	previewButton.setDisable(false);
                 	showMXLButton.setDisable(false);
                 	playMusic.setDisable(false);
+                	playMusicMichelle.setDisable(false);
                 }
                 return highlighter.computeHighlighting(text);
             }
