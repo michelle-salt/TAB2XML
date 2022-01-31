@@ -56,6 +56,8 @@ import org.jfugue.midi.MidiFileManager;
 import org.jfugue.midi.MidiParser;
 import org.jfugue.pattern.Pattern;
 
+import converter.Converter;
+
 public class MainViewController extends Application {
 	
 	private Preferences prefs;
@@ -357,7 +359,10 @@ public class MainViewController extends Application {
 		StaccatoParserListener listener = new StaccatoParserListener();
 		parser.addParserListener(listener);
 		//Change the filepath as needed
-		parser.parse(new File("C:\\Users\\User\\Documents\\School\\Second Year\\EECS 2311\\DrumTab.musicxml"));
+		Converter c = new Converter(this);
+		c.update();
+		parser.parse(c.getMusicXML());
+//		parser.parse(new File("C:\\Users\\User\\Documents\\School\\Second Year\\EECS 2311\\DrumTab.musicxml"));
 		
 		Player player = new Player();
 		Pattern musicXMLPattern = listener.getPattern().setTempo(400);
