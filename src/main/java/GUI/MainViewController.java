@@ -17,7 +17,13 @@ import java.util.prefs.Preferences;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiSystem;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JTextField;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.fxmisc.richtext.CodeArea;
@@ -325,11 +331,49 @@ public class MainViewController extends Application {
 	@FXML
 	private void previewButtonHandle() throws IOException {
 		System.out.println("Preview Button Clicked!");
+		// converter.getMusicXML() returns the MusicXML output as a String
+		
+		//Make the GUI
 		JFrame frame = new JFrame();
-		frame.setSize(700,700);
+		frame.setSize(600,420);
 		frame.setLayout(null);
 		frame.setVisible(true);
-		// converter.getMusicXML() returns the MusicXML output as a String
+		
+		//Go to Measure Feature
+		JLabel label = new JLabel();
+		label.setText("Go To Measure");
+		label.setBounds(10,330,100,30);
+		
+		JTextField text1 = new JTextField();
+		text1.setBounds(105,330,50,30);
+		
+		JButton button = new JButton();
+		button.setText("Go");
+		button.setBounds(149,330,50,30);
+		
+		frame.add(label);
+		frame.add(text1);
+		frame.add(button);
+		
+		//Export Feature
+		JMenuBar mb = new JMenuBar();
+		
+		JMenu menu = new JMenu("Export");
+		JMenuItem i1 = new JMenuItem("Print");
+		JMenu saveAs = new JMenu("Save As...");
+		
+		JMenuItem i2 = new JMenuItem("PDF");
+		JMenuItem i3 = new JMenuItem("Jpeg");
+		JMenuItem i4 = new JMenuItem("Png");
+		
+		menu.add(i1);
+		menu.add(saveAs);
+		saveAs.add(i2);
+		saveAs.add(i3);
+		saveAs.add(i4);
+		mb.add(menu);
+		
+		frame.setJMenuBar(mb);
 	}
 	
 	@FXML
