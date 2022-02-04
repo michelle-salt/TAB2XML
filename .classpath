@@ -32,6 +32,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
-	<classpathentry kind="lib" path="C:/Users/VinhA/Documents/Java Libraries/jfugue-5.0.9.jar"/>
 	<classpathentry kind="output" path="bin/default"/>
 </classpath>
