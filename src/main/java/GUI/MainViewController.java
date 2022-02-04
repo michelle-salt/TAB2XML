@@ -409,7 +409,7 @@ public class MainViewController extends Application {
 //		parser.parse(new File("C:\\Users\\User\\Documents\\School\\Second Year\\EECS 2311\\DrumTab.musicxml"));
 		
 		Player player = new Player();
-		Pattern musicXMLPattern = listener.getPattern().setTempo(400);
+		Pattern musicXMLPattern = listener.getPattern().setTempo(400).setInstrument("Guitar");
 		player.play(musicXMLPattern);	
 
 	}
