@@ -339,16 +339,18 @@ public class MainViewController extends Application {
 		//Player player = new Player();
 		//player.play(pattern);
 		
-		MidiParser parser = new MidiParser();
-		StaccatoParserListener listener = new StaccatoParserListener();
+//		MidiParser parser = new MidiParser();
+//		StaccatoParserListener listener = new StaccatoParserListener();
+//		
+//		parser.addParserListener(listener);
+//		parser.parse(MidiSystem.getSequence(new File("C:\\Users\\VinhA\\Desktop\\anothertest.mid")));
+//		Pattern staccatoPattern = listener.getPattern();
+//		staccatoPattern.setInstrument(24);
+//		
+//		Player player = new Player();
+//		player.play(staccatoPattern);
 		
-		parser.addParserListener(listener);
-		parser.parse(MidiSystem.getSequence(new File("C:\\Users\\VinhA\\Desktop\\anothertest.mid")));
-		Pattern staccatoPattern = listener.getPattern();
-		staccatoPattern.setInstrument(24);
 		
-		Player player = new Player();
-		player.play(staccatoPattern);
 
 	}
 	
@@ -365,7 +367,7 @@ public class MainViewController extends Application {
 //		parser.parse(new File("C:\\Users\\User\\Documents\\School\\Second Year\\EECS 2311\\DrumTab.musicxml"));
 		
 		Player player = new Player();
-		Pattern musicXMLPattern = listener.getPattern().setTempo(400);
+		Pattern musicXMLPattern = listener.getPattern().setTempo(200).setInstrument("guitar");
 		player.play(musicXMLPattern);	
 
 	}
