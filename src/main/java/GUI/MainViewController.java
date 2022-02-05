@@ -92,7 +92,6 @@ public class MainViewController extends Application {
 	@FXML  ComboBox<String> cmbScoreType;
 	
 	@FXML  Button playMusic;
-	@FXML  Button playMusicMichelle;
 
 
 	public MainViewController() {
@@ -377,29 +376,7 @@ public class MainViewController extends Application {
 	}
 	
 	@FXML
-	private void playMusic() throws IOException, InvalidMidiDataException {
-		
-		//Pattern pattern = MidiFileManager.loadPatternFromMidi(new File("C:\\Users\\VinhA\\Desktop\\aot.mid"));
-		//Player player = new Player();
-		//player.play(pattern);
-		
-//		MidiParser parser = new MidiParser();
-//		StaccatoParserListener listener = new StaccatoParserListener();
-//		
-//		parser.addParserListener(listener);
-//		parser.parse(MidiSystem.getSequence(new File("C:\\Users\\VinhA\\Desktop\\anothertest.mid")));
-//		Pattern staccatoPattern = listener.getPattern();
-//		staccatoPattern.setInstrument(24);
-//		
-//		Player player = new Player();
-//		player.play(staccatoPattern);
-		
-		
-
-	}
-	
-	@FXML
-	private void playMusicMichelle() throws ParserConfigurationException, ParsingException, IOException {
+	private void playMusic() throws ParserConfigurationException, ParsingException, IOException {
 		
 		MusicXmlParser parser = new MusicXmlParser();
 		StaccatoParserListener listener = new StaccatoParserListener();
@@ -413,7 +390,7 @@ public class MainViewController extends Application {
 		Player player = new Player();
 		Pattern musicXMLPattern = listener.getPattern().setTempo(400).setInstrument("Guitar");
 		player.play(musicXMLPattern);	
-
+		
 	}
 
 	public void refresh() {
@@ -472,7 +449,6 @@ public class MainViewController extends Application {
                 	previewButton.setDisable(true);
                 	showMXLButton.setDisable(true);
                 	playMusic.setDisable(true);
-                	playMusicMichelle.setDisable(true);
                 }
                 else
                 {
@@ -480,7 +456,6 @@ public class MainViewController extends Application {
                 	previewButton.setDisable(false);
                 	showMXLButton.setDisable(false);
                 	playMusic.setDisable(false);
-                	playMusicMichelle.setDisable(false);
                 }
                 return highlighter.computeHighlighting(text);
             }

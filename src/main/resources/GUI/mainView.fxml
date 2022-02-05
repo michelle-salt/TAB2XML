@@ -51,7 +51,6 @@
                         <Button fx:id="saveTabButton" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#saveTabButtonHandle" text="Save Tablature" />
                         <Button fx:id="previewButton" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#previewButtonHandle" text="Preview Sheet Music" />
                         <Button fx:id="playMusic" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#playMusic" text="Play Tablature" />
-                        <Button fx:id="playMusicMichelle" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#playMusicMichelle" text="Play Tablature (Michelle)" />
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
