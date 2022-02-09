@@ -16,4 +16,17 @@ public class Pitch {
 		this.octave = octave;
 		this.alter = alter;
 	}
+
+	//Public accessors
+	public char getStep() {
+		return step;
+	}
+
+	public int getAlter() {
+		return alter;
+	}
+
+	public int getOctave() {
+		return octave;
+	}
 }

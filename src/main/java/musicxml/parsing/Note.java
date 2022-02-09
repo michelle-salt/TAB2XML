@@ -56,16 +56,8 @@ public class Note {
 	}
 	
 	//Public getters to retrieve each field
-	public char getStep() {
-		return step;
-	}
-
-	public int getAlter() {
-		return alter;
-	}
-	
-	public int getOctave() {
-		return octave;
+	public Pitch getPitch() {
+		return pitch;
 	}
 
 	public int getDuration() {
