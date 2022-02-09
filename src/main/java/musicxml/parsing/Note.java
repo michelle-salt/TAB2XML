@@ -12,6 +12,7 @@ public class Note {
 	private int string; //The string the note is on
 	private int fret; //The fret of the note
 	
+	//Inside here (the notes method, actually), add a method for each note value/sub-tag	
 	public Note(char step, int alter, int octave, int duration, int voice, String noteType, int string, int fret) {
 		//Initialize all variables
 		this.step = step;

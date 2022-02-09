@@ -17,7 +17,7 @@ import org.xml.sax.SAXException;
 public class Parser {
 
 	private String instrument;
-	private ArrayList<Note> notes;
+	private ArrayList<Measure> measures;
 	private ArrayList<StaffTuning> lines; //Includes tuning-step and tuning-octave
 
 	private File musicXML; //Might not need this stored, assuming this parser will only ever run once. Good to have just in case
@@ -30,12 +30,8 @@ public class Parser {
 		this.prepareDocumentForReading();
 		//Get instrument
 		this.parseInstrument();
-		//Create list for all notes
-		this.parseNotes(); //Inside here, add a method for each note value/sub-tag
-		//Initialize attributes
-			
-		//Staff details (within attributes) is only needed for guitars (and maybe bass??)
-			//These include a <staff-lines> tag which indicates how many lines need to be drawn on the sheet musicx
+		//Create list to store each measure
+		this.parseMeasures();
 	}
 
 	//Parser (private) helper methods
@@ -65,78 +61,41 @@ public class Parser {
 		}
 	}
 
-	private void parseNotes() {
-		NodeList noteList = doc.getElementsByTagName("note");
+	private void parseMeasures() {
+		NodeList noteList = doc.getElementsByTagName("measure");
 
 		for (int i = 0; i < noteList.getLength(); i++) {
 			Node currentNode = noteList.item(i);
 
 			if (currentNode.getNodeType() == Node.ELEMENT_NODE) {
 				Element eElement = (Element) currentNode;
-				char step = eElement.getElementsByTagName("step").item(0).getTextContent().charAt(0);
-				int alter = Integer.parseInt(eElement.getElementsByTagName("alter").item(0).getTextContent());
-				int octave = Integer.parseInt(eElement.getElementsByTagName("octave").item(0).getTextContent());
-				int duration = Integer.parseInt(eElement.getElementsByTagName("duration").item(0).getTextContent());
-				int voice = Integer.parseInt(eElement.getElementsByTagName("voice").item(0).getTextContent());
-				String type = eElement.getElementsByTagName("type").item(0).getTextContent();
-				int string = Integer.parseInt(eElement.getElementsByTagName("string").item(0).getTextContent());
-				int fret = Integer.parseInt(eElement.getElementsByTagName("fret").item(0).getTextContent());
-
-				this.notes.add(new Note(step, alter, octave, duration, voice, type, string, fret));
+				
+				int measureNumber = Integer.parseInt(eElement.getAttribute("number"));
+				measures.add(new Measure(this.doc, measureNumber));
 			}
 		}
 	}
-
-	private void parseAttributes() {
-		int divisions;
-		int fifths;
-		
-		String sign;
-		int line;
-		Clef clef;
-		
-		NodeList attributes = doc.getElementsByTagName("attributes");
-
-		for (int i = 0; i < attributes.getLength(); i++) {
-			Node currentNode = attributes.item(i);
-
-			if (currentNode.getNodeType() == Node.ELEMENT_NODE) {
-				Element currElement = (Element) currentNode;
-//				currElement.getElementsByTagName("step").item(0).getTextContent();
-				
-				divisions = Integer.parseInt(currElement.getElementsByTagName("divisions").item(0).getTextContent());
-				fifths = Integer.parseInt(currElement.getElementsByTagName("fifths").item(0).getTextContent());
-				
-				sign = currElement.getElementsByTagName("fifths").item(0).getTextContent();
-				line = Integer.parseInt(currElement.getElementsByTagName("fifths").item(0).getTextContent());
-				clef = new Clef(sign, line);
-				
-			}
-		}		
-	}
 	
-	
-	//Graphics helper methods
-	public String getStaffDetails() {
-		//Used for drawing the graphics
-		return null;
-	}
-	
+	//Graphics helper methods	
 	public int getNumLines() {
 		return this.lines.size();
 	}
 	
-	//Accessors
-	public ArrayList<Note> getNotes() {
-		return this.notes;
-	}
-
-	public String getInstrument() {
-		return this.instrument;
+	public int getNumMeasures() {
+		return this.measures.size();
 	}
 	
-	//Line 6 would be the bottom one, line 1 would be the top
+	//Accessors
+	public ArrayList<Measure> getMeasures() {
+		return this.measures;
+	}
+
+	//Line 6 would be the bottom one, line 1 would be the top (applicable for note retreival, not form StaffTuning)
 	public ArrayList<StaffTuning> getLines() {
 		return this.lines;
+	}
+	
+	public String getInstrument() {
+		return this.instrument;
 	}
 }
