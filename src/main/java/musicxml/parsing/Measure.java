@@ -12,7 +12,7 @@ public class Measure {
 	
 	private int measureNumber;
 	private Attributes attributes;
-	private ArrayList<Note> notes;
+	private ArrayList<Note> notes = new ArrayList<Note>();
 	
 	public Measure(Document musicXML, int measureNumber) {
 		//Set musicXML
@@ -35,20 +35,34 @@ public class Measure {
 
 			if (currentNode.getNodeType() == Node.ELEMENT_NODE) {
 				Element eElement = (Element) currentNode;
+				
+				Pitch pitch;
 				char step = eElement.getElementsByTagName("step").item(0).getTextContent().charAt(0);
-				int alter = Integer.parseInt(eElement.getElementsByTagName("alter").item(0).getTextContent());
 				int octave = Integer.parseInt(eElement.getElementsByTagName("octave").item(0).getTextContent());
+				try {
+					int alter = Integer.parseInt(eElement.getElementsByTagName("alter").item(0).getTextContent()); //Optional
+					pitch = new Pitch(step, octave, alter);
+				} catch (NullPointerException e) {
+					//This means an alter has not been provided
+					pitch = new Pitch(step, octave);
+				}
+
 				int duration = Integer.parseInt(eElement.getElementsByTagName("duration").item(0).getTextContent());
 				int voice = Integer.parseInt(eElement.getElementsByTagName("voice").item(0).getTextContent());
 				String type = eElement.getElementsByTagName("type").item(0).getTextContent();
 				int string = Integer.parseInt(eElement.getElementsByTagName("string").item(0).getTextContent());
 				int fret = Integer.parseInt(eElement.getElementsByTagName("fret").item(0).getTextContent());
 
-				this.notes.add(new Note(step, alter, octave, duration, voice, type, string, fret));
+				this.notes.add(new Note(pitch, duration, voice, type, string, fret));
 			}
 		}
 	}
 
+	
+	//Methods for GUI
+	public int getNumNotes() {
+		return this.notes.size();
+	}
 	
 	//Public accessors
 	public int getMeasureNumber() {

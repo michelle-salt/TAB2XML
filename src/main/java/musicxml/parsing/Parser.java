@@ -17,7 +17,9 @@ import org.xml.sax.SAXException;
 public class Parser {
 
 	private String instrument;
-	private ArrayList<Measure> measures;
+	private ArrayList<Measure> measures = new ArrayList<Measure>();
+	//StaffTuning lines are currently not retrieved in this method
+	//They should be retrieved in the Attributes method instead (remove the variable + methods from here)
 	private ArrayList<StaffTuning> lines; //Includes tuning-step and tuning-octave
 
 	private File musicXML; //Might not need this stored, assuming this parser will only ever run once. Good to have just in case

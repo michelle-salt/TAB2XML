@@ -2,9 +2,7 @@ package musicxml.parsing;
 
 public class Note {
 
-	private char step; //Letter of each note (ranging from 'A' to 'G')
-	private int alter; //Represents chromatic alteration in number of semitones (e.g., -1 for flat, 1 for sharp). Decimal values like 0.5 (quarter tone sharp) are used for microtones.
-	private int octave; //Octave each note is on
+	private Pitch pitch; //Includes step, octave, and potentially alter
 	private int duration; //The length of each note (used for playing)
 	private int voice; //Used if there is more than one instrument. Shouldn't make a difference since everything is supposed to be one instrument anyways
 	private int type; //maxima (-3), long (-2), breve (-1), whole (1), half (2), quarter (4), eighth (8), etc. until 1024th (1024)
@@ -13,11 +11,9 @@ public class Note {
 	private int fret; //The fret of the note
 	
 	//Inside here (the notes method, actually), add a method for each note value/sub-tag	
-	public Note(char step, int alter, int octave, int duration, int voice, String noteType, int string, int fret) {
+	public Note(Pitch pitch, int duration, int voice, String noteType, int string, int fret) {
 		//Initialize all variables
-		this.step = step;
-		this.alter = alter;
-		this.octave = octave;
+		this.pitch = pitch;
 		this.duration = duration;
 		this.voice = voice;
 		this.string = string;
