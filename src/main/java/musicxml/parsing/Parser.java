@@ -122,6 +122,10 @@ public class Parser {
 		return null;
 	}
 	
+	public int getNumLines() {
+		return this.lines.size();
+	}
+	
 	//Accessors
 	public ArrayList<Note> getNotes() {
 		return this.notes;
@@ -130,8 +134,9 @@ public class Parser {
 	public String getInstrument() {
 		return this.instrument;
 	}
-
-	public int getNumLines() {
-		return this.lines.size();
+	
+	//Line 6 would be the bottom one, line 1 would be the top
+	public ArrayList<StaffTuning> getLines() {
+		return this.lines;
 	}
 }
