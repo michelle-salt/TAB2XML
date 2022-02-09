@@ -114,6 +114,7 @@ public class Parser {
 		}		
 	}
 	
+	
 	//Graphics helper methods
 	public String getStaffDetails() {
 		//Used for drawing the graphics
@@ -129,4 +130,7 @@ public class Parser {
 		return this.instrument;
 	}
 
+	public int getNumLines() {
+		return this.lines.size();
+	}
 }
