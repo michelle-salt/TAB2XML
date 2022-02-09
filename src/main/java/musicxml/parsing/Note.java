@@ -2,16 +2,17 @@ package musicxml.parsing;
 
 public class Note {
 
-	char step; // Represents the Note value from 'A' to 'G'
-	int octave; // Represents the octave this note belongs to 
-	int duration; // Stores how long the note should be played (relative to the "beat-type" and "divisions" fields of the Measure)
-	int voice; //Used if there is more than one instrument. Shouldn't make a difference since everything is supposed to be one instrument anyways
-	int type; //maxima (-3), long (-2), breve (-1), whole (1), half (2), quarter (4), eighth (8), etc. until 1024th (1024)
-			  //0 is used for if the type is incorrect
-	int string; //The string the note is on
-	int fret; //The fret of the note
+	private char step; //Letter of each note (ranging from 'A' to 'G')
+	private int octave; //Octave each note is on
+	private int duration; //The length of each note (used for playing)
+	private int voice; //Used if there is more than one instrument. Shouldn't make a difference since everything is supposed to be one instrument anyways
+	private int type; //maxima (-3), long (-2), breve (-1), whole (1), half (2), quarter (4), eighth (8), etc. until 1024th (1024)
+			  		  //0 is used for if the type is incorrect
+	private int string; //The string the note is on
+	private int fret; //The fret of the note
 	
 	public Note(char step, int octave, int duration, int voice, String noteType, int string, int fret) {
+		//Initialize all variables
 		this.step = step;
 		this.octave = octave;
 		this.duration = duration;
@@ -19,41 +20,43 @@ public class Note {
 		this.string = string;
 		this.fret = fret;
 		
-		switch (noteType) {
-		case "maxima":	this.type = -3;
-						break;
-		case "long":	this.type = -2;
-						break;
-		case "breve":	this.type = -1;
-						break;
-		case "whole":	this.type = 1;
-						break;
-		case "half":	this.type = 2;
-						break;
-		case "quarter":	this.type = 4;
-						break;
-		case "eigth":	this.type = 8;
-						break;
-		case "16th":	this.type = 16;
-						break;
-		case "32nd":	this.type = 32;
-						break;
-		case "64th":	this.type = 64;
-						break;
-		case "128th":	this.type = 128;
-						break;
-		case "256th":	this.type = 256;
-						break;
-		case "512th":	this.type = 512;
-						break;
-		case "1024th":	this.type = 1024;
-						break;
-		default:		this.type = 0;
-						break;
+		//Initialize the value of the type based on the input string, defaulting to 0 if it doesn't work
+		switch (noteType.toLowerCase()) {
+			case "maxima":	this.type = -3;
+							break;
+			case "long":	this.type = -2;
+							break;
+			case "breve":	this.type = -1;
+							break;
+			case "whole":	this.type = 1;
+							break;
+			case "half":	this.type = 2;
+							break;
+			case "quarter":	this.type = 4;
+							break;
+			case "eigth":	this.type = 8;
+							break;
+			case "16th":	this.type = 16;
+							break;
+			case "32nd":	this.type = 32;
+							break;
+			case "64th":	this.type = 64;
+							break;
+			case "128th":	this.type = 128;
+							break;
+			case "256th":	this.type = 256;
+							break;
+			case "512th":	this.type = 512;
+							break;
+			case "1024th":	this.type = 1024;
+							break;
+			default:		this.type = 0;
+							break;
 		}
 		
 	}
 	
+	//Public getters to retrieve each field
 	public char getStep() {
 		return step;
 	}
@@ -82,6 +85,8 @@ public class Note {
 		return fret;
 	}
 
+	//Public setters to modify each field value
+	//Likely won't be used but will be placed here for now, just in case
 	public void setStep(char step) {
 		this.step = step;
 	}
