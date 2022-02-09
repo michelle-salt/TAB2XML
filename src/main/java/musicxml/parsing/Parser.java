@@ -74,6 +74,7 @@ public class Parser {
 			if (currentNode.getNodeType() == Node.ELEMENT_NODE) {
 				Element eElement = (Element) currentNode;
 				char step = eElement.getElementsByTagName("step").item(0).getTextContent().charAt(0);
+				int alter = Integer.parseInt(eElement.getElementsByTagName("alter").item(0).getTextContent());
 				int octave = Integer.parseInt(eElement.getElementsByTagName("octave").item(0).getTextContent());
 				int duration = Integer.parseInt(eElement.getElementsByTagName("duration").item(0).getTextContent());
 				int voice = Integer.parseInt(eElement.getElementsByTagName("voice").item(0).getTextContent());
@@ -81,7 +82,7 @@ public class Parser {
 				int string = Integer.parseInt(eElement.getElementsByTagName("string").item(0).getTextContent());
 				int fret = Integer.parseInt(eElement.getElementsByTagName("fret").item(0).getTextContent());
 
-				this.notes.add(new Note(step, octave, duration, voice, type, string, fret));
+				this.notes.add(new Note(step, alter, octave, duration, voice, type, string, fret));
 			}
 		}
 	}
