@@ -79,35 +79,4 @@ public class Note {
 	public int getFret() {
 		return fret;
 	}
-
-	//Public setters to modify each field value
-	//Likely won't be used but will be placed here for now, just in case
-	public void setStep(char step) {
-		this.step = step;
-	}
-
-	public void setOctave(int octave) {
-		this.octave = octave;
-	}
-
-	public void setDuration(int duration) {
-		this.duration = duration;
-	}
-
-	public void setVoice(int voice) {
-		this.voice = voice;
-	}
-
-	public void setType(int type) {
-		this.type = type;
-	}
-
-	public void setString(int string) {
-		this.string = string;
-	}
-
-	public void setFret(int fret) {
-		this.fret = fret;
-	}
-
 }
