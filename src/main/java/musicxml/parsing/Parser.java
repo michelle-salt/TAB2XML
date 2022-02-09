@@ -38,39 +38,6 @@ public class Parser {
 			//These include a <staff-lines> tag which indicates how many lines need to be drawn on the sheet musicx
 	}
 
-	public static void main(String[] args) {
-		try {
-			File inputFile = new File("C:\\Users\\User\\Documents\\School\\Second Year\\EECS 2311\\Code\\MusicXMLParserAttempt\\src\\guitarTabXMLText.txt");
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(inputFile);
-			doc.getDocumentElement().normalize();
-			System.out.println("Instrument :" + doc.getElementsByTagName("part-name").item(0).getTextContent());
-			NodeList nList = doc.getElementsByTagName("note");
-
-
-			for (int temp = 0; temp < nList.getLength(); temp++) {
-				Node nNode = nList.item(temp);
-				System.out.println("\nCurrent Element :" + nNode.getNodeName());
-
-				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-					Element eElement = (Element) nNode;
-					char step = eElement.getElementsByTagName("step").item(0).getTextContent().charAt(0);
-					int octave = Integer.parseInt(eElement.getElementsByTagName("octave").item(0).getTextContent());
-					int duration = Integer.parseInt(eElement.getElementsByTagName("duration").item(0).getTextContent());
-					int voice = Integer.parseInt(eElement.getElementsByTagName("voice").item(0).getTextContent());
-					String type = eElement.getElementsByTagName("type").item(0).getTextContent();
-					int string = Integer.parseInt(eElement.getElementsByTagName("string").item(0).getTextContent());
-					int fret = Integer.parseInt(eElement.getElementsByTagName("fret").item(0).getTextContent());
-
-//					this.notes
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	//Parser (private) helper methods
 	private void prepareDocumentForReading() {
 		//Change this first line so the input is read instead
