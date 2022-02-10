@@ -28,6 +28,7 @@ public class Parser {
 	private Document doc;
 
 	public Parser(File musicXML) throws SAXException, IOException {
+		this.musicXML = musicXML;
 		//Initialize and standardize MusicXML file
 		this.prepareDocumentForReading();
 		//Get instrument
@@ -39,7 +40,7 @@ public class Parser {
 	//Parser (private) helper methods
 	private void prepareDocumentForReading() {
 		//Change this first line so the input is read instead
-		musicXML = new File("C:\\Users\\User\\Documents\\School\\Second Year\\EECS 2311\\Code\\MusicXMLParserAttempt\\src\\guitarTabXMLText.txt");
+//		musicXML = new File("C:\\Users\\User\\Documents\\School\\Second Year\\EECS 2311\\Code\\MusicXMLParserAttempt\\src\\guitarTabXMLText.txt");
 		dbFactory = DocumentBuilderFactory.newInstance();
 		try {
 			dBuilder = dbFactory.newDocumentBuilder();
