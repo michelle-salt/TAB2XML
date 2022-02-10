@@ -9,10 +9,13 @@ public class Note {
 			  		  //0 is used for if the type is incorrect
 	private int string; //The string the note is on
 	private int fret; //The fret of the note
+	private boolean isChord; //If true, this note is a chord with the preceding note(s)
 	
 	//Inside here (the notes method, actually), add a method for each note value/sub-tag	
 	public Note(Pitch pitch, int duration, int voice, String noteType, int string, int fret) {
-		//Initialize all variables
+		//isChord defaults to false
+		isChord = false;
+		//Initialize all given variables
 		this.pitch = pitch;
 		this.duration = duration;
 		this.voice = voice;
@@ -79,4 +82,13 @@ public class Note {
 	public int getFret() {
 		return fret;
 	}
+	
+	public boolean isChord() {
+		return isChord;
+	}
+	
+	public void setChord() {
+		this.isChord = true;
+	}
 }
+

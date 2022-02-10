@@ -54,6 +54,13 @@ public class Measure {
 				int fret = Integer.parseInt(eElement.getElementsByTagName("fret").item(0).getTextContent());
 
 				this.notes.add(new Note(pitch, duration, voice, type, string, fret));
+				
+				try {
+					eElement.getElementsByTagName("chord").item(0).getTextContent();
+					this.notes.get(i).setChord();
+				} catch (NullPointerException e) {
+					//This means the note is not a chord, and nothing has to be done
+				}
 			}
 		}
 	}
