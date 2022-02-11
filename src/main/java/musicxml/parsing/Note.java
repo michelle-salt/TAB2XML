@@ -87,6 +87,7 @@ public class Note {
 		return isChord;
 	}
 	
+	//Setter to indicate that the note is a chord
 	public void setChord() {
 		this.isChord = true;
 	}
