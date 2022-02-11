@@ -22,12 +22,12 @@ public class Parser {
 	//They should be retrieved in the Attributes method instead (remove the variable + methods from here)
 	private ArrayList<StaffTuning> lines; //Includes tuning-step and tuning-octave
 
-	private File musicXML; //Might not need this stored, assuming this parser will only ever run once. Good to have just in case
+	private String musicXML; //Might not need this stored, assuming this parser will only ever run once. Good to have just in case
 	private DocumentBuilderFactory dbFactory;	
 	private DocumentBuilder dBuilder;
 	private Document doc;
 
-	public Parser(File musicXML) throws SAXException, IOException {
+	public Parser(String musicXML) {
 		this.musicXML = musicXML;
 		//Initialize and standardize MusicXML file
 		this.prepareDocumentForReading();
@@ -44,7 +44,8 @@ public class Parser {
 		dbFactory = DocumentBuilderFactory.newInstance();
 		try {
 			dBuilder = dbFactory.newDocumentBuilder();
-			doc = dBuilder.parse(musicXML);
+			//File() constructor needs the path file; it does not convert a String to a File.
+			doc = dBuilder.parse(new File(musicXML));
 		} catch (ParserConfigurationException | SAXException | IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Problem parsing the file");
@@ -61,6 +62,8 @@ public class Parser {
 			//Call a method to parse all the instruments within the drumset
 		} else if (instrument.equalsIgnoreCase("Bass")) {
 			instrument = "ACOUSTIC_BASS"; //MidiDictionary has 8 different types of bass available
+		} else if (!instrument.equalsIgnoreCase("Guitar")) {
+			instrument = null;
 		}
 	}
 
