@@ -60,6 +60,7 @@ import org.staccato.StaccatoParserListener;
 import org.jfugue.integration.MusicXmlParser;
 import org.jfugue.midi.MidiFileManager;
 import org.jfugue.midi.MidiParser;
+import org.jfugue.midi.MidiParserListener;
 import org.jfugue.pattern.Pattern;
 
 import converter.Converter;
@@ -378,19 +379,56 @@ public class MainViewController extends Application {
 	@FXML
 	private void playMusic() throws ParserConfigurationException, ParsingException, IOException {
 		
-		MusicXmlParser parser = new MusicXmlParser();
-		StaccatoParserListener listener = new StaccatoParserListener();
-		parser.addParserListener(listener);
-		//Change the filepath as needed
-		Converter c = new Converter(this);
-		c.update();
-		parser.parse(c.getMusicXML());
-//		parser.parse(new File("C:\\Users\\User\\Documents\\School\\Second Year\\EECS 2311\\DrumTab.musicxml"));
+//		Whole W /1.0
+//		Half H /0.5
+//		Quarter Q /0.25
+//		Eighth I /0.125
+//		Sixteenth S /0.0625
+//		Thirty-second T /0.03125
+//		Sixty-fourth X /0.015625
+//		One-twenty-eighth O /0.0078125
+		
+/*
+	  <note>
+        <pitch>
+          <step>C</step>								// note
+          <alter>1</alter>								// accidental (1 means sharp (#). 0.5 means flat (b))
+          <octave>5</octave>							// position
+        </pitch>
+        <duration>6</duration>
+        <voice>1</voice>
+        <type>16th</type>								// note type
+        <notations>
+          <slur number="4" type="stop"/>
+          <technical>
+            <string>1</string>
+            <fret>9</fret>
+            <pull-off number="4" type="stop">P</pull-off>
+          </technical>
+        </notations>
+      </note>
+*/
+		//<technical> pull off?, <notations> slurs?
 		
 		Player player = new Player();
-		Pattern musicXMLPattern = listener.getPattern().setTempo(400).setInstrument("Guitar");
-		player.play(musicXMLPattern);	
+		//player.play("T90 I[Guitar] V0 A3H+E3H+A2H G5S E5S D5S C#5S E5S D5S A#4S A4S C5S A#4S G4S");
+		player.play("T90 V0 I[Guitar] E2I B2I E3I G#3I B3I E4I B3I G#3I E4W+B3W+G#3W+E3W+B2W+E2W");
 		
+//		MusicXmlParser parser = new MusicXmlParser();
+//		StaccatoParserListener listener = new StaccatoParserListener();
+//		parser.addParserListener(listener);
+//		//Change the filepath as needed
+//		Converter c = new Converter(this);
+//		c.update();
+//		parser.parse(c.getMusicXML());
+//		
+//		Player player = new Player();
+//		Pattern musicXMLPattern = listener.getPattern().setTempo(90).setInstrument("Guitar");
+//		System.out.println(musicXMLPattern);
+//		player.play(musicXMLPattern);	
+		//player.play("T90 I[Guitar] V0 E2ha90 B2ha90 E3ha90 G#3ha90 B3ha90 E4ha90 B3ha90 G#3ha90");
+		//player.play("T90 I[Guitar] V0 A3wa90 E3wa90 A2wa90 | G5/0.08333333333333333a90 E5/0.08333333333333333a90 D5/0.08333333333333333a90 C#5/0.08333333333333333a90 E5/0.08333333333333333a90 D5/0.08333333333333333a90 Bb4/0.08333333333333333a90 A4/0.08333333333333333a90 C5/0.08333333333333333a90 Bb4/0.08333333333333333a90 G4/0.08333333333333333a90 E4/0.08333333333333333a90 | E4/0.6666666666666666a90 D4qa90 Bb3qa90 G3qa90 E4/0.08333333333333333a90 | C#4wa90 A3wa90 E3wa90 A2wa90 | A3wa90 E3wa90 A2wa90 | G5/0.08333333333333333a90 E5/0.08333333333333333a90 D5/0.08333333333333333a90 C#5/0.08333333333333333a90 E5/0.08333333333333333a90 D5/0.08333333333333333a90 Bb4/0.08333333333333333a90 A4/0.08333333333333333a90 C5/0.08333333333333333a90 Bb4/0.08333333333333333a90 G4/0.08333333333333333a90 E4/0.08333333333333333a90");
+
 	}
 
 	public void refresh() {
