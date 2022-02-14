@@ -54,6 +54,7 @@ import utility.Settings;
 
 import org.jfugue.player.Player;
 import org.staccato.StaccatoParserListener;
+import org.xml.sax.SAXException;
 import org.jfugue.integration.MusicXmlParser;
 import org.jfugue.midi.MidiFileManager;
 import org.jfugue.midi.MidiParser;
@@ -326,7 +327,7 @@ public class MainViewController extends Application {
 	}
 
 	@FXML
-	private void previewButtonHandle() throws IOException {
+	private void previewButtonHandle() throws IOException, SAXException {
 		// converter.getMusicXML() returns the MusicXML output as a String
 		Parent root;
  		try {
@@ -334,6 +335,7 @@ public class MainViewController extends Application {
  			root = loader.load();
  			SheetMusicGUI controller = loader.getController();
  			controller.setMainViewController(this);
+ 			controller.update();
  			convertWindow = this.openNewWindow(root, "Preview Sheet Music");
  		} catch (IOException e) {
  			Logger logger = Logger.getLogger(getClass().getName());
