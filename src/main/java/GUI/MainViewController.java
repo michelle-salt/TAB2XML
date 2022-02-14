@@ -359,7 +359,7 @@ public class MainViewController extends Application {
 			
 			ArrayList<Note> notesInMeasure = measures.get(i).getNotes();
 			
-			for(int j = 0; j < measures.get(i).getNumNotes(); j++) {
+			for(int j = 0; j < measures.get(i).getNumNotes(); j++) { // adding all notes from the specific measure to the string
 				
 				System.out.println(j);
 				
