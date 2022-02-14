@@ -46,6 +46,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import musicxml.parsing.Measure;
+import musicxml.parsing.Note;
 import musicxml.parsing.Parser;
 import nu.xom.ParsingException;
 import utility.Range;
@@ -342,24 +343,32 @@ public class MainViewController extends Application {
 	
 	@FXML
 	private void playMusic() throws IOException {
-		
-		System.out.println("clicked");
-		Player player = new Player();
+
 //		player.play("T90 I[Guitar] V0 A3H+E3H+A2H G5S E5S D5S C#5S E5S D5S A#4S A4S C5S A#4S G4S");
 		//player.play("T90 V0 I[Guitar] E2I B2I E3I G#3I B3I E4I B3I G#3I E4W+B3W+G#3W+E3W+B2W+E2W");
 
-		Parser parse = new Parser(converter.getMusicXML());
-//		
-//		String instrument = parse.getInstrument();
-//		System.out.println(instrument);
+		Parser parse = new Parser(new File("C:\\Users\\VinhA\\Desktop\\2311\\guitarsample.xml"));
+		
+		String instrument = parse.getInstrument();
+		
+		String string = "T90 V0 [" + instrument + "] ";
 				
-//		ArrayList<Measure> measures = parse.getMeasures();
-//		
-//		for(int i = 0; i < parse.getNumMeasures() ; i++) { // go through every measure
-//			
-//			System.out.println(1);
-//			
-//		}
+		ArrayList<Measure> measures = parse.getMeasures();
+		
+		for(int i = 0; i < parse.getNumMeasures() ; i++) { // go through every measure
+			
+			ArrayList<Note> notesInMeasure = measures.get(i).getNotes();
+			
+			for(int j = 0; j < measures.get(i).getNumNotes(); j++) {
+				
+				System.out.println(j);
+				
+			}
+			
+		}		
+		
+		Player player = new Player();
+		player.play(string);
 	
 	}
 
