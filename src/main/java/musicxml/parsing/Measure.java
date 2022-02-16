@@ -28,12 +28,27 @@ public class Measure {
 	
 	//Create two methods based on parser class methods
 	private void initializeNotes() {
-		NodeList noteList = musicXML.getElementsByTagName("note");
-
+//		NodeList measureList = musicXML.getChildNodes();
+		NodeList measureList = musicXML.getElementsByTagName("measure");
+//		NodeList noteList = measureList.getElementsByTagName("note");
+		
+		//Get nodes for current measure
+		Node currentMeasureParentNode = measureList.item(measureNumber - 1);
+		NodeList noteList = currentMeasureParentNode.getChildNodes();
+		
+//		for (int nodeIndex = 0; nodeIndex < measureList.getLength(); nodeIndex++) {
+//			Node curr = measureList.item(nodeIndex);
+//			
+//			NodeList noteList = curr.getChildNodes();
+//			System.out.println("test");
+//		}
+		
+		int noteCounter = 0;
+		
 		for (int i = 0; i < noteList.getLength(); i++) {
 			Node currentNode = noteList.item(i);
 
-			if (currentNode.getNodeType() == Node.ELEMENT_NODE) {
+			if (currentNode.getNodeType() == Node.ELEMENT_NODE && currentNode.getNodeName().equals("note")) {
 				Element eElement = (Element) currentNode;
 				
 				Pitch pitch;
@@ -65,14 +80,35 @@ public class Measure {
 				int string = Integer.parseInt(eElement.getElementsByTagName("string").item(0).getTextContent());
 				int fret = Integer.parseInt(eElement.getElementsByTagName("fret").item(0).getTextContent());
 
-				this.notes.add(new Note(pitch, duration, voice, type, string, fret));
+//				I still need to varify that getting an attibute that doesn't exist won't cause an error
+				//Get Slur
+				int slurNum = Integer.parseInt(eElement.getAttribute("number"));
+				String slurPlace = eElement.getAttribute("placement");
+				String slurType = eElement.getAttribute("type");
+				Slur slur = new Slur(slurNum, slurPlace, slurType);
+				//Get Pull-Off
+				int pullOffNum = Integer.parseInt(eElement.getAttribute("number"));
+				String pullOffType = eElement.getAttribute("type");
+				//Since pitch might not exist, this might return an error
+//				String pullOffVal = eElement.getElementsByTagName("pull-off").item(0).getTextContent();
+				//^^ is being replaced with
+				String pullOffVal;
+				try {
+					pullOffVal = eElement.getElementsByTagName("pull-off").item(0).getTextContent();
+				} catch (NullPointerException e) {
+					pullOffVal = null;
+				}
+				PullOff pullOff = new PullOff(pullOffNum, pullOffType, pullOffVal);
+				
+				this.notes.add(new Note(pitch, duration, voice, type, string, fret, slur, pullOff));
 				
 				try {
 					eElement.getElementsByTagName("chord").item(0).getTextContent();
-					this.notes.get(i).setChord();
+					this.notes.get(noteCounter).setChord();
 				} catch (NullPointerException e) {
 					//This means the note is not a chord, and nothing has to be done
 				}
+				noteCounter++;
 			}
 		}
 	}

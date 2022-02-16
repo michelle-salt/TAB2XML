@@ -1,6 +1,7 @@
 package musicxml.parsing;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -22,12 +23,13 @@ public class Parser {
 	//They should be retrieved in the Attributes method instead (remove the variable + methods from here)
 	private ArrayList<StaffTuning> lines; //Includes tuning-step and tuning-octave
 
-	private File musicXML; //Might not need this stored, assuming this parser will only ever run once. Good to have just in case
+	private String musicXML; //Might not need this stored, assuming this parser will only ever run once. Good to have just in case
+	private File musicXMLFile;
 	private DocumentBuilderFactory dbFactory;	
 	private DocumentBuilder dBuilder;
 	private Document doc;
 
-	public Parser(File musicXML) {
+	public Parser(String musicXML) {
 		this.musicXML = musicXML;
 		//Initialize and standardize MusicXML file
 		this.prepareDocumentForReading();
@@ -39,16 +41,25 @@ public class Parser {
 
 	//Parser (private) helper methods
 	private void prepareDocumentForReading() {
-		//Change this first line so the input is read instead
-//		musicXML = new File("C:\\Users\\User\\Documents\\School\\Second Year\\EECS 2311\\Code\\MusicXMLParserAttempt\\src\\guitarTabXMLText.txt");
+		//Write musicXML string to file
+		FileWriter myWriter;
+		try {
+			myWriter = new FileWriter("musicXML.txt");
+			myWriter.write(musicXML);
+			myWriter.close();
+		} catch (IOException e1) {
+			System.out.println("Problem converting MusicXML to file. What a hard life.");
+			e1.printStackTrace();
+		}
+		//Create file object to store newly created file
+		musicXMLFile = new File("musicXML.txt");
+		//Prepare file for reading
 		dbFactory = DocumentBuilderFactory.newInstance();
 		try {
 			dBuilder = dbFactory.newDocumentBuilder();
-			//File() constructor needs the path file; it does not convert a String to a File.
-			doc = dBuilder.parse(musicXML);
+			doc = dBuilder.parse(musicXMLFile);
 		} catch (ParserConfigurationException | SAXException | IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Problem parsing the file");
+			System.out.println("Problem parsing the file. How devastating.");
 			e.printStackTrace();
 		}
 		doc.getDocumentElement().normalize();
