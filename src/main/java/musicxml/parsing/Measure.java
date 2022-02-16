@@ -68,7 +68,27 @@ public class Measure {
 				int string = Integer.parseInt(eElement.getElementsByTagName("string").item(0).getTextContent());
 				int fret = Integer.parseInt(eElement.getElementsByTagName("fret").item(0).getTextContent());
 
-				this.notes.add(new Note(pitch, duration, voice, type, string, fret));
+//				I still need to varify that getting an attibute that doesn't exist won't cause an error
+				//Get Slur
+				int slurNum = Integer.parseInt(eElement.getAttribute("number"));
+				String slurPlace = eElement.getAttribute("placement");
+				String slurType = eElement.getAttribute("type");
+				Slur slur = new Slur(slurNum, slurPlace, slurType);
+				//Get Pull-Off
+				int pullOffNum = Integer.parseInt(eElement.getAttribute("number"));
+				String pullOffType = eElement.getAttribute("type");
+				//Since pitch might not exist, this might return an error
+//				String pullOffVal = eElement.getElementsByTagName("pull-off").item(0).getTextContent();
+				//^^ is being replaced with
+				String pullOffVal;
+				try {
+					pullOffVal = eElement.getElementsByTagName("pull-off").item(0).getTextContent();
+				} catch (NullPointerException e) {
+					pullOffVal = null;
+				}
+				PullOff pullOff = new PullOff(pullOffNum, pullOffType, pullOffVal);
+				
+				this.notes.add(new Note(pitch, duration, voice, type, string, fret, slur, pullOff));
 				
 				try {
 					eElement.getElementsByTagName("chord").item(0).getTextContent();
