@@ -373,7 +373,7 @@ public class MainViewController extends Application {
 		// E4W+B3W+G#3W+E3W+B2W+E2W");
 
 		//Parser parse = new Parser(new File("C:\\Users\\VinhA\\Desktop\\2311\\caprichosamplealtered.xml"));
-		Parser parse = new Parser(new File("C:\\Users\\VinhA\\Desktop\\2311\\idk.musicxml"));
+		Parser parse = new Parser(converter.getMusicXML());
 		String instrument = parse.getInstrument();
 		String string = "T90 V0 I[" + instrument + "] ";
 		ArrayList<Measure> measures = parse.getMeasures();

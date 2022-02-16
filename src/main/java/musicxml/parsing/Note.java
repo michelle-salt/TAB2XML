@@ -13,11 +13,11 @@ public class Note {
 	private int string; //The string the note is on
 	private int fret; //The fret of the note
 	private boolean isChord; //If true, this note is a chord with the preceding note(s)
-	private Slur slur; //Stores attributes of the slur (if found)
-	private PullOff pullOff; //Stores attributes of the slur (if found)
+	private musicxml.parsing.Slur slur; //Stores attributes of the slur (if found)
+	private musicxml.parsing.PullOff pullOff; //Stores attributes of the slur (if found)
 	
 	//Inside here (the notes method, actually), add a method for each note value/sub-tag	
-	public Note(Pitch pitch, int duration, int voice, String noteType, int string, int fret, Slur slur, PullOff pullOff) {
+	public Note(Pitch pitch, int duration, int voice, String noteType, int string, int fret, musicxml.parsing.Slur slur2, musicxml.parsing.PullOff pullOff2) {
 		//isChord defaults to false
 		isChord = false;
 		//Initialize all given variables
@@ -26,8 +26,8 @@ public class Note {
 		this.voice = voice;
 		this.string = string;
 		this.fret = fret; //Represents the number outputted on the lines
-		this.slur = slur;
-		this.pullOff = pullOff;
+		this.slur = slur2;
+		this.pullOff = pullOff2;
 		
 		//Initialize the value of the type based on the input string, defaulting to 'Z' if it doesn't work
 		switch (noteType.toLowerCase()) {
@@ -92,11 +92,11 @@ public class Note {
 		return fret;
 	}
 	
-	public Slur getSlur() {
+	public musicxml.parsing.Slur getSlur() {
 		return slur;
 	}
 
-	public PullOff getPullOff() {
+	public musicxml.parsing.PullOff getPullOff() {
 		return pullOff;
 	}
 
