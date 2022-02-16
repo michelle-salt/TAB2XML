@@ -28,12 +28,27 @@ public class Measure {
 	
 	//Create two methods based on parser class methods
 	private void initializeNotes() {
-		NodeList noteList = musicXML.getElementsByTagName("note");
-
+//		NodeList measureList = musicXML.getChildNodes();
+		NodeList measureList = musicXML.getElementsByTagName("measure");
+//		NodeList noteList = measureList.getElementsByTagName("note");
+		
+		//Get nodes for current measure
+		Node currentMeasureParentNode = measureList.item(measureNumber - 1);
+		NodeList noteList = currentMeasureParentNode.getChildNodes();
+		
+//		for (int nodeIndex = 0; nodeIndex < measureList.getLength(); nodeIndex++) {
+//			Node curr = measureList.item(nodeIndex);
+//			
+//			NodeList noteList = curr.getChildNodes();
+//			System.out.println("test");
+//		}
+		
+		int noteCounter = 0;
+		
 		for (int i = 0; i < noteList.getLength(); i++) {
 			Node currentNode = noteList.item(i);
 
-			if (currentNode.getNodeType() == Node.ELEMENT_NODE) {
+			if (currentNode.getNodeType() == Node.ELEMENT_NODE && currentNode.getNodeName().equals("note")) {
 				Element eElement = (Element) currentNode;
 				
 				Pitch pitch;
@@ -57,10 +72,11 @@ public class Measure {
 				
 				try {
 					eElement.getElementsByTagName("chord").item(0).getTextContent();
-					this.notes.get(i).setChord();
+					this.notes.get(noteCounter).setChord();
 				} catch (NullPointerException e) {
 					//This means the note is not a chord, and nothing has to be done
 				}
+				noteCounter++;
 			}
 		}
 	}
