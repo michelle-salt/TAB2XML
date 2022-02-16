@@ -371,6 +371,7 @@ public class MainViewController extends Application {
 //		player.play("T90 I[Guitar] V0 A3H+E3H+A2H G5S E5S D5S C#5S E5S D5S A#4S A4S C5S A#4S G4S");
 		// player.play("T90 V0 I[Guitar] E2I B2I E3I G#3I B3I E4I B3I G#3I
 		// E4W+B3W+G#3W+E3W+B2W+E2W");
+
 		Parser parse = new Parser(converter.getMusicXML());
 		String instrument = parse.getInstrument();
 		String string = "T90 V0 I[" + instrument + "] ";
