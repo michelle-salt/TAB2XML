@@ -5,7 +5,7 @@ public class Note {
 	private Pitch pitch; //Includes step, octave, and potentially alter
 	private int duration; //The length of each note (used for playing)
 	private int voice; //Used if there is more than one instrument. Shouldn't make a difference since everything is supposed to be one instrument anyways
-	private char type; //maxima (M), long (L), breve (B), whole (W), half (H), quarter (Q), eighth (I), etc. (S, T, X, O)
+	private char type; //maxima (M), long (L), breve (B), whole (W), half (H), quarter (Q), eighth (I), etc. (S, T, X, O, U, R, C)
 			  		  //0 is used for if the type is incorrect
 	private int string; //The string the note is on
 	private int fret; //The fret of the note
@@ -27,7 +27,6 @@ public class Note {
 		this.pullOff = pullOff;
 		
 		//Initialize the value of the type based on the input string, defaulting to 'Z' if it doesn't work
-//		I need to figure out what the values of 256-1024 should be (and add to comment on attribute declaration)
 		switch (noteType.toLowerCase()) {
 			case "maxima":	this.type = 'M';
 							break;
@@ -51,11 +50,11 @@ public class Note {
 							break;
 			case "128th":	this.type = 'O';
 							break;
-			case "256th":	this.type = 'a';
+			case "256th":	this.type = 'U';
 							break;
-			case "512th":	this.type = 'b';
+			case "512th":	this.type = 'R';
 							break;
-			case "1024th":	this.type = 'c';
+			case "1024th":	this.type = 'C';
 							break;
 			default:		this.type = 'Z';
 							break;
