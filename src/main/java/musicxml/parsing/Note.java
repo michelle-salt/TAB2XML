@@ -5,7 +5,7 @@ public class Note {
 	private Pitch pitch; //Includes step, octave, and potentially alter
 	private int duration; //The length of each note (used for playing)
 	private int voice; //Used if there is more than one instrument. Shouldn't make a difference since everything is supposed to be one instrument anyways
-	private int type; //maxima (-3), long (-2), breve (-1), whole (1), half (2), quarter (4), eighth (8), etc. until 1024th (1024)
+	private char type; //maxima (-3), long (-2), breve (-1), whole (1), half (2), quarter (4), eighth (8), etc. until 1024th (1024)
 			  		  //0 is used for if the type is incorrect
 	private int string; //The string the note is on
 	private int fret; //The fret of the note
@@ -24,35 +24,35 @@ public class Note {
 		
 		//Initialize the value of the type based on the input string, defaulting to 0 if it doesn't work
 		switch (noteType.toLowerCase()) {
-			case "maxima":	this.type = -3;
+//			case "maxima":	this.type = -3;
+//							break;
+//			case "long":	this.type = -2;
+//							break;
+//			case "breve":	this.type = -1;
+//							break;
+			case "whole":	this.type = 'W';
 							break;
-			case "long":	this.type = -2;
+			case "half":	this.type = 'H';
 							break;
-			case "breve":	this.type = -1;
+			case "quarter":	this.type = 'Q';
 							break;
-			case "whole":	this.type = 1;
+			case "eighth":	this.type = 'I';
 							break;
-			case "half":	this.type = 2;
+			case "16th":	this.type = 'S';
 							break;
-			case "quarter":	this.type = 4;
+			case "32nd":	this.type = 'T';
 							break;
-			case "eigth":	this.type = 8;
+			case "64th":	this.type = 'X';
 							break;
-			case "16th":	this.type = 16;
+			case "128th":	this.type = 'O';
 							break;
-			case "32nd":	this.type = 32;
-							break;
-			case "64th":	this.type = 64;
-							break;
-			case "128th":	this.type = 128;
-							break;
-			case "256th":	this.type = 256;
-							break;
-			case "512th":	this.type = 512;
-							break;
-			case "1024th":	this.type = 1024;
-							break;
-			default:		this.type = 0;
+//			case "256th":	this.type = 256;
+//							break;
+//			case "512th":	this.type = 512;
+//							break;
+//			case "1024th":	this.type = 1024;
+//							break;
+			default:		this.type = ' ';
 							break;
 		}
 		
@@ -71,7 +71,7 @@ public class Note {
 		return voice;
 	}
 
-	public int getType() {
+	public char getType() {
 		return type;
 	}
 

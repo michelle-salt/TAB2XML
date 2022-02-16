@@ -46,6 +46,18 @@ public class Measure {
 					//This means an alter has not been provided
 					pitch = new Pitch(step, octave);
 				}
+				
+				/*
+				 pull off
+				hammer
+				slur
+				dotted
+				grace
+				time modification
+				slide
+				key
+				 */
+
 
 				int duration = Integer.parseInt(eElement.getElementsByTagName("duration").item(0).getTextContent());
 				int voice = Integer.parseInt(eElement.getElementsByTagName("voice").item(0).getTextContent());
