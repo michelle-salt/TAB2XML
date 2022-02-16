@@ -5,7 +5,7 @@ public class Note {
 	private Pitch pitch; //Includes step, octave, and potentially alter
 	private int duration; //The length of each note (used for playing)
 	private int voice; //Used if there is more than one instrument. Shouldn't make a difference since everything is supposed to be one instrument anyways
-	private int type; //maxima (-3), long (-2), breve (-1), whole (1), half (2), quarter (4), eighth (8), etc. until 1024th (1024)
+	private char type; //maxima (M), long (L), breve (B), whole (W), half (H), quarter (Q), eighth (I), etc. (S, T, X, O)
 			  		  //0 is used for if the type is incorrect
 	private int string; //The string the note is on
 	private int fret; //The fret of the note
@@ -26,37 +26,38 @@ public class Note {
 		this.slur = slur;
 		this.pullOff = pullOff;
 		
-		//Initialize the value of the type based on the input string, defaulting to 0 if it doesn't work
+		//Initialize the value of the type based on the input string, defaulting to 'Z' if it doesn't work
+//		I need to figure out what the values of 256-1024 should be (and add to comment on attribute declaration)
 		switch (noteType.toLowerCase()) {
-			case "maxima":	this.type = -3;
+			case "maxima":	this.type = 'M';
 							break;
-			case "long":	this.type = -2;
+			case "long":	this.type = 'L';
 							break;
-			case "breve":	this.type = -1;
+			case "breve":	this.type = 'B';
 							break;
-			case "whole":	this.type = 1;
+			case "whole":	this.type = 'W';
 							break;
-			case "half":	this.type = 2;
+			case "half":	this.type = 'H';
 							break;
-			case "quarter":	this.type = 4;
+			case "quarter":	this.type = 'Q';
 							break;
-			case "eigth":	this.type = 8;
+			case "eigth":	this.type = 'I';
 							break;
-			case "16th":	this.type = 16;
+			case "16th":	this.type = 'S';
 							break;
-			case "32nd":	this.type = 32;
+			case "32nd":	this.type = 'T';
 							break;
-			case "64th":	this.type = 64;
+			case "64th":	this.type = 'X';
 							break;
-			case "128th":	this.type = 128;
+			case "128th":	this.type = 'O';
 							break;
-			case "256th":	this.type = 256;
+			case "256th":	this.type = 'a';
 							break;
-			case "512th":	this.type = 512;
+			case "512th":	this.type = 'b';
 							break;
-			case "1024th":	this.type = 1024;
+			case "1024th":	this.type = 'c';
 							break;
-			default:		this.type = 0;
+			default:		this.type = 'Z';
 							break;
 		}
 		
