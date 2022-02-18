@@ -6,15 +6,19 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import musicxml.parsing.*;
+
 import java.io.IOException;
 
 public class SheetMusicGUI {
 	
-    public void setMainViewController(MainViewController mvcInput) {
-    }
-    
-    @FXML 
+	@FXML 
     private Pane pane;
+    private MainViewController mvc;
+	
+    public void setMainViewController(MainViewController mvcInput) {
+    	mvc = mvcInput;
+    }
     
 	//Implements the "Save as PDF" button on the SheetMusic GUI
     public void handleSavePDF() {
@@ -64,7 +68,7 @@ public class SheetMusicGUI {
     //Draws 6 Sheet lines and places them on the GUI
     public void placeSheetLines(double y) {	
      	//Loop through each line
-    	//Add 10 to the vertical distance after each loop
+    	//Add 12 to the vertical distance after each loop
     	for (int i = 1; i <= 6; i++, y+= 12) {
          	DrawSheetLines sheetLine = new DrawSheetLines(0.0, y, this.pane.getMaxWidth(), y);
          	//Add lines to pane
@@ -73,14 +77,14 @@ public class SheetMusicGUI {
  	}	
     
     //Update the SheetMusic GUI
-    public void update() throws IOException {
-    	//HardCoded 4 sets of Sheet lines on the SheetMusic GUI, working on changing to dynamic
-      	for (int i = 1, y = 0; i <= 4; i++, y += 100) {
+    public void update() throws IOException { 	
+    	Parser p = new Parser(mvc.converter.getMusicXML());
+    	//Dynamically draw the Sheet lines on the SheetMusic GUI
+      	for (int i = 1, y = 0; i <= Math.ceil(p.getNumMeasures()/2); i++, y += 100) {
       		placeSheetLines(y);
+      		//Dynamically draw bar lines and clef
+          	barLines(470, 0+y);
+          	clef("TAB", 6, 18+y);
       	}
-      	//Draw bar lines and clef
-      	//Clef to be updated dynamically later
-      	barLines(470, 0);
-      	clef("TAB", 6, 18);
     }
  }
