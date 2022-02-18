@@ -67,7 +67,7 @@ public class Note {
 		
 	}
 	
-	public Note(Pitch pitch, int voice, String noteType, int string, int fret, musicxml.parsing.Slur slur2, musicxml.parsing.PullOff pullOff2) {
+	public Note(Pitch pitch, int voice, String noteType, int string, int fret, musicxml.parsing.Slur slur2, musicxml.parsing.PullOff pullOff2) { // for grace notes
 		
 		//isChord defaults to false
 				isChord = false;
