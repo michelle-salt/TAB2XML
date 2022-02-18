@@ -80,25 +80,46 @@ public class Measure {
 				int string = Integer.parseInt(eElement.getElementsByTagName("string").item(0).getTextContent());
 				int fret = Integer.parseInt(eElement.getElementsByTagName("fret").item(0).getTextContent());
 
-//				I still need to varify that getting an attibute that doesn't exist won't cause an error
+//				I still need to verify that getting an attribute that doesn't exist won't cause an error
 				//Get Slur
-				int slurNum = Integer.parseInt(eElement.getAttribute("number"));
-				String slurPlace = eElement.getAttribute("placement");
-				String slurType = eElement.getAttribute("type");
-				Slur slur = new Slur(slurNum, slurPlace, slurType);
-				//Get Pull-Off
-				int pullOffNum = Integer.parseInt(eElement.getAttribute("number"));
-				String pullOffType = eElement.getAttribute("type");
-				//Since pitch might not exist, this might return an error
-//				String pullOffVal = eElement.getElementsByTagName("pull-off").item(0).getTextContent();
-				//^^ is being replaced with
-				String pullOffVal;
-				try {
-					pullOffVal = eElement.getElementsByTagName("pull-off").item(0).getTextContent();
-				} catch (NullPointerException e) {
-					pullOffVal = null;
+				Slur slur = new Slur(0, null, null);
+				
+				if (eElement.hasAttribute("number")) {
+					int slurNum = Integer.parseInt(eElement.getAttribute("number"));
+					String slurPlace = eElement.getAttribute("placement");
+					String slurType = eElement.getAttribute("type");
+					slur = new Slur(slurNum, slurPlace, slurType);
 				}
-				PullOff pullOff = new PullOff(pullOffNum, pullOffType, pullOffVal);
+				
+				//Gets to pull-off tag, if it exists
+//				eElement.getElementsByTagName("notations").item(0).getChildNodes().item(3).getChildNodes().item(5)
+				
+				//Get Pull-Off
+				PullOff pullOff = new PullOff(0, null, null);
+				if (eElement.hasAttribute("pull-off")) {
+					int pullOffNum = Integer.parseInt(eElement.getAttribute("number"));
+					String pullOffType = eElement.getAttribute("type");
+					String pullOffVal;
+					try {
+						pullOffVal = eElement.getElementsByTagName("pull-off").item(0).getTextContent();
+					} catch (NullPointerException e) {
+						pullOffVal = null;
+					}
+					pullOff = new PullOff(pullOffNum, pullOffType, pullOffVal);
+				} 
+//				
+//				int pullOffNum = Integer.parseInt(eElement.getAttribute("number"));
+//				String pullOffType = eElement.getAttribute("type");
+//				//Since pitch might not exist, this might return an error
+////				String pullOffVal = eElement.getElementsByTagName("pull-off").item(0).getTextContent();
+//				//^^ is being replaced with
+//				String pullOffVal;
+//				try {
+//					pullOffVal = eElement.getElementsByTagName("pull-off").item(0).getTextContent();
+//				} catch (NullPointerException e) {
+//					pullOffVal = null;
+//				}
+//				PullOff pullOff = new PullOff(pullOffNum, pullOffType, pullOffVal);
 				
 				this.notes.add(new Note(pitch, duration, voice, type, string, fret, slur, pullOff));
 				
