@@ -44,7 +44,7 @@ public class Note {
 							break;
 			case "quarter":	this.type = 'Q';
 							break;
-			case "eigth":	this.type = 'I';
+			case "eighth":	this.type = 'I';
 							break;
 			case "16th":	this.type = 'S';
 							break;
@@ -67,6 +67,56 @@ public class Note {
 		
 	}
 	
+	public Note(Pitch pitch, int voice, String noteType, int string, int fret, musicxml.parsing.Slur slur2, musicxml.parsing.PullOff pullOff2) { // for grace notes
+		
+		//isChord defaults to false
+				isChord = false;
+				//Initialize all given variables
+				this.pitch = pitch;
+				this.voice = voice;
+				this.string = string;
+				this.fret = fret; //Represents the number outputted on the lines
+				this.slur = slur2;
+				this.pullOff = pullOff2;
+				this.duration = 0;
+				
+				//Initialize the value of the type based on the input string, defaulting to 'Z' if it doesn't work
+				switch (noteType.toLowerCase()) {
+
+					case "maxima":	this.type = 'M';
+									break;
+					case "long":	this.type = 'L';
+									break;
+					case "breve":	this.type = 'B';
+									break;
+					case "whole":	this.type = 'W';
+									break;
+					case "half":	this.type = 'H';
+									break;
+					case "quarter":	this.type = 'Q';
+									break;
+					case "eighth":	this.type = 'I';
+									break;
+					case "16th":	this.type = 'S';
+									break;
+					case "32nd":	this.type = 'T';
+									break;
+					case "64th":	this.type = 'X';
+									break;
+					case "128th":	this.type = 'O';
+									break;
+					case "256th":	this.type = 'U';
+									break;
+					case "512th":	this.type = 'R';
+									break;
+					case "1024th":	this.type = 'C';
+									break;
+					default:		this.type = 'Z';
+
+									break;
+				}
+	}
+
 	//Public getters to retrieve each field
 	public Pitch getPitch() {
 		return pitch;

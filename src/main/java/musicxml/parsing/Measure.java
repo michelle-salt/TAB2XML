@@ -9,72 +9,63 @@ import org.w3c.dom.NodeList;
 
 public class Measure {
 	private Document musicXML;
-	
+
 	private int measureNumber;
 	private Attributes attributes;
 	private ArrayList<Note> notes = new ArrayList<Note>();
-	
+
 	public Measure(Document musicXML, int measureNumber) {
-		//Set musicXML
+		// Set musicXML
 		this.musicXML = musicXML;
-		//Set measureNumber
+		// Set measureNumber
 		this.measureNumber = measureNumber;
-		
-		//Initialize attributes
+
+		// Initialize attributes
 		this.attributes = new Attributes(musicXML);
-		//Get a list of notes
+		// Get a list of notes
 		initializeNotes();
 	}
-	
-	//Create two methods based on parser class methods
+
+	// Create two methods based on parser class methods
 	private void initializeNotes() {
 //		NodeList measureList = musicXML.getChildNodes();
 		NodeList measureList = musicXML.getElementsByTagName("measure");
 //		NodeList noteList = measureList.getElementsByTagName("note");
-		
-		//Get nodes for current measure
+
+		// Get nodes for current measure
 		Node currentMeasureParentNode = measureList.item(measureNumber - 1);
 		NodeList noteList = currentMeasureParentNode.getChildNodes();
-		
+
 //		for (int nodeIndex = 0; nodeIndex < measureList.getLength(); nodeIndex++) {
 //			Node curr = measureList.item(nodeIndex);
 //			
 //			NodeList noteList = curr.getChildNodes();
 //			System.out.println("test");
 //		}
-		
+
 		int noteCounter = 0;
-		
+
 		for (int i = 0; i < noteList.getLength(); i++) {
 			Node currentNode = noteList.item(i);
 
 			if (currentNode.getNodeType() == Node.ELEMENT_NODE && currentNode.getNodeName().equals("note")) {
 				Element eElement = (Element) currentNode;
-				
+
 				Pitch pitch;
 				char step = eElement.getElementsByTagName("step").item(0).getTextContent().charAt(0);
 				int octave = Integer.parseInt(eElement.getElementsByTagName("octave").item(0).getTextContent());
 				try {
-					int alter = Integer.parseInt(eElement.getElementsByTagName("alter").item(0).getTextContent()); //Optional
+					int alter = Integer.parseInt(eElement.getElementsByTagName("alter").item(0).getTextContent()); // Optional
 					pitch = new Pitch(step, octave, alter);
 				} catch (NullPointerException e) {
-					//This means an alter has not been provided
+					// This means an alter has not been provided
 					pitch = new Pitch(step, octave);
 				}
-				
+
 				/*
-				 pull off
-				hammer
-				slur
-				dotted
-				grace
-				time modification
-				slide
-				key
+				 * pull off hammer slur dotted grace time modification slide key
 				 */
 
-
-				int duration = Integer.parseInt(eElement.getElementsByTagName("duration").item(0).getTextContent());
 				int voice = Integer.parseInt(eElement.getElementsByTagName("voice").item(0).getTextContent());
 				String type = eElement.getElementsByTagName("type").item(0).getTextContent();
 				int string = Integer.parseInt(eElement.getElementsByTagName("string").item(0).getTextContent());
@@ -107,49 +98,42 @@ public class Measure {
 					}
 					pullOff = new PullOff(pullOffNum, pullOffType, pullOffVal);
 				} 
-//				
-//				int pullOffNum = Integer.parseInt(eElement.getAttribute("number"));
-//				String pullOffType = eElement.getAttribute("type");
-//				//Since pitch might not exist, this might return an error
-////				String pullOffVal = eElement.getElementsByTagName("pull-off").item(0).getTextContent();
-//				//^^ is being replaced with
-//				String pullOffVal;
-//				try {
-//					pullOffVal = eElement.getElementsByTagName("pull-off").item(0).getTextContent();
-//				} catch (NullPointerException e) {
-//					pullOffVal = null;
-//				}
-//				PullOff pullOff = new PullOff(pullOffNum, pullOffType, pullOffVal);
 				
-				this.notes.add(new Note(pitch, duration, voice, type, string, fret, slur, pullOff));
+				try {
+
+					int duration = Integer.parseInt(eElement.getElementsByTagName("duration").item(0).getTextContent());
+					this.notes.add(new Note(pitch, duration, voice, type, string, fret, null, null));
+
+				} catch (NullPointerException e) { // if there is no duration, then it is a grace note
+
+					this.notes.add(new Note(pitch, voice, type, string, fret, null, null));
+
+				}
 				
 				try {
 					eElement.getElementsByTagName("chord").item(0).getTextContent();
 					this.notes.get(noteCounter).setChord();
 				} catch (NullPointerException e) {
-					//This means the note is not a chord, and nothing has to be done
+					// This means the note is not a chord, and nothing has to be done
 				}
 				noteCounter++;
 			}
 		}
 	}
 
-	
-	//Methods for GUI
+	// Methods for GUI
 	public int getNumNotes() {
 		return this.notes.size();
 	}
-	
-	//Public accessors
+
+	// Public accessors
 	public int getMeasureNumber() {
 		return measureNumber;
 	}
-	
 
 	public Attributes getAttributes() {
 		return attributes;
 	}
-	
 
 	public ArrayList<Note> getNotes() {
 		return notes;
