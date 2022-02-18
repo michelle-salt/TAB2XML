@@ -368,13 +368,9 @@ public class MainViewController extends Application {
 	@FXML
 	private void playMusic() throws IOException {
 
-//		player.play("T90 I[Guitar] V0 A3H+E3H+A2H G5S E5S D5S C#5S E5S D5S A#4S A4S C5S A#4S G4S");
-		// player.play("T90 V0 I[Guitar] E2I B2I E3I G#3I B3I E4I B3I G#3I
-		// E4W+B3W+G#3W+E3W+B2W+E2W");
-
 		Parser parse = new Parser(converter.getMusicXML());
 		String instrument = parse.getInstrument();
-		String string = "T90 V0 I[" + instrument + "] ";
+		String string = "T120 V0 I[" + instrument + "] ";
 		ArrayList<Measure> measures = parse.getMeasures();
 
 		for (int i = 0; i < parse.getNumMeasures(); i++) { // go through every measure
@@ -383,7 +379,6 @@ public class MainViewController extends Application {
 
 			for (int j = 0; j < measures.get(i).getNumNotes(); j++) { // go through all note sin specific measure
 
-				System.out.println("ging");
 				Pitch pitch = measures.get(i).getNotes().get(j).getPitch();
 				String altervalue = "";
 				char step = pitch.getStep();
@@ -410,23 +405,38 @@ public class MainViewController extends Application {
 					altervalue = "";
 					
 				}
-
-				string += step + altervalue + octave + type;
+				
+				if(measures.get(i).getNotes().get(j).getDuration() == 0) { // if note is a grace note
+					
+					string += step + altervalue + octave + "o-";
+					
+					string += " ";
+					
+					string += step + altervalue + octave + "-o";
+					
+				}else {
+					
+					string += step + altervalue + octave + type;
+					
+				}
 
 				if (measures.get(i).getNumNotes() - j != 1) {
 
-					if (measures.get(i).getNotes().get(j).isChord() || measures.get(i).getNotes().get(j + 1).isChord()) {
-
-						string += "+"; // combine as a chord
+					if (measures.get(i).getNotes().get(j + 1).isChord()) { //  if next note is also part of the chord
+						
+						string += "+";
 
 					}else{
 						
 						string += " "; // add a space to split up notes
 						
 					}
-
-				} 
-
+					
+				}else {
+					
+					string += " ";
+					
+				}
 			}
 			
 			if(parse.getNumMeasures() - i != 1) {
@@ -434,13 +444,10 @@ public class MainViewController extends Application {
 				string += " | "; // add space between notes to indicate measures
 				
 			}
-
 		}
 		
 		System.out.println(string);
-		System.out.println(1);
 		Player player = new Player();
-		//player.play("T90 V0 I[Guitar] E2I B2I E3I G#3I B3I E4I B3I G#3I E4W+B3W+G#3W+E3W+B2W+E2W");
 		player.play(string);
 
 	}
