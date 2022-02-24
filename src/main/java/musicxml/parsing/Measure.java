@@ -102,11 +102,11 @@ public class Measure {
 				try {
 
 					int duration = Integer.parseInt(eElement.getElementsByTagName("duration").item(0).getTextContent());
-					this.notes.add(new Note(pitch, duration, voice, type, string, fret, null, null));
+					this.notes.add(new Note(pitch, duration, voice, type, string, fret, slur, pullOff));
 
 				} catch (NullPointerException e) { // if there is no duration, then it is a grace note
 
-					this.notes.add(new Note(pitch, voice, type, string, fret, null, null));
+					this.notes.add(new Note(pitch, voice, type, string, fret, slur, pullOff));
 
 				}
 				

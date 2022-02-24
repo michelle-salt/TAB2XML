@@ -1,7 +1,7 @@
 package musicxml.parsing;
 
-import models.measure.note.notations.Slur;
-import models.measure.note.notations.technical.PullOff;
+//import models.measure.note.notations.Slur;
+//import models.measure.note.notations.technical.PullOff;
 
 public class Note {
 
@@ -9,7 +9,7 @@ public class Note {
 	private int duration; //The length of each note (used for playing)
 	private int voice; //Used if there is more than one instrument. Shouldn't make a difference since everything is supposed to be one instrument anyways
 	private char type; //maxima (M), long (L), breve (B), whole (W), half (H), quarter (Q), eighth (I), etc. (S, T, X, O, U, R, C)
-			  		  //0 is used for if the type is incorrect
+			  		  //Z is used for if the type is incorrect
 	private int string; //The string the note is on
 	private int fret; //The fret of the note
 	private boolean isChord; //If true, this note is a chord with the preceding note(s)
@@ -17,7 +17,7 @@ public class Note {
 	private musicxml.parsing.PullOff pullOff; //Stores attributes of the slur (if found)
 	
 	//Inside here (the notes method, actually), add a method for each note value/sub-tag	
-	public Note(Pitch pitch, int duration, int voice, String noteType, int string, int fret, musicxml.parsing.Slur slur2, musicxml.parsing.PullOff pullOff2) {
+	public Note(Pitch pitch, int duration, int voice, String noteType, int string, int fret, musicxml.parsing.Slur slur, musicxml.parsing.PullOff pullOff) {
 		//isChord defaults to false
 		isChord = false;
 		//Initialize all given variables
@@ -26,8 +26,8 @@ public class Note {
 		this.voice = voice;
 		this.string = string;
 		this.fret = fret; //Represents the number outputted on the lines
-		this.slur = slur2;
-		this.pullOff = pullOff2;
+		this.slur = slur;
+		this.pullOff = pullOff;
 		
 		//Initialize the value of the type based on the input string, defaulting to 'Z' if it doesn't work
 		switch (noteType.toLowerCase()) {
@@ -67,7 +67,7 @@ public class Note {
 		
 	}
 	
-	public Note(Pitch pitch, int voice, String noteType, int string, int fret, musicxml.parsing.Slur slur2, musicxml.parsing.PullOff pullOff2) { // for grace notes
+	public Note(Pitch pitch, int voice, String noteType, int string, int fret, musicxml.parsing.Slur slur, musicxml.parsing.PullOff pullOff) { // for grace notes
 		
 		//isChord defaults to false
 				isChord = false;
@@ -76,8 +76,8 @@ public class Note {
 				this.voice = voice;
 				this.string = string;
 				this.fret = fret; //Represents the number outputted on the lines
-				this.slur = slur2;
-				this.pullOff = pullOff2;
+				this.slur = slur;
+				this.pullOff = pullOff;
 				this.duration = 0;
 				
 				//Initialize the value of the type based on the input string, defaulting to 'Z' if it doesn't work
