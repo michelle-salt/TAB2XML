@@ -22,7 +22,7 @@ public class SheetMusicGUI {
     
 	//Implements the "Save as PDF" button on the SheetMusic GUI
     public void handleSavePDF() {
-    	//Implement - Mohammad
+    	//Implement - Mohammad.
     }
     
     //Implements the "Go To Measure" button on the SheetMusic GUI
