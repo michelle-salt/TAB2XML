@@ -65,17 +65,9 @@ public class Parser {
 		doc.getDocumentElement().normalize();
 	}
 	
+	//Drumset, Bass, or Guitar
 	private void parseInstrument() {
 		instrument = doc.getElementsByTagName("part-name").item(0).getTextContent().trim();
-		if (instrument.equalsIgnoreCase("Drumset")) {
-			instrument = "STEEL_DRUMS"; //MidiDictionary also allows "TAIKO_DRUM" and "SYNTH_DRUM"
-			//This will likely require the parsing of all the instruments within the drumset (e.g. cymbals)
-			//Call a method to parse all the instruments within the drumset
-		} else if (instrument.equalsIgnoreCase("Bass")) {
-			instrument = "ACOUSTIC_BASS"; //MidiDictionary has 8 different types of bass available
-		} else if (!instrument.equalsIgnoreCase("Guitar")) {
-			instrument = null;
-		}
 	}
 
 	private void parseMeasures() {
