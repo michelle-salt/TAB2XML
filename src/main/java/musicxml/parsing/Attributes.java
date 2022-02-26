@@ -24,8 +24,8 @@ public class Attributes {
 				divisions = Integer.parseInt(currElement.getElementsByTagName("divisions").item(0).getTextContent());
 				fifths = Integer.parseInt(currElement.getElementsByTagName("fifths").item(0).getTextContent());
 
-				String sign = currElement.getElementsByTagName("fifths").item(0).getTextContent();
-				int line = Integer.parseInt(currElement.getElementsByTagName("fifths").item(0).getTextContent());
+				String sign = currElement.getElementsByTagName("sign").item(0).getTextContent();
+				int line = Integer.parseInt(currElement.getElementsByTagName("line").item(0).getTextContent());
 				clef = new Clef(sign, line);
 
 			}

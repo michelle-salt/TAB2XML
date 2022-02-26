@@ -61,7 +61,6 @@ public class Note {
 		case "1024th":	this.type = 'C';
 		break;
 		default:		this.type = 'Z';
-
 		break;
 		}
 
