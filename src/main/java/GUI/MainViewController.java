@@ -46,7 +46,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import musicxml.parsing.Measure;
-import musicxml.parsing.Note;
+import musicxml.parsing.GuitarNote;
 import musicxml.parsing.Parser;
 import musicxml.parsing.Pitch;
 import nu.xom.ParsingException;
@@ -375,7 +375,7 @@ public class MainViewController extends Application {
 
 		for (int i = 0; i < parse.getNumMeasures(); i++) { // go through every measure
 
-			ArrayList<Note> notesInMeasure = measures.get(i).getNotes();
+			ArrayList<GuitarNote> notesInMeasure = measures.get(i).getNotes();
 
 			for (int j = 0; j < measures.get(i).getNumNotes(); j++) { // go through all note sin specific measure
 

@@ -80,7 +80,7 @@ public class Parser {
 				Element eElement = (Element) currentNode;
 				
 				int measureNumber = Integer.parseInt(eElement.getAttribute("number"));
-				measures.add(new Measure(this.doc, measureNumber));
+				measures.add(new Measure(this.doc, measureNumber, this.getInstrument()));
 			}
 		}
 	}
@@ -104,7 +104,8 @@ public class Parser {
 		return this.lines;
 	}
 	
+	//Drumset, Bass, or Guitar
 	public String getInstrument() {
-		return this.instrument;
+		return this.instrument.toLowerCase();
 	}
 }
