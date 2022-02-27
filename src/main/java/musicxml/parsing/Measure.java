@@ -187,7 +187,7 @@ public class Measure {
 				try {
 					eElement.getElementsByTagName("chord").item(0).getTextContent();
 					this.guitarNotes.get(noteCounter).setChord();
-				} catch (NullPointerException e) {
+				} catch (NullPointerException | IndexOutOfBoundsException e) {
 					// This means the note is not a chord, and nothing has to be done
 				}
 			}
