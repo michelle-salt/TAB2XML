@@ -3,7 +3,7 @@ package musicxml.parsing;
 //import models.measure.note.notations.Slur;
 //import models.measure.note.notations.technical.PullOff;
 
-public class Note {
+public class GuitarNote {
 
 	private Pitch pitch; //Includes step, octave, and potentially alter
 	private int duration; //The length of each note (used for playing)
@@ -17,7 +17,7 @@ public class Note {
 	private musicxml.parsing.PullOff pullOff; //Stores attributes of the slur (if found)
 
 	//Inside here (the notes method, actually), add a method for each note value/sub-tag	
-	public Note(Pitch pitch, int duration, int voice, String noteType, int string, int fret, musicxml.parsing.Slur slur, musicxml.parsing.PullOff pullOff) {
+	public GuitarNote(Pitch pitch, int duration, int voice, String noteType, int string, int fret, musicxml.parsing.Slur slur, musicxml.parsing.PullOff pullOff) {
 		//isChord defaults to false
 		isChord = false;
 		//Initialize all given variables
@@ -31,7 +31,6 @@ public class Note {
 
 		//Initialize the value of the type based on the input string, defaulting to 'Z' if it doesn't work
 		switch (noteType.toLowerCase()) {
-
 		case "maxima":	this.type = 'M';
 		break;
 		case "long":	this.type = 'L';
@@ -67,7 +66,7 @@ public class Note {
 	}
 
 	//Used for grace notes (where the duration is 0)
-	public Note(Pitch pitch, int voice, String noteType, int string, int fret, musicxml.parsing.Slur slur, musicxml.parsing.PullOff pullOff) {
+	public GuitarNote(Pitch pitch, int voice, String noteType, int string, int fret, musicxml.parsing.Slur slur, musicxml.parsing.PullOff pullOff) {
 		//Call the other constructor (above) but set the duration to 0 (since it's not given here)
 		this(pitch, 0, voice, noteType, string, fret, slur, pullOff);
 	}
