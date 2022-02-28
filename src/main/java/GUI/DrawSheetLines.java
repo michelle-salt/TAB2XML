@@ -7,7 +7,7 @@ public class DrawSheetLines extends Line {
 
 	@FXML 
 	private Line line = new Line();
-
+	
  	public DrawSheetLines(double startX, double startY, double endX, double endY) {
      	this.line.setStartX(startX); 
      	this.line.setStartY(startY);         
@@ -19,7 +19,7 @@ public class DrawSheetLines extends Line {
  	public Line getLine() {
  		return line;
  	}
-
+ 	
  	public void setLine(Line line) {
  		this.line = line;
  	}

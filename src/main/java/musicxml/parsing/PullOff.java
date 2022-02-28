@@ -1,7 +1,7 @@
 package musicxml.parsing;
 
 public class PullOff {
-	private int number;
+	private int number; //Valid numbers: 1-16
 	private String type;
 	private String value;
 	

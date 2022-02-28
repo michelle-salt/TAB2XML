@@ -1,7 +1,7 @@
 package musicxml.parsing;
 
 public class Slur {
-	private int number;
+	private int number; //Valid numbers: 1-16
 	private String placement;
 	private String type;
 	
