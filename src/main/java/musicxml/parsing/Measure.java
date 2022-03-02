@@ -129,7 +129,7 @@ public class Measure {
 
 		int noteCounter = 0;
 
-		for (int i = 0; i < noteList.getLength(); i++, noteCounter++) {
+		for (int i = 0; i < noteList.getLength(); i++) {
 			Node currentNode = noteList.item(i);
 
 			if (currentNode.getNodeType() == Node.ELEMENT_NODE && currentNode.getNodeName().equals("note")) {
@@ -193,6 +193,7 @@ public class Measure {
 				} catch (NullPointerException | IndexOutOfBoundsException e) {
 					// This means the note is not a chord, and nothing has to be done
 				}
+				noteCounter++;
 			}
 		}
 	}

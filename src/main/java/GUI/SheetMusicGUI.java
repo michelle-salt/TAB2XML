@@ -60,34 +60,34 @@ public class SheetMusicGUI {
 		//Add bar to pane
 		pane.getChildren().add(bar);
 	}
-
-	//Draw the Clef at the left-end of the Staff
-	private void clef(String symbol, double x, double y) {
-		if (symbol.equalsIgnoreCase("TAB")) {
-			//Draw onto the pane letter by letter
-			for (int i = 0; i < symbol.length(); i++) {
-				//Get the letter
-				Text t = new Text(x, y, symbol.substring(i, i+1));
-				t.setFont(Font.font("times new roman", FontWeight.BLACK, 24));
-				//Add letter to pane
-				pane.getChildren().add(t);
-				//Increment vertical distance for next letter
-				y += 19;
-			}
-			//Must still be implemented, this is just temporary code to fill the space
-		} else if (symbol.equalsIgnoreCase("percussion")) {
-			symbol = "II";
-			for (int i = 0; i < symbol.length(); i++) {
-				//Get the letter
-				Text t = new Text(x, y, symbol.substring(i, i+1));
-				t.setFont(Font.font("veranda", FontWeight.BOLD, 20));
-				//Add letter to pane
-				pane.getChildren().add(t);
-				//Increment vertical distance for next letter
-				x += 8;
-			}
-		} 
-	}
+	 //Draw the Clef at the left-end of the Staff
+    private void clef(String symbol, double x, double y) {
+        if (symbol.equalsIgnoreCase("TAB")) {
+            //Draw onto the pane letter by letter
+            for (int i = 0; i < symbol.length(); i++) {
+                //Get the letter
+                Text t = new Text(x, y, symbol.substring(i, i+1));
+                t.setFont(Font.font("times new roman", FontWeight.BLACK, 24));
+                //Add letter to pane
+                pane.getChildren().add(t);
+                //Increment vertical distance for next letter
+                y += 19;
+            }
+        } else if (symbol.equalsIgnoreCase("percussion")) {
+        	symbol = "II";
+        	//Percussion symbol starts lower on the staff than TAB
+        	y += 18;
+        	for (int i = 0; i < symbol.length(); i++) {
+                //Get the letter
+                Text t = new Text(x, y, symbol.substring(i, i+1));
+                t.setFont(Font.font("veranda", FontWeight.BLACK, 34));
+                //Add letter to pane
+                pane.getChildren().add(t);
+                //Increment vertical distance for next letter
+                x += 8;
+            }
+        } 
+    }
 
 	//Draws Sheet lines and places them on the GUI
 	public void placeSheetLines(double y, String instrument) {	
@@ -116,7 +116,7 @@ public class SheetMusicGUI {
 			}
 		}		
 	}
-
+    
 	//Update the SheetMusic GUI
 	public void update() throws IOException { 	
 		Parser p = new Parser(mvc.converter.getMusicXML());
@@ -152,10 +152,11 @@ public class SheetMusicGUI {
 			//Dynamically draw a bar line (after each measure)
 			barLines(x, 0, p.getInstrument());
 		}
-		for (int a = 1, b = 0; a <= Math.ceil(p.getNumMeasures()/2); a++, b += 100) {
-			placeSheetLines(b, p.getInstrument());
-			//Dynamically draw clef
-			clef("TAB", 6, 18+b);
-		}
+		//Dynamically draw the Sheet lines on the SheetMusic GUI
+      	for (int i = 1, y2 = 0; i <= Math.ceil(p.getNumMeasures()/2); i++, y2 += 100) {
+      		placeSheetLines(y2, p.getInstrument());
+      		//Dynamically draw clef
+          	clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+y2);
+      	}
 	}
 }
