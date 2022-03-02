@@ -137,6 +137,10 @@ public class SheetMusicGUI {
 			{
 				//Get the current note
 				GuitarNote note = noteList.get(j);
+				//If it's a chord, draw the notes on the same line (x-coordinate)
+				if (note.isChord()) {
+					x -= 25;
+				}
 				//Figure out which string the note is on
 				int string = note.getString();
 				//Set the y coordinate based on the line
@@ -144,10 +148,6 @@ public class SheetMusicGUI {
 				y = 5+(string-1)*12; //Each staff line is 12 y-pixels apart
 				//Draw the note
 				new DrawNotes(pane, x, y, note, p.getInstrument());
-				//If it's a chord, draw the notes on the same line (x-coordinate)
-				if (note.isChord()) {
-					x -= 25;
-				}
 			}
 			//Dynamically draw a bar line (after each measure)
 			barLines(x, 0, p.getInstrument());
