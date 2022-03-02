@@ -31,7 +31,6 @@ public class SheetMusicGUI {
     }
      
     //Draw the Bars to mark the end of a Measure
-    //Must implement double bar and end bars soon?
     private void barLines(double x, double y, String instrument) {
     	//Set base length of the bar
     	int endY = 60;
@@ -77,13 +76,14 @@ public class SheetMusicGUI {
                 //Increment vertical distance for next letter
                 y += 19;
             }
-        //Must still be implemented, this is just temporary code to fill the space
         } else if (symbol.equalsIgnoreCase("percussion")) {
         	symbol = "II";
+        	//Percussion symbol starts lower on the staff than TAB
+        	y += 18;
         	for (int i = 0; i < symbol.length(); i++) {
                 //Get the letter
                 Text t = new Text(x, y, symbol.substring(i, i+1));
-                t.setFont(Font.font("veranda", FontWeight.BOLD, 20));
+                t.setFont(Font.font("veranda", FontWeight.BLACK, 34));
                 //Add letter to pane
                 pane.getChildren().add(t);
                 //Increment vertical distance for next letter
@@ -128,7 +128,7 @@ public class SheetMusicGUI {
       		placeSheetLines(y, p.getInstrument());
       		//Dynamically draw bar lines and clef
           	barLines(470, 0+y, p.getInstrument());
-          	clef("TAB", 6, 18+y);
+          	clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+y);
       	}
     }
  }
