@@ -4,16 +4,16 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
-import musicxml.parsing.GuitarNote;
+import musicxml.parsing.Note;
 
 public class DrawNotes {
 
 	@FXML 
 	private Pane pane;
 	private double x, y;
-	private GuitarNote note;
+	private Note note;
 	
-	public DrawNotes(Pane pane, double x, double y, GuitarNote note, String instrument) {
+	public DrawNotes(Pane pane, double x, double y, Note note, String instrument) {
 		this.pane = pane;
 		this.x = x;
 		this.y = y;

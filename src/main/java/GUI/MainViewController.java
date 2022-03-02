@@ -47,7 +47,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import musicxml.parsing.Measure;
 import musicxml.parsing.Note;
-import musicxml.parsing.GuitarNote;
+//import musicxml.parsing.GuitarNote;
 import musicxml.parsing.Parser;
 import musicxml.parsing.Pitch;
 import nu.xom.ParsingException;

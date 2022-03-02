@@ -6,7 +6,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import models.measure.note.Note;
+//import models.measure.note.Note;
 import musicxml.parsing.*;
 
 import java.io.IOException;
@@ -131,12 +131,12 @@ public class SheetMusicGUI {
 			//Get the current measure
 			Measure measure = measureList.get(i);
 			//Get the list of notes for each measure
-			ArrayList<GuitarNote> noteList = measure.getNotes();
+			ArrayList<Note> noteList = measure.getNotes();
 			//Loop through all the notes in the current measure
 			for (int j = 0; j < noteList.size(); j++, x += 25)
 			{
 				//Get the current note
-				GuitarNote note = noteList.get(j);
+				Note note = noteList.get(j);
 				//If it's a chord, draw the notes on the same line (x-coordinate)
 				if (note.isChord()) {
 					x -= 25;
