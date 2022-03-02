@@ -178,20 +178,9 @@ public class Measure {
 				// Get the duration (if possible) or set it to 0 (if it's a grace note)
 				int duration;
 				try {
-<<<<<<< HEAD
-
-					int duration = Integer.parseInt(eElement.getElementsByTagName("duration").item(0).getTextContent());
-					this.notes.add(new Note(pitch, duration, voice, type, string, fret, slur, null));
-
-				} catch (NullPointerException e) { // if there is no duration, then it is a grace note
-
-					this.notes.add(new Note(pitch, voice, type, string, fret, slur, null));
-
-=======
 					duration = Integer.parseInt(eElement.getElementsByTagName("duration").item(0).getTextContent());
 				} catch (NullPointerException e) { // If there is no duration, then it is a grace note
 					duration = 0;
->>>>>>> develop
 				}
 				this.guitarNotes.add(new GuitarNote(pitch, duration, voice, type, string, fret, slur, pullOff));
 
