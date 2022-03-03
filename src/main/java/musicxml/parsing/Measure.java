@@ -12,8 +12,10 @@ public class Measure {
 
 	private int measureNumber;
 	private Attributes attributes;
-	private ArrayList<GuitarNote> guitarNotes = new ArrayList<GuitarNote>();
-	private ArrayList<DrumNote> drumNotes = new ArrayList<DrumNote>();
+	private ArrayList<Note> notes = new ArrayList<Note>();
+//	boolean isGuitar;
+//	private ArrayList<GuitarNote> guitarNotes = new ArrayList<GuitarNote>();
+//	private ArrayList<DrumNote> drumNotes = new ArrayList<DrumNote>();
 
 	public Measure(Document musicXML, int measureNumber, String instrument) {
 		// Set musicXML
@@ -26,8 +28,10 @@ public class Measure {
 		// Get a list of notes, based on the instrument (since they're parsed differently)
 		// I don't know how bass musicxml differs from guitar musicxml (yet) so I'll assume they're the same for now
 		if (instrument.equals("guitar") || instrument.equals("bass")) {
+//			isGuitar = true;
 			initializeGuitarNotes(); //Method name should be changed if it's also for bass notes
 		} else { // Otherwise, it's assumed to be drumset
+//			isGuitar = false;
 			initializeDrumNotes();
 		}
 	}
@@ -42,7 +46,7 @@ public class Measure {
 		int noteCounter = 0;
 		
 		//Loop through every note in the measure
-		for (int i = 0; i < noteList.getLength(); i++, noteCounter++) {
+		for (int i = 0; i < noteList.getLength(); i++) {
 			Node currentNode = noteList.item(i);
 
 			if (currentNode.getNodeType() == Node.ELEMENT_NODE && currentNode.getNodeName().equals("note")) {
@@ -81,9 +85,42 @@ public class Measure {
 					//Do nothing, since the default value is set to null
 				}
 				
-				this.drumNotes.add(new DrumNote(unpitch, duration, instrumentID, voice, type, stem, notehead));
+				this.notes.add(new Note(unpitch, duration, instrumentID, voice, type, stem, notehead));
 				System.out.println("sjfn");
 				
+//<<<<<<< HEAD
+//=======
+////				//Get Slur
+////				Slur slur = new Slur(0, null, null);
+////				if (eElement.hasAttribute("slur")) {
+////					int slurNum = Integer.parseInt(eElement.getAttribute("number"));
+////					String slurPlace = eElement.getAttribute("placement");
+////					String slurType = eElement.getAttribute("type");
+////					slur = new Slur(slurNum, slurPlace, slurType);
+////				}
+////
+////				//Get Pull-Off
+////				PullOff pullOff = new PullOff(0, null, null);
+////				if (eElement.hasAttribute("pull-off")) {
+////					int pullOffNum = Integer.parseInt(eElement.getAttribute("number"));
+////					String pullOffType = eElement.getAttribute("type");
+////					String pullOffVal;
+////					try {
+////						pullOffVal = eElement.getElementsByTagName("pull-off").item(0).getTextContent();
+////					} catch (NullPointerException e) {
+////						pullOffVal = null;
+////					}
+////					pullOff = new PullOff(pullOffNum, pullOffType, pullOffVal);
+////				} 
+////
+				try {
+					eElement.getElementsByTagName("chord").item(0).getTextContent();
+					this.notes.get(noteCounter).setChord();
+				} catch (NullPointerException e) {
+					// This means the note is not a chord, and nothing has to be done
+				}
+				noteCounter++;
+//>>>>>>> develop
 			}
 		}
 	}
@@ -153,11 +190,11 @@ public class Measure {
 				} catch (NullPointerException e) { // If there is no duration, then it is a grace note
 					duration = 0;
 				}
-				this.guitarNotes.add(new GuitarNote(pitch, duration, voice, type, string, fret, slur, pullOff));
+				this.notes.add(new Note(pitch, duration, voice, type, string, fret, slur, pullOff));
 
 				try {
 					eElement.getElementsByTagName("chord").item(0).getTextContent();
-					this.guitarNotes.get(noteCounter).setChord();
+					this.notes.get(noteCounter).setChord();
 				} catch (NullPointerException | IndexOutOfBoundsException e) {
 					// This means the note is not a chord, and nothing has to be done
 				}
@@ -168,7 +205,7 @@ public class Measure {
 	
 	// Methods for GUI
 	public int getNumNotes() {
-		return this.guitarNotes.size();
+		return this.notes.size();
 	}
 
 	// Public accessors
@@ -180,7 +217,11 @@ public class Measure {
 		return attributes;
 	}
 
-	public ArrayList<GuitarNote> getNotes() {
-		return guitarNotes;
+	public ArrayList<Note> getNotes() {
+		return notes;
 	}
+	
+//	public ArrayList<GuitarNote> getDrumNotes() {
+//		return guitarNotes;
+//	}
 }
