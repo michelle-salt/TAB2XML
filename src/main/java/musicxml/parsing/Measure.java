@@ -84,35 +84,6 @@ public class Measure {
 				this.drumNotes.add(new DrumNote(unpitch, duration, instrumentID, voice, type, stem, notehead));
 				System.out.println("sjfn");
 				
-//				//Get Slur
-//				Slur slur = new Slur(0, null, null);
-//				if (eElement.hasAttribute("slur")) {
-//					int slurNum = Integer.parseInt(eElement.getAttribute("number"));
-//					String slurPlace = eElement.getAttribute("placement");
-//					String slurType = eElement.getAttribute("type");
-//					slur = new Slur(slurNum, slurPlace, slurType);
-//				}
-//
-//				//Get Pull-Off
-//				PullOff pullOff = new PullOff(0, null, null);
-//				if (eElement.hasAttribute("pull-off")) {
-//					int pullOffNum = Integer.parseInt(eElement.getAttribute("number"));
-//					String pullOffType = eElement.getAttribute("type");
-//					String pullOffVal;
-//					try {
-//						pullOffVal = eElement.getElementsByTagName("pull-off").item(0).getTextContent();
-//					} catch (NullPointerException e) {
-//						pullOffVal = null;
-//					}
-//					pullOff = new PullOff(pullOffNum, pullOffType, pullOffVal);
-//				} 
-//
-//				try {
-//					eElement.getElementsByTagName("chord").item(0).getTextContent();
-//					this.notes.get(noteCounter).setChord();
-//				} catch (NullPointerException e) {
-//					// This means the note is not a chord, and nothing has to be done
-//				}
 			}
 		}
 	}
