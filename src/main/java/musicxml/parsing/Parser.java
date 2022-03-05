@@ -81,6 +81,9 @@ public class Parser {
 		} catch (NullPointerException e) {
 			artist = null;
 		}
+		if (artist.equals("")) {
+			artist = null;
+		}
 	}
 
 	private void parseMeasures() {
