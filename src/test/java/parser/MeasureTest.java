@@ -16,9 +16,7 @@ import org.junit.jupiter.api.*;
 class MeasureTest {
 
 	protected Parser wikiDrumTab, wikiGuitarTab;
-	
-	//String filePath = new File("").getAbsolutePath().concat("\\src\\test\\resources\\musicXMLFiles\\");
-	
+		
 	@BeforeEach
 	void setUp() throws Exception {
 		//Get the OS

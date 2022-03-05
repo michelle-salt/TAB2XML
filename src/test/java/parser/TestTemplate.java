@@ -13,12 +13,14 @@ import org.junit.jupiter.api.*;
 public class TestTemplate {	
 	/*
 	 * When creating a new test class,
-	 * 		1. Copy all imports
-	 * 		2. Copy the block below into your new class, and uncomment it
-	 * 		3. Create a new test for both the wikiDrumTab and wikiGuitarTab
+	 * 		1. Replace all current imports with the ones above
+	 * 		2. Copy the block below into your new class, replacing the auto-created test method
+	 * 		3. Uncomment the block you just pasted
 	 * 		4. Create test cases using the template block shown below the setUp method
 	 * 			Remember to change the method name!	
+	 * 			Be sure to test both wikiDrumTab and wikiGuitarTab for each method you are testing
 	 */
+//	protected Parser wikiDrumTab, wikiGuitarTab;
 //	@BeforeEach
 //	void setUp() throws Exception {
 //		//Get the OS
