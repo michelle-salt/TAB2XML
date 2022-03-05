@@ -2,6 +2,8 @@ package GUI;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 import musicxml.parsing.Note;
@@ -19,7 +21,7 @@ public class DrawNotes {
 		this.y = y;
 		this.note = note;
 		
-		if (instrument.equals("drum")) {
+		if (instrument.equals("drumset")) {
 			this.drawDrumNote();
 		}
 		//Works for "guitar" or "bass"
@@ -37,8 +39,12 @@ public class DrawNotes {
 	
 	//Draws the notehead of each note, if the instrument is a drum
 	public void drawDrumNote() {
-//		String note = this.note.getNotehead(); //Will be implemented soon
-		Text text = new Text(x, y, "x");
+		String note = this.note.getNotehead(); //Will be implemented soon
+		if (note == null) {
+			note = "o";
+		}
+		Text text = new Text(x, y, note);
+		text.setFont(Font.font("veranda", FontWeight.BLACK, 18));
 		pane.getChildren().add(text);
 	}	
 }

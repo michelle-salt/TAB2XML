@@ -74,34 +74,34 @@ public class SheetMusicGUI{
 		//Add bar to pane
 		pane.getChildren().add(bar);
 	}
-	 //Draw the Clef at the left-end of the Staff
-    private void clef(String symbol, double x, double y) {
-        if (symbol.equalsIgnoreCase("TAB")) {
-            //Draw onto the pane letter by letter
-            for (int i = 0; i < symbol.length(); i++) {
-                //Get the letter
-                Text t = new Text(x, y, symbol.substring(i, i+1));
-                t.setFont(Font.font("times new roman", FontWeight.BLACK, 24));
-                //Add letter to pane
-                pane.getChildren().add(t);
-                //Increment vertical distance for next letter
-                y += 19;
-            }
-        } else if (symbol.equalsIgnoreCase("percussion")) {
-        	symbol = "II";
-        	//Percussion symbol starts lower on the staff than TAB
-        	y += 18;
-        	for (int i = 0; i < symbol.length(); i++) {
-                //Get the letter
-                Text t = new Text(x, y, symbol.substring(i, i+1));
-                t.setFont(Font.font("veranda", FontWeight.BLACK, 34));
-                //Add letter to pane
-                pane.getChildren().add(t);
-                //Increment vertical distance for next letter
-                x += 8;
-            }
-        } 
-    }
+	//Draw the Clef at the left-end of the Staff
+	private void clef(String symbol, double x, double y) {
+		if (symbol.equalsIgnoreCase("TAB")) {
+			//Draw onto the pane letter by letter
+			for (int i = 0; i < symbol.length(); i++) {
+				//Get the letter
+				Text t = new Text(x, y, symbol.substring(i, i+1));
+				t.setFont(Font.font("times new roman", FontWeight.BLACK, 24));
+				//Add letter to pane
+				pane.getChildren().add(t);
+				//Increment vertical distance for next letter
+				y += 19;
+			}
+		} else if (symbol.equalsIgnoreCase("percussion")) {
+			symbol = "II";
+			//Percussion symbol starts lower on the staff than TAB
+			y += 18;
+			for (int i = 0; i < symbol.length(); i++) {
+				//Get the letter
+				Text t = new Text(x, y, symbol.substring(i, i+1));
+				t.setFont(Font.font("veranda", FontWeight.BLACK, 34));
+				//Add letter to pane
+				pane.getChildren().add(t);
+				//Increment vertical distance for next letter
+				x += 8;
+			}
+		} 
+	}
 
 	//Draws Sheet lines and places them on the GUI
 	public void placeSheetLines(double y, String instrument) {	
@@ -130,7 +130,7 @@ public class SheetMusicGUI{
 			}
 		}		
 	}
-    
+
 	//Update the SheetMusic GUI
 	public void update() throws IOException { 	
 		Parser p = new Parser(mvc.converter.getMusicXML());
@@ -138,7 +138,7 @@ public class SheetMusicGUI{
 		List<Measure> measureList = p.getMeasures();
 		//Initialize x and y coordinates of where to draw notes
 		double x = 50.0; 
-		double y;
+		double y = 0;
 		//Iterate through each measure
 		for (int i = 0; i< measureList.size(); i++, x += 25)
 		{
@@ -155,11 +155,44 @@ public class SheetMusicGUI{
 				if (note.isChord()) {
 					x -= 25;
 				}
-				//Figure out which string the note is on
-				int string = note.getString();
-				//Set the y coordinate based on the line
-				//Currently only works for the first staff
-				y = 5+(string-1)*12; //Each staff line is 12 y-pixels apart
+				//Get the y value for each drum note
+				if (p.getInstrument().equals("drumset")) {
+					//The spacing of each note is based on the octave and step
+					//Each value represents one "space" above, with a space either being the line or the spaces between
+					//0 is the bottom line (going through the line), 1 is the space between the bottom two lines, etc.
+					if (note.getUnpitched().getOctave() == 5) {
+						switch (note.getUnpitched().getStep()) {
+						case 'A':
+							y = 1;
+							//This is the only note which will have a strikethrough in it
+							Line strikethrough = new Line(x-2, -12+(y-1)*6, x+12, -12+(y-1)*6);
+							pane.getChildren().add(strikethrough); break;
+						case 'G':	y = 2;	break;
+						case 'F':	y = 3;	break;
+						case 'E':	y = 4;	break;
+						case 'D':	y = 5;	break;
+						case 'C':	y = 6;	break;
+						}
+					} else if (note.getUnpitched().getOctave() == 4) {
+						switch (note.getUnpitched().getStep()) {
+						case 'B':	y = 7;	break;
+						case 'A':	y = 8;	break;
+						case 'G':	y = 9;	break;
+						case 'F':	y = 10;	break;
+						case 'E':	y = 11;	break;
+						}
+					}
+					//Value retrieved through guess and check :))))
+					y = -7+(y-1)*6; 
+				} 
+				//Get the y value for each guitar or bass note
+				else {
+					//Figure out which string the note is on
+					int string = note.getString();
+					//Set the y coordinate based on the line
+					//Currently only works for the first staff
+					y = 5+(string-1)*12; //Each staff line is 12 y-pixels apart
+				}
 				//Draw the note
 				new DrawNotes(pane, x, y, note, p.getInstrument());
 			}
@@ -167,11 +200,11 @@ public class SheetMusicGUI{
 			barLines(x, 0, p.getInstrument());
 		}
 		//Dynamically draw the Sheet lines on the SheetMusic GUI
-      	for (int i = 1, y2 = 0; i <= Math.ceil(p.getNumMeasures()/2); i++, y2 += 100) {
-      		placeSheetLines(y2, p.getInstrument());
-      		//Dynamically draw clef
-          	clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+y2);
-      	}
+		for (int i = 1, y2 = 0; i <= Math.ceil(p.getNumMeasures()/2); i++, y2 += 100) {
+			placeSheetLines(y2, p.getInstrument());
+			//Dynamically draw clef
+			clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+y2);
+		}
 	}
 	
 }

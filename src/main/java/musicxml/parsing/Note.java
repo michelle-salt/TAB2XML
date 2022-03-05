@@ -15,60 +15,45 @@ public class Note {
 		this.voice = voice;
 		//Initialize the value of the type based on the input string, defaulting to 'Z' if it doesn't work
 		switch (noteType.toLowerCase()) {
-		case "maxima":	this.type = 'M';
-		break;
-		case "long":	this.type = 'L';
-		break;
-		case "breve":	this.type = 'B';
-		break;
-		case "whole":	this.type = 'W';
-		break;
-		case "half":	this.type = 'H';
-		break;
-		case "quarter":	this.type = 'Q';
-		break;
-		case "eighth":	this.type = 'I';
-		break;
-		case "16th":	this.type = 'S';
-		break;
-		case "32nd":	this.type = 'T';
-		break;
-		case "64th":	this.type = 'X';
-		break;
-		case "128th":	this.type = 'O';
-		break;
-		case "256th":	this.type = 'U';
-		break;
-		case "512th":	this.type = 'R';
-		break;
-		case "1024th":	this.type = 'C';
-		break;
-		default:		this.type = 'Z';
-		break;
+		case "maxima":	this.type = 'M'; break;
+		case "long":	this.type = 'L'; break;
+		case "breve":	this.type = 'B'; break;
+		case "whole":	this.type = 'W'; break;
+		case "half":	this.type = 'H'; break;
+		case "quarter":	this.type = 'Q'; break;
+		case "eighth":	this.type = 'I'; break;
+		case "16th":	this.type = 'S'; break;
+		case "32nd":	this.type = 'T'; break;
+		case "64th":	this.type = 'X'; break;
+		case "128th":	this.type = 'O'; break;
+		case "256th":	this.type = 'U'; break;
+		case "512th":	this.type = 'R'; break;
+		case "1024th":	this.type = 'C'; break;
+		default:		this.type = 'Z'; break;
 		}
 	}
 	
 	//Public getters for common attributes
-		public int getDuration() {
-			return duration;
-		}
+	public int getDuration() {
+		return duration;
+	}
 
-		public int getVoice() {
-			return voice;
-		}
+	public int getVoice() {
+		return voice;
+	}
 
-		public char getType() {
-			return type;
-		}
-		
-		public boolean isChord() {
-			return isChord;
-		}
+	public char getType() {
+		return type;
+	}
+	
+	public boolean isChord() {
+		return isChord;
+	}
 
-		//Setter to indicate that the note is a chord
-		public void setChord() {
-			this.isChord = true;
-		}
+	//Setter to indicate that the note is a chord
+	public void setChord() {
+		this.isChord = true;
+	}
 		
 	//Initialize a GuitarNote
 	private Pitch pitch; //Includes step, octave, and potentially alter
@@ -76,9 +61,10 @@ public class Note {
 	private int fret; //The fret of the note
 	private musicxml.parsing.Slur slur; //Stores attributes of the slur (if found)
 	private musicxml.parsing.PullOff pullOff; //Stores attributes of the slur (if found)
-
+	private Tied tied;
+	
 	//Inside here (the notes method, actually), add a method for each note value/sub-tag	
-	public Note(Pitch pitch, int duration, int voice, String noteType, int string, int fret, musicxml.parsing.Slur slur, musicxml.parsing.PullOff pullOff) {
+	public Note(Pitch pitch, int duration, int voice, String noteType, int string, int fret, musicxml.parsing.Slur slur, musicxml.parsing.PullOff pullOff, Tied tied) {
 		this(duration, voice, noteType);
 		//Initialize all given variables
 		this.pitch = pitch;
@@ -86,13 +72,14 @@ public class Note {
 		this.fret = fret; //Represents the number outputted on the lines
 		this.slur = slur;
 		this.pullOff = pullOff;
+		this.tied = tied;
 	}
 
-	//Used for grace notes (where the duration is 0)
-	public Note(Pitch pitch, int voice, String noteType, int string, int fret, musicxml.parsing.Slur slur, musicxml.parsing.PullOff pullOff) {
-		//Call the other constructor (above) but set the duration to 0 (since it's not given here)
-		this(pitch, 0, voice, noteType, string, fret, slur, pullOff);
-	}
+//	//Used for grace notes (where the duration is 0)
+//	public Note(Pitch pitch, int voice, String noteType, int string, int fret, musicxml.parsing.Slur slur, musicxml.parsing.PullOff pullOff) {
+//		//Call the other constructor (above) but set the duration to 0 (since it's not given here)
+//		this(pitch, 0, voice, noteType, string, fret, slur, pullOff);
+//	}
 
 	//Public getters for guitarNotes
 	public Pitch getPitch() {
@@ -113,6 +100,10 @@ public class Note {
 
 	public musicxml.parsing.PullOff getPullOff() {
 		return pullOff;
+	}
+	
+	public Tied getTied() {
+		return tied;
 	}
 	
 	//DrumNote	

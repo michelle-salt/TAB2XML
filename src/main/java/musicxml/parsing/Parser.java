@@ -17,7 +17,7 @@ import org.xml.sax.SAXException;
 
 public class Parser {
 
-	private String instrument;
+	private String instrument, title, artist;
 	private ArrayList<Measure> measures = new ArrayList<Measure>();
 	//StaffTuning lines are currently not retrieved in this method
 	//They should be retrieved in the Attributes method instead (remove the variable + methods from here)
@@ -34,7 +34,7 @@ public class Parser {
 		//Initialize and standardize MusicXML file
 		this.prepareDocumentForReading();
 		//Get instrument
-		this.parseInstrument();
+		this.parseInstrumentTitleArtist();
 		//Create list to store each measure
 		this.parseMeasures();
 	}
@@ -66,8 +66,22 @@ public class Parser {
 	}
 	
 	//Drumset, Bass, or Guitar
-	private void parseInstrument() {
+	private void parseInstrumentTitleArtist() {
+		//Get instrument
 		instrument = doc.getElementsByTagName("part-name").item(0).getTextContent().trim();
+		//Get music title, if it exists
+		try {
+			title = doc.getElementsByTagName("movement-title").item(0).getTextContent();
+		} catch (NullPointerException e) {
+			title = null;
+		}
+		//Get artist, if it exists
+		try {
+			artist = doc.getElementsByTagName("creator").item(0).getTextContent();
+		} catch (NullPointerException e) {
+			artist = null;
+		}
+		System.out.println("artist, title: " + artist + title);
 	}
 
 	private void parseMeasures() {
@@ -107,5 +121,13 @@ public class Parser {
 	//Drumset, Bass, or Guitar
 	public String getInstrument() {
 		return this.instrument.toLowerCase();
+	}
+	
+	public String getTitle() {
+		return this.title;
+	}
+	
+	public String getArtist() {
+		return this.artist;
 	}
 }
