@@ -368,7 +368,7 @@ public class MainViewController extends Application {
 
 	@FXML
 	private void playMusic() throws IOException {
-
+		
 		Parser parse = new Parser(converter.getMusicXML());
 		String instrument = parse.getInstrument();
 		String string = "T50 V0 I[" + instrument + "] ";
