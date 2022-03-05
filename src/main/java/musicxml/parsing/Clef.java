@@ -15,7 +15,7 @@ public class Clef {
 		return sign;
 	}
 
-	public int getNumLines() {
+	public int getLineValues() {
 		return numLines;
 	}
 }
