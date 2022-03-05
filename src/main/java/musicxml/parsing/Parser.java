@@ -81,7 +81,6 @@ public class Parser {
 		} catch (NullPointerException e) {
 			artist = null;
 		}
-		System.out.println("artist, title: " + artist + title);
 	}
 
 	private void parseMeasures() {
