@@ -56,6 +56,7 @@ mkdir <filename>
 git clone https://github.com/michelle-salt/TAB2XML
 ```
 3. Change directory to where the project was installed then use ./gradlew build to build the project.
+
 ```
 Warning: If permission to build was denied, make sure the ./gradlew is an executable. To change the file permission access of the ./gradlew file use chmod +x ./gradlew	
 ```
@@ -68,7 +69,8 @@ Warning: If permission to build was denied, make sure the ./gradlew is an execut
 <p align="center"><img src="https://github.com/michelle-salt/TAB2XML/blob/mohammad/src/main/resources/image_assets/Screen%20Shot%202022-03-06%20at%2010.30.10%20AM.png" alt="10"></p>
 
 2. Input your text tab into the application. You can type or copy-paste your text tab into the text box.
-<p align="center"><img src="https://github.com/michelle-salt/TAB2XML/blob/mohammad/src/main/resources/image_assets/Screen%20Shot%202022-03-06%20at%2010.30.34%20AM.png" alt="10"></p>
+<p align="center"><img src="https://github.com/michelle-salt/TAB2XML/blob/mohammad/src/main/resources/image_assets/Screen%20Shot%202022-03-06%20at%2010.30.34%20AM.png" alt="11"></p>
+
 ```
 Warning: If your input tab has errors, there will be yellow highlights on the text that contains the error.
 ```
@@ -77,13 +79,13 @@ Warning: If your input tab has errors, there will be yellow highlights on the te
 
 1. Input your text tablature into the application.
 2. Press the “Preview Sheet Music” button. A new window will pop-up with the corresponding Sheet Music.
-<p align="center"><img src="https://github.com/michelle-salt/TAB2XML/blob/mohammad/src/main/resources/image_assets/Screen%20Shot%202022-03-06%20at%2010.52.25%20AM.png" alt="10"></p>
+<p align="center"><img src="https://github.com/michelle-salt/TAB2XML/blob/mohammad/src/main/resources/image_assets/Screen%20Shot%202022-03-06%20at%2010.52.25%20AM.png" alt="12"></p>
 
 #### 4.3 Save Sheet Music
 
 1. Press the "Preview Sheet Music" button and a new window will open.
 2. Press the “Save PDF” button at the bottom right of the pop-up to save the Sheet Music as a PDF to your device! (This feature will be implemented at a later time).
-<p align="center"><img src="https://github.com/michelle-salt/TAB2XML/blob/mohammad/src/main/resources/image_assets/Screen%20Shot%202022-03-06%20at%2010.54.53%20AM.png" alt="10"></p>
+<p align="center"><img src="https://github.com/michelle-salt/TAB2XML/blob/mohammad/src/main/resources/image_assets/Screen%20Shot%202022-03-06%20at%2010.54.53%20AM.png" alt="13"></p>
   
 #### 4.4 Go-to Measure
 
