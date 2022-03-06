@@ -12,7 +12,7 @@ import org.junit.jupiter.api.*;
 
 class TiedTest {
 
-	protected Parser wikiDrumTab, wikiGuitarTab, tieTest1;
+	protected Parser tieTest1;
 	@BeforeEach
 	void setUp() throws Exception {
 		//Get the OS
@@ -28,8 +28,6 @@ class TiedTest {
 		else {
 			filePath = filePath.concat("/src/test/resources/musicXMLFiles/");
 		}
-		wikiDrumTab = new Parser(Files.readString(Paths.get(filePath.concat("wikiDrumTab.txt"))));
-		wikiGuitarTab = new Parser(Files.readString(Paths.get(filePath.concat("wikiGuitarTab.txt"))));
 		tieTest1 = new Parser(Files.readString(Paths.get(filePath.concat("tieTest1.txt"))));
 	}
 
@@ -70,6 +68,24 @@ class TiedTest {
 			assertEquals(false, this.tieTest1.getMeasures().get(measureNum).getNotes().get(i).getTied().getCont());
 			assertEquals(false, this.tieTest1.getMeasures().get(measureNum).getNotes().get(i).getTied().getLetRing());
 		}
+	}
+	
+	@Test
+	public void testSetters() {
+		//Everything here should be false initially, verified by testGetters method
+		Tied tied = this.tieTest1.getMeasures().get(0).getNotes().get(0).getTied();
+		
+		//Set all the values to true
+		tied.setCont(true);
+		tied.setLetRing(true);
+		tied.setStart(true);
+		tied.setStop(true);
+		
+		//Verify that the values are true, as expected
+		assertEquals(true, tied.getStart());
+		assertEquals(true, tied.getStop());
+		assertEquals(true, tied.getCont());
+		assertEquals(true, tied.getLetRing());
 	}
 
 }
