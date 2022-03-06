@@ -158,18 +158,27 @@ public class Measure {
 
 				//Get Slur
 				Slur slur = new Slur(0, null, null);
-				if (eElement.hasAttribute("slur")) { //Changed "number" to "slur". Will verify if this works later
-					int slurNum = Integer.parseInt(eElement.getAttribute("number"));
-					String slurPlace = eElement.getAttribute("placement");
-					String slurType = eElement.getAttribute("type");
+				if (eElement.getElementsByTagName("slur").item(0) != null) { //Changed "number" to "slur". Will verify if this works later
+					String slurPlace, slurType;
+					int slurNum = Integer.parseInt(eElement.getElementsByTagName("slur").item(0).getAttributes().item(0).getNodeValue());
+					if (eElement.getElementsByTagName("slur").item(0).getAttributes().item(1).getNodeName().equals("placement")) {
+						slurPlace = eElement.getElementsByTagName("slur").item(0).getAttributes().item(1).getNodeValue();
+						slurType = eElement.getElementsByTagName("slur").item(0).getAttributes().item(2).getNodeValue();
+					} 
+					//Placement does not exist and should be set to null
+					else {
+						slurPlace = null;
+						slurType = eElement.getElementsByTagName("slur").item(0).getAttributes().item(1).getNodeValue();
+					}
+					
 					slur = new Slur(slurNum, slurPlace, slurType);
 				}
 
 				//Get Pull-Off
 				PullOff pullOff = new PullOff(0, null, null);
-				if (eElement.hasAttribute("pull-off")) {
-					int pullOffNum = Integer.parseInt(eElement.getAttribute("number"));
-					String pullOffType = eElement.getAttribute("type");
+				if (eElement.getElementsByTagName("pull-off").item(0) != null) {
+					int pullOffNum = Integer.parseInt(eElement.getElementsByTagName("pull-off").item(0).getAttributes().item(0).getNodeValue());
+					String pullOffType = eElement.getElementsByTagName("pull-off").item(0).getAttributes().item(1).getNodeValue();
 					String pullOffVal;
 					try {
 						pullOffVal = eElement.getElementsByTagName("pull-off").item(0).getTextContent();
