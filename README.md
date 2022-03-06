@@ -31,10 +31,11 @@ JDK 17.0.2 and Eclipse 2021-12 (4.22.0) were used for the IDE screenshots.
 
 #### 3.2 Command Line Interface
 
-1. Clone the repository to the directory of your choice. To create a new directory use mkdir <directory>. Then use git clone https://github.com/michelle-salt/TAB2XML
+1. Clone the repository to the directory of your choice. To create a new directory use mkdir [filename]. Then use git clone https://github.com/michelle-salt/TAB2XML.
 2. Change directory to where the project was installed then use ./gradlew build to build the project.
+
 ```
-  Warning: If permission to build was denied, make sure the ./gradlew is an executable. To change the file permission access of the ./gradlew file use chmod +x ./gradlew	
+Warning: If permission to build was denied, make sure the ./gradlew is an executable. To change the file permission access of the ./gradlew file use chmod +x ./gradlew	
 ```
 
 ### 4 How to Use TAB2XML
@@ -44,15 +45,16 @@ JDK 17.0.2 and Eclipse 2021-12 (4.22.0) were used for the IDE screenshots.
 1. To run the application in Eclipse, double-click the green “run” item in the application folder. To run the application directly from the command line, use the command ./gradlew run in the program directory.
 2. Input your text tab into the application. You can type or copy-paste your text tab into the text box.
 ```
-  Warning: If your input tab has errors, there will be yellow highlights on the text that contains the error.
+Warning: If your input tab has errors, there will be yellow highlights on the text that contains the error.
 ```
+
 #### 4.2 Convert Tablature to Sheet Music
 
 1. To run the application in Eclipse, double-click the green “run” item in the application folder. To run the application directly from the command line, use the command ./gradlew run in the program directory.
 2. Input your text tab into the application. You can type or copy-paste your text tab into the text box.
-  ```
-  Warning: If your input tab has errors, there will be yellow highlights on the text that contains the error.
-  ```
+```
+Warning: If your input tab has errors, there will be yellow highlights on the text that contains the error.
+```
 3. Press the “Preview Sheet Music” button. A new window will pop-up with the corresponding Sheet Music.
 
 #### 4.3 Save Sheet Music
@@ -60,8 +62,8 @@ JDK 17.0.2 and Eclipse 2021-12 (4.22.0) were used for the IDE screenshots.
 1. To run the application in Eclipse, double-click the green “run” item in the application folder. To run the application directly from the command line, use the command ./gradlew run in the program directory.
 2. Input your text tab into the application. You can type or copy-paste your text tab into the text box.
 ```
-  Warning: If your input tab has errors, there will be yellow highlights on the text that contains the error.
-  ```
+Warning: If your input tab has errors, there will be yellow highlights on the text that contains the error.
+```
 3. Press the “Preview Sheet Music” button. A new window will pop-up with the corresponding Sheet Music.
 4. Press the “Save as PDF” button at the bottom right of the pop-up to save the Sheet Music as a PDF to your device! (This feature will be implemented at a later time).
   
@@ -70,8 +72,8 @@ JDK 17.0.2 and Eclipse 2021-12 (4.22.0) were used for the IDE screenshots.
 1. To run the application in Eclipse, double-click the green “run” item in the application folder. To run the application directly from the command line, use the command ./gradlew run in the program directory.
 2. Input your text tab into the application. You can type or copy-paste your text tab into the text box.
 ```
-  Warning: If your input tab has errors, there will be yellow highlights on the text that contains the error.
-  ```
+Warning: If your input tab has errors, there will be yellow highlights on the text that contains the error.
+```
 3. Press the “Preview Sheet Music” button. A new window will pop-up with the corresponding Sheet Music.
 4. At the bottom left corner, in the text box beside “Go To Measure”, enter the measure number and click “Go” to navigate to the bar that corresponds to the inputted measure. (This feature will be implemented at a later time.)
   
@@ -80,10 +82,17 @@ JDK 17.0.2 and Eclipse 2021-12 (4.22.0) were used for the IDE screenshots.
 1. To run the application in Eclipse, double-click the green “run” item in the application folder. To run the application directly from the command line, use the command ./gradlew run in the program directory.
 2. Input your text tab into the application. You can type or copy-paste your text tab into the text box.
 ```
-  Warning: If your input tab has errors, there will be yellow highlights on the text that contains the error.
-  ```
+Warning: If your input tab has errors, there will be yellow highlights on the text that contains the error.
+```
 3. Make sure your device volume is not muted. Click the “Play Tablature” button on the bottom right corner. You will be able to hear the inputted tablature being played.
 
+### Collaborators
+
+- [@Duaaa29](https://github.com/Duaaa29)
+- [@jhaniff](https://github.com/jhaniff)
+- [@hpaurobally](https://github.com/hpaurobally)
+- [@maiv8964](https://github.com/maiv8964)
+- [@michelle-salt](https://github.com/michelle-salt)
 
 [![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
 
