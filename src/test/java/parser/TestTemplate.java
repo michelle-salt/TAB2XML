@@ -40,6 +40,6 @@ public class TestTemplate {
 //	@Test
 //	public void testInsertNameHere() {
 //		assertEquals(expectedValue, this.wikiGuitarTab.methodNameAsNeeded());
-//		assertEquals(expectedValue, this.wikiDrumTab.methodNameAsNeeded())
+//		assertEquals(expectedValue, this.wikiDrumTab.methodNameAsNeeded());
 //	}
 }
