@@ -48,6 +48,11 @@
 								<Button fx:id="savePDFButton" layoutX="15.0"
 									layoutY="15.0" mnemonicParsing="false"
 									onAction="#handleSavePDF" prefWidth="115.0" text="Save as PDF">
+									<graphic>
+										<ImageView>
+											<Image url="@/toolbarButtonGraphics/general/TipOfTheDay24.gif" />
+										</ImageView>
+									</graphic>
 									<padding>
 										<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 									</padding>
