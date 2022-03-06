@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<BorderPane fx:id="borderPane"
+	maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+	minHeight="450.0" minWidth="640.0" prefHeight="700.0"
+	prefWidth="1000.0" stylesheets="@styles.css"
+	xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="GUI.SheetMusicGUI">
+	<center>
+		<AnchorPane prefHeight="200.0" prefWidth="666.0"
+			BorderPane.alignment="CENTER">
+			<children>
+				<ScrollPane layoutX="28.0" layoutY="15.0"
+					prefHeight="600.0" prefWidth="974.0" AnchorPane.leftAnchor="13.0"
+					AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="32.0">
+					<content>
+						<AnchorPane fx:id="anchorPane">
+							<children>
+								<Pane fx:id="pane" maxWidth="920.0"
+									AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="13.0"
+									AnchorPane.topAnchor="32.0" />
+							</children>
+						</AnchorPane>
+					</content>
+				</ScrollPane>
+				<AnchorPane layoutX="12.0" layoutY="614.0"
+					prefHeight="52.0" prefWidth="977.0" AnchorPane.bottomAnchor="8.0"
+					AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0">
+					<children>
+						<HBox layoutY="11.0" spacing="5.0"
+							AnchorPane.rightAnchor="0.0">
+							<padding>
+								<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+							</padding>
+							<children>
+								<Button fx:id="savePDFButton" layoutX="15.0"
+									layoutY="15.0" mnemonicParsing="false"
+									onAction="#savePDFButtonHandle" prefWidth="115.0" text="Save as PDF">
+<!-- 									<graphic>
+										<ImageView>
+											<Image url="@/toolbarButtonGraphics/general/TipOfTheDay24.gif"/>
+										</ImageView>
+									</graphic> -->
+									<padding>
+										<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+									</padding>
+								</Button>
+								
+								<Button fx:id="playMusicButton" layoutX="15.0"
+									layoutY="15.0" mnemonicParsing="false"
+									onAction="#handlePlayMusic" prefWidth="115.0" text="Play Music">
+									<padding>
+										<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+									</padding>
+								</Button>
+								
+							</children>
+						</HBox>
+						<HBox layoutX="14.0" layoutY="8.0" spacing="5.0"
+							AnchorPane.leftAnchor="14.0">
+							<padding>
+								<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+							</padding>
+							<children>
+								<Label text="Go To Measure">
+									<padding>
+										<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+									</padding>
+								</Label>
+								<TextField fx:id="goToMeasureField" prefWidth="50.0" />
+								<Button fx:id="goToMeasureButton" mnemonicParsing="false"
+									onAction="#handleGotoMeasure" prefHeight="25.0"
+									prefWidth="42.0" text="Go" />
+							</children>
+						</HBox>
+					</children>
+				</AnchorPane>
+			</children>
+		</AnchorPane>
+	</center>
+</BorderPane>
