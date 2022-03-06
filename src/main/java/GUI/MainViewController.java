@@ -368,10 +368,10 @@ public class MainViewController extends Application {
 
 	@FXML
 	private void playMusic() throws IOException {
-
+		
 		Parser parse = new Parser(converter.getMusicXML());
 		String instrument = parse.getInstrument();
-		String string = "T120 V0 I[" + instrument + "] ";
+		String string = "T90 V0 I[" + instrument + "] ";
 		ArrayList<Measure> measures = parse.getMeasures();
 
 		for (int i = 0; i < parse.getNumMeasures(); i++) { // go through every measure
@@ -416,8 +416,8 @@ public class MainViewController extends Application {
 					string += step + altervalue + octave + "-o";
 					
 				}else {
-					
-					string += step + altervalue + octave + type;
+						
+						string += step + altervalue + octave + type;				
 					
 				}
 
@@ -433,11 +433,16 @@ public class MainViewController extends Application {
 						
 					}
 					
-				}else {
+				}else { // add the tie thing around here i think
 					
 					string += " ";
 					
 				}
+				
+				
+				
+				
+				
 			}
 			
 			if(parse.getNumMeasures() - i != 1) {

@@ -1,0 +1,3508 @@
+[33mcommit 543404b74632ad4ff2643f3c32142f05f8ede276[m[33m ([m[1;36mHEAD -> [m[1;32mvincent[m[33m, [m[1;31morigin/vincent[m[33m)[m
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Thu Mar 3 08:31:04 2022 -0500
+
+    push to pull
+
+[33mcommit d480eb6987e9eadfdb272c287617fe2f6b5f61af[m
+Merge: c06ca1e a7a55f3
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Wed Mar 2 11:50:02 2022 -0500
+
+    Merge branch 'develop' into vincen
+
+[33mcommit a7a55f3ded37355d9eda59538d25fd09abf90f9b[m
+Merge: 5f2ed89 7f5164a
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Wed Mar 2 11:48:15 2022 -0500
+
+    Merge branch 'develop' into michelle
+
+[33mcommit c06ca1e0d5e0210e4ada8e3d4e705c2835a84bdb[m
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Wed Mar 2 11:46:00 2022 -0500
+
+    push to remove
+
+[33mcommit 5f2ed895d6bbcccbe69d83e5491d19631f960c85[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Tue Mar 1 14:24:29 2022 -0500
+
+    Fix isChord method for guitar notes
+
+[33mcommit 7f5164a5fc40eb274c6f5f1917c682212e103aa1[m
+Author: Duaa Ali <duaaa29@my.yorku.ca>
+Date:   Mon Feb 28 13:00:49 2022 -0500
+
+    Clef is now dynamically drawn based on the Instrument
+
+[33mcommit f076a16f6c70b3ce2f48d8e0f7801786b9d7d68e[m
+Merge: e3c812c 33b5246
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Mon Feb 28 11:53:48 2022 -0500
+
+    Merge branch 'develop' into vincent
+    
+    # Conflicts:
+    #       src/main/java/musicxml/parsing/Measure.java
+    #       src/test/java/parser/ParserTest.java
+
+[33mcommit e3c812c61a0f1190f2e6f00949f1badf4fb68f97[m
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Mon Feb 28 11:52:44 2022 -0500
+
+    push to pulll develop
+
+[33mcommit 33b5246d509fba8d62f66fb1ab1819442a6b1eff[m
+Merge: 594f156 c87b143
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Sat Feb 26 22:27:43 2022 -0500
+
+    Merge branch 'michelle' into develop
+
+[33mcommit c87b14366733d68acd7169204b6587e372169bd7[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Sat Feb 26 22:26:50 2022 -0500
+
+    Catch exception in Measure class
+    
+    IndexOutOfBoundsException was thrown for some reason
+
+[33mcommit 867e492f545a8415f26c50636fa7d7d668e83e85[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Sat Feb 26 21:58:32 2022 -0500
+
+    Add drum note parsing, fix error in Attribute class
+    
+    Error in attribute class: The "fifths" element didn't always exist, and would crash in these cases. Now works
+
+[33mcommit 13e7787f80539489cc0b187dd93113b1167377d3[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Sat Feb 26 10:31:52 2022 -0500
+
+    Fix Clef retrieval
+    
+    Gets the sign and line correctly now (before I had copied and pasted the value retrieval and forgot to change the values I was reading)
+
+[33mcommit 16f1d275e7c730fcc28b3ffd5915343c32b6f861[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Sat Feb 26 10:25:39 2022 -0500
+
+    Update Note constructor for grace notes
+    
+    Now avoids duplication of code by calling one constructor from another
+
+[33mcommit 594f1564349810534189996394b4a698b3195468[m
+Author: Duaa Ali <duaaa29@my.yorku.ca>
+Date:   Fri Feb 25 17:44:56 2022 -0500
+
+    Updated code to match the GUI of a given instrument
+    
+    Now, based on the instrument, the bar lines, the clef, and the sheet
+    lines are drawn, instead of just the guitar.
+
+[33mcommit 65f349e0453068bd11653ab070a73f699cb5d32b[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Fri Feb 25 15:44:43 2022 -0500
+
+    Update parseInstrument
+    
+    Doesn't set specialized strings for each instrument anymore
+
+[33mcommit 6a84e745f2e0350453935bfe922eca2ce0a4b680[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Thu Feb 24 15:31:46 2022 -0500
+
+    Fix pull-off and slur parsing
+    
+    Now, if these elements don't exist, a default slur & pull-off instance is made with invalid attributes (0 and null)
+
+[33mcommit 703c4ea421e86708cefc00c6db6721a8e06921bb[m[33m ([m[1;31morigin/master[m[33m)[m
+Merge: 087721e 4f237fe
+Author: Duaa Ali <duaaa29@my.yorku.ca>
+Date:   Fri Feb 18 17:27:33 2022 -0500
+
+    Merge branch 'develop' into duaa
+    Merging in order to solve conflict.
+
+[33mcommit 087721e1d60eadeb5593f962d228c96dada99581[m
+Author: Duaa Ali <duaaa29@my.yorku.ca>
+Date:   Fri Feb 18 17:24:21 2022 -0500
+
+    Changed the methods in the SheetMusicGUI to draw dynamically.
+    
+    This includes dynamically-drawn Sheet lines, Bar lines, and Clef.
+
+[33mcommit 4f237fec79a23fa45370b0b903d417c114710bb9[m
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Fri Feb 18 17:19:27 2022 -0500
+
+    added constructor if note is a grace note
+
+[33mcommit 531da55a95f4b7c785de315b1388af9d6dde0619[m
+Merge: f4a8e8e e012385
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Fri Feb 18 17:08:27 2022 -0500
+
+    Merge branch 'develop' into vincent
+    
+    # Conflicts:
+    #       src/main/java/musicxml/parsing/Measure.java
+
+[33mcommit f4a8e8e9f67813881db6380af070305811b4fb61[m
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Fri Feb 18 17:05:41 2022 -0500
+
+    Allowed any guitar tab input to be played, with no slurs, ties, and
+    hammers
+
+[33mcommit e0123856c78c6fa89e0f96dc74e3df4be441fe16[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Fri Feb 18 17:05:32 2022 -0500
+
+    Update slur and pull-off
+    
+    Doesn't work properly but doesn't cause an error anymore
+
+[33mcommit 7b951d314f2734949db71f45f69d4c683f53f668[m
+Merge: 1a4bba6 11b7009
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Wed Feb 16 12:25:42 2022 -0500
+
+    Merge branch 'vincent' into develop
+    
+    # Conflicts:
+    #       src/main/java/GUI/MainViewController.java
+
+[33mcommit 11b70092ac0f2ca7336f6eedd6568221cf5d0a48[m
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Wed Feb 16 12:23:47 2022 -0500
+
+    updated code
+
+[33mcommit 1a4bba67fd19cfaa97ce5470bde99482e7a5e2c6[m
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Wed Feb 16 12:20:05 2022 -0500
+
+    fixed some things, but playing is broken
+
+[33mcommit 48b1e95b00f83431b66d97e07a705a7cb7f0c371[m
+Merge: a41eee0 63c89e8
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Wed Feb 16 12:10:34 2022 -0500
+
+    Merge branch 'develop' into vincent
+    
+    # Conflicts:
+    #       src/main/java/musicxml/parsing/Note.java
+
+[33mcommit 63c89e865a5e589ade302abfa2c784c7df368098[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Wed Feb 16 12:05:15 2022 -0500
+
+    Update last 3 chars for note type
+
+[33mcommit a41eee0bf7527799daea90fec582bc30509c7f16[m
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Wed Feb 16 12:02:43 2022 -0500
+
+    Hard coded musicxml file input to fully output sound
+
+[33mcommit b36f3d24e6c90ae25dc37a0db31d92dfd03501bf[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Wed Feb 16 10:00:27 2022 -0500
+
+    Changes note type from int to char
+    
+    This is done to match the input needed for the music player.
+    I still need to update the chars for 256th, 512th, and 1024th. This will be done when I figure out what chars correspond to these values
+
+[33mcommit bf62ff2bfa9558ea80701197458a94cb5cf7bda8[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Wed Feb 16 09:54:43 2022 -0500
+
+    Add slur and pull-off to parser
+
+[33mcommit 99fdb12c68979e42006a530e29347b6aa103d7ed[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Tue Feb 15 21:51:10 2022 -0500
+
+    Fix measure class to only read its own notes
+    
+    The measure class now only reads the notes in its own measure. Before there was an issue where it read all the notes in the entire song.
+
+[33mcommit f7fce89ef70949f04510ea5a0b90823c29a17fc9[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Tue Feb 15 21:05:11 2022 -0500
+
+    Convert inputted musicXML string to File
+    
+    Actually works this time (I hope ;-;)
+
+[33mcommit a149f4140a442c16d2ce8275ffb1fd51b34cc3ce[m
+Merge: 70350c5 f288f54
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Mon Feb 14 13:42:48 2022 -0500
+
+    Merge branch 'develop' into vincent
+
+[33mcommit 70350c5f059f889a9b56d20069af1efb57b3cfbb[m
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Mon Feb 14 13:42:14 2022 -0500
+
+    set up loop in to retrieve all notes in a measure
+
+[33mcommit ee86758c74b8b0f71301ae492d7d6ef1398cb05c[m
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Mon Feb 14 13:41:50 2022 -0500
+
+    Set up the loop to retrieve every note in every measure
+
+[33mcommit f288f544add9e5038139bba2b64e36a1abb310ae[m
+Author: Duaa Ali <duaaa29@my.yorku.ca>
+Date:   Mon Feb 14 13:35:36 2022 -0500
+
+    Class for Drawing Sheet Lines
+    
+    Should have been pushed in the last commit, got left out by mistake.
+
+[33mcommit 1a7b0abc10e5101bbcdc4ff82368311e81cf0546[m
+Merge: 529cc20 d99b5ac
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Mon Feb 14 13:29:24 2022 -0500
+
+    Merge branch 'michelle' into develop
+
+[33mcommit d99b5ac3e9c0f84659e840baa7917daa1a0ff737[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Mon Feb 14 13:28:37 2022 -0500
+
+    Create JUnit test class for Parser Class
+
+[33mcommit 529cc20ea9bb24ce8ec5159ee1a183331ec216f0[m
+Merge: 256dd59 5f96073
+Author: Duaa Ali <duaaa29@my.yorku.ca>
+Date:   Mon Feb 14 13:24:08 2022 -0500
+
+    Merge branch 'develop' of https://github.com/michelle-salt/TAB2XML into
+    develop
+    # Please enter a commit message to explain why this merge is necessary,
+    # especially if it merges an updated upstream into a topic branch.
+    #
+    # Lines starting with '#' will be ignored, and an empty message aborts
+    # the commit.
+
+[33mcommit 256dd59e159935a6520b173a5377c1109c5f64c3[m
+Author: Duaa Ali <duaaa29@my.yorku.ca>
+Date:   Mon Feb 14 13:19:59 2022 -0500
+
+    Added methods to draw staff, measure, bars, and clef onto the GUI
+
+[33mcommit 4e7551bbd568cdde79cb4aac30818e5e460cd7f2[m
+Merge: 0e115e6 5f96073
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Mon Feb 14 13:05:07 2022 -0500
+
+    Merge branch 'develop' into vincent
+
+[33mcommit 0e115e6a37e9997aa74d4d6f69e82164affb38f9[m
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Mon Feb 14 13:04:25 2022 -0500
+
+    Commented out lines to make new note stringbuilder
+
+[33mcommit 5f96073665d0e1214b86789c43856fbcc4454183[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Mon Feb 14 13:02:24 2022 -0500
+
+    Change musicXML back to File
+
+[33mcommit d4b414be78da54edf453bd07768db158dbd02e0e[m
+Merge: 81f151f dba8ba5
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Fri Feb 11 10:11:42 2022 -0500
+
+    Merge branch 'develop' into vincent
+
+[33mcommit dba8ba5773b32797a6deebddf55393d3bc77169b[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Fri Feb 11 09:59:52 2022 -0500
+
+    Set instrument to null if it's not one of the 3 accepted ones
+    
+    Also add comments
+
+[33mcommit 2dbcda9f1b8b3c41408501af3cc35f631bc7c73c[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Fri Feb 11 09:20:37 2022 -0500
+
+    Change MusicXML input to String instead of File
+
+[33mcommit 81f151f2b2c720faf9359e625995436410b4d9a7[m
+Merge: e3fd7d6 78b8ece
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Fri Feb 11 02:21:42 2022 -0500
+
+    Merge branch
+    develop' into vincent
+
+[33mcommit e3fd7d675ea52f47175225da399b3e88097bc0d9[m
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Fri Feb 11 02:16:01 2022 -0500
+
+    Hard code in sample music playing
+
+[33mcommit 78b8ece8b8ec6a4be218254378f9b8bdaba2237b[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Thu Feb 10 15:49:19 2022 -0500
+
+    Make parser read input file
+    
+    It used to read a static file from my local machine
+
+[33mcommit 1511166f07ec3f2462b54d3e3b63c7ad1158bdf8[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Thu Feb 10 12:59:28 2022 -0500
+
+    Implement methods to check if the note is a chord
+
+[33mcommit 86de367247c9460c77009e381c658159f8590c92[m
+Merge: 7bea284 13c3ef4
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Wed Feb 9 15:20:28 2022 -0500
+
+    Merge branch 'develop' into michelle
+
+[33mcommit 7bea284c2e0688240fdfa6ae7020a545e86a17d0[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Wed Feb 9 11:13:38 2022 -0500
+
+    Remove all setters from Note class
+
+[33mcommit 68626ecbc0c7337dbfa539c50b989f0f0ef5b366[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Wed Feb 9 11:09:07 2022 -0500
+
+    Update pitch-related accessors
+    
+    Adds accessors to the Pitch class
+    Modifies accessors in the Note class (now returns the pitch variable instead of its individual attributes)
+
+[33mcommit b82536af575579c832b9187ec635a78eb72ad70c[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Wed Feb 9 11:01:23 2022 -0500
+
+    Fix pitch to make alter optional
+    
+    Adds a pitch class with 2 constructors (with and without alter)
+    Updates Note class to take Pitch as a parameter instead of step, alter, and octave (the elements of pitch)
+    Modifies Measure class to reflect changes to Note constructor
+    
+    Also initializes ArrayLists in Parser and Measure classes
+
+[33mcommit 887fef6c6c8416b4e421f0b7e49e955c99618529[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Wed Feb 9 06:54:43 2022 -0500
+
+    Parse by measures instead of by notes
+    
+    Creates a Measure and Attributes class (attributes is a sub-element of measure)
+    Updates parser class to only parse measures (instead of attributes + notes separately) -- this is done by moving the code within the parseNotes() and parseAttributes() methods to the Measure and Attributes class respectively
+
+[33mcommit ae46b8766a290362efb5b95a8377395fe4a6e62b[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Wed Feb 9 05:38:27 2022 -0500
+
+    Add accessor to retrieve the lines
+    
+    Also move the getNumLines() method to the appropriate place
+
+[33mcommit c97e0d62234088d31c731928fb04fc38f2e6cfc5[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Wed Feb 9 05:28:12 2022 -0500
+
+    Add alter element
+    
+    Attribute added to notes class
+    Parser updated to retrieve value
+
+[33mcommit 53562f8ce900e11e312400b9118659a3646f4bea[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Wed Feb 9 05:26:58 2022 -0500
+
+    Add getLines() method to Parser
+    
+    To be used when creating graphics
+
+[33mcommit accc6d394959786f5081ae96cd23b432e2ce6876[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Wed Feb 9 05:17:00 2022 -0500
+
+    Remove main method from Parser
+    
+    This was only used for testing and is no longer needed
+
+[33mcommit bd2e0b7cd20be5dd544b59486c6ee666657ccd66[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Wed Feb 9 05:15:59 2022 -0500
+
+    Create Staff class and initialize attributes
+    
+    No constructor created yet
+    All potential attributes included
+
+[33mcommit 5d6aa772f6bb4b692070f1d09b01dee65385595b[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Wed Feb 9 05:14:55 2022 -0500
+
+    Create StaffTuning class to store attributes for each staff-tuning element
+    
+    Includes all elements possible in the staff-tuning tag (not only what's shown in sample)
+    Includes two constructors, taking the optional element into account
+    Includes getters for all attributes
+
+[33mcommit 6b03c2a8f163d098f164c11bdab1716bc35b231a[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Wed Feb 9 05:12:42 2022 -0500
+
+    Update comments and indentation
+
+[33mcommit 577a12a5833fafb985074e5ffb739e0d2026da70[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Wed Feb 9 05:11:47 2022 -0500
+
+    Create LineDetails class to store attributes for each line-details element
+    
+    Includes sub-tags found in general MusicXML files and not only in the sample guitar one
+    
+    Doesn't have a constructor (yet)
+
+[33mcommit c5e44847f86b476f47d12d71751d7d95cd8b2089[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Wed Feb 9 05:09:54 2022 -0500
+
+    Create Clef class to store attributes for each clef
+    
+    Only includes elements found within the sample guitar tab and its corresponding MusicXML file
+
+[33mcommit a5201c42b6b1527f142f11093205b7ce283bf0a2[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Wed Feb 9 05:08:01 2022 -0500
+
+    Update comments, add variables, and create methods
+    
+    Methods created to split up the Parser() constructor for better organization
+    Accessor/getter methods created for some variables
+    Helper methods to be used to draw graphics have been added
+
+[33mcommit 13c3ef461d8d17401f8ee68f895c7ddeb3e8466f[m
+Author: Duaa Ali <duaaa29@my.yorku.ca>
+Date:   Mon Feb 7 12:05:27 2022 -0500
+
+    Changed GUI library from Swing to JavaFX. New GUI is made to continue
+    the app theme.
+
+[33mcommit 88715f21129cebe9c436b618e9eaaf2351a370ae[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Sun Feb 6 17:39:29 2022 -0500
+
+    Create Note class
+    
+    Store all elements of a note. A constructor to set all the elements and every setter/getter pair has been created
+
+[33mcommit 649b645cfd9370b66119f64158670157a2c7c227[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Sun Feb 6 17:10:37 2022 -0500
+
+    Create Parser class and package
+    
+    Parser package is within src/main/java
+    Parser class just prints out the different parts of a note
+
+[33mcommit c3edc456832fae56b93262f2d985b8f2edc7919e[m
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Sat Feb 5 15:24:57 2022 -0500
+
+    Cleaned/Simplified Code for Play Music Function
+
+[33mcommit c6003494a0e2592bb5ab0ca1692801b873e0700a[m
+Merge: 3658f2e cdb141d
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Fri Feb 4 16:39:45 2022 -0500
+
+    Merge branch 'develop' into vincent
+    
+    # Conflicts:
+    #       src/main/java/GUI/MainViewController.java
+
+[33mcommit 3658f2eec983cb4bfb342faf867b13f2297c5efb[m
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Fri Feb 4 16:37:05 2022 -0500
+
+    Updating all files to Github
+
+[33mcommit cdb141d6d875a52cc6a4312c25e3e79cc01e20c0[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Fri Feb 4 15:22:10 2022 -0500
+
+    Set instrument manually
+
+[33mcommit a2792123f282d55dac0370553689441cabd85f73[m
+Author: Duaa Ali <duaaa29@my.yorku.ca>
+Date:   Thu Feb 3 17:37:01 2022 -0500
+
+    Implemented Export and goToMeasure features in GUI
+
+[33mcommit 15edf114e9606b9692d1dc874f592ce0202aa3ef[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Mon Jan 31 10:46:18 2022 -0500
+
+    Update player to read input
+    
+    The player now plays from the tablature inputted rather than a static filepath
+
+[33mcommit 0445f0e5988cd38977b09d52f033ac986ae320bd[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Mon Jan 31 10:30:21 2022 -0500
+
+    Implement playing from MusicXML
+    
+    Adds a button to the GUI and plays the MusicXML from a filepath
+
+[33mcommit 6b96059179f37853f29ef41c93bd1cd5738e8c3d[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Mon Jan 31 10:12:37 2022 -0500
+
+    Delete testPush files
+    
+    The files were used to test lab task 3
+
+[33mcommit 20dc0075ed5e5f12a89bac67f407028439ff049b[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Mon Jan 31 10:09:01 2022 -0500
+
+    Update .gitignore from lecture
+    
+    He discussed at ~1:16 in the week 2 lecture video. The following files have been added to .gitignore: .project and .classpath
+
+[33mcommit d4d80950261cef820b39c5e96eae839dd665587e[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Mon Jan 31 10:02:23 2022 -0500
+
+    Add JFugue to .classpath
+
+[33mcommit ce765740c8e0d4124064f6c4882307ee7cb34f2e[m[33m ([m[1;31morigin/mohammad[m[33m)[m
+Author: hpaurobally <hpaurobally@gmail.com>
+Date:   Sat Jan 29 20:44:46 2022 -0500
+
+    ...
+
+[33mcommit 88622608bce8c8c1edab5811e9223174c75ce822[m
+Author: hpaurobally <hpaurobally@gmail.com>
+Date:   Fri Jan 28 18:42:33 2022 -0500
+
+    remove classpath from gitignore file
+
+[33mcommit 33dc074e295f43ac0dbb82ee5819971a33e10272[m
+Author: hpaurobally <hpaurobally@gmail.com>
+Date:   Fri Jan 28 18:18:13 2022 -0500
+
+    fbfd
+
+[33mcommit 033aabc45f45885f1d531b855b23cfee47411635[m
+Merge: cedc2cc 11dba80
+Author: hpaurobally <hpaurobally@gmail.com>
+Date:   Fri Jan 28 18:17:13 2022 -0500
+
+    Merge branch 'mohammad' into develop
+    
+    # Conflicts:
+    #       testPush
+
+[33mcommit 11dba80746bb1edbf0e5e070f16b437320903d6c[m
+Author: hpaurobally <hpaurobally@gmail.com>
+Date:   Fri Jan 28 18:14:13 2022 -0500
+
+    a push
+
+[33mcommit cedc2cce5a045cea052df1727aed8b6cdd62e7cd[m
+Author: Joshua Hanif <90522357+jhaniff@users.noreply.github.com>
+Date:   Fri Jan 28 18:10:29 2022 -0500
+
+    new push push
+
+[33mcommit 39c2e965a16bd0a1f0970ecad817eeb27fb80083[m
+Author: Joshua Hanif <90522357+jhaniff@users.noreply.github.com>
+Date:   Fri Jan 28 18:09:32 2022 -0500
+
+    h
+
+[33mcommit b68f6ab9662dd933c467b6654996e73d3397478a[m
+Merge: 0425dad 7d6f045
+Author: Joshua Hanif <90522357+jhaniff@users.noreply.github.com>
+Date:   Fri Jan 28 18:07:08 2022 -0500
+
+    Merge branch 'develop' of https://github.com/michelle-salt/TAB2XML.git
+    into develop
+    
+    Conflicts:
+            testPush
+
+[33mcommit 0425dadf24f0e10bbb9f265717d1ec0479494ead[m
+Author: Joshua Hanif <90522357+jhaniff@users.noreply.github.com>
+Date:   Fri Jan 28 18:06:12 2022 -0500
+
+    this is new push (not really)
+
+[33mcommit a8de2b0d33cfb0a31773984d0c711fee5e4a1d31[m
+Author: Joshua Hanif <90522357+jhaniff@users.noreply.github.com>
+Date:   Fri Jan 28 18:00:53 2022 -0500
+
+    new push
+
+[33mcommit 7d6f045261ab06084fb150e6af53076c8e696329[m
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Fri Jan 28 17:57:24 2022 -0500
+
+    another test by vincent
+
+[33mcommit ad2f428e1b7ab67b30745e96110aa862e66a39b0[m
+Merge: 52c01aa 6517542
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Fri Jan 28 17:55:31 2022 -0500
+
+    test from vincent
+
+[33mcommit 52c01aa7a6c91b73d80114f4c262f48f224a1250[m
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Fri Jan 28 17:50:34 2022 -0500
+
+    Merge branch 'develop' of https://github.com/michelle-salt/TAB2XML into
+    develop
+
+[33mcommit 6517542a53563df83f908945d2dd6a7de0d13750[m
+Author: Joshua Hanif <90522357+jhaniff@users.noreply.github.com>
+Date:   Fri Jan 28 17:47:29 2022 -0500
+
+    Updated testPush again
+
+[33mcommit e78796667f00dbae7ad8b87aa26fca863d9af0f4[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Fri Jan 28 17:41:25 2022 -0500
+
+    Update testPush
+
+[33mcommit 88ed07aa3702cd649b8588b4f81fac4edd6257fd[m
+Merge: 767123c fbfc02c
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Fri Jan 28 17:40:20 2022 -0500
+
+    Merge branch 'develop' of https://github.com/michelle-salt/TAB2XML into develop
+
+[33mcommit 767123c33c684a4713b4b7da040899354dd968fb[m
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Fri Jan 28 17:39:14 2022 -0500
+
+    # WARNING: head commit changed in the meantime
+    
+    Vincent test to push from feature branch to develop
+
+[33mcommit fbfc02c0c3a0af7c906e873b15682576df10d018[m
+Author: Duaa Ali <duaaa29@my.yorku.ca>
+Date:   Fri Jan 28 17:28:10 2022 -0500
+
+    This is me testing a push onto my branch.
+
+[33mcommit f1cc17642200fb8ff7e84b2e5844dbf01f303ad6[m[33m ([m[1;32mmaster[m[33m)[m
+Author: hpaurobally <hpaurobally@gmail.com>
+Date:   Fri Jan 28 17:10:28 2022 -0500
+
+    add classpath to gitignore
+
+[33mcommit 0be905e08e720dc7f9f7edfa8cbce13b25c5e1d8[m
+Author: hpaurobally <hpaurobally@gmail.com>
+Date:   Fri Jan 28 17:08:53 2022 -0500
+
+    update gitignore file
+
+[33mcommit 87c4655abe78afa7c3fe5814dd8f6912b06021ce[m
+Author: Duaa Ali <duaaa29@my.yorku.ca>
+Date:   Tue Jan 25 14:20:02 2022 -0500
+
+    Made GUI pop-up for "Preview Sheet Music" button.
+
+[33mcommit 754384a8a0cd5c885dd2f17f477c578a7ca593d0[m
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Mon Jan 24 12:00:06 2022 -0500
+
+    Vincent First test for midi Player
+
+[33mcommit 215f991fbc2eac1c4fd69fd6a779782d3cdbd32e[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Sat Jan 22 13:09:34 2022 -0500
+
+    Remove edits for conflict testing
+
+[33mcommit 14034b643e335c648438411b7736203c09c1d26f[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Sat Jan 22 12:59:41 2022 -0500
+
+    Conflict for Lab 3
+
+[33mcommit 01d59e1b51ccc74b47fae70d9a4385ff4353d65a[m
+Author: hpaurobally <hpaurobally@gmail.com>
+Date:   Wed Jan 19 15:22:35 2022 -0500
+
+    default
+
+[33mcommit f2e7598570840796f6e11a6e1c2828503824cc39[m
+Author: Duaa Ali <duaaa29@my.yorku.ca>
+Date:   Wed Jan 19 15:09:18 2022 -0500
+
+    Deleted TestFileForCommitting
+
+[33mcommit a4c8c178e8379f58466e347f2d7ae7b589a76f92[m
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Wed Jan 19 13:30:17 2022 -0500
+
+    Testing Conflict Vincent
+
+[33mcommit 0fbf69b19a5d968b109e97a2131fc28bc524fa27[m
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Wed Jan 19 13:35:31 2022 -0500
+
+    Vincent Conflict
+
+[33mcommit 2d2cdd230c18465ac3df294a5721a381d3232617[m
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Wed Jan 19 12:13:24 2022 -0500
+
+    vincent commit
+
+[33mcommit 4640fce1b51a4ec3080b93adac4041e0f308bc50[m
+Author: Duaa Ali <duaaa29@my.yorku.ca>
+Date:   Wed Jan 19 13:25:52 2022 -0500
+
+    Attempting Conflict
+
+[33mcommit be14fc6e2920b516341b5112f79e64d1e0c9a5b9[m
+Author: hpaurobally <hpaurobally@gmail.com>
+Date:   Wed Jan 19 12:26:32 2022 -0500
+
+    perfect solution
+
+[33mcommit 5f5610ddc3dd914ef1a6075a93e16799ba1b4f25[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Wed Jan 19 12:13:07 2022 -0500
+
+    Test Conflict
+    
+    Line 4 for test file
+
+[33mcommit 82d094fb9826a2d77563c24e67615e5fa31e78a2[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Wed Jan 19 12:10:45 2022 -0500
+
+    Test Push
+
+[33mcommit dbceba549a19cc708ee0bdae839ae4f99b3696b6[m
+Author: Duaa Ali <duaaa29@my.yorku.ca>
+Date:   Wed Jan 19 12:07:56 2022 -0500
+
+    Testing Push.
+
+[33mcommit 71c5ed9ea35aac55eaf62522096873ec627acb0e[m
+Author: hpaurobally <hpaurobally@gmail.com>
+Date:   Mon Jan 17 13:29:18 2022 -0500
+
+    Another practice commit
+
+[33mcommit 2e8799b5528e123fca174af77593fde09fb68798[m
+Merge: c67e5c4 f03e685
+Author: Joshua Hanif <90522357+jhaniff@users.noreply.github.com>
+Date:   Mon Jan 17 13:18:14 2022 -0500
+
+    Merge branch 'master' of https://github.com/michelle-salt/TAB2XML.git
+
+[33mcommit c67e5c42530479c19933ae2b705b9c15725f16d9[m
+Author: Joshua Hanif <90522357+jhaniff@users.noreply.github.com>
+Date:   Mon Jan 17 13:16:43 2022 -0500
+
+    edited comment to the converter file.
+
+[33mcommit f03e685a2aaccdba51e9019982ac4cc6ef9e2e83[m
+Merge: 82adee4 4a3fe5e
+Author: hpaurobally <hpaurobally@gmail.com>
+Date:   Mon Jan 17 13:01:24 2022 -0500
+
+    Merge branch 'master' of https://github.com/michelle-salt/TAB2XML.git
+
+[33mcommit 82adee4a8a2947cc43e35810e4cb644eff423737[m
+Author: hpaurobally <hpaurobally@gmail.com>
+Date:   Mon Jan 17 13:01:06 2022 -0500
+
+    Added another comment to the IIE class
+
+[33mcommit 4a3fe5e8c817ec35b6042673e888f8a3b73c363c[m
+Author: Joshua Hanif <90522357+jhaniff@users.noreply.github.com>
+Date:   Mon Jan 17 12:48:03 2022 -0500
+
+    i just added a comment in at the end in converter file
+
+[33mcommit 9b4f7ec270c34ecc89a6b716592049c1720b3cc8[m
+Author: hpaurobally <hpaurobally@gmail.com>
+Date:   Mon Jan 17 12:35:00 2022 -0500
+
+    Add comment to invalid input exception
+    
+    to practice pushing/pulling
+
+[33mcommit 203df943e3c1e89cfe79d3893096d7e47a7d1501[m
+Author: Vincent Mai <maiv8964@my.yorku.ca>
+Date:   Mon Jan 17 11:52:36 2022 -0500
+
+    Test from Vincent
+
+[33mcommit 7447af46f03a30e6065a40173924370cc211b685[m
+Author: michelle-salt <cookies10m@gmail.com>
+Date:   Mon Jan 17 11:37:34 2022 -0500
+
+    Add comment to preview button method
+    
+    Test commit created for lab 2, so others' can practice pulling
+
+[33mcommit aa7f11c2a036756531e13cb0a679f458d0314695[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Mon Jan 10 17:26:04 2022 -0500
+
+    Polishing changes to publish
+
+[33mcommit 87a7e8596717adf282e5b0ac95fa5766fb6215b5[m
+Merge: 3d3a665 4652bed
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Mon Jan 10 15:41:39 2022 -0500
+
+    Merge branch 'master' of https://github.com/biltzerpos/TAB2XML
+
+[33mcommit 3d3a665ff674ed0945a57f97275c99eb7f3c8b14[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Mon Jan 10 15:41:24 2022 -0500
+
+    Polishing changes to publish
+
+[33mcommit 4652bed975287324250460f95d90480173fa5b9c[m
+Author: biltzerpos <bil@cse.yorku.ca>
+Date:   Mon Jan 10 15:22:14 2022 -0500
+
+    Update README.md
+
+[33mcommit a285a49d1bca4acc351eba16b1042ba15bb44ebc[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Mon Jan 10 15:21:24 2022 -0500
+
+    Polishing changes to publish
+
+[33mcommit fd00db241de195cc483a57fd5bd4e4e50717d278[m
+Merge: 29c9bdd c1f18b9
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Mon Jan 10 15:11:03 2022 -0500
+
+    Merge branch 'master' of https://github.com/biltzerpos/TAB2XML
+
+[33mcommit 29c9bdd739504c40327b6be38490df189fb8c458[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Mon Jan 10 15:10:10 2022 -0500
+
+    Polishing changes to publish
+
+[33mcommit c1f18b98695922e71a3bc070af622afb1c2e4016[m
+Author: biltzerpos <bil@cse.yorku.ca>
+Date:   Mon Jan 10 12:43:34 2022 -0500
+
+    Update README.md
+
+[33mcommit f9b231ba738d49550efbf4c77cb89e07a5f3bdca[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Mon Jan 10 12:24:41 2022 -0500
+
+    Polishing test cases to publish
+
+[33mcommit e0259aa8626cd03611fd2b1bc9af4a6fea2a087e[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Thu Dec 9 17:11:07 2021 -0500
+
+    Removed all warnings
+
+[33mcommit d93c55bc8139f381b366a38cacad6288e953dc52[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Thu Dec 9 16:26:02 2021 -0500
+
+    Bass tuning gets applied correctly to output now
+
+[33mcommit 24432084e84a4095683e2f9d05d7fda1fe7a40dd[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Wed Dec 1 17:42:39 2021 -0500
+
+    Critical Error Cutoff is now in Settings
+
+[33mcommit 29ef32e27937bbb59fc3265e5bf0e9b616f8d528[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Wed Dec 1 17:22:31 2021 -0500
+
+    System Default Settings now use prefs
+    Removed USED_DRUM_PARTS
+
+[33mcommit 8c844cd04b65c42bd6e0d8f47995abf3a332d88a[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Wed Dec 1 16:40:11 2021 -0500
+
+    Added times attribute to repeats.
+    Removed NotePlayer
+
+[33mcommit 692e2bfb0ec37052985f1817e72b07a279e96bd6[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Fri Nov 26 11:58:34 2021 -0500
+
+    Support for bends added and tested
+
+[33mcommit 59924ae798a92f86bcee7c36ac0278030c7cdd7e[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Wed Nov 24 17:20:37 2021 -0500
+
+    Fixed a bug related to TieNote (when there's multiple TieNote objects at
+    the beginning of a measure).
+
+[33mcommit 3eb6e2398617a9c10ea114564ce52924a83846c5[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Thu Nov 18 19:15:32 2021 -0500
+
+    Added support for tied notes at the beginning of a measure. Code tested
+    and tified up.
+
+[33mcommit fab120a86ed670eb4feba76eeeebe509816812e8[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Wed Nov 17 17:30:18 2021 -0500
+
+    Timing instructions work with triplets
+    Missing timing instructions get highlighted as errors
+
+[33mcommit 0a748816f1a1580a8948e664302221ef70b25bd9[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Wed Nov 17 13:36:41 2021 -0500
+
+    Added Timing instruction and did regression testing. Need to test actual
+    timing instructions
+
+[33mcommit f3d98077bd92adc12c264c78f01abdced9f9076b[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Fri Nov 12 11:52:50 2021 -0500
+
+    Multiple grace notes now handled, even grace chords.
+
+[33mcommit 5df2641c1e08cdb5ec6fe02cbbf0709b6299a069[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Thu Nov 11 17:07:49 2021 -0500
+
+    NoteFactory refactored into abstract class + concrete subclasses for
+    each instrument
+
+[33mcommit f2ce50abaed1b2bc21aa2e61269660f7d03112dd[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Thu Nov 11 12:15:07 2021 -0500
+
+    Fully tested and tidied up after AnchoredText restructuring.
+    Many other changes to improve desing with regards to inheritance
+
+[33mcommit 53c1dc627882ae2e06db429436eff80085b0b85b[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Tue Nov 9 21:20:01 2021 -0500
+
+    Fixed all bugs after AnchoredText restructuring including when divisions
+    too small and was divided into 0
+
+[33mcommit fcdcd05f89dd2b04c9ac3db97ce4136448fc486f[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Tue Nov 9 17:31:42 2021 -0500
+
+    Fixed all outstanding issues related to the introduction of AnchoredText
+
+[33mcommit 1e72e9ad7b3e68eb40cfd88eba1ddc16e006d5e2[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Mon Nov 8 16:46:31 2021 -0500
+
+    Added 4 system test files
+
+[33mcommit 2caa5abc69f96cd41f0441ddc7375b2f23a9f234[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Mon Nov 8 16:46:06 2021 -0500
+
+    Major restructuring to introduce AnchoredText
+    Back to normal with minor bugs remaining
+    Started on the Timing instruction
+
+[33mcommit ae0b6f1f94eacfe1ff0e0cfdda7def35ee606864[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Mon Nov 8 05:49:40 2021 -0500
+
+    Added testDebug task to Gradle
+    Added system tests and fixeda couple of older tests
+
+[33mcommit 056f548cc9914dd667ed0006a11cc9b5c03299ee[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Sat Nov 6 23:36:45 2021 -0400
+
+    Fixed regular expression bugs
+    All basic tabs work fairly well
+
+[33mcommit c7e8fe752564bb971ace81551b9332309deb146b[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Sat Nov 6 17:22:07 2021 -0400
+
+    Fixed all basic bugs related to BASS
+    Rewrote some of the regular expressions.
+    Not so tolerant now, have to debug capsmall and pigs
+
+[33mcommit 8af60de88daa3668a4c28800f34203d9d4492b65[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Fri Nov 5 16:29:51 2021 -0400
+
+    First set of changes towards bass completed. Stull bugs to fix.
+    Some work done on the Patterns class to document the regular
+    expressions.
+
+[33mcommit 0e9dd2370e4a70bd38bbf0cbef55f5fc2270c9b6[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Thu Nov 4 14:39:11 2021 -0400
+
+    Instrument detection now done only at score creation time
+    Settings holds the detected instrument
+
+[33mcommit c07523af58e3fa168a526f2de7c91d36e56c1804[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Thu Nov 4 08:34:27 2021 -0400
+
+    Reorganized the TabSection parsing.
+    Goes line be line. Creates only one TabRow.
+    Nested Repeats are now marked as InvalidRepeats.
+
+[33mcommit e4056e5d8cf84b32ae0fd16c56acef686356246f[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Wed Nov 3 09:58:38 2021 -0400
+
+    Changed the validation model to be part of the ScoreComponent interface.
+    Scorecomponents should not alter their state after creation.
+
+[33mcommit 8abc27d1b6dab099f52d87b189146fea9df17f41[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Mon Nov 1 19:25:26 2021 -0400
+
+    Fixed a bug with the calculation of divisions due to integer division
+
+[33mcommit b50cc2558e56633b2fac1931c7eeef6ae766e3a2[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Sun Oct 31 22:08:14 2021 -0400
+
+    Implemented tie notes, so all notes should have the right duration now.
+    Error if timing is incorrect.
+
+[33mcommit 0ef96668de6bfa6369baf3ab45fd7f09a16c3d1b[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Sun Oct 31 14:34:22 2021 -0400
+
+    Fixed a bug where drum tabs had an upper limit of lines.
+
+[33mcommit f9f10743a150c7829bf2434a5b5a2fc6c2fcc9e8[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Sun Oct 31 14:22:45 2021 -0400
+
+    Fixed a bug where multiple Repeat instructions removed multiple lines
+    Choke cymbal as # is supported as a regular hit
+    Minor bug fixes
+
+[33mcommit 537198a11522ee2f7a7ab0dbf7846b4e873a1e1c[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Sun Oct 31 11:22:01 2021 -0400
+
+    Fixed Notations and Technical. All code needing them must check for null
+    before using them
+
+[33mcommit 5bd9e4f1ef5117f25169535db4053a6479654b4d[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Sat Oct 30 16:08:38 2021 -0400
+
+    Fixed the problem with repeat instructions above the tab row
+    Implemented new structure for drumset (DrumPiece, DrumPieceInfo)
+    Used it to fix the hi hat issue (one line -> two drum pieces)
+
+[33mcommit e5a37ab2e6233efa6a3b2e178fcf67e7ace23382[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Fri Oct 29 18:58:02 2021 -0400
+
+    Fixed instrument detection so it happens at the measure level.
+    TabStrings just get the type of the measure.
+
+[33mcommit 61fbb1f6bf55f0ed816f292c2f1f300728775e3b[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Fri Oct 29 09:58:24 2021 -0400
+
+    Triplets finished (time modification only)
+
+[33mcommit 2724a3dfcc1a82525ae71ab7c94fbcf7080634df[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Thu Oct 28 20:12:52 2021 -0400
+
+    Fixed bug with double notes in drums.
+    Fixed divisions so it is the length of a quarter note rather than the
+    denominator of time signature.
+
+[33mcommit cae59a740625e15f4092f7ebf28915361556ed13[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Thu Oct 28 17:53:24 2021 -0400
+
+    Detected instrument is now displayed on the main view.
+
+[33mcommit 198f823f8767fe1a434e8358f98df13ec1ba92c3[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Thu Oct 28 16:29:44 2021 -0400
+
+    Restructured MainViewController and Highlighter, so that Highlighter
+    only does the highlighting, listening and updating is in the main view
+
+[33mcommit 6caf880dabead0ff9f4cb8bb5d68e5eabd0ebc88[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Thu Oct 28 15:41:17 2021 -0400
+
+    GUI: Removed instrument combobox, moved Wrap text, added top labels
+
+[33mcommit ee187a23d793ddea1b7ec4d9d6998e3c21435869[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Wed Oct 27 19:27:23 2021 -0400
+
+    Drums now work ok for easy cases.
+    Added midi-device XML to ensure proper sound in MuseScore.
+
+[33mcommit e28337e874b818e15b1fa17a7fd55d9ce096f62a[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Wed Oct 27 16:06:40 2021 -0400
+
+    Finished changes to the GUI, preview brings up MuseScore.
+    Instrument is now a setting.
+
+[33mcommit c03654d09f17322781e5e49b688a4c755fc8c2c3[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Tue Oct 26 18:23:00 2021 -0400
+
+    Restructured MainViewController, Highlighter, Converter.
+    Everybody should use the Score object from Converter.
+    Added buttons to the GUI, Show MXL works, but its buttons not yet.
+    Preview should bring up MusicScore.
+
+[33mcommit 2a82a660e89734501c1d5ec26f1aee2ed777962b[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Mon Oct 25 17:11:43 2021 -0400
+
+    Fixed bug with chords that had both single and double digit frets.
+    Introduced double digit style in Settings.
+
+[33mcommit 488a7090797617ec9b46ccf0f6f8f3f3ee0e1d99[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Mon Oct 25 12:14:10 2021 -0400
+
+    The new duration, division, note type system is finished.
+    Works for standard note duration.
+    Need more work for triplets, tie notes, probably a pass through the
+    measure to adjust these after the notes have been created.
+
+[33mcommit 1cdcaa7259ce1a9d40ab0b550783be98d21350c1[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Sun Oct 24 14:35:17 2021 -0400
+
+    Each measure has its own divisions.
+    No global divisions needed.
+    getDivisions is now setDivisions
+
+[33mcommit fd6d9f7189d896d430b32e4da00eceb05b9214e9[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Sun Oct 24 11:55:01 2021 -0400
+
+    GuitarConverter package deleted
+
+[33mcommit b5f7110220e7bc6ff2d14dec141f0aa7a76106d5[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Sat Oct 23 17:12:33 2021 -0400
+
+    Added debug to Gradle.
+    Fixed many problems with time signatures.
+    Time signature instructions now work as expected.
+    Guitar tuning is extracted from text and used.
+
+[33mcommit ff00d14acbddedc5c5367d2c5e7e6df158aa8571[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Sat Oct 23 13:17:30 2021 -0400
+
+    Current song guitar tuning settings now applied correctly.
+    Reorganized createTabSectionList in Score
+
+[33mcommit 5147de2fe2d95403d44532e3dff3145c0ac38549[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Fri Oct 22 17:42:09 2021 -0400
+
+    Implemented current song and system default settings.
+    Added guitar tuning setting to current song settings.
+    Updates Settings.guitarTuning
+    Need to use that info when creating MusicXML
+
+[33mcommit a30f7819466ec8124409f8bbf1260f331132ed93[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Thu Oct 21 17:36:12 2021 -0400
+
+    Passed stringNumber to all levels. Names and octaves now depens on
+    stringNumber
+
+[33mcommit a46145b6231880e796cfba54eeb3f77a2857ae70[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Thu Oct 21 10:57:56 2021 -0400
+
+    Reorganized many patterns to the Patterns class. Ongoing work on TabRow
+    class.
+
+[33mcommit 0933cbc50ed0d56ec4f97f85a43583f13be71294[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Thu Oct 21 09:24:54 2021 -0400
+
+    Renamed all tab classes, from MeasureCollection/Group/etc. to
+    TabSection/Row etc.
+
+[33mcommit f7eaaaaf4ea303649e4741aa5b56ec73a4070f75[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Wed Oct 20 17:11:43 2021 -0400
+
+    Eliminated the from method from MeasureLine (moved to Measure).
+    Other minor edits
+
+[33mcommit d9e38a74be40402b7712bb7ce8197586a6c68336[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Tue Oct 19 19:14:40 2021 -0400
+
+    Validation now allows an empty string for line name. If empty, default
+    tuning is assumed.
+
+[33mcommit 4f269e40f18afb7e8317603914c2f73f1602069b[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Tue Oct 19 14:37:49 2021 -0400
+
+    MusicXMLCreator is now object-oriented.
+
+[33mcommit c909a1b9accd9c82e76057d81b630a36a54fc74c[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Fri Oct 8 13:29:13 2021 -0400
+
+    Most GUI code now fixed. Global settings have been implemented.
+    Persistent settings still to do.
+
+[33mcommit d5a8b2f55279b5e169b362b8ad44eb476f4f8ce2[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Thu Oct 7 19:02:49 2021 -0400
+
+    Settings Window now shows up and has separate controller
+    
+    Need to test that settings get applied and preferences work correctly.
+
+[33mcommit b4abfdb78f5b17f519031f1658e377eb3a2d0fde[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Thu Oct 7 15:22:40 2021 -0400
+
+    Minor renaming changes
+    Must move to creating one Score object for the whole system
+
+[33mcommit 8758947f51472b5d0f3276eb5d72888f97873df5[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Thu Oct 7 13:35:24 2021 -0400
+
+    Tidied up code, resolved saveFile issues, most test cases
+
+[33mcommit 4b3c2589ff97301b74cc05255dae7a14ec6d2496[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Wed Oct 6 17:49:59 2021 -0400
+
+    Renamed a bunch of classes
+    Convert Window has its own controller
+    MainViewController creates MainView and uses it (no more new TabInput)
+    
+    Some test cases fail
+    Savefile code commented out in ConvertWindowController
+    Some renaming and ticing up between the two controllers needed
+
+[33mcommit 94c02c916e3a8b7cc155fb73194421f03c459223[m
+Author: Vassilios Tzerpos <bil@cse.yorku.ca>
+Date:   Tue Oct 5 18:03:19 2021 -0400
+
+    Added dummy Preview button that prints to the console. Minor code
+    cleanup.
+
+[33mcommit 1fa9eb6f9b9338742e30d0eeecd506c947e7e9aa[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Fri Apr 30 09:08:10 2021 -0400
+
+    Create LICENSE
+
+[33mcommit bee5c0e5eb1d0bd76a3a200cafacc37520cb92df[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Fri Apr 30 09:05:48 2021 -0400
+
+    Update README.md
+
+[33mcommit 7e0ae35635c8efe4ab69f35661e71bcda74818de[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Fri Apr 30 09:05:11 2021 -0400
+
+    Update README.md
+
+[33mcommit 189f5e0eda4cdb54df6ac6d445eaca676cc813d7[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Fri Apr 30 09:04:29 2021 -0400
+
+    Delete LICENSE
+
+[33mcommit ae0502df744707c9896b5646bc78aa100d373a90[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Apr 14 21:51:26 2021 -0400
+
+    removed one line
+
+[33mcommit bd87493fbeaaee650eaa9be183f0b3d78e35427a[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Apr 14 00:02:45 2021 -0400
+
+    commented out stuff temporarily
+
+[33mcommit 5afa11d72b3d71681f08297939c57595ba9a734c[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Tue Apr 13 23:59:37 2021 -0400
+
+    commented out stuff temporarily
+
+[33mcommit d7a73c58330737f287e7fc2aa623cf1e23ad08ae[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Tue Apr 13 23:58:46 2021 -0400
+
+    commented out stuff temporarily
+
+[33mcommit 7d90fe82b165c79b74d9847f82beab12f2845d58[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Tue Apr 13 23:57:58 2021 -0400
+
+    commented out stuff temporarily
+
+[33mcommit b8075f0c82bed0d35e94662fbe7ec64ca8b6a2de[m
+Author: k899e <k8.99e9@gmail.com>
+Date:   Tue Apr 13 22:54:59 2021 -0400
+
+    Gui Testing  pt 3
+
+[33mcommit c0aed5e68ed98220d867d9980f0a5fba62453a52[m
+Author: k899e <k8.99e9@gmail.com>
+Date:   Tue Apr 13 22:54:31 2021 -0400
+
+    Gui Testing  pt 2
+
+[33mcommit f686f1540ca078fe6f9510c320618beed8d91257[m
+Author: k899e <k8.99e9@gmail.com>
+Date:   Tue Apr 13 22:52:37 2021 -0400
+
+    Gui Testing
+
+[33mcommit 08d9e2f05c1366c9dd8a71e8811b3d6629f46261[m
+Author: k899e <k8.99e9@gmail.com>
+Date:   Tue Apr 13 18:25:55 2021 -0400
+
+    Gui Testing, Input testing
+
+[33mcommit 38241e5ed000ddb2a68f88a8c7f7ab370ea77850[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Tue Apr 13 17:33:13 2021 -0400
+
+    Tested harmonics, frets, grace notes, hammer ons, pull offs, slides, flams, and drags
+
+[33mcommit ab0e56b13d7183acdffe20079dd770330d62658c[m[33m ([m[1;31morigin/stan-branch[m[33m)[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Tue Apr 13 11:21:50 2021 -0400
+
+    fixed bug where level 4 highlights didnt appear.
+    added support for drag notes
+
+[33mcommit 37e7ffb87d5b2f6ec2958f8083a20dbaecee0ea9[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Tue Apr 13 00:19:29 2021 -0400
+
+    added testing for time signatures and styled the new splash screen
+
+[33mcommit 63ec766f518ec7537b68669e4916354b10608f50[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Apr 12 20:22:07 2021 -0400
+
+    started working on a new splashscreen that uses javafx. restored the note player functionality
+
+[33mcommit 20b50e0e927d400f552f988ea20175ab43414985[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Apr 12 17:46:30 2021 -0400
+
+    commented out stuff temporarily
+
+[33mcommit d6e3d292fc448a1989915eaf6f1a2f0d7501c3d1[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Apr 12 17:43:47 2021 -0400
+
+    commented out stuff temporarily
+
+[33mcommit 060f73a86d9f2d5df40a926945391979d01ceea3[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Apr 12 17:40:26 2021 -0400
+
+    removed dependency on lombok and temporarily removed dependency on jfugue
+
+[33mcommit 1984b1f16fd067454a1f5f7b04265ce430959baf[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Apr 12 16:44:36 2021 -0400
+
+    made methods public
+
+[33mcommit 66687fe88e4e33d0ec58fd2a7f729f21acd39f53[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Apr 12 15:53:21 2021 -0400
+
+    change made
+
+[33mcommit a5097ad1529195804df70749a63b9182e6e61566[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Apr 12 15:02:39 2021 -0400
+
+    made instrument mode to autodetect before every test
+
+[33mcommit ce45f326838ad0b16a2d9679d509f924e584262d[m
+Merge: c19cc1e fb36f94
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Apr 12 14:57:20 2021 -0400
+
+    Merge branch 'stan-branch' of https://github.com/Stan15/TAB2XML
+
+[33mcommit fb36f94d9c700316306c64cfd4b45dd04206c8c5[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Apr 12 14:56:52 2021 -0400
+
+    commented out test
+
+[33mcommit e70865a2782494effd2937961b5bc646db2b4029[m[33m ([m[1;31morigin/new-error-system[m[33m)[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Apr 12 14:49:03 2021 -0400
+
+    changed error representation from a hashmap representation to a class-based representation. removed deprecated gradle features.
+
+[33mcommit c19cc1e6d1e333fab4ff9668067c0cb776084667[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Apr 12 12:57:07 2021 -0400
+
+    removed test that is not completed
+
+[33mcommit 66fb29b1e15526bb03b5f1e8f387e87c5d5b8d13[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Apr 12 12:53:54 2021 -0400
+
+    tst
+
+[33mcommit 3d5af6efe21f91c2f8464ccffe5a08b028d57dc4[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Apr 12 12:18:51 2021 -0400
+
+    trying to optimize errors
+
+[33mcommit c7d810dc18f3f71afc3a64d693d8267e347753a1[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sat Apr 10 17:20:28 2021 -0400
+
+    fixed some test cases that were faulty
+
+[33mcommit d510aacbc25f6afe767f891c84201d250d3509d1[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sat Apr 10 13:47:48 2021 -0400
+
+    added some tests for the MeasureInsides regex pattern
+
+[33mcommit a16bb5be42d87e017edf0390083e30d41c2e8a1b[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sat Apr 10 04:19:52 2021 -0400
+
+    prevents conversion when no measure is present in the text
+
+[33mcommit fa5642d5b02b6767c9e31f3a0948cfb9e902da1e[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sat Apr 10 04:01:31 2021 -0400
+
+    * Made bass scores display with the correct strings
+    * changed the auto instrument detection algorithm to be more heuristic based, and it, to a degree, uses knowledge of previous measures to determine the next measure's type
+    * added some new error messages ( I have not tested if they are actually reachable)
+    * Fixed bugs
+
+[33mcommit e19f33f85b29bbe0cd0aef33407299873a247e2b[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Fri Apr 9 21:11:51 2021 -0400
+
+    made it so only drum parts that are used are specified in the musicxml file
+
+[33mcommit 52448c88f646950e7b5b90940d7466bb8a2d3893[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Fri Apr 9 20:17:17 2021 -0400
+
+    implemented a way to make it really easy to add support for other drum parts
+
+[33mcommit 4f778b089d430079325faa709ada616be8b68e9b[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Fri Apr 9 14:02:39 2021 -0400
+
+    fixed support for flams and a bug where multiple repeats separated only by one | is seen as invalid
+
+[33mcommit 3805f61a9f54f648332eaad9e4231c8c5a1d3e8c[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Fri Apr 9 11:13:06 2021 -0400
+
+    fixed some bugs with drums and added back the four error level system
+
+[33mcommit 67594297e324981ec4a71d1147dda736acbe5239[m
+Merge: ebce651 1169e16
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Thu Apr 8 22:09:31 2021 -0400
+
+    Merge branch 'develop-Kj' of https://github.com/Stan15/TAB2XML into stan-branch
+    
+     Conflicts:
+    	src/main/java/converter/note/DrumNote.java
+    	src/main/java/converter/note/Note.java
+    	src/main/java/converter/note/NoteFactory.java
+    	src/main/java/models/measure/note/Instrument.java
+    	src/main/java/models/measure/note/Unpitched.java
+
+[33mcommit ebce651c86cbc2e6fbe6641e6bd548404c8b834c[m
+Merge: 87a542d 8068633
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Thu Apr 8 21:40:00 2021 -0400
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML into stan-branch
+    
+     Conflicts:
+    	src/main/java/converter/Score.java
+
+[33mcommit 87a542dab69a46048a65569847d0babe0385b1be[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Thu Apr 8 15:59:32 2021 -0400
+
+    fixed bugs in drum tablature parsing relating to chords in different voices
+
+[33mcommit 6493ba461004f2c081b2ef56c1e1918872e9e070[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Thu Apr 8 14:14:19 2021 -0400
+
+    fixing voice differentiation bugs in measures
+
+[33mcommit 8b829b07c2c4f701f2ec6155fde342f28a9921bb[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Thu Apr 8 05:12:42 2021 -0400
+
+    fixed issues with dri+um parsing such as backup misaligned and missing notes in output xml
+
+[33mcommit 8068633cde972aebf82e26539a056b89793de137[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Apr 7 12:41:18 2021 -0400
+
+    fixing bug with MeasureLine.INSIDES_PATTERN
+
+[33mcommit 3469716cbb373b473b80283f55feb680cf59d3f3[m
+Merge: 8556f07 1634ce4
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Apr 7 12:27:33 2021 -0400
+
+    fixing bug with MeasureLine.INSIDES_PATTERN
+
+[33mcommit a9adf5370a827bf474e2d41b89ad81d5dbfe5dc4[m
+Author: k899e <k8.99e9@gmail.com>
+Date:   Wed Apr 7 11:52:48 2021 -0400
+
+    add go to measure
+
+[33mcommit 1634ce42065433a96fa5e4dd959447e52c1dc0bc[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Tue Apr 6 23:39:35 2021 -0400
+
+    changed instrument to AUTO
+
+[33mcommit 8556f0733b03d63eebf501b28f21166bb7775a82[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Apr 5 20:30:03 2021 -0400
+
+    connected score type chooser to backend
+
+[33mcommit 9078809f56e2b37e0b2772eb02f8dc5c688b1197[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Apr 5 18:49:14 2021 -0400
+
+    connected score type chooser to backend
+
+[33mcommit 7cd9c0de7a124f7ea78a40303716f7e62e7d5c49[m
+Merge: b1cbf4a 9730ce2
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Apr 5 18:11:07 2021 -0400
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML into stan-branch
+
+[33mcommit 9730ce2f3166af6063c72f64844ac4ae5c30a502[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Apr 5 18:10:15 2021 -0400
+
+    added some unnecessary files to gitignore
+
+[33mcommit c6d5d5641b7afe3400ee6327e6f1d91717c74aa7[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Apr 5 18:06:42 2021 -0400
+
+    deleted unneeded files
+
+[33mcommit b1cbf4a00c78238192f4b626813250b4467101a6[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Apr 5 17:48:19 2021 -0400
+
+    Implementing drum tablature
+
+[33mcommit d36b4490205ba3e280726e2bd6b0ad6efb763eeb[m
+Author: k899e <k8.99e9@gmail.com>
+Date:   Mon Apr 5 14:46:36 2021 -0400
+
+    bug fix; changes should persist with time signature
+
+[33mcommit 8153ecd2c2376b53f4bc1b9d4d06143aa8c28e68[m
+Author: k899e <k8.99e9@gmail.com>
+Date:   Mon Apr 5 14:40:34 2021 -0400
+
+    gui updates; user manual, score type, default time signature
+
+[33mcommit 0d97c07e5554c567700749a5801450b157286d7c[m[33m ([m[1;31morigin/adil-branch[m[33m)[m
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Mon Apr 5 12:54:29 2021 -0400
+
+    private measure Count
+
+[33mcommit 0d2dd980180d2d2ea3a39ac10ca76b0bdddf4ba6[m
+Merge: efc9cfa ce38d94
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Mon Apr 5 11:51:27 2021 -0400
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML into adil-branch
+
+[33mcommit 1169e16330cc306492947e0927cd81bec21b2ce7[m
+Author: kjthegreat <kjsingh76@gmail.com>
+Date:   Sun Apr 4 23:06:18 2021 -0400
+
+    beam support added
+
+[33mcommit f03f7686d4a1eae863eee420c210b39d4acb657f[m
+Merge: f6d09cb ce38d94
+Author: kjthegreat <kjsingh76@gmail.com>
+Date:   Sun Apr 4 23:04:09 2021 -0400
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML into develop-Kj
+    
+     Conflicts:
+    	src/main/java/converter/instruction/Repeat.java
+    	src/main/java/converter/measure/Measure.java
+    	src/main/java/converter/note/Note.java
+    	src/main/java/converter/note/NoteFactory.java
+    	src/main/java/models/measure/note/Beam.java
+
+[33mcommit f6d09cb7f16ba9fde7bd55f335826bd4f63f65bf[m
+Author: kjthegreat <kjsingh76@gmail.com>
+Date:   Sun Apr 4 22:54:58 2021 -0400
+
+    type functionality for DrumNote.java
+
+[33mcommit 1600d5b660ac4742e9a0d91e31667ba464ccf56a[m
+Author: kjthegreat <kjsingh76@gmail.com>
+Date:   Sun Apr 4 22:40:50 2021 -0400
+
+    type functionality for DrumNote.java
+
+[33mcommit 3c882908c2d81a478b67bec5fc08360594ce0c8c[m
+Author: kjthegreat <kjsingh76@gmail.com>
+Date:   Sun Apr 4 20:21:40 2021 -0400
+
+    type functionality for DrumNote.java
+
+[33mcommit c443429afd7e6affa68e4fcfaa5ad8525102564d[m
+Author: kjthegreat <kjsingh76@gmail.com>
+Date:   Sun Apr 4 19:37:38 2021 -0400
+
+    basic support for all elements of drum tabs 2
+    basic support means, all elements needed in getModel are there; may work with
+    limited to full functionality
+
+[33mcommit 7037679d56b9d88cd3ffbafb7593a52c8bcb8e5f[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Apr 4 18:16:27 2021 -0400
+
+    deleted compiler.xml
+
+[33mcommit f674d9641694b2f7f379ea13d65a3437fefb4eb9[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Apr 4 18:13:04 2021 -0400
+
+    deleted compiler.xml
+
+[33mcommit c36bf9eaef62cdf4acfc884d247680c589941a0c[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Apr 4 13:26:33 2021 -0400
+
+    moved an excepiton class
+
+[33mcommit d0ade18171873d25f93c380cb44ee9e23a6a4285[m
+Author: kjthegreat <kjsingh76@gmail.com>
+Date:   Sun Apr 4 12:53:19 2021 -0400
+
+    basic support for all elements of drum tabs
+    basic support means, all elements needed in getModel are there; may work with
+    limited to full functionality
+
+[33mcommit 73d095e152fde025189843654c9d5b7735f7897b[m
+Author: kjthegreat <kjsingh76@gmail.com>
+Date:   Sun Apr 4 12:41:46 2021 -0400
+
+    added support for Unpitched.java
+
+[33mcommit 115ab751604148d3c89c0100a34a0c7bc182d0a8[m
+Author: kjthegreat <kjsingh76@gmail.com>
+Date:   Sun Apr 4 12:01:03 2021 -0400
+
+    changes to DrumNote.java
+
+[33mcommit 703eca7bf9d5b61c5c190b527d2ab692a486d140[m
+Author: kjthegreat <kjsingh76@gmail.com>
+Date:   Sat Apr 3 16:44:35 2021 -0400
+
+    git ignoring master branch files
+
+[33mcommit 98c0e72c7fc66fd13f79f54904d93656b8890a98[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sat Apr 3 12:44:05 2021 -0400
+
+    changed repeat types to enum instead of string representation
+
+[33mcommit ce38d94fc9909a72481a06dec106542fe4c6987f[m
+Merge: 2ecc266 f260997
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sat Apr 3 02:56:55 2021 -0400
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit 2ecc266a3e06db55ccec4578123bf9700b14f671[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sat Apr 3 02:56:44 2021 -0400
+
+    made settings and convert windows have a fixed size
+
+[33mcommit f260997da3c63ac2438445c4af5740397e048553[m
+Merge: 6677e7d 3c24c7a
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Fri Apr 2 04:58:52 2021 -0400
+
+    Merge pull request #25 from Stan15/add-license-1
+    
+    Create LICENSE
+
+[33mcommit 3c24c7a60235e69192bd36c026fb209615c2081e[m[33m ([m[1;31morigin/add-license-1[m[33m)[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Fri Apr 2 04:58:23 2021 -0400
+
+    Create LICENSE
+
+[33mcommit 6677e7d1ac82387ffedd1d47e881cc9d7e615cbe[m
+Merge: 1f0afe7 99fb4a2
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Fri Apr 2 04:49:28 2021 -0400
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML into stan-branch
+
+[33mcommit 1f0afe7895acae7ab0be64ab3dc1dc4e89abdd7c[m
+Merge: 450cd25 3563be7
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Fri Apr 2 04:47:31 2021 -0400
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML into stan-branch
+    
+     Conflicts:
+    	.idea/modules/org.openjfx.TAB2XML.test.iml
+    	src/main/java/converter/Score.java
+    	src/main/java/converter/measure/Measure.java
+    	src/main/java/converter/measure_line/MeasureLine.java
+    	src/main/java/converter/note/GuitarNote.java
+    	src/main/java/converter/note/Note.java
+    	src/main/java/converter/note/NoteFactory.java
+    	src/main/resources/GUI/scene.fxml
+
+[33mcommit 99fb4a2a3e850f3b1dbd87b1ffc7220bef47a3f4[m
+Merge: 3563be7 643b244
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Fri Apr 2 04:42:58 2021 -0400
+
+    Merge branch 'master' of https://github.com/Stan15/TAB2XML into develop
+
+[33mcommit 3563be7b773c88408991dd93186f2d9b81055655[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Fri Apr 2 04:42:39 2021 -0400
+
+     ,
+
+[33mcommit 4f68ef4faa5be651c8dc5af9fcb7857f4f0cb33e[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Fri Apr 2 04:17:45 2021 -0400
+
+    changed project structure
+
+[33mcommit 643b244ad471254b11ab6e214fb5115f4ebff7d6[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Fri Apr 2 04:07:59 2021 -0400
+
+    started working on making bass notes an octave lower
+
+[33mcommit 0d066d482ec6ef312b2e900230f55dd52dcbecb6[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Thu Apr 1 20:47:16 2021 -0400
+
+    fixed bugs with Bass support
+
+[33mcommit 450cd25d85ace65c16a707f6a6d2caebb664192d[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Thu Apr 1 20:26:26 2021 -0400
+
+    fixed bugs with Bass support
+
+[33mcommit 4f6d9022242c56d7ed6d8e3218b859e90652d2a4[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Thu Apr 1 19:24:04 2021 -0400
+
+    added beta support for bass tablature
+
+[33mcommit aa43dda2280355df4a88e5d1ff626ca7f135bdd8[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Thu Apr 1 18:14:04 2021 -0400
+
+    implemented a goToMeasure() method in TabInput.java which should scroll the screen to the position of the specified measure. Implemented the STRICT_TYPE functionality which enables users to override the default automatic instrument type detection. Implemented the method getErrorLevel which lets the user know the level of the most significant error in the score (a level 1 error is the most significant. level 4 is the least.)
+
+[33mcommit ec2ddc6261f93529d8e81835d6f25331c669d7a1[m
+Author: k899e <k8.99e9@gmail.com>
+Date:   Wed Mar 31 12:28:29 2021 -0400
+
+    fixed issue where conversion could happen with empty input, added gui testing cases
+
+[33mcommit 594fd08c3c41d933fa6715168185da3da492a65a[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Mar 31 12:14:11 2021 -0400
+
+    bugfixes with grace notes
+
+[33mcommit c6c3161bed001f88fb6d1fd64969a685dc155a65[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Mar 31 10:52:52 2021 -0400
+
+    removed unused enums
+
+[33mcommit b8a1fb1ef1ae4fa1c443532f13b02eee289c641d[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Mar 31 10:51:18 2021 -0400
+
+    added support for grace notes, slides, hammerons, slurs, pulloffs, natural harmonics
+
+[33mcommit efc9cfa96ce6633be64573e5b941cd52c0b4ef0f[m
+Merge: 60402c8 4019311
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Tue Mar 30 15:41:31 2021 -0400
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML into adil-branch
+
+[33mcommit a2319046e912ed1eac0181f2f238802e7f2da7b7[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Tue Mar 30 07:27:33 2021 -0400
+
+    fixed bug with settings where when error sensitivity is changed, the errors which are not supposed to be shown are still present, but just not highlighted
+
+[33mcommit 73b7328efce046493e85d1bf9f1dfee56d6ff27a[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Mar 29 22:44:16 2021 -0400
+
+    Implemented repeat detection and application using the * notation
+
+[33mcommit 80aca5dd4b0454ffd5402ddf2cd298c49292efeb[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Mar 29 16:43:55 2021 -0400
+
+    test
+
+[33mcommit 1434be546f968a19c3ca3ed7c0a3692dc3f47d4e[m
+Merge: 522b2e8 3cffde6
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Mar 29 13:32:48 2021 -0400
+
+    Merge branch 'master' of https://github.com/Stan15/TAB2XML into stan-branch
+    
+     Conflicts:
+    	.gitignore
+
+[33mcommit 3cffde6894022ccaf139c7849911b28bbca70405[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Mar 29 13:32:12 2021 -0400
+
+    test
+
+[33mcommit 522b2e8e3ff4eb7524431f9e161d5ffea0129dcf[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Mar 29 13:31:25 2021 -0400
+
+    test
+
+[33mcommit 814d24426ce04765bf137780a5177984162138df[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Mar 29 13:30:24 2021 -0400
+
+    test
+
+[33mcommit 40193114f8012f09ce0236e6db8513ae7769bace[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Mar 29 13:25:06 2021 -0400
+
+    .
+
+[33mcommit e3b6e6ae56095726dd4823539094cfe8b64c2da2[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Mar 28 16:08:00 2021 -0400
+
+    TEST
+
+[33mcommit adbaca2481ba59fb314f137a12ce69bb0ed0536e[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Mar 28 15:30:05 2021 -0400
+
+    .
+
+[33mcommit 9ca99b878c41d6e7149086adc883c62981c61099[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Mar 28 15:28:41 2021 -0400
+
+    .
+
+[33mcommit 97e6cfe5131005b01666b8838468b1b241cee25f[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Mar 28 15:23:52 2021 -0400
+
+    changed structure of project to prevent the repository displaying as multiple projects on eclipse
+
+[33mcommit 92927b95a384b2b6ed7a45748d79dfc1d4739d90[m
+Merge: 8acad6c 9078a9d
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Mar 28 14:55:52 2021 -0400
+
+    Merge branch 'stan-branch'
+    
+    # Conflicts:
+    #       .idea/modules.xml
+
+[33mcommit 8acad6cdd0249df65d3c4589a3132e4e313e400b[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Mar 28 14:55:34 2021 -0400
+
+    ff
+
+[33mcommit 9078a9dafd0bd479ce917045600d942d6310ec67[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Mar 28 14:54:35 2021 -0400
+
+    ff
+
+[33mcommit 089d294c36c8962a7ecf10c675233cd644fb0b54[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Mar 28 14:53:35 2021 -0400
+
+    ff
+
+[33mcommit 6adf2e0fe58cdf90ac1f3c2fe44dc425eeaf26bb[m
+Merge: 97b5238 bdcbb97
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Mar 28 14:51:15 2021 -0400
+
+    Merge branch 'stan-branch' of https://github.com/Stan15/TAB2XML
+    
+     Conflicts:
+    	.classpath
+    	.idea/compiler.xml
+    	.idea/modules/TAB2XML.iml
+    	lib/src/main/java/converter/InvalidInputException.java
+    	lib/src/test/java/converter/ScoreTest.java
+    	lib/src/test/java/test_tab_files/xmlDump.xml
+    	src/main/java/utility/Patterns.java
+
+[33mcommit bdcbb97dd8191a47737d17ff6042468275ee3cc2[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Mar 28 14:30:28 2021 -0400
+
+    Changed project structure to prevent multiple project folders being displayed if this repository is opened in eclipse
+
+[33mcommit bba835380ae9b6df1616c1f14a0e27b2058c8c68[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Mar 28 13:40:52 2021 -0400
+
+    ,
+
+[33mcommit 97b5238554d5fc6773ff7a53609d41925274faba[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Mar 28 13:35:40 2021 -0400
+
+    ,
+
+[33mcommit 8404b5a715baa3470e52067a47e445b7ac42689d[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Mar 28 01:07:16 2021 -0400
+
+    .
+
+[33mcommit 9a36becf5977983fecaaef4bf1cb1ae48fb25df8[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Mar 28 01:05:49 2021 -0400
+
+    committing some xml model files
+
+[33mcommit bf70e2f2029d8933fc9d80dad779590f230b8399[m
+Merge: 288a07a bfb3b61
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Mar 28 01:00:43 2021 -0400
+
+    Merge remote-tracking branch 'origin/develop' into stan-branch
+
+[33mcommit 06b9e921097c1a0d1168ed67e523d8c0c8929fe5[m
+Merge: 82b655e bfb3b61
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Mar 28 00:58:23 2021 -0400
+
+    Merge remote-tracking branch 'origin/develop'
+    
+    # Conflicts:
+    #       lib/src/main/java/GUI/FXMLController.java
+
+[33mcommit 82b655ed069c686c878ba9c89bfb8d4a33c95aac[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Mar 28 00:57:07 2021 -0400
+
+    started implementation of grace notes and the repeat style denoted with asterisks "*"
+
+[33mcommit e2614e6d0cfec6c0cdbb1ca6342079f199979929[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Tue Mar 23 22:17:47 2021 -0400
+
+    Update README.md
+
+[33mcommit 657a2aabcda4badfdefa4257cc2f6d11f7a342ac[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Tue Mar 23 22:16:03 2021 -0400
+
+    Update README.md
+
+[33mcommit b8647e12611a91a52872f2d9663b9a352f7465ba[m
+Merge: e0026cf 38fc23f
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Tue Mar 23 17:52:31 2021 -0400
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit e0026cfd8a1058bf87b84f78a5d8ac78bfb800a5[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Tue Mar 23 17:52:17 2021 -0400
+
+    test
+
+[33mcommit 38fc23fcd0528d81c2810298606899f525f08d56[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Tue Mar 23 04:28:00 2021 -0400
+
+    Update README.md
+
+[33mcommit 74b4ea71421b5c9b7dc8f082397833578fbea884[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Tue Mar 23 04:27:35 2021 -0400
+
+    Update README.md
+
+[33mcommit 4bff0015bbb55dbd3bee713e4ae20fe2eda251a3[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Tue Mar 23 04:26:50 2021 -0400
+
+    Update README.md
+
+[33mcommit c89d544a518699665de466a5202b31c7f8c92f16[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Mar 22 20:25:06 2021 -0400
+
+    created a new project structure that will work better with eclipse
+
+[33mcommit 60402c8501817534bf6e383b2b1f2f2ff6e29918[m
+Merge: 63caa6d bfb3b61
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Mon Mar 22 12:32:22 2021 -0400
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML into adil-branch
+
+[33mcommit 9989fdcb8ea84152e7a6874b9ce7afbe138edbf7[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sat Mar 20 20:35:43 2021 -0400
+
+    fixed too many tab signs
+
+[33mcommit 56eb904b2c9bc74e5df3d099863021b2ec18e6cc[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sat Mar 20 20:31:35 2021 -0400
+
+    removed second algorithm option
+
+[33mcommit 3b9f295e6a01c45d69eaf951c244b9a5fff97f71[m
+Merge: 5287819 a0b654c
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sat Mar 20 20:30:12 2021 -0400
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit 5287819e33bdfd79f2b8b125cf06e7fd91da67d6[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sat Mar 20 20:30:00 2021 -0400
+
+    tst
+
+[33mcommit 91559b2372c273154ef77a016c4c467d469b0bbc[m
+Merge: 85da756 288a07a
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sat Mar 20 20:28:48 2021 -0400
+
+    Merge branch 'stan-branch' of https://github.com/Stan15/TAB2XML
+
+[33mcommit bfb3b610d74b82c702f6301261c40df758b087ab[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sat Mar 20 20:24:19 2021 -0400
+
+    changed to one converter algorithm
+
+[33mcommit d95211c79dbdf30bc24cedd8af8e4aecb9a28c63[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sat Mar 20 20:21:11 2021 -0400
+
+    changed to one converter algorithm
+
+[33mcommit 288a07a23cba0d840622e5cf817eeb6038026ca1[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sat Mar 20 20:08:38 2021 -0400
+
+    did stuff
+
+[33mcommit a0b654c71df750dd3cfeadbc7bb3eba866e5283c[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Wed Mar 17 23:38:38 2021 -0400
+
+    Update README.md
+
+[33mcommit 0c38b7da684cb991548b550566cc8d00ff20a57e[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Wed Mar 17 23:38:15 2021 -0400
+
+    Update README.md
+
+[33mcommit c6201aaf59603aa6cb894be78f4cbce01744173a[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Wed Mar 17 23:35:59 2021 -0400
+
+    Update README.md
+
+[33mcommit e4e09a597c8214419952fc57a057d5feafb0e641[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Wed Mar 17 23:34:42 2021 -0400
+
+    Update README.md
+
+[33mcommit 5451f1461728e53239a2915e2f0c08c1abf44a14[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Wed Mar 17 23:33:58 2021 -0400
+
+    Update README.md
+
+[33mcommit 5e33317243e737b5afb0908f56d7fac76f06aef5[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Wed Mar 17 23:33:10 2021 -0400
+
+    Update README.md
+
+[33mcommit ea234c2fb30889e551bdf8403d6020522e04bbaa[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Mar 17 22:17:32 2021 -0400
+
+    trying to add eclipse support
+
+[33mcommit 74eff824fc0e78667835ed0d01621be25a523efe[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Mar 17 22:17:19 2021 -0400
+
+    trying to add eclipse support
+
+[33mcommit ad20ef0d00b78ce171f791d011eebca61542005c[m
+Author: Adil Hashmi <76922658+h-adil@users.noreply.github.com>
+Date:   Wed Mar 17 22:05:57 2021 -0400
+
+    Updated README
+    
+    Added detail, etc.
+
+[33mcommit 2b392c3c7b686718531483498da9eec3ad66050d[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Mar 17 21:59:00 2021 -0400
+
+    trying to add eclipse support
+
+[33mcommit f5eda48f5bb2f09d61d2dbd7c43fac9c1c52f1bc[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Mar 17 11:42:38 2021 -0400
+
+    tst
+
+[33mcommit c3509bd6ba1c28e6eb24be180ff061ed40500694[m
+Merge: b8a1340 e27587b
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Mar 17 01:33:51 2021 -0400
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML into stan-branch
+    
+     Conflicts:
+    	.idea/jarRepositories.xml
+    	build.gradle
+
+[33mcommit b8a1340e6115a8833129ac019a48201323eab95f[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Mar 17 01:31:18 2021 -0400
+
+    tst
+
+[33mcommit e27587b5e06072c61dfe8e0757912a594c0e6916[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Mar 17 01:06:31 2021 -0400
+
+    Added Note Player functionality. Select one or more measures and right click to access the Note Player window
+
+[33mcommit 0557d6c36695eb2d1d88050436603b61db6515cc[m
+Merge: 44c8d65 5fd0859
+Author: k899e <k8.99e9@gmail.com>
+Date:   Mon Mar 15 12:40:50 2021 -0400
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #       src/main/resources/org.openjfx/scene.fxml
+
+[33mcommit 44c8d659aba9cb980773ca6e8c432cc471b788d5[m
+Author: k899e <k8.99e9@gmail.com>
+Date:   Mon Mar 15 12:40:00 2021 -0400
+
+    scrollable gui, style classes updated for new window
+
+[33mcommit 5fd0859e300f1b8a5c62ef03c21cf768906a896e[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Mar 15 12:24:23 2021 -0400
+
+    added method shells for future functionality
+
+[33mcommit ace3e2a54387f72cf675d19574ea7b0eb3586df4[m
+Author: k899e <k8.99e9@gmail.com>
+Date:   Mon Mar 15 12:10:50 2021 -0400
+
+    time signatures adjust window (per measure)
+
+[33mcommit a1f8572c8dca7450d38b5832ec5bd4f5a8db0eb4[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Mar 15 12:08:59 2021 -0400
+
+    test
+
+[33mcommit a48b5ee897055278d59f233fdf7fde5726e4e28b[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Mar 14 18:22:07 2021 -0400
+
+    Fixed bugs with properly applying time signature and repeats
+
+[33mcommit a7461f61a5fd2b28173582226500ffef6541ee2f[m
+Author: Kanwarjot Singh Bharaj <kjsingh76@gmail.com>
+Date:   Sun Mar 14 15:56:32 2021 -0400
+
+    adding changes for the drum note class
+
+[33mcommit fcdb7d47f83ffac4b80e5e423558dd4e5d253a5f[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Mar 14 04:49:54 2021 -0400
+
+    Fixed bugs in repeats
+
+[33mcommit 048f60baf1ef7096529bab064f2863c876fa0168[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Mar 14 04:25:31 2021 -0400
+
+    Implemented repeats. Major bugs still exist
+
+[33mcommit c240c592f1f8890d6aea8dbe4af22f79a3ba9ee4[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Mar 14 00:21:50 2021 -0500
+
+    test
+
+[33mcommit d1a767b8e3628a5c2d6bd7db3bb70c752360cdc3[m
+Merge: c8d4c36 9f9bd82
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sat Mar 13 18:09:37 2021 -0500
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML into stan-branch
+    
+     Conflicts:
+    	src/main/java/converter/note/Note.java
+
+[33mcommit 94cb595acdf31700b98060de04b1a66c6603bb76[m
+Merge: afcc8e4 9f9bd82
+Author: Kanwarjot Singh Bharaj <kjsingh76@gmail.com>
+Date:   Sat Mar 13 18:09:01 2021 -0500
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML into develop-Kj
+
+[33mcommit 9f9bd82b93402ba40fa6bf397ee3ce8c23e5e8c2[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sat Mar 13 18:06:48 2021 -0500
+
+    moved shared methods into the abstract Note class and deleted redundant/unused methods
+
+[33mcommit c8d4c36eb3b73f5881f7114a4ae3986d830a8586[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sat Mar 13 17:58:38 2021 -0500
+
+    started implementing support for instructions like repeats and measure-specific time signatures
+
+[33mcommit afcc8e443d7fba3daa22546da2fa7915c7560d15[m
+Merge: c723a6a 9faeb43
+Author: Kanwarjot Singh Bharaj <kjsingh76@gmail.com>
+Date:   Sat Mar 13 17:35:43 2021 -0500
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML into develop-Kj
+    
+     Conflicts:
+    	src/main/java/converter/note/DrumNote.java
+
+[33mcommit c723a6aa875fc3753c8b1c6ba33d4107ddf589aa[m
+Author: Kanwarjot Singh Bharaj <kjsingh76@gmail.com>
+Date:   Sat Mar 13 17:33:51 2021 -0500
+
+    adding DrumNote.java
+
+[33mcommit 1af03497adfbf9cbc80b108a07360c4ab172f3ca[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sat Mar 13 16:17:07 2021 -0500
+
+    Added functionality to approximate the duration of notes. Also added functionality for dotted note and the xml generates properly for dotted notes, but it still gives an error when opening with musescore for some reason
+
+[33mcommit 4f99b135dc42a1a4cc077f6e3d4a922a58df8726[m
+Author: Kanwarjot Singh Bharaj <kjsingh76@gmail.com>
+Date:   Sat Mar 13 15:20:04 2021 -0500
+
+    adding DrumNote.java
+
+[33mcommit 407c9bedecd09c07dfa64ca682c8f3ef4f2204d7[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sat Mar 13 01:08:01 2021 -0500
+
+    testing sifferent duration calculation method
+
+[33mcommit 63caa6d981bb73100d8bcd152fc1dcd259ad309f[m
+Merge: 56955cd 9faeb43
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Fri Mar 12 14:21:06 2021 -0500
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML into adil-branch
+    
+     Conflicts:
+    	src/main/java/converter/measure/Measure.java
+
+[33mcommit 9faeb438e2a4899aa87e2bc391e41dd81c47512c[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Fri Mar 12 04:03:42 2021 -0500
+
+    Fixed highlighting bug that occured when there are two overlapping verification errors with the same start index
+
+[33mcommit 2ff709191f9a7f047be1323bb16781dc743cfc9f[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Fri Mar 12 02:50:33 2021 -0500
+
+    Fixed bug where having a validation error in the MeasureLine class would result in a runtime error with the StyleSpan class
+
+[33mcommit cde15038a27e6fe4d6f223f8b43d3bf8b6049cf0[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Fri Mar 12 01:18:07 2021 -0500
+
+    transitioned conversion from toString to sterilization using JacksonXML. This makes it a lot easier to add support for new features, and makes debugging conversion problems easier and ensures a more reliable XML output. It also makes us able to give the user a properly indented XML output. This allowed me to easily add support for tablature XML output.
+
+[33mcommit 2dfc2c7bb80d9e0c314e0648b34c16defbbd12a5[m
+Merge: 01ad496 43bd1a8
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Thu Mar 11 14:14:01 2021 -0500
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML into stan-branch
+
+[33mcommit 01ad49688df9c10e5bc5999575e2c5b6dc636156[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Thu Mar 11 14:13:44 2021 -0500
+
+    test
+
+[33mcommit 43bd1a808f972d0fb34efe170087333d7d640f42[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Mar 3 11:57:44 2021 -0500
+
+    change
+
+[33mcommit 56955cdd0335a125fbef4035e265b75709d6d3d1[m
+Merge: b4609af 0c9daff
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Wed Mar 3 11:52:41 2021 -0500
+
+    Merge branch 'develop' into adil-branch
+
+[33mcommit b4609afd25069751eaf20e6393d7e9db09d8a1e5[m
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Wed Mar 3 11:52:16 2021 -0500
+
+    private measure Count
+
+[33mcommit 4f8deafb58ffa7e2b1dcc300991fa764c7c1f844[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Mar 3 11:49:40 2021 -0500
+
+    change
+
+[33mcommit 0c9daff4379de19a718e375601ea967953c6c59c[m
+Merge: 53ba5c7 466ca28
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Wed Mar 3 11:42:25 2021 -0500
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #       src/main/java/converter/measure/Measure.java
+
+[33mcommit 53ba5c7959ac37178027af41549614aba91d4337[m
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Wed Mar 3 11:40:39 2021 -0500
+
+    private measure Count
+
+[33mcommit 466ca2810c540271cf274a1da68e9b8cdbe4239f[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Mar 3 11:39:38 2021 -0500
+
+    Fixed bug with togglepiano button
+
+[33mcommit 85da75628cfbec090a4764b731ba9e31abaf051b[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Feb 28 23:55:18 2021 -0500
+
+    Fixed bug with togglepiano button
+
+[33mcommit 7a575f176babeae24a6de9f9bb8aedb861ab39f5[m
+Merge: bf83869 81b8012
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Feb 28 23:53:01 2021 -0500
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit bf8386915f69334e7f77cc2d8dfba33c2017233d[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Feb 28 23:44:36 2021 -0500
+
+    Fixed bug with togglepiano button
+
+[33mcommit 81b801251d1e4e52c77252c0f7ba8b3f70a64a53[m
+Author: KjSingh97 <77406821+KjSingh97@users.noreply.github.com>
+Date:   Sun Feb 28 23:37:57 2021 -0500
+
+    Add files via upload
+    
+    The Testing Document
+
+[33mcommit cfc2f3650e04d7146a72558799daf00d0f887895[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Feb 28 23:35:50 2021 -0500
+
+    Integrated Boho's converter
+
+[33mcommit 5bcc4c5956df82a1def5dea529a20d558f39202b[m
+Author: Kanwarjot Singh Bharaj <kjsingh76@gmail.com>
+Date:   Sun Feb 28 23:06:26 2021 -0500
+
+    adding test cases 4
+
+[33mcommit 22f4a7fb8fe018b53714c29d5a0f480a6fbc3cba[m
+Author: Kanwarjot Singh Bharaj <kjsingh76@gmail.com>
+Date:   Sun Feb 28 23:05:58 2021 -0500
+
+    adding test cases 3
+
+[33mcommit bd7e4c5405c986b0ca70cfc9f41c965201904ea7[m
+Merge: 8012b2b 398edfe
+Author: Kanwarjot Singh Bharaj <kjsingh76@gmail.com>
+Date:   Sun Feb 28 23:01:22 2021 -0500
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML into develop-Kj
+
+[33mcommit 8012b2b42ccb7fc3b2c61027607d2ed2aafc3075[m
+Author: Kanwarjot Singh Bharaj <kjsingh76@gmail.com>
+Date:   Sun Feb 28 22:53:51 2021 -0500
+
+    adding test cases 2
+
+[33mcommit 398edfeb1409c1e5882a31b30bd02b31361494d4[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Feb 28 21:56:41 2021 -0500
+
+    fixed error
+
+[33mcommit 9c9828a35450a182bc0b1cee547ad840a76e5056[m
+Merge: b1b5605 c2ca428
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Feb 28 21:37:01 2021 -0500
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #       src/main/java/org/openjfx/FXMLController.java
+
+[33mcommit f93e7a0b797e2352c7eb8c47c6b7315e2b214206[m
+Author: Kanwarjot Singh Bharaj <kjsingh76@gmail.com>
+Date:   Sun Feb 28 21:32:54 2021 -0500
+
+    adding test cases 2
+
+[33mcommit b1b56059be5fb10bb1aa41bef50586b2cd12094a[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Feb 28 21:32:54 2021 -0500
+
+    Fixed bug where GuitarNote musicxml <string> property was ocassionally set to 0.
+
+[33mcommit a48eab114c8e76f6428bd31c57ca9f1dff691dad[m
+Author: Kanwarjot Singh Bharaj <kjsingh76@gmail.com>
+Date:   Sun Feb 28 21:32:09 2021 -0500
+
+    adding test cases 1
+
+[33mcommit 67bad7669e602d784e6eed060d6ba65d568792e4[m
+Merge: ec568a3 c2ca428
+Author: Kanwarjot Singh Bharaj <kjsingh76@gmail.com>
+Date:   Sun Feb 28 20:40:10 2021 -0500
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML
+
+[33mcommit ec568a36ecbc9629536fd43dfcfaf0977a166c09[m
+Merge: 267e267 3f62a09
+Author: Kanwarjot Singh Bharaj <kjsingh76@gmail.com>
+Date:   Sun Feb 28 20:04:56 2021 -0500
+
+    Merge branch 'master' of https://github.com/Stan15/TAB2XML
+
+[33mcommit c2ca4285fe045722829bf489c0967183729ee331[m
+Merge: 484a449 310a630
+Author: k899e <k8.99e9@gmail.com>
+Date:   Sun Feb 28 20:00:45 2021 -0500
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 484a449e2b0329dda7602173b00ce745e91382a2[m
+Author: k899e <k8.99e9@gmail.com>
+Date:   Sun Feb 28 20:00:37 2021 -0500
+
+    output folder + error sensitivity updates correctly from program settings
+
+[33mcommit 310a63056623b221ce538ea610e27ff9ddfbe5b9[m
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Sun Feb 28 19:36:06 2021 -0500
+
+    spacing.
+
+[33mcommit a0d1cf8de5943d3e95e6c56228ec1a14f302a3c3[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Feb 28 18:15:01 2021 -0500
+
+    added a loading screen and a new validation error for MeasureLine objects
+
+[33mcommit 71214747185d2ba77a0ca304d1a02492cb6c0c2c[m
+Merge: bed1ebe 2df2bbc
+Author: k899e <k8.99e9@gmail.com>
+Date:   Sun Feb 28 17:41:35 2021 -0500
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #       src/main/resources/org.openjfx/convertWindow.fxml
+
+[33mcommit bed1ebe235ea36afacc91848760796ab99bff783[m
+Author: k899e <k8.99e9@gmail.com>
+Date:   Sun Feb 28 17:41:02 2021 -0500
+
+    Conversion window fields
+
+[33mcommit 2df2bbc09d73545fe815571a57fc5e96b252899a[m
+Merge: 7b876ed 4c8f7f4
+Author: kimboho <kimboho614@gmail.com>
+Date:   Sun Feb 28 17:34:37 2021 -0500
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML into develop
+
+[33mcommit 7b876edc5be93c0356410de9dfe588d51221cd8d[m
+Author: kimboho <kimboho614@gmail.com>
+Date:   Sun Feb 28 17:34:10 2021 -0500
+
+    Add method to convert in GuitarConvert
+
+[33mcommit 4c8f7f42146711668d7def7f212796b016c1497a[m
+Merge: 8d40285 1cca741
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Sun Feb 28 17:25:50 2021 -0500
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML into adil-branch
+
+[33mcommit 8d40285d09cfdbba9d19e1acb511533b037e9e33[m
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Sun Feb 28 17:17:59 2021 -0500
+
+    loading screen for application.
+
+[33mcommit 1cca7415f2e054040213c4d34bd3bcfb37f3b5e1[m
+Merge: 7324ed3 db2fd17
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Feb 28 17:11:44 2021 -0500
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 7324ed332e8adb2597dbfc20d92201c9a228dcee[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Feb 28 17:10:50 2021 -0500
+
+    made convertWindow's save button and close button work
+
+[33mcommit db2fd17e6b45311747bb24183dae9477de8ce6bb[m
+Author: kimboho <kimboho614@gmail.com>
+Date:   Sun Feb 28 15:37:40 2021 -0500
+
+    Add .txt in file name to make it txt format for GUI file opening test
+
+[33mcommit a9e2224617731472ef593ec92cedc8c31f04cdf2[m
+Merge: 3e98bb5 48ab8f7
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Sun Feb 28 15:05:26 2021 -0500
+
+    Merge remote-tracking branch 'origin/develop' into adil-branch
+    
+    # Conflicts:
+    #       src/test/java/converter/measure_line/GuitarMeasureLineTest.java
+
+[33mcommit 3e98bb5fcba789abf9074a8e41f2bc9a412416d2[m
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Sun Feb 28 15:04:17 2021 -0500
+
+    push.
+
+[33mcommit 6b9cd9d94466d526532a201bb774ae8c9aa42cba[m
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Sun Feb 28 15:02:49 2021 -0500
+
+    push.
+
+[33mcommit 48ab8f7700fff453bd3c2aecfc10a7a6e49bcc80[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Feb 28 14:59:35 2021 -0500
+
+    Fixed bug where a new window wasn't opening when you click the "convert" button
+
+[33mcommit 042f4a126d1d79c066dccd8e72708d764e1e32d4[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Feb 28 06:46:13 2021 -0500
+
+    new window problem is still there, but I fixed some things in the GUI and added open and save functionality
+
+[33mcommit acf36fa2345fb5570f88f9dc13d104486ebe4187[m
+Merge: 047e0df bf3713a
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Feb 28 06:01:34 2021 -0500
+
+    Merge branch 'stan-branch' of https://github.com/Stan15/TAB2XML into develop
+    
+     Conflicts:
+    	src/main/java/org/openjfx/FXMLController.java
+    	src/main/java/org/openjfx/MainApp.java
+    	src/main/resources/org.openjfx/scene.fxml
+    	src/main/resources/org.openjfx/styles.css
+
+[33mcommit bf3713a82669f042bc30f7e696c25e7776018c43[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Feb 28 05:59:51 2021 -0500
+
+    fixed GUI
+
+[33mcommit 2d4a47bd0efb9146e853514c0c2e4f017580907b[m
+Author: k899e <k8.99e9@gmail.com>
+Date:   Sat Feb 27 17:51:49 2021 -0500
+
+    Functions for convert window, window still will not open
+
+[33mcommit 19301bc817e9f87c4cd1e6979d3a4556ce3c81bd[m
+Author: k899e <k8.99e9@gmail.com>
+Date:   Sat Feb 27 17:30:00 2021 -0500
+
+    convert window
+
+[33mcommit 38b572166848ca206615c4eb55f5cce11578cedd[m
+Author: kimboho <kimboho614@gmail.com>
+Date:   Fri Feb 26 15:25:03 2021 -0500
+
+    Guitar note pitch test
+
+[33mcommit 2af2ad09f9a3826594a3f80785927a160c0177ca[m
+Author: kimboho <kimboho614@gmail.com>
+Date:   Thu Feb 25 17:54:25 2021 -0500
+
+    Add key test method
+
+[33mcommit 56ea81cd04a61da6922b247d1024d5e39796e351[m
+Author: kimboho <kimboho614@gmail.com>
+Date:   Thu Feb 25 17:17:17 2021 -0500
+
+    Add octave test method
+
+[33mcommit c89ab3a574c2bf51cac54118f375774d91b612df[m
+Author: kimboho <kimboho614@gmail.com>
+Date:   Thu Feb 25 15:42:42 2021 -0500
+
+    Test file made and change some method from private to public to test
+
+[33mcommit 0e71623d993913c37b7713128a255d97894657a0[m
+Author: k899e <k8.99e9@gmail.com>
+Date:   Sat Feb 27 16:26:26 2021 -0500
+
+    - need to figure out how to add new window to stage
+    - styling / layout changes
+
+[33mcommit 8f233b90f56e090e343ee59e2952a9e825ab1bf4[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sat Feb 27 18:18:05 2021 -0500
+
+    temporoary change, working on figuring out the duration of notes
+
+[33mcommit 047e0df6ba528d0333969bb6854349f120540e84[m
+Author: k899e <k8.99e9@gmail.com>
+Date:   Sat Feb 27 17:51:49 2021 -0500
+
+    Functions for convert window, window still will not open
+
+[33mcommit 2b27907e6ee493395926674238e6860957c2ad6c[m
+Author: k899e <k8.99e9@gmail.com>
+Date:   Sat Feb 27 17:30:00 2021 -0500
+
+    convert window
+
+[33mcommit e9e3590d7d0a5a70de44666fa705293172b9d10a[m
+Merge: f716a6c b4bc002
+Author: k899e <k8.99e9@gmail.com>
+Date:   Sat Feb 27 16:26:42 2021 -0500
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit f716a6cfe92d1a07b45776abfa37ae276656cf1b[m
+Author: k899e <k8.99e9@gmail.com>
+Date:   Sat Feb 27 16:26:26 2021 -0500
+
+    - need to figure out how to add new window to stage
+    - styling / layout changes
+
+[33mcommit b4bc002b527dc0d34c2613ca768546a7308942c0[m
+Merge: 03a42e4 30eb844
+Author: kimboho <kimboho614@gmail.com>
+Date:   Sat Feb 27 14:51:04 2021 -0500
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #       src/main/java/converter/measure/GuitarMeasure.java
+
+[33mcommit 30eb844c84af5c57a1072a9c7b68b9f5113c9ea7[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Fri Feb 26 15:25:21 2021 -0500
+
+    added instance vars to TabInput
+
+[33mcommit 03a42e40f4581b4cf2be0286e32a89d97cc72dc6[m
+Author: kimboho <kimboho614@gmail.com>
+Date:   Fri Feb 26 15:25:03 2021 -0500
+
+    Guitar note pitch test
+
+[33mcommit 3f62a09d6a8ae9132b2d8aef8e742d820cd0a18d[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Fri Feb 26 15:13:21 2021 -0500
+
+    removed unused code
+
+[33mcommit f73650eed9e68bb81aefff5e24cb277310b935d9[m
+Merge: e8fd712 ee5675d
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Fri Feb 26 14:59:00 2021 -0500
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML
+
+[33mcommit ee5675d9b25fd22b3d87f075ba579e7717ad0edf[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Fri Feb 26 14:57:01 2021 -0500
+
+    implemented asynchronous error highlighting
+
+[33mcommit e32a72960ce916e6bc431f1accda1f81f205b80c[m
+Merge: 2fe21a5 67c0a3e
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Fri Feb 26 14:47:24 2021 -0500
+
+    Merge branch 'stan-branch' of https://github.com/Stan15/TAB2XML into develop
+    
+     Conflicts:
+    	src/main/java/converter/Score.java
+    	src/main/java/org/openjfx/FXMLController.java
+    	src/main/java/utility/Range.java
+    	src/main/resources/org.openjfx/scene.fxml
+    	src/main/resources/org.openjfx/styles.css
+    	src/test/java/converter/measure_line/GuitarMeasureLineTest.java
+
+[33mcommit 67c0a3e51430c3b841c2b6f66649b792122c9577[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Fri Feb 26 14:43:45 2021 -0500
+
+    implemented asynchronous error highlighting
+
+[33mcommit eed8b7d0e47d2445481c84500e4adff620a2e151[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Fri Feb 26 01:40:05 2021 -0500
+
+    temporary commit
+
+[33mcommit 832eade83d9e5a070ac751f803777a1254dfec3a[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Feb 24 11:29:05 2021 -0500
+
+    slightly decreased the hover time for the tooltip for error annotations
+
+[33mcommit 6e52f9a85782f91ddebfe5dd0efa1895b52ef378[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Feb 24 11:17:58 2021 -0500
+
+    Fixed bug with Score.validate()
+
+[33mcommit 8f29d9a54a8529676beee7658e1b1995e8c074b9[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Feb 24 09:50:40 2021 -0500
+
+    fixed some bugs, introduced some more :)
+
+[33mcommit 73f53fbfe2170d368b2b8b0defe1cc681aeb1f84[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Feb 24 08:46:10 2021 -0500
+
+    Added error annotation for incorrect notes
+
+[33mcommit 9338480da16f0c085535029fd49427e43cfbcfe5[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Feb 24 06:50:58 2021 -0500
+
+    Fixed a bug where a measure which ended at the end of the whole input text was not being recognised.
+
+[33mcommit a6daef294a6725929962d1f7d0c0470ce670c831[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Feb 24 06:45:16 2021 -0500
+
+    Implemented error highlighting, and a tooltip which shows the error message
+
+[33mcommit c341ef5b3bfde330839eae757083d5d7b884db5f[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Feb 24 01:40:41 2021 -0500
+
+    made font monospace
+
+[33mcommit 0226b1f57d7ba14f54e15f4daa6851b58b43ecef[m
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Mon Feb 22 13:16:36 2021 -0500
+
+    Fixed Invalid tests, flipped expected vs. check in assertEquals method.
+
+[33mcommit c44da537efc58d69b275aff9e55fde5c2e520d24[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Feb 22 15:11:49 2021 -0500
+
+    fixed error when creating a GuitarMeasureLine or a DrumMeasureLine object where their GuitarMeasureLine.NAME_SET and DrumMeasureLine.NAME_SET instance variables were being accessed by their parent class, MeasureLine before the instance variables were instantiated.
+
+[33mcommit f3e4d315ebe035e7ad12b163f299eb59609e1a65[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Feb 22 12:53:51 2021 -0500
+
+    fixed error in MeasureGroup test cases
+
+[33mcommit f4b373c1b96a8e9e13bbc526f9f38491021c50c6[m
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Mon Feb 22 12:56:34 2021 -0500
+
+    Added Invalidty tests.
+
+[33mcommit 211709f26071efbba18b3537f2f54a5f016cf0d4[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Feb 22 12:32:29 2021 -0500
+
+    fixed error in MeasureGroup test cases
+
+[33mcommit d1fb546036fa3dfb37f2be34d245e524a2758b42[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Feb 22 12:15:46 2021 -0500
+
+    fixed MeasureGroup test
+
+[33mcommit 590f5dee2992f3d5c1bee4063b5ca472254e8a2e[m
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Mon Feb 22 12:32:47 2021 -0500
+
+    Updated measureLineTest, validity1
+
+[33mcommit 04a3bb3b8d99da274a247a504050b2e32848a62d[m
+Author: k899e <k8.99e9@gmail.com>
+Date:   Mon Feb 22 01:30:41 2021 -0500
+
+    Measure group junit testing
+
+[33mcommit 30488d8c19ee28424de221eb9a909ac815a487f5[m
+Author: k899e <k8.99e9@gmail.com>
+Date:   Sun Feb 21 18:07:51 2021 -0500
+
+    Measure group junit testing
+
+[33mcommit d6e84a6a99868703432934680909b999a6d8af78[m
+Author: kimboho <kimboho614@gmail.com>
+Date:   Sun Feb 21 23:01:27 2021 -0500
+
+    Some fixing in GuitarMeasure class
+
+[33mcommit 86c8d1c71e3d11fe76bea4d85c88fa7582f38607[m
+Author: kimboho <kimboho614@gmail.com>
+Date:   Sun Feb 21 22:08:16 2021 -0500
+
+    Explain how each method handle information specifically in GuitarConvert class
+
+[33mcommit 412ed4326e9ec1ff32a298029ec40f36b33f663e[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Sun Feb 21 18:02:53 2021 -0500
+
+    Update README.md
+
+[33mcommit 507a96113d0550581915c5965cbed1977ed37f0b[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Sun Feb 21 18:00:20 2021 -0500
+
+    Update README.md
+
+[33mcommit 6c8b085cf134e8eb923cc7eece242c55e4a82be0[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Sun Feb 21 17:59:03 2021 -0500
+
+    Update README.md
+
+[33mcommit e78882a3860dce18554db0fdc8917623c199e4ce[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Sun Feb 21 17:58:05 2021 -0500
+
+    Update README.md
+
+[33mcommit 560867744f3be9f3b158f12427ca3c56a951c883[m
+Author: kimboho <kimboho614@gmail.com>
+Date:   Thu Feb 25 17:54:25 2021 -0500
+
+    Add key test method
+
+[33mcommit 8403795e367a2d09a67979cc4f7f622dee8461a8[m
+Author: kimboho <kimboho614@gmail.com>
+Date:   Thu Feb 25 17:17:17 2021 -0500
+
+    Add octave test method
+
+[33mcommit 2408741ddc473982962743aeb94b73c6882a39f1[m
+Author: kimboho <kimboho614@gmail.com>
+Date:   Thu Feb 25 15:42:42 2021 -0500
+
+    Test file made and change some method from private to public to test
+
+[33mcommit 2fe21a57ceac35bfd09e055c18a217f6f80f713c[m
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Wed Feb 24 13:23:22 2021 -0500
+
+    invalidNaming test (corrected).
+
+[33mcommit 3ca6bc9c9b2248ea3a711e479a41b5f19eddfcae[m
+Merge: 0c66980 a497703
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Wed Feb 24 12:20:20 2021 -0500
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML into adil-branch
+
+[33mcommit 0c669807d65c963dcc8a6d2262b1b52095a82c80[m
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Wed Feb 24 12:05:28 2021 -0500
+
+    lab3
+
+[33mcommit a497703151ad667b00e7f38b1537252461d3fa66[m
+Merge: e5eebb3 4fe7468
+Author: kimboho <kimboho614@gmail.com>
+Date:   Wed Feb 24 12:01:37 2021 -0500
+
+    Merge branch 'Boho' into develop
+    
+    # Conflicts:
+    #       src/main/java/converter/GuitarConverter/GuitarConvert.java
+
+[33mcommit e5eebb3738f627062c1223e3707d2b5bb9a2fa78[m
+Author: kimboho <kimboho614@gmail.com>
+Date:   Wed Feb 24 12:01:24 2021 -0500
+
+    lab
+
+[33mcommit 4fe7468dd3b78abfe69444fa0c0bda68e9417970[m
+Author: kimboho <kimboho614@gmail.com>
+Date:   Wed Feb 24 12:01:04 2021 -0500
+
+    lab
+
+[33mcommit f05cab85210d682fd8a75f3ab5f3d08ae34d6b17[m
+Merge: 92132f5 176964d
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Wed Feb 24 11:46:02 2021 -0500
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML into adil-branch
+
+[33mcommit 92132f54d1781e5146685f727ac09957b65038ba[m
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Wed Feb 24 11:45:04 2021 -0500
+
+    Adding invalidNaming test (unfinished).
+
+[33mcommit 176964da9ca66a834b46d080115b93a928087c2e[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Feb 24 11:29:05 2021 -0500
+
+    slightly decreased the hover time for the tooltip for error annotations
+
+[33mcommit 262d7aaa2d41f1817346b6d4e4d4127c0c66228d[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Feb 24 11:17:58 2021 -0500
+
+    Fixed bug with Score.validate()
+
+[33mcommit 267e267e2d55551568841047c82ef4ec7f508a86[m
+Merge: e8fd712 620d959
+Author: Kanwarjot Singh Bharaj <kjsingh76@gmail.com>
+Date:   Wed Feb 24 11:08:55 2021 -0500
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML
+
+[33mcommit 620d95930b32bc89acf8a11c8029141ad1d0bd44[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Feb 24 09:50:40 2021 -0500
+
+    fixed some bugs, introduced some more :)
+
+[33mcommit 34bcda21f4f586a6f3d742622fe62685fc44d0b5[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Feb 24 08:46:10 2021 -0500
+
+    Added error annotation for incorrect notes
+
+[33mcommit ce7f55fccd4ebd4fcf507c8a6928adbeab6fb161[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Feb 24 06:50:58 2021 -0500
+
+    Fixed a bug where a measure which ended at the end of the whole input text was not being recognised.
+
+[33mcommit 33407cef0b4cd2d6e6e4aa8cc9e2df49ce6e3317[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Feb 24 06:45:16 2021 -0500
+
+    Implemented error highlighting, and a tooltip which shows the error message
+
+[33mcommit 51dfdfb6254cc45105791101fc6f301568d6f37f[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Feb 24 01:40:41 2021 -0500
+
+    made font monospace
+
+[33mcommit c22ae1ae0fa6fbe5dd2ab06f67440e776a83f887[m
+Merge: 6294e55 926b53a
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Feb 24 00:28:06 2021 -0500
+
+    Merge branch 'stan-branch' of https://github.com/Stan15/TAB2XML into develop
+
+[33mcommit 926b53accb0bddba2333ddd40f31e694b3694765[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Feb 24 00:27:22 2021 -0500
+
+    made StyleClassedTestArea work with th eParser
+
+[33mcommit 17e75b4eb583eb8be4228a8b0bf62e12e03f162c[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Tue Feb 23 23:51:07 2021 -0500
+
+    change the TextArea text input to a StyleClassedTextArea
+
+[33mcommit e8fd712eee44780bbb7c2ff069cc3613d26eb7e2[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Tue Feb 23 22:44:14 2021 -0500
+
+    made whitespace not count toward a note's distance from the start of the measure
+
+[33mcommit 6294e554bf317f62be1bcdc48c4dfb900e8a8b1c[m
+Merge: 22a36e9 ca24b9f
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Feb 22 15:13:13 2021 -0500
+
+    Merge remote-tracking branch 'origin/develop' into develop
+    
+    # Conflicts:
+    #       src/test/java/converter/measure_line/GuitarMeasureLineTest.java
+
+[33mcommit 22a36e9855e4498cb040bbd49f1784321d3aba34[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Feb 22 15:11:49 2021 -0500
+
+    fixed error when creating a GuitarMeasureLine or a DrumMeasureLine object where their GuitarMeasureLine.NAME_SET and DrumMeasureLine.NAME_SET instance variables were being accessed by their parent class, MeasureLine before the instance variables were instantiated.
+
+[33mcommit ca24b9f52ac72d42b45b42775730a8292f86cd2c[m
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Mon Feb 22 13:16:36 2021 -0500
+
+    Fixed Invalid tests, flipped expected vs. check in assertEquals method.
+
+[33mcommit 9146a88670de2cf808bea4ad18c09f03813b9f23[m
+Merge: 2a29651 c1c6134
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Mon Feb 22 12:58:01 2021 -0500
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML into adil-branch
+
+[33mcommit 2a29651ba4cdf4806b94e051dacf0b532d25e099[m
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Mon Feb 22 12:56:34 2021 -0500
+
+    Added Invalidty tests.
+
+[33mcommit c1c6134ac6451b2993e049cbda9e825daa8deb25[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Feb 22 12:53:51 2021 -0500
+
+    fixed error in MeasureGroup test cases
+
+[33mcommit 5ccd90ebbb21357f0015dadbffb5832c8f00bd96[m
+Merge: 3b0c021 7b58a47
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Mon Feb 22 12:35:47 2021 -0500
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML into adil-branch
+
+[33mcommit 3b0c0216f98891bcd933a79ac861cc541f776c59[m
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Mon Feb 22 12:32:47 2021 -0500
+
+    Updated measureLineTest, validity1
+
+[33mcommit 7b58a47a02c8d8a01ed2d4312e0dcf7a25bf6886[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Feb 22 12:32:29 2021 -0500
+
+    fixed error in MeasureGroup test cases
+
+[33mcommit 8165b74fa72e596a737c86a53b1f2cfbfe45760a[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Feb 22 12:15:46 2021 -0500
+
+    fixed MeasureGroup test
+
+[33mcommit 8e5487125193f12819fe50079a90d7096efdfae9[m
+Merge: 2efdc30 5cebac4
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Mon Feb 22 12:02:08 2021 -0500
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML into adil-branch
+
+[33mcommit 275b33ffdced62d8dd2b5d36fd20a6f9be034f6a[m
+Merge: 020bd49 d0d4f3c
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Mon Feb 22 11:42:26 2021 -0500
+
+    Merge branch 'stan-branch' of https://github.com/Stan15/TAB2XML into develop
+
+[33mcommit 020bd49ed0648255de829272d4d43cc739123374[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Feb 21 18:28:23 2021 -0500
+
+    wrote a few tests for MeasureGroup and Measure
+
+[33mcommit 5cebac43baca2008565c3104ecac3dabbeac1f89[m
+Author: k899e <k8.99e9@gmail.com>
+Date:   Mon Feb 22 01:30:41 2021 -0500
+
+    Measure group junit testing
+
+[33mcommit 4df7a50db58b73fc8772d53085ade15608586a65[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Sun Feb 21 18:02:53 2021 -0500
+
+    Update README.md
+
+[33mcommit c415ae802b053347f0bab2d47be042d668b59ab6[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Sun Feb 21 18:00:20 2021 -0500
+
+    Update README.md
+
+[33mcommit 5880b3b5dd5e0c096205fd3d6d2007ea14c38611[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Sun Feb 21 17:59:03 2021 -0500
+
+    Update README.md
+
+[33mcommit ee469133798230e91124c4792852f3f6cf3b0f95[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Sun Feb 21 17:58:05 2021 -0500
+
+    Update README.md
+
+[33mcommit 3999ccacf4c4021190b8300544431d17fca3d410[m
+Author: k899e <k8.99e9@gmail.com>
+Date:   Sun Feb 21 18:07:51 2021 -0500
+
+    Measure group junit testing
+
+[33mcommit 3a9e7be6e5af49a51443484930275c186d08bee2[m
+Author: kimboho <kimboho614@gmail.com>
+Date:   Mon Feb 22 00:59:59 2021 -0500
+
+    Explains some methods in GuitarNote class
+
+[33mcommit 71c5aa39cb0e2ec9b061df4574b7c75fd245652f[m
+Author: kimboho <kimboho614@gmail.com>
+Date:   Mon Feb 22 00:00:17 2021 -0500
+
+    More explains some methods in GuitarMeasure class
+
+[33mcommit d127ea508e4f87cc95f0e535a06fb2c06a05ec6f[m
+Author: kimboho <kimboho614@gmail.com>
+Date:   Sun Feb 21 23:45:02 2021 -0500
+
+    Explains some methods in GuitarMeasure class
+
+[33mcommit e5089a21194c28dbd7deb95a6a41c8cd8deb8a4f[m
+Merge: b03e8a9 6324a91
+Author: kimboho <kimboho614@gmail.com>
+Date:   Sun Feb 21 23:28:40 2021 -0500
+
+    Merge branch 'develop'
+
+[33mcommit 6324a9186b6dd98e228a8e0fc4ef2f658d9fa55f[m
+Author: kimboho <kimboho614@gmail.com>
+Date:   Sun Feb 21 23:01:27 2021 -0500
+
+    Some fixing in GuitarMeasure class
+
+[33mcommit b03e8a9952b1b8fd35fa8d825037516c6fe76aed[m
+Merge: af9796f 3a1c0f0
+Author: kimboho <kimboho614@gmail.com>
+Date:   Sun Feb 21 22:12:44 2021 -0500
+
+    Merge branch 'develop' of https://github.com/Stan15/TAB2XML
+
+[33mcommit 3a1c0f0f83846b6338be1a3d16d35a41102f2f05[m
+Author: kimboho <kimboho614@gmail.com>
+Date:   Sun Feb 21 22:08:16 2021 -0500
+
+    Explain how each method handle information specifically in GuitarConvert class
+
+[33mcommit 2efdc30840afd5756028b8f51f34870b5a6d2364[m
+Merge: a247c71 af9796f
+Author: Adil Hashmi <adilhashmi12345@gmail.com>
+Date:   Sun Feb 21 20:39:57 2021 -0500
+
+    Merge branch 'master' of https://github.com/Stan15/TAB2XML into adil-branch
+
+[33mcommit d0d4f3cda10effd58b32e3aa71dc606d4d27aaa1[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Feb 21 18:28:23 2021 -0500
+
+    wrote a few tests for MeasureGroup and Measure
+
+[33mcommit af9796ffab8c3fa1913507fd5c4db40bf68f4264[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Sun Feb 21 18:02:53 2021 -0500
+
+    Update README.md
+
+[33mcommit 70eee8997affb4619713979a2d8ee371f04d3695[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Sun Feb 21 18:00:20 2021 -0500
+
+    Update README.md
+
+[33mcommit e206986d11d8d440189a8b53ac6b7da6e13bf6b3[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Sun Feb 21 17:59:03 2021 -0500
+
+    Update README.md
+
+[33mcommit bcc0d21ba454ba7fce10b0383dc6827a9e69c5ed[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Sun Feb 21 17:58:05 2021 -0500
+
+    Update README.md
+
+[33mcommit a247c7100072f7ba7a94cf32c81d02340377c673[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Feb 21 12:56:17 2021 -0500
+
+    not quite sure what changes were made here lol
+
+[33mcommit 867f84cc5c849d6186cc73363fe82886a7123fc9[m
+Merge: 598bf83 1164830
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Sun Feb 21 12:55:13 2021 -0500
+
+    Merge branch 'master' of https://github.com/Stan15/TAB2XML into develop
+
+[33mcommit 11648306cf82eff3be1f718f9e6edc825df4a0ad[m
+Merge: 22199df fbac5c8
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Fri Feb 19 15:41:53 2021 -0500
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit 22199dfeff0c2df66461d984027b285005a1a345[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Fri Feb 19 15:41:44 2021 -0500
+
+    Added a few TODO comments, made minor code optimizations
+
+[33mcommit fbac5c88651d752661aa08077687349e7c15bbab[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Wed Feb 17 23:58:58 2021 -0500
+
+    Update README.md
+
+[33mcommit a19a65dd827710bccc57ad53302c6da7aa7a1d7c[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Wed Feb 17 23:58:11 2021 -0500
+
+    Update README.md
+
+[33mcommit 52e350c087d68b89c00c589d568685ebba3f004c[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Wed Feb 17 23:56:45 2021 -0500
+
+    Update README.md
+
+[33mcommit edf9898c77f9e02f80dd316184ddf8243801ccc0[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Wed Feb 17 23:47:47 2021 -0500
+
+    Update README.md
+
+[33mcommit 5a55787fdecc390965431fe14c3a33eccd81f034[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Wed Feb 17 23:46:41 2021 -0500
+
+    Update README.md
+
+[33mcommit 8a023ed745b973b27e41231948c686cfb3aa1510[m
+Author: Stanley Ihesiulo <47716543+Stan15@users.noreply.github.com>
+Date:   Wed Feb 17 23:44:37 2021 -0500
+
+    Create README.md
+
+[33mcommit f0f1e9a4ad9aee1a89475a574ca705aa018e4b29[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Feb 17 17:25:41 2021 -0500
+
+    fixed bug where the whole text input was not being broken into multiple fragments by the blank lines. It was a problem with the regex "([^\\n\\r]+[\\n\\r])+" in Score.getStringFragments().
+
+[33mcommit 598bf83cf6976b02e55298bdeb96e3c70af91485[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Wed Feb 17 17:25:41 2021 -0500
+
+    fixed bug where the whole text input was not being broken into multiple fragments by the blank lines. It was a problem with the regex "([^\\n\\r]+[\\n\\r])+" in Score.getStringFragments().
+
+[33mcommit f10a58db15b2c8d719a5fffdc9cee1bdeaa0f462[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Tue Feb 16 21:32:28 2021 -0500
+
+    made Note abstract, added technical details to the GuitarNote.toXML()
+
+[33mcommit 61a89f4e379aa2e3be84ab05d951921e9cc472ca[m
+Author: kimboho <kimboho614@gmail.com>
+Date:   Tue Feb 16 18:42:50 2021 -0500
+
+    Guitar Converter classes
+
+[33mcommit 8fedc3dc82da2305b2d239514a7c71bcf1cf0532[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Tue Feb 16 21:32:28 2021 -0500
+
+    made Note abstract, added technical details to the GuitarNote.toXML()
+
+[33mcommit df4d3504514faff44f84fce04aae1870098befc3[m
+Merge: 7dc3dfa 4426185
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Tue Feb 16 21:06:09 2021 -0500
+
+    Merge remote-tracking branch 'origin/develop' into develop
+
+[33mcommit 7dc3dfac63b4adca1fd9f441a008acc2ecae43e9[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Tue Feb 16 21:05:54 2021 -0500
+
+    fixed bug where multiple E notes with the same capitalization in standard guitar tuning weren't being properly detected and corrected to a lower e and an upper E note. made the filechooser's start directory to be the user's home directory
+
+[33mcommit 4426185e3108334727dad12aa35bc3379ab1877b[m
+Author: kimboho <kimboho614@gmail.com>
+Date:   Tue Feb 16 18:42:50 2021 -0500
+
+    Guitar Converter classes
+
+[33mcommit 7c037bfc1d12fee249a4e2664dff419ad346e877[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Tue Feb 16 17:39:26 2021 -0500
+
+    separated the definition of the regex for a measureline divider to the variable Patterns.DIVIDER. added automatic detection and correction when a measure has two e's with the same caps.
+
+[33mcommit 7ec3f2dec06d7ba3859b0d2393523494128203f5[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Tue Feb 16 16:04:14 2021 -0500
+
+    Fixed bug where chords with 2 notes weren't being registered as chords and fixed bug where no measure attributes were being added to the musicXML file
+
+[33mcommit 2fd99d28f86bd1643074c34f83d739f5f9f4007a[m
+Author: Stanley Ihesiulo <stanihe1901@gmail.com>
+Date:   Tue Feb 16 14:35:36 2021 -0500
+
+    Initial commit

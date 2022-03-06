@@ -1,6 +1,8 @@
 package GUI;
 
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
@@ -10,10 +12,16 @@ import javafx.scene.text.Text;
 import musicxml.parsing.*;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
-public class SheetMusicGUI {
+import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.model.StyleSpans;
+
+public class SheetMusicGUI{
 
 	@FXML 
 	private Pane pane;
@@ -33,7 +41,13 @@ public class SheetMusicGUI {
 		//Implement - Duaa
 		//Check if it's a valid measure
 	}
-
+	
+	public void handlePlayMusic() {
+		
+		//Plays music corresponding to the inputted tablature
+		
+	}
+	
 	//Draw the bar to mark the end of a Measure
 	//Must implement double bar and end bars soon?
 	private void barLines(double x, double y, String instrument) {
@@ -192,4 +206,5 @@ public class SheetMusicGUI {
 			clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+y2);
 		}
 	}
+	
 }

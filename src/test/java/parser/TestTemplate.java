@@ -7,9 +7,6 @@ import java.nio.file.Paths;
 
 import musicxml.parsing.*;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.*;
-
 public class TestTemplate {	
 	/*
 	 * When creating a new test class,

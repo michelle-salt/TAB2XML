@@ -57,6 +57,15 @@
 										<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 									</padding>
 								</Button>
+								
+								<Button fx:id="playMusicButton" layoutX="15.0"
+									layoutY="15.0" mnemonicParsing="false"
+									onAction="#handlePlayMusic" prefWidth="115.0" text="Play Music">
+									<padding>
+										<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+									</padding>
+								</Button>
+								
 							</children>
 						</HBox>
 						<HBox layoutX="14.0" layoutY="8.0" spacing="5.0"
