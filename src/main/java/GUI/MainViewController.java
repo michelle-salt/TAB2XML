@@ -371,7 +371,7 @@ public class MainViewController extends Application {
 		
 		Parser parse = new Parser(converter.getMusicXML());
 		String instrument = parse.getInstrument();
-		String string = "T50 V0 I[" + instrument + "] ";
+		String string = "T90 V0 I[" + instrument + "] ";
 		ArrayList<Measure> measures = parse.getMeasures();
 
 		for (int i = 0; i < parse.getNumMeasures(); i++) { // go through every measure
