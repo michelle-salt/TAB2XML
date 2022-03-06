@@ -1,53 +1,77 @@
 package GUI;
 
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-//import models.measure.note.Note;
+import javafx.stage.Window;
 import musicxml.parsing.*;
-
 import java.io.IOException;
-import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
-
-import org.fxmisc.richtext.CodeArea;
-import org.fxmisc.richtext.model.StyleSpans;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import javafx.stage.FileChooser;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 public class SheetMusicGUI{
 
 	@FXML 
 	private Pane pane;
 	private MainViewController mvc;
+	public Window convertWindow;
+
 
 	public void setMainViewController(MainViewController mvcInput) {
 		mvc = mvcInput;
 	}
 
-	//Implements the "Save as PDF" button on the SheetMusic GUI
-	public void handleSavePDF() {
-		//Implement - Mohammad.
+	@FXML
+	void savePDFButtonHandle() {
+		FileChooser fileChooser = new FileChooser();
+		File file = fileChooser.showSaveDialog(convertWindow);
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF Files", "*.pdf");
+		fileChooser.getExtensionFilters().add(extFilter);
+
+		Document document = new Document();
+		if (file != null){
+			try {
+				String filename = "sample.pdf";
+				PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream(filename));
+				document.open();
+				document.add(new Paragraph("This is a sentence."));
+				document.close();
+				pdfWriter.close();
+				System.out.println(filename + " has been succesfully created!");
+			}
+			catch (DocumentException e) {
+				e.printStackTrace();
+			} 
+			catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
 	}
+
 
 	//Implements the "Go To Measure" button on the SheetMusic GUI
 	public void handleGotoMeasure() {
 		//Implement - Duaa
 		//Check if it's a valid measure
 	}
-	
+
 	public void handlePlayMusic() {
-		
+
 		//Plays music corresponding to the inputted tablature
-		
+
 	}
-	
+
 	//Draw the bar to mark the end of a Measure
 	//Must implement double bar and end bars soon?
 	private void barLines(double x, double y, String instrument) {
@@ -206,5 +230,5 @@ public class SheetMusicGUI{
 			clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+y2);
 		}
 	}
-	
+
 }
