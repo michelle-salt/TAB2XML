@@ -12,6 +12,9 @@
 
 <?import javafx.geometry.Insets?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
 <BorderPane fx:id="borderPane"
 	maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
 	minHeight="450.0" minWidth="640.0" prefHeight="700.0"
@@ -48,11 +51,11 @@
 								<Button fx:id="savePDFButton" layoutX="15.0"
 									layoutY="15.0" mnemonicParsing="false"
 									onAction="#handleSavePDF" prefWidth="115.0" text="Save as PDF">
-									<graphic>
+<!-- 									<graphic>
 										<ImageView>
-											<Image url="@/toolbarButtonGraphics/general/TipOfTheDay24.gif" />
+											<Image url="@/toolbarButtonGraphics/general/TipOfTheDay24.gif"/>
 										</ImageView>
-									</graphic>
+									</graphic> -->
 									<padding>
 										<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 									</padding>
