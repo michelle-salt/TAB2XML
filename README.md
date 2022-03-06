@@ -11,12 +11,12 @@ This application is for anyone who wants to:
 
 ## Getting Started
 
-### Prerequisites
+### 1 Prerequisites
 This application works on all major operating systems and assumes that you have a recent version of Java 17, or at least Java 11 installed.
 
-### 3 How to Install TAB2XML
+### 2 How to Install TAB2XML
 
-#### 3.1 Eclipse
+#### 2.1 Eclipse
 JDK 17.0.2 and Eclipse 2021-12 (4.22.0) were used for the IDE screenshots.
 
 1. Open Eclipse, and click on import projects.
@@ -47,7 +47,7 @@ JDK 17.0.2 and Eclipse 2021-12 (4.22.0) were used for the IDE screenshots.
 <p align="center"><img src="https://github.com/michelle-salt/TAB2XML/blob/mohammad/src/main/resources/image_assets/Screen%20Shot%202022-03-06%20at%2010.08.54%20AM.png" alt="9"></p>
 
 
-#### 3.2 Command Line Interface
+#### 2.2 Command Line Interface
 
 1. Clone the repository to the directory of your choice. 
 2. Create a new directory and clone the repository.
@@ -61,9 +61,9 @@ git clone https://github.com/michelle-salt/TAB2XML
 Warning: If permission to build was denied, make sure the ./gradlew is an executable. To change the file permission access of the ./gradlew file use chmod +x ./gradlew	
 ```
 
-### 4 How to Use TAB2XML
+### 3 How to Use TAB2XML
   
-#### 4.1 Insert Tablature
+#### 3.1 Insert Tablature
 
 1. To run the application in Eclipse, double-click the green “run” item in the application folder. To run the application directly from the command line, use the command ./gradlew run in the program directory.
 <p align="center"><img src="https://github.com/michelle-salt/TAB2XML/blob/mohammad/src/main/resources/image_assets/Screen%20Shot%202022-03-06%20at%2010.30.10%20AM.png" alt="10"></p>
@@ -75,27 +75,27 @@ Warning: If permission to build was denied, make sure the ./gradlew is an execut
 Warning: If your input tab has errors, there will be yellow highlights on the text that contains the error.
 ```
 
-#### 4.2 Convert Tablature to Sheet Music
+#### 3.2 Convert Tablature to Sheet Music
 
 1. Input your text tablature into the application.
 2. Press the “Preview Sheet Music” button. A new window will pop-up with the corresponding Sheet Music.
 <p align="center"><img src="https://github.com/michelle-salt/TAB2XML/blob/mohammad/src/main/resources/image_assets/Screen%20Shot%202022-03-06%20at%2010.52.25%20AM.png" alt="12"></p>
 
-#### 4.3 Save Sheet Music
+#### 3.3 Save Sheet Music
 
 1. Press the "Preview Sheet Music" button and a new window will open.
 2. Press the “Save PDF” button at the bottom right of the pop-up to save the Sheet Music as a PDF to your device! (This feature will be implemented at a later time).
 <p align="center"><img src="https://github.com/michelle-salt/TAB2XML/blob/mohammad/src/main/resources/image_assets/Screen%20Shot%202022-03-06%20at%2010.54.53%20AM.png" alt="13"></p>
   
-#### 4.4 Go-to Measure
+#### 3.4 Go-to Measure
 
 1. In the “Go To Measure” field enter a page number and then click "Go" to navigate to the corresponding page (This feature is partly implemented).
 
-#### 4.5 Play
+#### 3.5 Play
 
 1. Click “Play Tablature” to play a song.
 
-### Collaborators
+### 4 Collaborators
 
 - [@Duaaa29](https://github.com/Duaaa29)
 - [@jhaniff](https://github.com/jhaniff)
