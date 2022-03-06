@@ -23,4 +23,8 @@ public class Notehead {
     public void setParentheses(String parentheses) {
         this.parentheses = parentheses;
     }
+
+	public Object getType() {
+		return type;
+	}
 }
