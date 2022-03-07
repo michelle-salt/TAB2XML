@@ -6,62 +6,68 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class Attributes {
+
+	public static final int DEFAULT_FIFTHS = -100000;
 	private int divisions;
 	private int fifths;
 	private Clef clef;
-	
-	public static final int DEFAULT_FIFTHS = -100000;
 
-	//Staff details method is only needed (only for guitars (and maybe bass??))
-		//These include a <staff-lines> tag which indicates how many lines need to be drawn on the sheet music
+	/*
+	 * Staff details method is only needed (only for guitars (and maybe bass??))
+	 * These include a <staff-lines> tag which indicates how many lines need to be drawn on the sheet music
+	 */
 	public Attributes(Document doc, int measureNumber) {
 		NodeList measureList = doc.getElementsByTagName("measure");
 
-		// Get nodes for current measure
-		Node currentMeasureParentNode = measureList.item(measureNumber - 1); //Subtract 1 since it starts from 0
+		/*
+		 * Get the nodes for the current measure
+		 * NOTE: item should start from  0 
+		 */
+		Node currentMeasureParentNode = measureList.item(measureNumber - 1);
 		NodeList attributesInMeasure = currentMeasureParentNode.getChildNodes();
-
-		int counter = 0;
-		for (int i = 0; i < attributesInMeasure.getLength(); i++, counter++) {
+		
+		for (int i = 0; i < attributesInMeasure.getLength(); i++) {	
+			
+			// Get Node at position i.
 			Node currentNode = attributesInMeasure.item(i);
-
+			
+			// Get Element of the current node.
 			if (currentNode.getNodeType() == Node.ELEMENT_NODE && currentNode.getNodeName().equals("attributes")) {
-				Element currElement = (Element) currentNode;
+				Element currentElement = (Element) currentNode;
 				
-				divisions = Integer.parseInt(currElement.getElementsByTagName("divisions").item(0).getTextContent());
+				divisions = Integer.parseInt(currentElement.getElementsByTagName("divisions").item(0).getTextContent());
 				try {
-					fifths = Integer.parseInt(currElement.getElementsByTagName("fifths").item(0).getTextContent());
-				} catch (NullPointerException e) {
-					fifths = DEFAULT_FIFTHS; //Random value that's probably not a valid number
+					fifths = Integer.parseInt(currentElement.getElementsByTagName("fifths").item(0).getTextContent());
+				} 
+				catch (NullPointerException e) {
+					fifths = DEFAULT_FIFTHS; // Random value that's probably not a valid number
 				}
-				
 
-				//Clef will only exist for the first measure
+				// Clef will only exist for the first measure.
 				try {
-					String sign = currElement.getElementsByTagName("sign").item(0).getTextContent();
-					int line = Integer.parseInt(currElement.getElementsByTagName("line").item(0).getTextContent());
+					String sign = currentElement.getElementsByTagName("sign").item(0).getTextContent();
+					int line = Integer.parseInt(currentElement.getElementsByTagName("line").item(0).getTextContent());
 					clef = new Clef(sign, line);
-				} catch (NullPointerException e) {
+				} 
+				catch (NullPointerException e) {
 					clef = new Clef(null, 0);
 				}
-				break; //Since there's only one attribute tag
+				break; // Since there's only one attribute tag
 			}
+			
 		}
 	}
 
-	
-	//Public accessors
 	public int getDivisions() {
 		return divisions;
 	}
-	
 
 	public int getFifths() {
 		return fifths;
 	}
 	
-
 	public Clef getClef() {
 		return clef;
 	}
+	
 }
