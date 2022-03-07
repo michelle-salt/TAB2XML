@@ -311,7 +311,7 @@ public class MainViewController extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/convertWindow.fxml"));
 			root = loader.load();
-			SaveController controller = loader.getController();
+			SaveMXLController controller = loader.getController();
 			controller.setMainViewController(this);
 			convertWindow = this.openNewWindow(root, "ConversionOptions");
 		} catch (IOException e) {
@@ -324,9 +324,9 @@ public class MainViewController extends Application {
 	void saveMXLButtonHandle() {
 		Parent root;
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/saveWindow.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/saveMXLWindow.fxml"));
 			root = loader.load();
-			SaveController controller = loader.getController();
+			SaveMXLController controller = loader.getController();
 			controller.setMainViewController(this);
 			convertWindow = this.openNewWindow(root, "Save MusicXML");
 		} catch (IOException e) {
@@ -371,9 +371,9 @@ public class MainViewController extends Application {
 	void savePDFButtonHandle() {		
 		Parent root;
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/saveWindow.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/savePDFWindow.fxml"));
 			root = loader.load();
-			SaveController controller = loader.getController();
+			SaveMXLController controller = loader.getController();
 			controller.setMainViewController(this);
 			convertWindow = this.openNewWindow(root, "Save PDF");
 		} catch (IOException e) {
