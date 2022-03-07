@@ -99,6 +99,8 @@ public class MainViewController extends Application {
 	@FXML
 	Button previewButton;
 	@FXML
+	Button savePDFButton;
+	@FXML
 	Button goToline;
 	@FXML
 	ComboBox<String> cmbScoreType;
@@ -309,7 +311,7 @@ public class MainViewController extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/convertWindow.fxml"));
 			root = loader.load();
-			SaveMXLController controller = loader.getController();
+			SaveController controller = loader.getController();
 			controller.setMainViewController(this);
 			convertWindow = this.openNewWindow(root, "ConversionOptions");
 		} catch (IOException e) {
@@ -322,9 +324,9 @@ public class MainViewController extends Application {
 	void saveMXLButtonHandle() {
 		Parent root;
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/saveMXLWindow.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/saveWindow.fxml"));
 			root = loader.load();
-			SaveMXLController controller = loader.getController();
+			SaveController controller = loader.getController();
 			controller.setMainViewController(this);
 			convertWindow = this.openNewWindow(root, "Save MusicXML");
 		} catch (IOException e) {
@@ -351,7 +353,6 @@ public class MainViewController extends Application {
 
 	@FXML
 	private void previewButtonHandle() throws IOException, SAXException {
-		// converter.getMusicXML() returns the MusicXML output as a String
 		Parent root;
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/sheetMusicGUI.fxml"));
@@ -360,6 +361,21 @@ public class MainViewController extends Application {
 			controller.setMainViewController(this);
 			controller.update();
 			convertWindow = this.openNewWindow(root, "Preview Sheet Music");
+		} catch (IOException e) {
+			Logger logger = Logger.getLogger(getClass().getName());
+			logger.log(Level.SEVERE, "Failed to create new Window.", e);
+		}
+	}
+	
+	@FXML
+	void savePDFButtonHandle() {		
+		Parent root;
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/saveWindow.fxml"));
+			root = loader.load();
+			SaveController controller = loader.getController();
+			controller.setMainViewController(this);
+			convertWindow = this.openNewWindow(root, "Save PDF");
 		} catch (IOException e) {
 			Logger logger = Logger.getLogger(getClass().getName());
 			logger.log(Level.SEVERE, "Failed to create new Window.", e);

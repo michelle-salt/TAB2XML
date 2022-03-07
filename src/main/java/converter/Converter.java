@@ -35,7 +35,19 @@ public class Converter {
 	public List<ValidationError> validate() {
 		return score.validate();
 	}
+	
     public void saveMusicXMLFile(File file) {
+        try {
+            PrintWriter writer;
+            writer = new PrintWriter(file);
+            writer.println(mxlc.generateMusicXML());
+            writer.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void savePDFFile(File file) {
         try {
             PrintWriter writer;
             writer = new PrintWriter(file);

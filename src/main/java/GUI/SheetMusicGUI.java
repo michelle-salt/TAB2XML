@@ -1,6 +1,7 @@
 package GUI;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
@@ -11,14 +12,6 @@ import musicxml.parsing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
-import javafx.stage.FileChooser;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 
 public class SheetMusicGUI{
 
@@ -26,39 +19,23 @@ public class SheetMusicGUI{
 	private Pane pane;
 	private MainViewController mvc;
 	public Window convertWindow;
+	
+	@FXML
+	Button savePDFButton;
+	@FXML
+	Button playMusicButton;
+	@FXML
+	Button goToMeasureButton;
 
 
 	public void setMainViewController(MainViewController mvcInput) {
 		mvc = mvcInput;
 	}
-
+	
 	@FXML
-	void savePDFButtonHandle() {
-		FileChooser fileChooser = new FileChooser();
-		File file = fileChooser.showSaveDialog(convertWindow);
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF Files", "*.pdf");
-		fileChooser.getExtensionFilters().add(extFilter);
-
-		Document document = new Document();
-		if (file != null){
-			try {
-				String filename = "sample.pdf";
-				PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream(filename));
-				document.open();
-				document.add(new Paragraph("This is a sentence."));
-				document.close();
-				pdfWriter.close();
-				System.out.println(filename + " has been succesfully created!");
-			}
-			catch (DocumentException e) {
-				e.printStackTrace();
-			} 
-			catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-		}
+	private void savePDFButtonHandle() {
+		mvc.savePDFButtonHandle();
 	}
-
 
 	//Implements the "Go To Measure" button on the SheetMusic GUI
 	public void handleGotoMeasure() {
@@ -67,9 +44,7 @@ public class SheetMusicGUI{
 	}
 
 	public void handlePlayMusic() {
-
 		//Plays music corresponding to the inputted tablature
-
 	}
 
 	//Draw the bar to mark the end of a Measure
