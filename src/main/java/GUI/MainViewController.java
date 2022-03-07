@@ -371,7 +371,7 @@ public class MainViewController extends Application {
 	void savePDFButtonHandle() {		
 		Parent root;
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/savePDFWindow.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/saveMXLWindow.fxml"));
 			root = loader.load();
 			SaveMXLController controller = loader.getController();
 			controller.setMainViewController(this);
