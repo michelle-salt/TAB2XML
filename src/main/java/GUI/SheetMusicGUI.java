@@ -136,7 +136,7 @@ public class SheetMusicGUI{
 			//Get the list of measure from parser
 			List<Measure> measureList = p.getMeasures();
 			//Initialize x and y coordinates of where to draw notes
-			double x = 50.0, y = 0, yStaff = 0;
+			double x = 50.0, xVerify = 50, y = 0, yStaff = 0;			
 			//Iterate through each measure
 			for (int i = 0; i< measureList.size(); i++, x += 25)
 			{
@@ -144,6 +144,22 @@ public class SheetMusicGUI{
 				Measure measure = measureList.get(i);
 				//Get the list of notes for each measure
 				ArrayList<Note> noteList = measure.getNotes();
+				xVerify = x;
+				for (int j = 0; j < noteList.size(); j++, xVerify += 25) {
+					//Get the current note
+					Note note = noteList.get(j);
+					//If it's a chord, draw the notes on the same line (x-coordinate)
+					if (note.isChord()) {
+						xVerify -= 25;
+					}
+				}
+				if (xVerify > this.pane.getMaxWidth()) {
+					x = 50.0;
+					yStaff += 100;
+					placeSheetLines(yStaff, p.getInstrument());
+					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff);
+				}
+				
 				//Loop through all the notes in the current measure
 				for (int j = 0; j < noteList.size(); j++, x += 25)
 				{
@@ -197,11 +213,11 @@ public class SheetMusicGUI{
 						clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff);
 					}
 					else {
-					x = 50.0;
-					yStaff += 100;
-					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
-					placeSheetLines(yStaff, p.getInstrument());
-					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff);
+						x = 50.0;
+						yStaff += 100;
+						new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
+						placeSheetLines(yStaff, p.getInstrument());
+						clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff);
 					}
 				}
 				//Dynamically draw a bar line (after each measure)
