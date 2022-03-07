@@ -19,7 +19,7 @@ public class SheetMusicGUI{
 	private Pane pane;
 	private MainViewController mvc;
 	public Window convertWindow;
-	
+
 	@FXML
 	Button savePDFButton;
 	@FXML
@@ -31,7 +31,7 @@ public class SheetMusicGUI{
 	public void setMainViewController(MainViewController mvcInput) {
 		mvc = mvcInput;
 	}
-	
+
 	@FXML
 	private void savePDFButtonHandle() {
 		mvc.savePDFButtonHandle();
@@ -130,80 +130,82 @@ public class SheetMusicGUI{
 		}		
 	}
 
-	//Update the SheetMusic GUI
-	public void update() throws IOException { 	
-		Parser p = new Parser(mvc.converter.getMusicXML());
-		//Get the list of measure from parser
-		List<Measure> measureList = p.getMeasures();
-		//Initialize x and y coordinates of where to draw notes
-		double x = 50.0; 
-		double y = 0;
-		//Iterate through each measure
-		for (int i = 0; i< measureList.size(); i++, x += 25)
-		{
-			//Get the current measure
-			Measure measure = measureList.get(i);
-			//Get the list of notes for each measure
-			ArrayList<Note> noteList = measure.getNotes();
-			//Loop through all the notes in the current measure
-			for (int j = 0; j < noteList.size(); j++, x += 25)
+		//Update the SheetMusic GUI
+		public void update() throws IOException { 	
+			Parser p = new Parser(mvc.converter.getMusicXML());
+			//Get the list of measure from parser
+			List<Measure> measureList = p.getMeasures();
+			//Initialize x and y coordinates of where to draw notes
+			double x = 50.0, y = 0, yStaff = 0;
+			//Iterate through each measure
+			for (int i = 0; i< measureList.size(); i++, x += 25)
 			{
-				//Get the current note
-				Note note = noteList.get(j);
-				//If it's a chord, draw the notes on the same line (x-coordinate)
-				if (note.isChord()) {
-					x -= 25;
-				}
-				//Get the y value for each drum note
-				if (p.getInstrument().equals("drumset")) {
-					//The spacing of each note is based on the octave and step
-					//Each value represents one "space" above, with a space either being the line or the spaces between
-					//0 is the bottom line (going through the line), 1 is the space between the bottom two lines, etc.
-					if (note.getUnpitched().getOctave() == 5) {
-						switch (note.getUnpitched().getStep()) {
-						case 'A':
-							y = 1;
-							//This is the only note which will have a strikethrough in it
-							Line strikethrough = new Line(x-2, -12+(y-1)*6, x+12, -12+(y-1)*6);
-							pane.getChildren().add(strikethrough); break;
-						case 'G':	y = 2;	break;
-						case 'F':	y = 3;	break;
-						case 'E':	y = 4;	break;
-						case 'D':	y = 5;	break;
-						case 'C':	y = 6;	break;
-						}
-					} else if (note.getUnpitched().getOctave() == 4) {
-						switch (note.getUnpitched().getStep()) {
-						case 'B':	y = 7;	break;
-						case 'A':	y = 8;	break;
-						case 'G':	y = 9;	break;
-						case 'F':	y = 10;	break;
-						case 'E':	y = 11;	break;
-						}
+				//Get the current measure
+				Measure measure = measureList.get(i);
+				//Get the list of notes for each measure
+				ArrayList<Note> noteList = measure.getNotes();
+				//Loop through all the notes in the current measure
+				for (int j = 0; j < noteList.size(); j++, x += 25)
+				{
+					//Get the current note
+					Note note = noteList.get(j);
+					//If it's a chord, draw the notes on the same line (x-coordinate)
+					if (note.isChord()) {
+						x -= 25;
 					}
-					//Value retrieved through guess and check :))))
-					y = -7+(y-1)*6; 
-				} 
-				//Get the y value for each guitar or bass note
-				else {
-					//Figure out which string the note is on
-					int string = note.getString();
-					//Set the y coordinate based on the line
-					//Currently only works for the first staff
-					y = 5+(string-1)*12; //Each staff line is 12 y-pixels apart
+					//Get the y value for each drum note
+					if (p.getInstrument().equals("drumset")) {
+						//The spacing of each note is based on the octave and step
+						//Each value represents one "space" above, with a space either being the line or the spaces between
+						//0 is the bottom line (going through the line), 1 is the space between the bottom two lines, etc.
+						if (note.getUnpitched().getOctave() == 5) {
+							switch (note.getUnpitched().getStep()) {
+							case 'A':
+								y = 1;
+								//This is the only note which will have a strikethrough in it
+								Line strikethrough = new Line(x-2, -12+(y-1)*6+yStaff, x+12, -12+(y-1)*6+yStaff);
+								pane.getChildren().add(strikethrough); break;
+							case 'G':	y = 2;	break;
+							case 'F':	y = 3;	break;
+							case 'E':	y = 4;	break;
+							case 'D':	y = 5;	break;
+							case 'C':	y = 6;	break;
+							}
+						} else if (note.getUnpitched().getOctave() == 4) {
+							switch (note.getUnpitched().getStep()) {
+							case 'B':	y = 7;	break;
+							case 'A':	y = 8;	break;
+							case 'G':	y = 9;	break;
+							case 'F':	y = 10;	break;
+							case 'E':	y = 11;	break;
+							}
+						}
+						//Value retrieved through guess and check :))))
+						y = -7+(y-1)*6; 
+					} 
+					//Get the y value for each guitar or bass note
+					else {
+						//Figure out which string the note is on
+						int string = note.getString();
+						//Set the y coordinate based on the line
+						y = 5+(string-1)*12; //Each staff line is 12 y-pixels apart
+					}
+					//Draw the note
+					if (x < this.pane.getMaxWidth()) {
+						new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
+						placeSheetLines(0, p.getInstrument());
+						clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff);
+					}
+					else {
+					x = 50.0;
+					yStaff += 100;
+					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
+					placeSheetLines(yStaff, p.getInstrument());
+					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff);
+					}
 				}
-				//Draw the note
-				new DrawNotes(pane, x, y, note, p.getInstrument());
+				//Dynamically draw a bar line (after each measure)
+				barLines(x, 0 + yStaff, p.getInstrument());
 			}
-			//Dynamically draw a bar line (after each measure)
-			barLines(x, 0, p.getInstrument());
 		}
-		//Dynamically draw the Sheet lines on the SheetMusic GUI
-		for (int i = 1, y2 = 0; i <= Math.ceil(p.getNumMeasures()/2); i++, y2 += 100) {
-			placeSheetLines(y2, p.getInstrument());
-			//Dynamically draw clef
-			clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+y2);
-		}
-	}
-
 }
