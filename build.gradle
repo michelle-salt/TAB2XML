@@ -26,8 +26,6 @@ jacocoTestReport {
 }
 
 dependencies {
-	// testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
-    // testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
@@ -47,11 +45,7 @@ dependencies {
     implementation 'com.github.JensPiegsa:jfugue:5.0.9'
     
     implementation 'com.itextpdf:itext7-core:7.2.1'
-   implementation 'com.itextpdf:itextpdf:5.5.13.1'
-    
-    implementation 'com.google.code.gson:gson:2.9.0'
-    implementation 'org.apache.pdfbox:pdfbox:2.0.25'
-    implementation 'org.openjfx:javafx:17'
+    implementation 'com.itextpdf:itextpdf:5.5.13.1'
 }
 
 task debug {
