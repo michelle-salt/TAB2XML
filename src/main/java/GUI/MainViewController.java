@@ -78,35 +78,22 @@ public class MainViewController extends Application {
 	public Highlighter highlighter;
 	public Converter converter;
 
-	@FXML
-	Label mainViewState;
-	@FXML
-	TextField instrumentMode;
+	@FXML Label mainViewState;
+	@FXML TextField instrumentMode;
 
-	@FXML
-	public CodeArea mainText;
+	@FXML public CodeArea mainText;
 
-	@FXML
-	TextField gotoMeasureField;
-	@FXML
-	BorderPane borderPane;
-	@FXML
-	Button saveTabButton;
-	@FXML
-	Button saveMXLButton;
-	@FXML
-	Button showMXLButton;
-	@FXML
-	Button previewButton;
-	@FXML
-	Button savePDFButton;
-	@FXML
-	Button goToline;
-	@FXML
-	ComboBox<String> cmbScoreType;
+	@FXML TextField gotoMeasureField;
+	@FXML BorderPane borderPane;
+	@FXML Button saveTabButton;
+	@FXML Button saveMXLButton;
+	@FXML Button showMXLButton;
+	@FXML Button previewButton;
+	@FXML Button savePDFButton;
+	@FXML Button goToline;
+	@FXML ComboBox<String> cmbScoreType;
 
-	@FXML
-	Button playMusic;
+	@FXML Button playMusic;
 
 	public MainViewController() {
 		Settings s = Settings.getInstance();
@@ -352,12 +339,13 @@ public class MainViewController extends Application {
 	}
 
 	@FXML
-	private void previewButtonHandle() throws IOException, SAXException {
-		Parent root;
+	private void previewButtonHandle() throws Exception {
+		System.out.println("Preview Button Clicked!");
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/sheetMusicGUI.fxml"));
+			Parent root;
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/previewSheetWindow.fxml"));
 			root = loader.load();
-			SheetMusicGUI controller = loader.getController();
+			PreviewSheetController controller = loader.getController();
 			controller.setMainViewController(this);
 			controller.update();
 			convertWindow = this.openNewWindow(root, "Preview Sheet Music");
@@ -368,7 +356,7 @@ public class MainViewController extends Application {
 	}
 	
 	@FXML
-	void savePDFButtonHandle() {		
+	void saveSheetMusicButtonHandle() {		
 		Parent root;
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/saveMXLWindow.fxml"));
@@ -382,9 +370,7 @@ public class MainViewController extends Application {
 		}
 	}
 
-	@FXML
-	private void playMusic() throws IOException {
-		
+	@FXML void playMusic() throws IOException {
 		Parser parse = new Parser(converter.getMusicXML());
 		String instrument = parse.getInstrument();
 		String string = "T90 V0 I[" + instrument + "] ";

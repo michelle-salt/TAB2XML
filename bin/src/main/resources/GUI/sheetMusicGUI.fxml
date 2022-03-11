@@ -20,7 +20,7 @@
 	minHeight="450.0" minWidth="640.0" prefHeight="700.0"
 	prefWidth="1000.0" stylesheets="@styles.css"
 	xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="GUI.SheetMusicGUI">
+	fx:controller="GUI.PreviewSheetController">
 	<center>
 		<AnchorPane prefHeight="200.0" prefWidth="666.0"
 			BorderPane.alignment="CENTER">

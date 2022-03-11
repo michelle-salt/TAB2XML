@@ -13,19 +13,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SheetMusicGUI{
+public class PreviewSheetController{
 
-	@FXML 
-	private Pane pane;
+	@FXML private Pane pane;
 	private MainViewController mvc;
 	public Window convertWindow;
 
-	@FXML
-	Button savePDFButton;
-	@FXML
-	Button playMusicButton;
-	@FXML
-	Button goToMeasureButton;
+	@FXML Button saveSheetMusicButton;
+	@FXML Button playButton;
+	@FXML Button goToMeasureButton;
 
 
 	public void setMainViewController(MainViewController mvcInput) {
@@ -33,8 +29,8 @@ public class SheetMusicGUI{
 	}
 
 	@FXML
-	private void savePDFButtonHandle() {
-		mvc.savePDFButtonHandle();
+	private void saveSheetMusicButtonHandle() {
+		mvc.saveSheetMusicButtonHandle();
 	}
 
 	//Implements the "Go To Measure" button on the SheetMusic GUI
@@ -43,8 +39,13 @@ public class SheetMusicGUI{
 		//Check if it's a valid measure
 	}
 
-	public void handlePlayMusic() {
-		//Plays music corresponding to the inputted tablature
+	public void handlePlay() {
+		try {
+			mvc.playMusic();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	//Draw the bar to mark the end of a Measure
