@@ -1,7 +1,9 @@
 package GUI;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
@@ -17,6 +19,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.fxmisc.richtext.CodeArea;
 
@@ -77,6 +80,7 @@ public class PreviewSheetController{
 		return true;
 	}
 
+	//TODO read the file.
 	@FXML
 	boolean handleSave() {
 		if (!isEditingSavedFile || saveFile == null || !saveFile.exists())
@@ -91,10 +95,9 @@ public class PreviewSheetController{
 		return true;
 	}
 	
-	//TODO close a window
 	@FXML
 	private void handleCloseWindow() {
-		
+		mvc.convertWindow.hide();
 	}
 
 	@FXML
