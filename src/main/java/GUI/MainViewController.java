@@ -114,7 +114,7 @@ public class MainViewController extends Application {
 	}
 
 	@FXML
-	private void handleCurrentSongSettings() {
+	void handleCurrentSongSettings() {
 		Parent root;
 		try {
 			FXMLLoader loader = new FXMLLoader(
@@ -130,7 +130,7 @@ public class MainViewController extends Application {
 	}
 
 	@FXML
-	private void handleSystemDefaultSettings() {
+	void handleSystemDefaultSettings() {
 		Parent root;
 		try {
 			FXMLLoader loader = new FXMLLoader(
@@ -146,7 +146,7 @@ public class MainViewController extends Application {
 	}
 
 	@FXML
-	private void handleNew() {
+	void handleNew() {
 		boolean userOkToGoAhead = promptSave();
 		if (!userOkToGoAhead)
 			return;
@@ -156,7 +156,7 @@ public class MainViewController extends Application {
 	}
 
 	@FXML
-	private void handleOpen() {
+	void handleOpen() {
 		boolean userOkToGoAhead = promptSave();
 		if (!userOkToGoAhead)
 			return;
@@ -193,7 +193,7 @@ public class MainViewController extends Application {
 	}
 
 	@FXML
-	private boolean handleSaveAs() {
+	boolean handleSaveAs() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save As");
 		fileChooser.setInitialDirectory(new File(Settings.getInstance().outputFolder));
@@ -220,7 +220,7 @@ public class MainViewController extends Application {
 	}
 
 	@FXML
-	private boolean handleSave() {
+	boolean handleSave() {
 		if (!isEditingSavedFile || saveFile == null || !saveFile.exists())
 			return this.handleSaveAs();
 		try {
