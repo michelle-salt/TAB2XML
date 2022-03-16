@@ -8,9 +8,6 @@ plugins {
 group 'GUI'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 17
-targetCompatibility = 17
-
 repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
@@ -40,7 +37,7 @@ dependencies {
 
     implementation 'com.github.JensPiegsa:jfugue:5.0.9'
     
-    implementation 'com.itextpdf:itextpdf:5.5.13.1'
+    implementation group: 'com.itextpdf', name: 'itext7-core', version:'7.0.4', ext: 'pom'
 }
 
 task debug {

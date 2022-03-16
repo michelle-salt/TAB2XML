@@ -38,7 +38,6 @@ public class PreviewSheetController{
 	@FXML Button playButton;
 	@FXML Button goToMeasureButton;
 
-
 	public void setMainViewController(MainViewController mvcInput) {
 		mvc = mvcInput;
 	}
