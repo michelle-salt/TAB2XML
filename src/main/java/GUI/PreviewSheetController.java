@@ -1,6 +1,8 @@
 package GUI;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -20,6 +22,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.fxmisc.richtext.CodeArea;
 
@@ -28,15 +32,17 @@ public class PreviewSheetController{
 	@FXML private Pane pane;
 	private MainViewController mvc;
 	public Window convertWindow;
-	
+
 	public File saveFile;
 	private static boolean isEditingSavedFile;
-	
+
 	@FXML public CodeArea mainText;
-	
-	@FXML Button saveSheetMusicButton;
+
+	@FXML Button savePDFButton;
 	@FXML Button playButton;
 	@FXML Button goToMeasureButton;
+	
+	public PreviewSheetController() {}
 
 	public void setMainViewController(MainViewController mvcInput) {
 		mvc = mvcInput;
@@ -51,7 +57,7 @@ public class PreviewSheetController{
 	private void handleSystemDefaultSettings() {
 		mvc.handleSystemDefaultSettings();
 	}
-	
+
 	@FXML
 	boolean handleSaveAs() {
 		FileChooser fileChooser = new FileChooser();
@@ -93,15 +99,35 @@ public class PreviewSheetController{
 		}
 		return true;
 	}
-	
+
 	@FXML
 	private void handleCloseWindow() {
-		mvc.convertWindow.hide();
+		Alert alert = 
+				new Alert(
+						Alert.AlertType.CONFIRMATION,
+						"Choose your option",
+						ButtonType.CANCEL, ButtonType.NO, ButtonType.YES);
+		
+		alert.setTitle("Exit Preview Window");
+		alert.setHeaderText("This document is unsaved and will be overwritten. Do you want to save it first?");
+
+		Optional<ButtonType> option = alert.showAndWait();
+		if (option.get() == ButtonType.CANCEL) {
+			/* nothing */
+		}
+		if (option.get() == ButtonType.NO) {
+			mvc.convertWindow.hide();
+		}
+		if (option.get() == ButtonType.YES) {
+			/*
+			 * Implement the saving functionality.
+			 */
+		}
 	}
 
 	@FXML
-	private void saveSheetMusicButtonHandle() {
-		mvc.saveSheetMusicButtonHandle();
+	void savePDFButtonHandle() {
+		mvc.savePDFButtonHandle();
 	}
 
 	//Implements the "Go To Measure" button on the SheetMusic GUI
