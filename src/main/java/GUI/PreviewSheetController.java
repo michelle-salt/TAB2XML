@@ -155,6 +155,10 @@ public class PreviewSheetController{
 		//Implement
 	}
 
+	public void handleTempo() {
+		//Implement
+	}
+	
 	public void handlePlay() {
 		try {
 			mvc.playMusic();

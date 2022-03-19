@@ -72,13 +72,13 @@
 										<Insets bottom="5.0" left="20.0" right="2.0" top="5.0" />
 									</padding>
 								</Label>
-								<TextField fx:id="goToMeasureField" prefWidth="50.0" />
+								<TextField fx:id="tempoField" prefWidth="50.0" />
 								<Label text="bpm">
 									<padding>
 										<Insets bottom="5.0" left="0.0" right="1.5" top="5.0" />
 									</padding>
 								</Label>
-								<Button fx:id="goToMeasureButton" mnemonicParsing="false" onAction="#handleGotoMeasure" prefHeight="25.0" prefWidth="42.0" text="Go" />
+								<Button fx:id="tempoButton" mnemonicParsing="false" onAction="#handleTempo" prefHeight="25.0" prefWidth="42.0" text="Go" />
 							</children>
 							
 						</HBox>
