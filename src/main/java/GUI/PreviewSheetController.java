@@ -7,7 +7,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -134,6 +136,23 @@ public class PreviewSheetController{
 	public void handleGotoMeasure() {
 		//Implement - Duaa
 		//Check if it's a valid measure
+	}
+	
+	public void handlePlayMusic() {
+		try {
+			mvc.playMusic();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void handlePauseMusic() {
+		//Implement
+	}
+	
+	public void handleStopMusic() {
+		//Implement
 	}
 
 	public void handlePlay() {
@@ -321,5 +340,6 @@ public class PreviewSheetController{
 			//Dynamically draw a bar line (after each measure)
 			barLines(x, 0 + yStaff, p.getInstrument());
 		}
+		
 	}
 }
