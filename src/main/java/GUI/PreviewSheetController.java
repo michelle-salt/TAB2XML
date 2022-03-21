@@ -267,19 +267,53 @@ public class PreviewSheetController{
 		}		
 	}
 
-	public void timeSignature(int beats, int beatType, double x, double y) {
-		Text beatsText = new Text(x, y, Integer.toString(beats));
-		beatsText.setFont(Font.font("comic sans", FontWeight.BLACK, 40));
-		//Add number to pane
-		pane.getChildren().add(beatsText);
-		
-		//Increment vertical distance for next letter
-		y += 31;
-		
-		Text beatTypeText = new Text(x, y, Integer.toString(beatType));
-		beatTypeText.setFont(Font.font("Chalkboard", FontWeight.BLACK, 40));
-		//Add number to pane
-		pane.getChildren().add(beatTypeText);
+	public void timeSignature(int beats, int beatType, double x, double y, String instrument) {
+		if (instrument.equalsIgnoreCase("guitar")) {
+			Text beatsText = new Text(x, y, Integer.toString(beats));
+			beatsText.setFont(Font.font("cambria", FontWeight.BLACK, 40));
+			//Add number to pane
+			pane.getChildren().add(beatsText);
+			
+			//Increment vertical distance for next letter
+			y += 31;
+			
+			Text beatTypeText = new Text(x, y, Integer.toString(beatType));
+			beatTypeText.setFont(Font.font("cambria", FontWeight.BLACK, 40));
+			//Add number to pane
+			pane.getChildren().add(beatTypeText);
+		} else if (instrument.equalsIgnoreCase("drumset")) {
+			y -= 6;
+			
+			Text beatsText = new Text(x, y, Integer.toString(beats));
+			beatsText.setFont(Font.font("cambria", FontWeight.BLACK, 32));
+			//Add number to pane
+			pane.getChildren().add(beatsText);
+			
+			//Increment vertical distance for next letter
+			y += 26;
+			
+			Text beatTypeText = new Text(x, y, Integer.toString(beatType));
+			beatTypeText.setFont(Font.font("cambria", FontWeight.BLACK, 32));
+			//Add number to pane
+			pane.getChildren().add(beatTypeText);
+		} 
+		//Assumed to be bass
+		else {
+			y -= 11;
+			
+			Text beatsText = new Text(x, y, Integer.toString(beats));
+			beatsText.setFont(Font.font("cambria", FontWeight.BLACK, 23));
+			//Add number to pane
+			pane.getChildren().add(beatsText);
+			
+			//Increment vertical distance for next letter
+			y += 19;
+			
+			Text beatTypeText = new Text(x, y, Integer.toString(beatType));
+			beatTypeText.setFont(Font.font("cambria", FontWeight.BLACK, 23));
+			//Add number to pane
+			pane.getChildren().add(beatTypeText);
+		}
 	}
 	
 	//Update the SheetMusic GUI
@@ -310,7 +344,7 @@ public class PreviewSheetController{
 				yStaff += 100;
 				placeSheetLines(yStaff, p.getInstrument());
 				clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
-				timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff);
+				timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 			}
 
 			//Loop through all the notes in the current measure
@@ -364,7 +398,7 @@ public class PreviewSheetController{
 					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
 					placeSheetLines(0, p.getInstrument());
 					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
-					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff);
+					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 				}
 				else {
 					x = 75.0;
@@ -372,7 +406,7 @@ public class PreviewSheetController{
 					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
 					placeSheetLines(yStaff, p.getInstrument());
 					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
-					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff);
+					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 				}
 			}
 			//Dynamically draw a bar line (after each measure)
