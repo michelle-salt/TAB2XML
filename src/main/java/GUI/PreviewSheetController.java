@@ -251,13 +251,28 @@ public class PreviewSheetController{
 		}		
 	}
 
+	public void timeSignature(int beats, int beatType, double x, double y) {
+		Text beatsText = new Text(x, y, Integer.toString(beats));
+		beatsText.setFont(Font.font("comic sans", FontWeight.BLACK, 40));
+		//Add number to pane
+		pane.getChildren().add(beatsText);
+		
+		//Increment vertical distance for next letter
+		y += 31;
+		
+		Text beatTypeText = new Text(x, y, Integer.toString(beatType));
+		beatTypeText.setFont(Font.font("Chalkboard", FontWeight.BLACK, 40));
+		//Add number to pane
+		pane.getChildren().add(beatTypeText);
+	}
+	
 	//Update the SheetMusic GUI
 	public void update() throws IOException { 	
 		Parser p = new Parser(mvc.converter.getMusicXML());
 		//Get the list of measure from parser
 		List<Measure> measureList = p.getMeasures();
 		//Initialize x and y coordinates of where to draw notes
-		double x = 50.0, xVerify = 50, y = 0, yStaff = 0;			
+		double x = 75.0, xVerify = 50, y = 0, yStaff = 0;			
 		//Iterate through each measure
 		for (int i = 0; i< measureList.size(); i++, x += 25)
 		{
@@ -275,10 +290,11 @@ public class PreviewSheetController{
 				}
 			}
 			if (xVerify > this.pane.getMaxWidth()) {
-				x = 50.0;
+				x = 75.0;
 				yStaff += 100;
 				placeSheetLines(yStaff, p.getInstrument());
 				clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff);
+				timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff);
 			}
 
 			//Loop through all the notes in the current measure
@@ -332,13 +348,15 @@ public class PreviewSheetController{
 					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
 					placeSheetLines(0, p.getInstrument());
 					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff);
+					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff);
 				}
 				else {
-					x = 50.0;
+					x = 75.0;
 					yStaff += 100;
 					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
 					placeSheetLines(yStaff, p.getInstrument());
 					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff);
+					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff);
 				}
 			}
 			//Dynamically draw a bar line (after each measure)
