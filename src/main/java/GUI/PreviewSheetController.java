@@ -195,17 +195,33 @@ public class PreviewSheetController{
 		pane.getChildren().add(bar);
 	}
 	//Draw the Clef at the left-end of the Staff
-	private void clef(String symbol, double x, double y) {
+	private void clef(String symbol, double x, double y, String instrument) {
 		if (symbol.equalsIgnoreCase("TAB")) {
-			//Draw onto the pane letter by letter
-			for (int i = 0; i < symbol.length(); i++) {
-				//Get the letter
-				Text t = new Text(x, y, symbol.substring(i, i+1));
-				t.setFont(Font.font("times new roman", FontWeight.BLACK, 24));
-				//Add letter to pane
-				pane.getChildren().add(t);
-				//Increment vertical distance for next letter
-				y += 19;
+			if (instrument.equalsIgnoreCase("guitar")) {
+				//Draw onto the pane letter by letter
+				for (int i = 0; i < symbol.length(); i++) {
+					//Get the letter
+					Text t = new Text(x, y, symbol.substring(i, i+1));
+					t.setFont(Font.font("times new roman", FontWeight.BLACK, 24));
+					//Add letter to pane
+					pane.getChildren().add(t);
+					//Increment vertical distance for next letter
+					y += 19;
+				}
+			} 
+			//Assumed to be bass
+			else {
+				y -= 7;
+				//Draw onto the pane letter by letter
+				for (int i = 0; i < symbol.length(); i++) {
+					//Get the letter
+					Text t = new Text(x, y, symbol.substring(i, i+1));
+					t.setFont(Font.font("times new roman", FontWeight.BLACK, 17));
+					//Add letter to pane
+					pane.getChildren().add(t);
+					//Increment vertical distance for next letter
+					y += 12.5;
+				}
 			}
 		} else if (symbol.equalsIgnoreCase("percussion")) {
 			symbol = "II";
@@ -293,7 +309,7 @@ public class PreviewSheetController{
 				x = 75.0;
 				yStaff += 100;
 				placeSheetLines(yStaff, p.getInstrument());
-				clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff);
+				clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
 				timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff);
 			}
 
@@ -347,7 +363,7 @@ public class PreviewSheetController{
 				if (x < this.pane.getMaxWidth()) {
 					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
 					placeSheetLines(0, p.getInstrument());
-					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff);
+					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
 					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff);
 				}
 				else {
@@ -355,7 +371,7 @@ public class PreviewSheetController{
 					yStaff += 100;
 					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
 					placeSheetLines(yStaff, p.getInstrument());
-					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff);
+					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
 					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff);
 				}
 			}
