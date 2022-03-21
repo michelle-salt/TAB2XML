@@ -50,7 +50,6 @@
                         <Button fx:id="saveMXLButton" alignment="CENTER_RIGHT" disable="true" layoutX="15.0" layoutY="15.0" mnemonicParsing="false" onAction="#saveMXLButtonHandle" text="Save MusicXML" />
                         <Button fx:id="saveTabButton" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#saveTabButtonHandle" text="Save Tablature" />
                         <Button fx:id="previewButton" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#previewButtonHandle" text="Preview Sheet Music" />
-                        <Button fx:id="savePDFButton" alignment="CENTER_RIGHT" disable="true" layoutX="15.0" layoutY="15.0" mnemonicParsing="false" onAction="#savePDFButtonHandle" text="Save PDF" />
                         <Button fx:id="playMusic" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" onAction="#playMusic" text="Play Tablature" />
                      </children>
                      <padding>

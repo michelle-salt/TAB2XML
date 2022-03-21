@@ -78,35 +78,22 @@ public class MainViewController extends Application {
 	public Highlighter highlighter;
 	public Converter converter;
 
-	@FXML
-	Label mainViewState;
-	@FXML
-	TextField instrumentMode;
+	@FXML Label mainViewState;
+	@FXML TextField instrumentMode;
 
-	@FXML
-	public CodeArea mainText;
+	@FXML public CodeArea mainText;
 
-	@FXML
-	TextField gotoMeasureField;
-	@FXML
-	BorderPane borderPane;
-	@FXML
-	Button saveTabButton;
-	@FXML
-	Button saveMXLButton;
-	@FXML
-	Button showMXLButton;
-	@FXML
-	Button previewButton;
-	@FXML
-	Button savePDFButton;
-	@FXML
-	Button goToline;
-	@FXML
-	ComboBox<String> cmbScoreType;
+	@FXML TextField gotoMeasureField;
+	@FXML BorderPane borderPane;
+	@FXML Button saveTabButton;
+	@FXML Button saveMXLButton;
+	@FXML Button showMXLButton;
+	@FXML Button previewButton;
+	@FXML Button savePDFButton;
+	@FXML Button goToline;
+	@FXML ComboBox<String> cmbScoreType;
 
-	@FXML
-	Button playMusic;
+	@FXML Button playMusic;
 
 	public MainViewController() {
 		Settings s = Settings.getInstance();
@@ -127,7 +114,7 @@ public class MainViewController extends Application {
 	}
 
 	@FXML
-	private void handleCurrentSongSettings() {
+	void handleCurrentSongSettings() {
 		Parent root;
 		try {
 			FXMLLoader loader = new FXMLLoader(
@@ -143,7 +130,7 @@ public class MainViewController extends Application {
 	}
 
 	@FXML
-	private void handleSystemDefaultSettings() {
+	void handleSystemDefaultSettings() {
 		Parent root;
 		try {
 			FXMLLoader loader = new FXMLLoader(
@@ -159,7 +146,7 @@ public class MainViewController extends Application {
 	}
 
 	@FXML
-	private void handleNew() {
+	void handleNew() {
 		boolean userOkToGoAhead = promptSave();
 		if (!userOkToGoAhead)
 			return;
@@ -169,7 +156,7 @@ public class MainViewController extends Application {
 	}
 
 	@FXML
-	private void handleOpen() {
+	void handleOpen() {
 		boolean userOkToGoAhead = promptSave();
 		if (!userOkToGoAhead)
 			return;
@@ -206,7 +193,7 @@ public class MainViewController extends Application {
 	}
 
 	@FXML
-	private boolean handleSaveAs() {
+	boolean handleSaveAs() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save As");
 		fileChooser.setInitialDirectory(new File(Settings.getInstance().outputFolder));
@@ -233,7 +220,7 @@ public class MainViewController extends Application {
 	}
 
 	@FXML
-	private boolean handleSave() {
+	boolean handleSave() {
 		if (!isEditingSavedFile || saveFile == null || !saveFile.exists())
 			return this.handleSaveAs();
 		try {
@@ -352,12 +339,12 @@ public class MainViewController extends Application {
 	}
 
 	@FXML
-	private void previewButtonHandle() throws IOException, SAXException {
-		Parent root;
+	private void previewButtonHandle() throws Exception {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/sheetMusicGUI.fxml"));
+			Parent root;
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/previewSheetWindow.fxml"));
 			root = loader.load();
-			SheetMusicGUI controller = loader.getController();
+			PreviewSheetController controller = loader.getController();
 			controller.setMainViewController(this);
 			controller.update();
 			convertWindow = this.openNewWindow(root, "Preview Sheet Music");
@@ -382,9 +369,7 @@ public class MainViewController extends Application {
 		}
 	}
 
-	@FXML
-	private void playMusic() throws IOException {
-		
+	@FXML void playMusic() throws IOException {
 		Parser parse = new Parser(converter.getMusicXML());
 		String instrument = parse.getInstrument();
 		String string = "T90 V0 I[" + instrument + "] ";

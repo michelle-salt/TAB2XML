@@ -1,13 +1,6 @@
 package GUI;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
 
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -79,28 +72,6 @@ public class SaveMXLController extends Application {
 			mvc.saveFile = file;
 			cancelButtonClicked();
 		}
-		//		FileChooser fileChooser = new FileChooser();
-		//		File file = fileChooser.showSaveDialog(convertWindow);
-		//		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF Files", "*.pdf");
-		//		fileChooser.getExtensionFilters().add(extFilter);
-		//
-		//		Document document = new Document();
-		//		if (file != null){
-		//			try {
-		//				PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream("sample.pdf"));
-		//				document.open();
-		//				document.add(new Paragraph("This is a sample pdf run."));
-		//				document.close();
-		//				pdfWriter.close();
-		//				System.out.println("PDF file can now be found under src/main/resources/org.openjfx");
-		//			}
-		//			catch (DocumentException e) {
-		//				e.printStackTrace();
-		//			} 
-		//			catch (FileNotFoundException e) {
-		//				e.printStackTrace();
-		//			}
-		//		}
 	}
 
 	@FXML

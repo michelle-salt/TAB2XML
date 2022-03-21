@@ -43,6 +43,21 @@ public class ShowMXLController extends Application {
 	}
     
 	@FXML
+	private void handleCurrentSongSettings() {
+		mvc.handleCurrentSongSettings();
+	}
+
+	@FXML
+	private void handleSystemDefaultSettings() {
+		mvc.handleSystemDefaultSettings();
+	}
+    
+	@FXML
+	private void handleCloseWindow() {
+		mvc.convertWindow.hide();
+	}
+    
+	@FXML
 	private void saveMXLButtonHandle() {
 		mvc.saveMXLButtonHandle();
 	}

@@ -9,7 +9,7 @@ This application is for anyone who wants to:
 - preview ASCII tabs as sheet music.
 - make reading and playing music more convenient.
 
-Detailed [requirements](https://github.com/michelle-salt/TAB2XML/blob/mohammad/SystemRequirements.pdf), [user manual](https://github.com/michelle-salt/TAB2XML/blob/mohammad/UserManual.pdf) and [testing document](https://github.com/michelle-salt/TAB2XML/blob/mohammad/TestingDocument.pdf) are a click away.
+Detailed [requirements](https://github.com/michelle-salt/TAB2XML/blob/mohammad/documentation/SystemRequirements.pdf), [user manual](https://github.com/michelle-salt/TAB2XML/blob/mohammad/documentation/UserManual.pdf) and [testing document](https://github.com/michelle-salt/TAB2XML/blob/mohammad/documentation/TestingDocument.pdf) are a click away.
 
 ## Getting Started
 
