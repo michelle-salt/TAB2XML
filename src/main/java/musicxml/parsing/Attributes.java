@@ -11,6 +11,7 @@ public class Attributes {
 	private int divisions;
 	private int fifths;
 	private Clef clef;
+	private Time time;
 
 	/*
 	 * Staff details method is only needed (only for guitars (and maybe bass??))
@@ -52,6 +53,18 @@ public class Attributes {
 				catch (NullPointerException e) {
 					clef = new Clef(null, 0);
 				}
+				
+				// Time only exists in some MusicXML files
+				try {
+					int beats = Integer.parseInt(currentElement.getElementsByTagName("beats").item(0).getTextContent());
+					int beatType = Integer.parseInt(currentElement.getElementsByTagName("beat-type").item(0).getTextContent());
+					time = new Time(beats, beatType);
+				} 
+				catch (NullPointerException e) {
+					//Default is 4, 4
+					time = new Time(4, 4);
+				}
+				
 				break; // Since there's only one attribute tag
 			}
 			
@@ -68,6 +81,10 @@ public class Attributes {
 	
 	public Clef getClef() {
 		return clef;
+	}
+	
+	public Time getTime() {
+		return time;
 	}
 	
 }
