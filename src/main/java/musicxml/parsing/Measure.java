@@ -190,6 +190,13 @@ public class Measure {
 				} catch (NullPointerException | IndexOutOfBoundsException e) {
 					// This means the note is not a chord, and nothing has to be done
 				}
+				
+				try {
+					eElement.getElementsByTagName("grace").item(0).getTextContent();
+					this.notes.get(noteCounter).setGraceNote();
+				} catch (NullPointerException | IndexOutOfBoundsException e) {
+					// This means the note is not a chord, and nothing has to be done
+				}
 				noteCounter++;
 			}
 		}
