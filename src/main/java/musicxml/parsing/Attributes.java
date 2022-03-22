@@ -12,7 +12,7 @@ public class Attributes {
 	private int fifths;
 	private Clef clef;
 	private Time time;
-
+	
 	/*
 	 * Staff details method is only needed (only for guitars (and maybe bass??))
 	 * These include a <staff-lines> tag which indicates how many lines need to be drawn on the sheet music
@@ -86,5 +86,9 @@ public class Attributes {
 	public Time getTime() {
 		return time;
 	}
+	
+//	public Repeat getRepeat() {
+//		return repeat;
+//	}
 	
 }

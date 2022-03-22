@@ -15,9 +15,6 @@ public class Measure {
 	private ArrayList<Note> notes = new ArrayList<Note>();
 	private Barline barline;
 	private Direction direction;
-//	boolean isGuitar;
-//	private ArrayList<GuitarNote> guitarNotes = new ArrayList<GuitarNote>();
-//	private ArrayList<DrumNote> drumNotes = new ArrayList<DrumNote>();
 
 	public Measure(Document musicXML, int measureNumber, String instrument) {
 		// Set musicXML
@@ -30,10 +27,8 @@ public class Measure {
 		// Get a list of notes, based on the instrument (since they're parsed differently)
 		// I don't know how bass musicxml differs from guitar musicxml (yet) so I'll assume they're the same for now
 		if (instrument.equals("guitar") || instrument.equals("bass")) {
-//			isGuitar = true;
 			initializeGuitarNotes(); //Method name should be changed if it's also for bass notes
 		} else { // Otherwise, it's assumed to be drumset
-//			isGuitar = false;
 			initializeDrumNotes();
 		}
 		//Get repeats, if they exist
@@ -282,8 +277,4 @@ public class Measure {
 	public Barline getBarline() {
 		return barline;
 	}
-	
-//	public ArrayList<GuitarNote> getDrumNotes() {
-//		return guitarNotes;
-//	}
 }
