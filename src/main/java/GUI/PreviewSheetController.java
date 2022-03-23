@@ -1,15 +1,12 @@
 package GUI;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -24,8 +21,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.fxmisc.richtext.CodeArea;
 
@@ -316,13 +311,50 @@ public class PreviewSheetController{
 		}
 	}
 	
+	public void drawRepeat(double x, double y, char direction, String words, String instrument) {
+		//Set base length of the bar
+		int endY = 60;
+		//Change the vertical length depending on the instrument
+		if (instrument.equalsIgnoreCase("Bass")) {
+			endY = 36;
+		}
+		else if (instrument.equalsIgnoreCase("Drumset")) {
+			endY = 48;
+		}
+		else if (instrument.equalsIgnoreCase("Guitar")) {
+			endY = 60;
+		}
+		//Thinn line
+		barLines(x, y, instrument);
+		double thiccX, dotX;
+		if (direction == 'l') {
+			thiccX = x - 5;
+			dotX = x + 7;
+		}
+		//Assumed to be right
+		else {
+			thiccX = x + 5;
+			dotX = x - 7;
+		}
+		//Thicc line
+		Line barLine = new Line(thiccX, y+1, thiccX, y + endY - 1);
+		barLine.setStrokeWidth(4);
+		pane.getChildren().add(barLine);
+		//Circles
+		Ellipse dot1 = new Ellipse(dotX, (y+endY)/2 - 7, 3, 3);
+		Ellipse dot2 = new Ellipse(dotX, (y+endY)/2 + 7, 3, 3);
+
+		pane.getChildren().add(dot1);
+		pane.getChildren().add(dot2);
+	}
+	
 	//Update the SheetMusic GUI
 	public void update() throws IOException { 	
 		Parser p = new Parser(mvc.converter.getMusicXML());
 		//Get the list of measure from parser
 		List<Measure> measureList = p.getMeasures();
 		//Initialize x and y coordinates of where to draw notes
-		double x = 75.0, xVerify = 50, y = 0, yStaff = 0;			
+		double x = 100.0, xVerify = 100, y = 0, yStaff = 0;			
 		//Iterate through each measure
 		for (int i = 0; i< measureList.size(); i++, x += 25)
 		{
@@ -340,13 +372,17 @@ public class PreviewSheetController{
 				}
 			}
 			if (xVerify > this.pane.getMaxWidth()) {
-				x = 75.0;
+				x = 100.0;
 				yStaff += 100;
 				placeSheetLines(yStaff, p.getInstrument());
 				clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
 				timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 			}
-
+			
+//			System.out.println(p.getMeasures().get(i).getBarline().getLocation());
+//			if (p.getMeasures().get(i).getBarline().getLocation() ==  'l')
+//				drawRepeat(x-25, 0 + yStaff, 'l', "x7", p.getInstrument());
+			
 			//Loop through all the notes in the current measure
 			for (int j = 0; j < noteList.size(); j++, x += 25)
 			{
@@ -401,7 +437,7 @@ public class PreviewSheetController{
 					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 				}
 				else {
-					x = 75.0;
+					x = 100.0;
 					yStaff += 100;
 					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
 					placeSheetLines(yStaff, p.getInstrument());
@@ -411,6 +447,8 @@ public class PreviewSheetController{
 			}
 			//Dynamically draw a bar line (after each measure)
 			barLines(x, 0 + yStaff, p.getInstrument());
+//			if (p.getMeasures().get(i).getBarline().getLocation() ==  'r')
+//				drawRepeat(x, 0 + yStaff, 'r', "x7", p.getInstrument());
 		}
 		
 	}
