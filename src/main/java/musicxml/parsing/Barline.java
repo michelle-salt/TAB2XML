@@ -1,7 +1,7 @@
 package musicxml.parsing;
 
 public class Barline {
-	public char NULL = '-';
+	public final char NULL = '-';
 	
 	private char location, repeatDirection;
 	private String barStyle;
@@ -30,5 +30,23 @@ public class Barline {
 			this.repeatDirection = NULL;
 		}
 		this.barStyle = barStyle;
+		this.repeatTimes = repeatTimes;
+	}
+	
+	//Public getters
+	public char getLocation() {
+		return location;
+	}
+
+	public char getRepeatDirection() {
+		return repeatDirection;
+	}
+
+	public String getBarStyle() {
+		return barStyle;
+	}
+
+	public int getRepeatTimes() {
+		return repeatTimes;
 	}
 }

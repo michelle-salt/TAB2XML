@@ -1,7 +1,7 @@
 package musicxml.parsing;
 
 public class Direction {
-	public char NULL = '-';
+	public final char NULL = '-';
 	
 	private char placement;
 	private double x, y;
