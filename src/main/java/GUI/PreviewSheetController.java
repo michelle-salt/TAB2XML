@@ -1,11 +1,15 @@
 package GUI;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -20,6 +24,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.fxmisc.richtext.CodeArea;
 
@@ -28,16 +34,17 @@ public class PreviewSheetController{
 	@FXML private Pane pane;
 	private MainViewController mvc;
 	public Window convertWindow;
-	
+
 	public File saveFile;
 	private static boolean isEditingSavedFile;
-	
+
 	@FXML public CodeArea mainText;
-	
-	@FXML Button saveSheetMusicButton;
+
+	@FXML Button savePDFButton;
 	@FXML Button playButton;
 	@FXML Button goToMeasureButton;
-
+	
+	public PreviewSheetController() {}
 
 	public void setMainViewController(MainViewController mvcInput) {
 		mvc = mvcInput;
@@ -52,7 +59,7 @@ public class PreviewSheetController{
 	private void handleSystemDefaultSettings() {
 		mvc.handleSystemDefaultSettings();
 	}
-	
+
 	@FXML
 	boolean handleSaveAs() {
 		FileChooser fileChooser = new FileChooser();
@@ -94,15 +101,35 @@ public class PreviewSheetController{
 		}
 		return true;
 	}
-	
+
 	@FXML
 	private void handleCloseWindow() {
-		mvc.convertWindow.hide();
+		Alert alert = 
+				new Alert(
+						Alert.AlertType.CONFIRMATION,
+						"Choose your option",
+						ButtonType.CANCEL, ButtonType.NO, ButtonType.YES);
+		
+		alert.setTitle("Exit Preview Window");
+		alert.setHeaderText("This document is unsaved and will be overwritten. Do you want to save it first?");
+
+		Optional<ButtonType> option = alert.showAndWait();
+		if (option.get() == ButtonType.CANCEL) {
+			/* nothing */
+		}
+		if (option.get() == ButtonType.NO) {
+			mvc.convertWindow.hide();
+		}
+		if (option.get() == ButtonType.YES) {
+			/*
+			 * Implement the saving functionality.
+			 */
+		}
 	}
 
 	@FXML
-	private void saveSheetMusicButtonHandle() {
-		mvc.saveSheetMusicButtonHandle();
+	void savePDFButtonHandle() {
+		mvc.savePDFButtonHandle();
 	}
 
 	//Implements the "Go To Measure" button on the SheetMusic GUI
@@ -110,7 +137,28 @@ public class PreviewSheetController{
 		//Implement - Duaa
 		//Check if it's a valid measure
 	}
+	
+	public void handlePlayMusic() {
+		try {
+			mvc.playMusic();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void handlePauseMusic() {
+		//Implement
+	}
+	
+	public void handleStopMusic() {
+		//Implement
+	}
 
+	public void handleTempo() {
+		//Implement
+	}
+	
 	public void handlePlay() {
 		try {
 			mvc.playMusic();
@@ -147,17 +195,33 @@ public class PreviewSheetController{
 		pane.getChildren().add(bar);
 	}
 	//Draw the Clef at the left-end of the Staff
-	private void clef(String symbol, double x, double y) {
+	private void clef(String symbol, double x, double y, String instrument) {
 		if (symbol.equalsIgnoreCase("TAB")) {
-			//Draw onto the pane letter by letter
-			for (int i = 0; i < symbol.length(); i++) {
-				//Get the letter
-				Text t = new Text(x, y, symbol.substring(i, i+1));
-				t.setFont(Font.font("times new roman", FontWeight.BLACK, 24));
-				//Add letter to pane
-				pane.getChildren().add(t);
-				//Increment vertical distance for next letter
-				y += 19;
+			if (instrument.equalsIgnoreCase("guitar")) {
+				//Draw onto the pane letter by letter
+				for (int i = 0; i < symbol.length(); i++) {
+					//Get the letter
+					Text t = new Text(x, y, symbol.substring(i, i+1));
+					t.setFont(Font.font("times new roman", FontWeight.BLACK, 24));
+					//Add letter to pane
+					pane.getChildren().add(t);
+					//Increment vertical distance for next letter
+					y += 19;
+				}
+			} 
+			//Assumed to be bass
+			else {
+				y -= 7;
+				//Draw onto the pane letter by letter
+				for (int i = 0; i < symbol.length(); i++) {
+					//Get the letter
+					Text t = new Text(x, y, symbol.substring(i, i+1));
+					t.setFont(Font.font("times new roman", FontWeight.BLACK, 17));
+					//Add letter to pane
+					pane.getChildren().add(t);
+					//Increment vertical distance for next letter
+					y += 12.5;
+				}
 			}
 		} else if (symbol.equalsIgnoreCase("percussion")) {
 			symbol = "II";
@@ -203,13 +267,62 @@ public class PreviewSheetController{
 		}		
 	}
 
+	public void timeSignature(int beats, int beatType, double x, double y, String instrument) {
+		if (instrument.equalsIgnoreCase("guitar")) {
+			Text beatsText = new Text(x, y, Integer.toString(beats));
+			beatsText.setFont(Font.font("cambria", FontWeight.BLACK, 40));
+			//Add number to pane
+			pane.getChildren().add(beatsText);
+			
+			//Increment vertical distance for next letter
+			y += 31;
+			
+			Text beatTypeText = new Text(x, y, Integer.toString(beatType));
+			beatTypeText.setFont(Font.font("cambria", FontWeight.BLACK, 40));
+			//Add number to pane
+			pane.getChildren().add(beatTypeText);
+		} else if (instrument.equalsIgnoreCase("drumset")) {
+			y -= 6;
+			
+			Text beatsText = new Text(x, y, Integer.toString(beats));
+			beatsText.setFont(Font.font("cambria", FontWeight.BLACK, 32));
+			//Add number to pane
+			pane.getChildren().add(beatsText);
+			
+			//Increment vertical distance for next letter
+			y += 26;
+			
+			Text beatTypeText = new Text(x, y, Integer.toString(beatType));
+			beatTypeText.setFont(Font.font("cambria", FontWeight.BLACK, 32));
+			//Add number to pane
+			pane.getChildren().add(beatTypeText);
+		} 
+		//Assumed to be bass
+		else {
+			y -= 11;
+			
+			Text beatsText = new Text(x, y, Integer.toString(beats));
+			beatsText.setFont(Font.font("cambria", FontWeight.BLACK, 23));
+			//Add number to pane
+			pane.getChildren().add(beatsText);
+			
+			//Increment vertical distance for next letter
+			y += 19;
+			
+			Text beatTypeText = new Text(x, y, Integer.toString(beatType));
+			beatTypeText.setFont(Font.font("cambria", FontWeight.BLACK, 23));
+			//Add number to pane
+			pane.getChildren().add(beatTypeText);
+		}
+	}
+	
 	//Update the SheetMusic GUI
 	public void update() throws IOException { 	
 		Parser p = new Parser(mvc.converter.getMusicXML());
 		//Get the list of measure from parser
 		List<Measure> measureList = p.getMeasures();
 		//Initialize x and y coordinates of where to draw notes
-		double x = 50.0, xVerify = 50, y = 0, yStaff = 0;			
+		double x = 75.0, xVerify = 50, y = 0, yStaff = 0;			
 		//Iterate through each measure
 		for (int i = 0; i< measureList.size(); i++, x += 25)
 		{
@@ -227,10 +340,11 @@ public class PreviewSheetController{
 				}
 			}
 			if (xVerify > this.pane.getMaxWidth()) {
-				x = 50.0;
+				x = 75.0;
 				yStaff += 100;
 				placeSheetLines(yStaff, p.getInstrument());
-				clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff);
+				clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
+				timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 			}
 
 			//Loop through all the notes in the current measure
@@ -283,18 +397,21 @@ public class PreviewSheetController{
 				if (x < this.pane.getMaxWidth()) {
 					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
 					placeSheetLines(0, p.getInstrument());
-					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff);
+					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
+					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 				}
 				else {
-					x = 50.0;
+					x = 75.0;
 					yStaff += 100;
 					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
 					placeSheetLines(yStaff, p.getInstrument());
-					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff);
+					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
+					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 				}
 			}
 			//Dynamically draw a bar line (after each measure)
 			barLines(x, 0 + yStaff, p.getInstrument());
 		}
+		
 	}
 }

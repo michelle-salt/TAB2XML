@@ -13,9 +13,8 @@ public class Measure {
 	private int measureNumber;
 	private Attributes attributes;
 	private ArrayList<Note> notes = new ArrayList<Note>();
-//	boolean isGuitar;
-//	private ArrayList<GuitarNote> guitarNotes = new ArrayList<GuitarNote>();
-//	private ArrayList<DrumNote> drumNotes = new ArrayList<DrumNote>();
+	private Barline barline;
+	private Direction direction;
 
 	public Measure(Document musicXML, int measureNumber, String instrument) {
 		// Set musicXML
@@ -28,11 +27,62 @@ public class Measure {
 		// Get a list of notes, based on the instrument (since they're parsed differently)
 		// I don't know how bass musicxml differs from guitar musicxml (yet) so I'll assume they're the same for now
 		if (instrument.equals("guitar") || instrument.equals("bass")) {
-//			isGuitar = true;
 			initializeGuitarNotes(); //Method name should be changed if it's also for bass notes
 		} else { // Otherwise, it's assumed to be drumset
-//			isGuitar = false;
 			initializeDrumNotes();
+		}
+		//Get repeats, if they exist
+		getRepeat();
+	}
+	
+	private void getRepeat() {
+		NodeList measureList = musicXML.getElementsByTagName("measure");
+
+		// Get nodes for current measure
+		Node currentMeasureParentNode = measureList.item(measureNumber - 1); //Subtract 1 since it starts from 0
+		NodeList noteList = currentMeasureParentNode.getChildNodes();
+
+		int noteCounter = 0;
+				
+		//Loop through every note in the measure
+		for (int i = 0; i < noteList.getLength(); i++) {
+			Node currentNode = noteList.item(i);
+			//Get Barline
+			if (currentNode.getNodeType() == Node.ELEMENT_NODE) {
+				if (currentNode.getNodeName().equals("barline")) {
+					Element eElement = (Element) currentNode;				
+					try {
+						String location = eElement.getAttribute("location");
+						String barStyle = eElement.getElementsByTagName("bar-style").item(0).getTextContent();
+						String direction = eElement.getElementsByTagName("repeat").item(0).getAttributes().getNamedItem("direction").getNodeValue();
+						int times = 0;
+						//times is optional within the "barline" element
+						try {
+							times = Integer.parseInt(eElement.getElementsByTagName("repeat").item(0).getAttributes().getNamedItem("times").getNodeValue());
+						} catch (NullPointerException e) {
+							barline = new Barline(location, barStyle, direction, 0);
+						}
+						barline = new Barline(location, barStyle, direction, times);
+					} 
+					catch (NullPointerException e) {
+						barline = new Barline("", null, "", 0);
+					}
+				}
+				//Get Direction
+				if (currentNode.getNodeName().equals("direction")) {
+					Element eElement = (Element) currentNode;
+					try {
+						String placement = eElement.getAttribute("placement");
+						String words = eElement.getElementsByTagName("words").item(0).getTextContent();
+						double x = Double.parseDouble(eElement.getElementsByTagName("words").item(0).getAttributes().getNamedItem("relative-x").getNodeValue());
+						double y = Double.parseDouble(eElement.getElementsByTagName("words").item(0).getAttributes().getNamedItem("relative-y").getNodeValue());
+						direction = new Direction(placement, x, y, words);
+					} 
+					catch (NullPointerException e) {
+						direction = new Direction("", 0, 0, null);
+					}
+				}
+			}
 		}
 	}
 
@@ -190,6 +240,13 @@ public class Measure {
 				} catch (NullPointerException | IndexOutOfBoundsException e) {
 					// This means the note is not a chord, and nothing has to be done
 				}
+				
+				try {
+					eElement.getElementsByTagName("grace").item(0).getTextContent();
+					this.notes.get(noteCounter).setGraceNote();
+				} catch (NullPointerException | IndexOutOfBoundsException e) {
+					// This means the note is not a chord, and nothing has to be done
+				}
 				noteCounter++;
 			}
 		}
@@ -213,7 +270,11 @@ public class Measure {
 		return notes;
 	}
 	
-//	public ArrayList<GuitarNote> getDrumNotes() {
-//		return guitarNotes;
-//	}
+	public Direction getDirection() {
+		return direction;
+	}
+	
+	public Barline getBarline() {
+		return barline;
+	}
 }

@@ -340,7 +340,6 @@ public class MainViewController extends Application {
 
 	@FXML
 	private void previewButtonHandle() throws Exception {
-		System.out.println("Preview Button Clicked!");
 		try {
 			Parent root;
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/previewSheetWindow.fxml"));
@@ -356,7 +355,7 @@ public class MainViewController extends Application {
 	}
 	
 	@FXML
-	void saveSheetMusicButtonHandle() {		
+	void savePDFButtonHandle() {		
 		Parent root;
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/saveMXLWindow.fxml"));

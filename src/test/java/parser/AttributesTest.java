@@ -1,7 +1,5 @@
 package parser;
 
-import org.junit.jupiter.api.*;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -59,18 +57,16 @@ class AttributesTest {
 		try {
 			clef = this.wikiDrumTab.getMeasures().get(0).getAttributes().getClef();
 			clef = this.wikiDrumTab.getMeasures().get(1).getAttributes().getClef();
-			System.out.println("Succesfull");
 			try {
 				clef = this.wikiDrumTab.getMeasures().get(2).getAttributes().getClef();
-				System.out.println("Unsuccesfull");
+				fail("Unsuccesfull");
 			}
 			catch (IndexOutOfBoundsException e) {
 				// Clef doesn't exist
-				System.out.println("TEST PASSED");
 			}
 		}
 		catch (IndexOutOfBoundsException e) {
-			System.out.println("TEST FAILED");
+			fail("TEST FAILED");
 		}
 	}
 	
@@ -97,18 +93,16 @@ class AttributesTest {
 		try {
 			clef = this.wikiGuitarTab.getMeasures().get(0).getAttributes().getClef();
 			clef = this.wikiGuitarTab.getMeasures().get(1).getAttributes().getClef();
-			System.out.println("Succesfull");
 			try {
 				clef = this.wikiGuitarTab.getMeasures().get(2).getAttributes().getClef();
-				System.out.println("Unsuccesfull");
+				fail("Unsuccesfull");
 			}
 			catch (IndexOutOfBoundsException e) {
 				// Clef doesn't exist
-				System.out.println("TEST PASSED");
 			}
 		}
 		catch (IndexOutOfBoundsException e) {
-			System.out.println("TEST FAILED");
+			fail("TEST FAILED");
 		}
 	}
 

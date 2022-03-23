@@ -6,8 +6,11 @@ public class Note {
 	private char type; //maxima (M), long (L), breve (B), whole (W), half (H), quarter (Q), eighth (I), etc. (S, T, X, O, U, R, C)
 						//Z is used for if the type is incorrect
 	private boolean isChord; //If true, this note is a chord with the preceding note(s)
+	private boolean isGraceNote;
 	
 	public Note(int duration, int voice, String noteType) {
+		//isGraceNote defaults to false
+		isGraceNote = false;
 		//isChord defaults to false
 		isChord = false;
 		//Set other values based on arguments passed
@@ -49,10 +52,19 @@ public class Note {
 	public boolean isChord() {
 		return isChord;
 	}
+	
+	public boolean isGraceNote() {
+		return isGraceNote;
+	}
 
 	//Setter to indicate that the note is a chord
 	public void setChord() {
 		this.isChord = true;
+	}
+		
+	//Setter to indicate that the note is a grace note
+	public void setGraceNote() {
+		this.isGraceNote = true;
 	}
 		
 	//Initialize a GuitarNote
