@@ -542,7 +542,6 @@ public class MainViewController extends Application {
 						measure += "+";
 					} else {
 						measure += " "; // add a space to split up notes
-						System.out.println("gong");
 					}
 				} else { // add the tie thing around here i think
 					measure += " ";
