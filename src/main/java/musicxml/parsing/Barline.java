@@ -20,7 +20,7 @@ public class Barline {
 		}
 		
 		//Get repeatDirection
-		if (repeatDirection.equalsIgnoreCase("forwards")) {
+		if (repeatDirection.equalsIgnoreCase("forward")) {
 			this.repeatDirection = 'f';
 		} else if (repeatDirection.equalsIgnoreCase("backward")) {
 			this.repeatDirection = 'b';

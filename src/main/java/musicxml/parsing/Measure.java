@@ -41,8 +41,6 @@ public class Measure {
 		// Get nodes for current measure
 		Node currentMeasureParentNode = measureList.item(measureNumber - 1); //Subtract 1 since it starts from 0
 		NodeList noteList = currentMeasureParentNode.getChildNodes();
-
-		int noteCounter = 0;
 				
 		//Loop through every note in the measure
 		for (int i = 0; i < noteList.getLength(); i++) {
@@ -68,6 +66,9 @@ public class Measure {
 						barline = new Barline("", null, "", 0);
 					}
 				}
+				if (barline == null) {
+					barline = new Barline("", null, "", 0);
+				}
 				//Get Direction
 				if (currentNode.getNodeName().equals("direction")) {
 					Element eElement = (Element) currentNode;
@@ -81,6 +82,9 @@ public class Measure {
 					catch (NullPointerException e) {
 						direction = new Direction("", 0, 0, null);
 					}
+				}
+				if (direction == null) {
+					direction = new Direction("", 0, 0, null);
 				}
 			}
 		}
@@ -149,7 +153,7 @@ public class Measure {
 					eElement.getElementsByTagName("grace").item(0).getTextContent();
 					this.notes.get(noteCounter).setGraceNote();
 				} catch (NullPointerException | IndexOutOfBoundsException e) {
-					// This means the note is not a chord, and nothing has to be done
+					// This means the note is not a grace note, and nothing has to be done
 				}
 				noteCounter++;
 			}
@@ -261,7 +265,7 @@ public class Measure {
 					eElement.getElementsByTagName("grace").item(0).getTextContent();
 					this.notes.get(noteCounter).setGraceNote();
 				} catch (NullPointerException | IndexOutOfBoundsException e) {
-					// This means the note is not a chord, and nothing has to be done
+					// This means the note is not a grace note, and nothing has to be done
 				}
 				noteCounter++;
 			}
