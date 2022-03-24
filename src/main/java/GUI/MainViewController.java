@@ -376,8 +376,6 @@ public class MainViewController extends Application {
 		String instrument = parse.getInstrument();
 		ArrayList<Measure> measures = parse.getMeasures();
 		
-		System.out.println(instrument);
-		
 		if(instrument.equals("guitar") || instrument.equals("bass")) {
 			
 			GuitarBass(parse, instrument);
@@ -390,23 +388,13 @@ public class MainViewController extends Application {
 			
 		}
 
-//		Pattern p1 = new Pattern("V0 I[Piano] Eq Ch. | Eq Ch. | Dq Eq Dq Cq");
-//	    Pattern p2 = new Pattern("V1 I[Flute] Rw     | Rw     | GmajQQQ  CmajQ");
-//	    Player player = new Player();
-//	    player.play(p1, p2);
-
 	}
 	
 	void GuitarBass(Parser parse, String instrument) throws IOException {
 
-		// String string = "T90 V0 I[guitar] ";
 		ArrayList<Measure> measures = parse.getMeasures();
-
-		// split each measure into an array cell
-		ArrayList<String> measuresarray = new ArrayList<>();
+		ArrayList<String> measuresarray = new ArrayList<>(); // split measures into array
 		int tempo = 90;
-
-		// measuresarray[0] = "T" + tempo + " V0 I[" + instrument + "]";
 
 		for (int i = 0; i < parse.getNumMeasures(); i++) { // go through every measure
 
@@ -478,7 +466,6 @@ public class MainViewController extends Application {
 	
 	void Drum(Parser parse, String instrument) throws IOException {
 		
-		
 		/*
 		   P1-I46 = Low Tom
       	   P1-I43 = Closed Hi-Hat
@@ -496,9 +483,7 @@ public class MainViewController extends Application {
 		 */
 
 		ArrayList<Measure> measures = parse.getMeasures();
-
-		// split each measure into an array cell
-		ArrayList<String> measuresarray = new ArrayList<>();
+		ArrayList<String> measuresarray = new ArrayList<>(); // split measures into array
 		int tempo = 90;
 
 		for (int i = 0; i < parse.getNumMeasures(); i++) { // go through every measure
