@@ -136,6 +136,22 @@ public class Measure {
 				}
 				
 				this.notes.add(new Note(unpitch, duration, instrumentID, voice, type, stem, notehead));
+				
+				//-----------------------------------------------
+				try {
+					eElement.getElementsByTagName("chord").item(0).getTextContent();
+					this.notes.get(noteCounter).setChord();
+				} catch (NullPointerException | IndexOutOfBoundsException e) {
+					// This means the note is not a chord, and nothing has to be done
+				}
+				
+				try {
+					eElement.getElementsByTagName("grace").item(0).getTextContent();
+					this.notes.get(noteCounter).setGraceNote();
+				} catch (NullPointerException | IndexOutOfBoundsException e) {
+					// This means the note is not a chord, and nothing has to be done
+				}
+				noteCounter++;
 			}
 		}
 	}

@@ -371,22 +371,46 @@ public class MainViewController extends Application {
 
 	@FXML
 	void playMusic() throws IOException {
+		
 		Parser parse = new Parser(converter.getMusicXML());
 		String instrument = parse.getInstrument();
 		ArrayList<Measure> measures = parse.getMeasures();
+		
+		System.out.println(instrument);
+		
+		if(instrument.equals("guitar") || instrument.equals("bass")) {
+			
+			GuitarBass(parse, instrument);
+			
+		}
+		
+		if(instrument.equals("drumset")) {
+			
+			Drum(parse,instrument);
+			
+		}
 
 //		Pattern p1 = new Pattern("V0 I[Piano] Eq Ch. | Eq Ch. | Dq Eq Dq Cq");
 //	    Pattern p2 = new Pattern("V1 I[Flute] Rw     | Rw     | GmajQQQ  CmajQ");
 //	    Player player = new Player();
 //	    player.play(p1, p2);
+
 	}
 	
-	void GuitarBass(Parser parse) throws IOException {
-		
-		String string = "T90 V0 I[guitar] ";
+	void GuitarBass(Parser parse, String instrument) throws IOException {
+
+		// String string = "T90 V0 I[guitar] ";
 		ArrayList<Measure> measures = parse.getMeasures();
 
+		// split each measure into an array cell
+		ArrayList<String> measuresarray = new ArrayList<>();
+		int tempo = 90;
+
+		// measuresarray[0] = "T" + tempo + " V0 I[" + instrument + "]";
+
 		for (int i = 0; i < parse.getNumMeasures(); i++) { // go through every measure
+
+			String measure = "";
 
 			ArrayList<Note> notesInMeasure = measures.get(i).getNotes();
 
@@ -399,50 +423,152 @@ public class MainViewController extends Application {
 				int octave = pitch.getOctave();
 				char type = measures.get(i).getNotes().get(j).getType();
 
-				if(alter != 0) {
-					if(alter == 1) {
+				if (alter != 0) {
+					if (alter == 1) {
 						altervalue = "#"; // sharp accidental
 					}
-					if(alter == -1) {
+					if (alter == -1) {
 						altervalue = "b"; // flat accidental
 					}
-				}else {
+				} else {
 					altervalue = "";
 				}
-				
-				if(measures.get(i).getNotes().get(j).getDuration() == 0) { // if note is a grace note
-					string += step + altervalue + octave + "o-";
-					string += " ";
-					string += step + altervalue + octave + "-o";
-				}else {
-						string += step + altervalue + octave + type;				
+
+				if (measures.get(i).getNotes().get(j).getDuration() == 0) { // if note is a grace note
+					measure += step + altervalue + octave + "o-";
+					measure += " ";
+					measure += step + altervalue + octave + "-o";
+				} else {
+					measure += step + altervalue + octave + type;
 				}
 
 				if (measures.get(i).getNumNotes() - j != 1) {
-					if (measures.get(i).getNotes().get(j + 1).isChord()) { //  if next note is also part of the chord
-						string += "+";
-					}else{						
-						string += " "; // add a space to split up notes						
-					}					
-				}else { // add the tie thing around here i think
-					string += " ";					
+					if (measures.get(i).getNotes().get(j + 1).isChord()) { // if next note is also part of the chord
+						measure += "+";
+					} else {
+						measure += " "; // add a space to split up notes
+					}
+				} else { // add the tie thing around here i think
+					measure += " ";
 				}
-				
-				
-				
-				
-				
+
 			}
-			
-			if(parse.getNumMeasures() - i != 1) {
-				string += " | "; // add space between notes to indicate measures
+
+			measuresarray.add(measure);
+
+			if (parse.getNumMeasures() - i != 1) {
+				measure += " | "; // add space between notes to indicate measures
 			}
+
 		}
+
+		String finalString = "T" + tempo + " V0 I[" + instrument + "] ";
+
+		for (int i = 0; i < measuresarray.size(); i++) {
+
+			finalString += measuresarray.get(i);
+
+		}
+
+		Player player = new Player();
+		System.out.println(finalString);
+		player.play(finalString);
 		
 	}
 	
-	void Drum() throws IOException {
+	void Drum(Parser parse, String instrument) throws IOException {
 		
+		
+		/*
+		   P1-I46 = Low Tom
+      	   P1-I43 = Closed Hi-Hat
+      	   P1-I42 = Low Floor Tom
+      	   P1-I48 = Low-Mid Tom
+      	   P1-I45 = Pedal Hi-Hat
+      	   P1-I47 = Open Hi-Hat
+      	   P1-I50 = Crash Cymbal 1
+      	   P1-I44 = High Floor Tom
+      	   P1-I39 = Snare
+      	   P1-I54 = Ride Bell
+      	   P1-I53 = Chinese Cymbal 1
+      	   P1-I36 = Bass Drum 1
+      	   P1-I52 = Ride Cymbal 1
+		 */
+
+		ArrayList<Measure> measures = parse.getMeasures();
+
+		// split each measure into an array cell
+		ArrayList<String> measuresarray = new ArrayList<>();
+		int tempo = 90;
+
+		for (int i = 0; i < parse.getNumMeasures(); i++) { // go through every measure
+
+			String measure = "";
+			ArrayList<Note> notesInMeasure = measures.get(i).getNotes();
+
+			for (int j = 0; j < measures.get(i).getNumNotes(); j++) { // go through all notes in specific measure
+
+				String instrumentID = measures.get(i).getNotes().get(j).getInstrumentID();
+				char type = measures.get(i).getNotes().get(j).getType();
+				
+				switch(instrumentID) {
+				
+				case "P1-I46":	instrumentID = "[LO_TOM]"; break;
+				case "P1-I43":	instrumentID = "[CLOSED_HI_HAT]"; break;
+				case "P1-I42":	instrumentID = "[LO_FLOOR_TOM"; break;
+				case "P1-I48":	instrumentID = "[LO_MID_TOM]"; break;
+				case "P1-I45":	instrumentID = "[PEDAL_HI_HAT]"; break;
+				case "P1-I47":	instrumentID = "[OPEN_HI_HAT]"; break;
+				case "P1-I50":	instrumentID = "[CRASH_CYMBAL_1]"; break;
+				case "P1-I44":	instrumentID = "[HIGH_FLOOR_TOM]]"; break;
+				case "P1-I39":	instrumentID = "[ACOUSTIC_SNARE]"; break; // or [ELECTRIC_SNARE]
+				case "P1-I54":	instrumentID = "[RIDE_BELL]"; break;
+				case "P1-I53":	instrumentID = "[CHINESE_CYMBAL]"; break;
+				case "P1-I36":	instrumentID = "[BASS_DRUM]"; break;
+				case "P1-I52":	instrumentID = "[RIDE_CYMBAL_1]"; break;
+				
+				}
+
+				if (measures.get(i).getNotes().get(j).getDuration() == 0) { // if note is a grace note
+					measure += instrumentID + "o-";
+					measure += " ";
+					measure += instrumentID + "-o";
+				} else {
+					measure += instrumentID + type;
+				}
+
+				if (measures.get(i).getNumNotes() - j != 1) {
+					if (measures.get(i).getNotes().get(j + 1).isChord()) { // if next note is also part of the chord
+						measure += "+";
+					} else {
+						measure += " "; // add a space to split up notes
+						System.out.println("gong");
+					}
+				} else { // add the tie thing around here i think
+					measure += " ";
+				}
+
+			}
+
+			measuresarray.add(measure);
+
+			if (parse.getNumMeasures() - i != 1) {
+				measure += " | "; // add space between notes to indicate measures
+			}
+
+		}
+
+		String finalString = "T" + tempo + " V9 ";
+
+		for (int i = 0; i < measuresarray.size(); i++) {
+
+			finalString += measuresarray.get(i);
+
+		}
+
+		Player player = new Player();
+		System.out.println(finalString);
+		player.play(finalString);
 		
 	}
 
