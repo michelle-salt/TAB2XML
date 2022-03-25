@@ -139,7 +139,14 @@ public class Measure {
 					//Do nothing, since the default value is set to null
 				}
 				
-				this.notes.add(new Note(unpitch, duration, instrumentID, voice, type, stem, notehead));
+				double bendAlter = 0.0;
+				try {
+					bendAlter = Double.parseDouble(eElement.getElementsByTagName("bend-alter").item(0).getTextContent());
+				} catch (NullPointerException e) {
+					//Do nothing, since the default value is already set
+				}
+				
+				this.notes.add(new Note(unpitch, duration, instrumentID, voice, type, stem, notehead, bendAlter));
 				
 				//-----------------------------------------------
 				try {
@@ -252,7 +259,14 @@ public class Measure {
 					}
 				}
 				
-				this.notes.add(new Note(pitch, duration, voice, type, string, fret, slur, pullOff, tied));
+				double bendAlter = 0.0;
+				try {
+					bendAlter = Double.parseDouble(eElement.getElementsByTagName("bend-alter").item(0).getTextContent());
+				} catch (NullPointerException e) {
+					//Do nothing, since the default value is already set
+				}
+				
+				this.notes.add(new Note(pitch, duration, voice, type, string, fret, slur, pullOff, tied, bendAlter));
 				
 				try {
 					eElement.getElementsByTagName("chord").item(0).getTextContent();
