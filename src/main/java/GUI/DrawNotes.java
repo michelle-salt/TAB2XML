@@ -2,6 +2,9 @@ package GUI;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -39,12 +42,64 @@ public class DrawNotes {
 	
 	//Draws the notehead of each note, if the instrument is a drum
 	public void drawDrumNote() {
-		String note = this.note.getNotehead(); //Will be implemented soon
-		if (note == null) {
-			note = "o";
+		//Print the "x" if the notehead is an "x"
+		if (this.note.getNotehead() != null && this.note.getNotehead().equalsIgnoreCase("x")) {
+			Text text = new Text(x, y, "x");
+			text.setFont(Font.font("veranda", FontWeight.BLACK, 18));
+			pane.getChildren().add(text);
+			drawStem(x+9, y-8, y-35);
+		} 
+		//Print the type of note otherwise
+		else {
+			//More to be implemented later
+			switch (this.note.getType()) {
+			case 'W':	printWholeNote();		break;
+			case 'H':	printHalfNote();		break;
+			case 'Q':	printQuarterNote();		break;
+			case 'I':	printEighthNote();		break;
+			case 'S':	printSixteenthNote();	break;
+			}
+			//Draw the stem for every note
+			//Will be changed later
+			drawStem(x+9, y-5, y-35);
 		}
-		Text text = new Text(x, y, note);
-		text.setFont(Font.font("veranda", FontWeight.BLACK, 18));
-		pane.getChildren().add(text);
 	}	
+	
+	public void drawStem(double x, double yStart, double yEnd) {
+		Line stem = new Line(x, yStart, x, yEnd);
+		pane.getChildren().add(stem);
+	}
+	
+	public void printWholeNote() {
+		printQuarterNote();
+		Ellipse centre = new Ellipse(x+4, y-5, 2, 3);
+		centre.setFill(Color.WHITE);
+		pane.getChildren().add(centre);
+	}
+	
+	public void printHalfNote() {
+		printQuarterNote();
+		Ellipse centre = new Ellipse(x+4, y-5, 4.75, 1.6);
+		centre.setFill(Color.WHITE);
+		centre.setRotate(330);
+		pane.getChildren().add(centre);
+	}
+	
+	public void printQuarterNote() {
+		Ellipse ellipse = new Ellipse(x+4, y-5, 6, 4.25);
+		ellipse.setRotate(320);
+		pane.getChildren().add(ellipse);
+	}
+	
+	public void printEighthNote() {
+		printQuarterNote();
+//		drawFlag(1);
+	}
+	
+	public void printSixteenthNote() {
+		printQuarterNote();
+//		drawFlag(2);
+	}
+	
+	
 }
