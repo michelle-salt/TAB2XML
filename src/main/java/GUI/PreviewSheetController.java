@@ -335,6 +335,12 @@ public class PreviewSheetController{
 		else {
 			thiccX = x + 5;
 			dotX = x - 7;
+			
+			//Text
+			Text t = new Text(x - 25, y - 10, words);
+			t.setFont(Font.font("arial", 15));
+			//Add letter to pane
+			pane.getChildren().add(t);
 		}
 		//Thicc line
 		Line barLine = new Line(thiccX, y+1, thiccX, y + endY - 1);
@@ -343,7 +349,7 @@ public class PreviewSheetController{
 		//Circles
 		Ellipse dot1 = new Ellipse(dotX, (y+endY)/2 - 7, 3, 3);
 		Ellipse dot2 = new Ellipse(dotX, (y+endY)/2 + 7, 3, 3);
-
+				
 		pane.getChildren().add(dot1);
 		pane.getChildren().add(dot2);
 	}
@@ -379,9 +385,9 @@ public class PreviewSheetController{
 				timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 			}
 			
-//			System.out.println(p.getMeasures().get(i).getBarline().getLocation());
-//			if (p.getMeasures().get(i).getBarline().getLocation() ==  'l')
-//				drawRepeat(x-25, 0 + yStaff, 'l', "x7", p.getInstrument());
+			System.out.println(p.getMeasures().get(i).getBarline().getLocation());
+			if (p.getMeasures().get(i).getBarline().getLocation() ==  'l')
+				drawRepeat(x-25, 0 + yStaff, 'l', "x7", p.getInstrument());
 			
 			//Loop through all the notes in the current measure
 			for (int j = 0; j < noteList.size(); j++, x += 25)
@@ -446,9 +452,12 @@ public class PreviewSheetController{
 				}
 			}
 			//Dynamically draw a bar line (after each measure)
-			barLines(x, 0 + yStaff, p.getInstrument());
-//			if (p.getMeasures().get(i).getBarline().getLocation() ==  'r')
-//				drawRepeat(x, 0 + yStaff, 'r', "x7", p.getInstrument());
+			if (p.getMeasures().get(i).getBarline().getLocation() ==  'r') {
+				x += 25;
+				drawRepeat(x, 0 + yStaff, 'r', "x7", p.getInstrument());
+			} else {
+				barLines(x, 0 + yStaff, p.getInstrument());
+			}
 		}
 		
 	}
