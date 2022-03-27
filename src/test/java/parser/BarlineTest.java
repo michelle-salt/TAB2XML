@@ -13,7 +13,7 @@ import musicxml.parsing.*;
 
 public class BarlineTest {
 
-	protected Parser repeat;
+	protected Parser repeat, money;
 	@BeforeEach
 	void setUp() throws Exception {
 		//Get the OS
@@ -30,6 +30,7 @@ public class BarlineTest {
             filePath = filePath.concat("/src/test/resources/musicXMLFiles/");
         }
 		repeat = new Parser(Files.readString(Paths.get(filePath.concat("repeat.txt"))));
+		money = new Parser(Files.readString(Paths.get(filePath.concat("money.txt"))));
 	}
 	
 	@Test
@@ -38,29 +39,46 @@ public class BarlineTest {
 		assertEquals(1, this.repeat.getMeasures().get(1).getBarlines().size());
 		assertEquals(0, this.repeat.getMeasures().get(2).getBarlines().size());
 		assertEquals(0, this.repeat.getMeasures().get(3).getBarlines().size());
+		
+		assertEquals(2, this.money.getMeasures().get(0).getBarlines().size());
+		assertEquals(0, this.money.getMeasures().get(1).getBarlines().size());
+		assertEquals(0, this.money.getMeasures().get(2).getBarlines().size());
+		assertEquals(0, this.money.getMeasures().get(3).getBarlines().size());
 	}
 	
 	@Test
 	public void testGetLocation() {
 		assertEquals('l', this.repeat.getMeasures().get(0).getBarlines().get(0).getLocation());
 		assertEquals('r', this.repeat.getMeasures().get(1).getBarlines().get(0).getLocation());
+		
+		assertEquals('l', this.money.getMeasures().get(0).getBarlines().get(0).getLocation());
+		assertEquals('r', this.money.getMeasures().get(0).getBarlines().get(1).getLocation());
 	}
 	
 	@Test
 	public void testGetRepeatDirection() {
 		assertEquals('f', this.repeat.getMeasures().get(0).getBarlines().get(0).getRepeatDirection());
 		assertEquals('b', this.repeat.getMeasures().get(1).getBarlines().get(0).getRepeatDirection());
+		
+		assertEquals('f', this.money.getMeasures().get(0).getBarlines().get(0).getRepeatDirection());
+		assertEquals('b', this.money.getMeasures().get(0).getBarlines().get(1).getRepeatDirection());
 	}
 	
 	@Test
 	public void testGetBarStyle() {
 		assertEquals("heavy-light", this.repeat.getMeasures().get(0).getBarlines().get(0).getBarStyle());
 		assertEquals("light-heavy", this.repeat.getMeasures().get(1).getBarlines().get(0).getBarStyle());
+		
+		assertEquals("heavy-light", this.money.getMeasures().get(0).getBarlines().get(0).getBarStyle());
+		assertEquals("light-heavy", this.money.getMeasures().get(0).getBarlines().get(1).getBarStyle());
 	}
 	
 	@Test
 	public void testGetRepeatTimes() {
 		assertEquals(0, this.repeat.getMeasures().get(0).getBarlines().get(0).getRepeatTimes());
 		assertEquals(7, this.repeat.getMeasures().get(1).getBarlines().get(0).getRepeatTimes());
+		
+		assertEquals(0, this.money.getMeasures().get(0).getBarlines().get(0).getRepeatTimes());
+		assertEquals(8, this.money.getMeasures().get(0).getBarlines().get(1).getRepeatTimes());
 	}
 }
