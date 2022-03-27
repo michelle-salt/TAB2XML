@@ -40,11 +40,6 @@
 										<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 									</padding>
 								</Button>
-								<Button fx:id="playButton" layoutX="15.0" layoutY="15.0" mnemonicParsing="false" onAction="#handlePlay" prefWidth="115.0" text="Play">
-									<padding>
-										<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-									</padding>
-								</Button>
 								<Button layoutX="15.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleCloseWindow" prefWidth="115.0" text="Exit">
 									<padding>
 										<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

@@ -153,15 +153,6 @@ public class PreviewSheetController{
 	public void handleTempo() {
 		//Implement
 	}
-	
-	public void handlePlay() {
-		try {
-			mvc.playMusic();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
 	//Draw the bar to mark the end of a Measure
 	//Must implement double bar and end bars soon?
