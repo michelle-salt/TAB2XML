@@ -13,7 +13,7 @@ public class Measure {
 	private int measureNumber;
 	private Attributes attributes;
 	private ArrayList<Note> notes = new ArrayList<Note>();
-	private Barline barline;
+	private ArrayList<Barline> barlines = new ArrayList<Barline>();
 	private Direction direction;
 
 	public Measure(Document musicXML, int measureNumber, String instrument) {
@@ -58,16 +58,13 @@ public class Measure {
 						try {
 							times = Integer.parseInt(eElement.getElementsByTagName("repeat").item(0).getAttributes().getNamedItem("times").getNodeValue());
 						} catch (NullPointerException e) {
-							barline = new Barline(location, barStyle, direction, 0);
+							//Do nothing since times is already 0
 						}
-						barline = new Barline(location, barStyle, direction, times);
+						barlines.add(new Barline(location, barStyle, direction, times));
 					} 
 					catch (NullPointerException e) {
-						barline = new Barline("", null, "", 0);
+						//Do nothing since we don't want to add a null value to the ArrayList
 					}
-				}
-				if (barline == null) {
-					barline = new Barline("", null, "", 0);
 				}
 				//Get Direction
 				if (currentNode.getNodeName().equals("direction")) {
@@ -308,7 +305,7 @@ public class Measure {
 		return direction;
 	}
 	
-	public Barline getBarline() {
-		return barline;
+	public ArrayList<Barline> getBarlines() {
+		return barlines;
 	}
 }

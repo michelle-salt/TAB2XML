@@ -385,9 +385,9 @@ public class PreviewSheetController{
 				timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 			}
 			
-			System.out.println(p.getMeasures().get(i).getBarline().getLocation());
-			if (p.getMeasures().get(i).getBarline().getLocation() ==  'l')
-				drawRepeat(x-25, 0 + yStaff, 'l', "x7", p.getInstrument());
+			//First one is always left
+			if (p.getMeasures().get(i).getBarlines().size() > 0 && p.getMeasures().get(i).getBarlines().get(0).getLocation() ==  'l')
+				drawRepeat(x-25, 0 + yStaff, 'l', p.getMeasures().get(i).getDirection().getWords(), p.getInstrument());
 			
 			//Loop through all the notes in the current measure
 			for (int j = 0; j < noteList.size(); j++, x += 25)
@@ -452,9 +452,11 @@ public class PreviewSheetController{
 				}
 			}
 			//Dynamically draw a bar line (after each measure)
-			if (p.getMeasures().get(i).getBarline().getLocation() ==  'r') {
+			//Either first or second is right
+			if ((p.getMeasures().get(i).getBarlines().size() == 1 && p.getMeasures().get(i).getBarlines().get(0).getLocation() ==  'r') 
+				|| (p.getMeasures().get(i).getBarlines().size() > 1 && p.getMeasures().get(i).getBarlines().get(1).getLocation() ==  'r')) {
 				x += 25;
-				drawRepeat(x, 0 + yStaff, 'r', "x7", p.getInstrument());
+				drawRepeat(x, 0 + yStaff, 'r', p.getMeasures().get(i).getDirection().getWords(), p.getInstrument());
 			} else {
 				barLines(x, 0 + yStaff, p.getInstrument());
 			}
