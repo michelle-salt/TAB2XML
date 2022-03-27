@@ -53,11 +53,17 @@ public class DrawNotes {
 		else {
 			//More to be implemented later
 			switch (this.note.getType()) {
-			case 'W':	printWholeNote();		break;
-			case 'H':	printHalfNote();		break;
-			case 'Q':	printQuarterNote();		break;
-			case 'I':	printEighthNote();		break;
-			case 'S':	printSixteenthNote();	break;
+			case 'W':	printWholeNote();			break;
+			case 'H':	printHalfNote();			break;
+			case 'Q':	printQuarterNote();			break;
+			case 'I':	printEighthPlusNote(1);		break;
+			case 'S':	printEighthPlusNote(2);		break;
+			case 'T':	printEighthPlusNote(3);		break;
+			case 'X':	printEighthPlusNote(4);		break;
+			case 'O':	printEighthPlusNote(5);		break;
+			case 'U':	printEighthPlusNote(6);		break;
+			case 'R':	printEighthPlusNote(7);		break;
+			case 'C':	printEighthPlusNote(8);		break;
 			}
 			//Draw the stem for every note
 			//Will be changed later
@@ -91,15 +97,14 @@ public class DrawNotes {
 		pane.getChildren().add(ellipse);
 	}
 	
-	public void printEighthNote() {
+	/* 
+	 * Draws the rest of the notes
+	 * The only difference between these notes is the number of flags, 
+	 * 		so they have been combined into one method
+	 */
+	public void printEighthPlusNote(int numFlags) {
 		printQuarterNote();
-//		drawFlag(1);
-	}
-	
-	public void printSixteenthNote() {
-		printQuarterNote();
-//		drawFlag(2);
-	}
-	
+//		drawFlag(numFlags);
+	}	
 	
 }
