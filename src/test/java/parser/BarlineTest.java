@@ -33,34 +33,34 @@ public class BarlineTest {
 	}
 	
 	@Test
+	public void testNoExtraBarlines() {
+		assertEquals(1, this.repeat.getMeasures().get(0).getBarlines().size());
+		assertEquals(1, this.repeat.getMeasures().get(1).getBarlines().size());
+		assertEquals(0, this.repeat.getMeasures().get(2).getBarlines().size());
+		assertEquals(0, this.repeat.getMeasures().get(3).getBarlines().size());
+	}
+	
+	@Test
 	public void testGetLocation() {
-		assertEquals('l', this.repeat.getMeasures().get(0).getBarline().getLocation());
-		assertEquals('r', this.repeat.getMeasures().get(1).getBarline().getLocation());
-		assertEquals('-', this.repeat.getMeasures().get(2).getBarline().getLocation());
-		assertEquals('-', this.repeat.getMeasures().get(3).getBarline().getLocation());
+		assertEquals('l', this.repeat.getMeasures().get(0).getBarlines().get(0).getLocation());
+		assertEquals('r', this.repeat.getMeasures().get(1).getBarlines().get(0).getLocation());
 	}
 	
 	@Test
 	public void testGetRepeatDirection() {
-		assertEquals('f', this.repeat.getMeasures().get(0).getBarline().getRepeatDirection());
-		assertEquals('b', this.repeat.getMeasures().get(1).getBarline().getRepeatDirection());
-		assertEquals('-', this.repeat.getMeasures().get(2).getBarline().getRepeatDirection());
-		assertEquals('-', this.repeat.getMeasures().get(3).getBarline().getRepeatDirection());
+		assertEquals('f', this.repeat.getMeasures().get(0).getBarlines().get(0).getRepeatDirection());
+		assertEquals('b', this.repeat.getMeasures().get(1).getBarlines().get(0).getRepeatDirection());
 	}
 	
 	@Test
 	public void testGetBarStyle() {
-		assertEquals("heavy-light", this.repeat.getMeasures().get(0).getBarline().getBarStyle());
-		assertEquals("light-heavy", this.repeat.getMeasures().get(1).getBarline().getBarStyle());
-		assertNull(this.repeat.getMeasures().get(2).getBarline().getBarStyle());
-		assertNull(this.repeat.getMeasures().get(3).getBarline().getBarStyle());
+		assertEquals("heavy-light", this.repeat.getMeasures().get(0).getBarlines().get(0).getBarStyle());
+		assertEquals("light-heavy", this.repeat.getMeasures().get(1).getBarlines().get(0).getBarStyle());
 	}
 	
 	@Test
 	public void testGetRepeatTimes() {
-		assertEquals(0, this.repeat.getMeasures().get(0).getBarline().getRepeatTimes());
-		assertEquals(7, this.repeat.getMeasures().get(1).getBarline().getRepeatTimes());
-		assertEquals(0, this.repeat.getMeasures().get(2).getBarline().getRepeatTimes());
-		assertEquals(0, this.repeat.getMeasures().get(3).getBarline().getRepeatTimes());
+		assertEquals(0, this.repeat.getMeasures().get(0).getBarlines().get(0).getRepeatTimes());
+		assertEquals(7, this.repeat.getMeasures().get(1).getBarlines().get(0).getRepeatTimes());
 	}
 }
