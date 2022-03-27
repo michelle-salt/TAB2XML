@@ -143,7 +143,14 @@ public class Measure {
 					//Do nothing, since the default value is already set
 				}
 				
-				this.notes.add(new Note(unpitch, duration, instrumentID, voice, type, stem, notehead, bendAlter));
+				int numDots = 0;
+				try {
+					numDots = eElement.getElementsByTagName("dot").getLength();
+				} catch (NullPointerException | IndexOutOfBoundsException e) {
+					//Do nothing since the default is already set to 0
+				}
+				
+				this.notes.add(new Note(unpitch, duration, instrumentID, voice, type, stem, notehead, bendAlter, numDots));
 				
 				//-----------------------------------------------
 				try {
@@ -263,7 +270,14 @@ public class Measure {
 					//Do nothing, since the default value is already set
 				}
 				
-				this.notes.add(new Note(pitch, duration, voice, type, string, fret, slur, pullOff, tied, bendAlter));
+				int numDots = 0;
+				try {
+					numDots = eElement.getElementsByTagName("dot").getLength();
+				} catch (NullPointerException | IndexOutOfBoundsException e) {
+					//Do nothing since the default is already set to 0
+				}
+				
+				this.notes.add(new Note(pitch, duration, voice, type, string, fret, slur, pullOff, tied, bendAlter, numDots));
 				
 				try {
 					eElement.getElementsByTagName("chord").item(0).getTextContent();
