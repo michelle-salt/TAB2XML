@@ -324,17 +324,16 @@ public class PreviewSheetController{
 		else if (instrument.equalsIgnoreCase("Guitar")) {
 			endY = 60;
 		}
-		//Thinn line
-		barLines(x, y, instrument);
-		double thiccX, dotX;
+		
+		double thinX, dotX;
 		if (direction == 'l') {
-			thiccX = x - 5;
-			dotX = x + 7;
+			thinX = x + 5;
+			dotX = x + 12;
 		}
 		//Assumed to be right
 		else {
-			thiccX = x + 5;
-			dotX = x - 7;
+			thinX = x - 5;
+			dotX = x - 12;
 			
 			//Text
 			Text t = new Text(x - 25, y - 10, words);
@@ -342,8 +341,10 @@ public class PreviewSheetController{
 			//Add letter to pane
 			pane.getChildren().add(t);
 		}
+		//Thinn line
+		barLines(thinX, y, instrument);
 		//Thicc line
-		Line barLine = new Line(thiccX, y+1, thiccX, y + endY - 1);
+		Line barLine = new Line(x, y+1, x, y + endY - 1);
 		barLine.setStrokeWidth(4);
 		pane.getChildren().add(barLine);
 		//Circles
