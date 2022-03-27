@@ -9,6 +9,7 @@ public class Note {
 	private int numDots;
 	private boolean isChord; //If true, this note is a chord with the preceding note(s)
 	private boolean isGraceNote;
+	private boolean isRest;
 	
 	public Note(int duration, int voice, String noteType, double bendAlter, int numDots) {
 		//isGraceNote defaults to false
@@ -69,6 +70,10 @@ public class Note {
 		return isGraceNote;
 	}
 
+	public boolean isRest() {
+		return isRest;
+	}
+	
 	//Setter to indicate that the note is a chord
 	public void setChord() {
 		this.isChord = true;
@@ -78,7 +83,12 @@ public class Note {
 	public void setGraceNote() {
 		this.isGraceNote = true;
 	}
-		
+	
+	//Setter to indicate that the note is a rest
+	public void setRest() {
+		this.isRest = true;
+	}
+	
 	//Initialize a GuitarNote
 	private Pitch pitch; //Includes step, octave, and potentially alter
 	private int string; //The string the note is on
