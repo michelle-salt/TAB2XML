@@ -19,10 +19,7 @@ public class Parser {
 
 	private String instrument, title, artist;
 	private ArrayList<Measure> measures = new ArrayList<Measure>();
-	//StaffTuning lines are currently not retrieved in this method
-	//They should be retrieved in the Attributes method instead (remove the variable + methods from here)
-//	private ArrayList<StaffTuning> lines; //Includes tuning-step and tuning-octave
-
+	
 	private String musicXML; //Might not need this stored, assuming this parser will only ever run once. Good to have just in case
 	private File musicXMLFile;
 	private DocumentBuilderFactory dbFactory;	
@@ -101,10 +98,6 @@ public class Parser {
 		}
 	}
 	
-//	//Graphics helper methods	
-//	public int getNumLines() {
-//		return this.lines.size();
-//	}
 	
 	public int getNumMeasures() {
 		return this.measures.size();
@@ -114,11 +107,6 @@ public class Parser {
 	public ArrayList<Measure> getMeasures() {
 		return this.measures;
 	}
-
-//	//Line 6 would be the bottom one, line 1 would be the top (applicable for note retreival, not form StaffTuning)
-//	public ArrayList<StaffTuning> getLines() {
-//		return this.lines;
-//	}
 	
 	//Drumset, Bass, or Guitar
 	public String getInstrument() {

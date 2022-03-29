@@ -85,10 +85,5 @@ public class Attributes {
 	
 	public Time getTime() {
 		return time;
-	}
-	
-//	public Repeat getRepeat() {
-//		return repeat;
-//	}
-	
+	}	
 }

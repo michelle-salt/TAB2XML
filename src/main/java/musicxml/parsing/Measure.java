@@ -137,8 +137,8 @@ public class Measure {
 				int voice;
 				try {
 					voice = Integer.parseInt(eElement.getElementsByTagName("voice").item(0).getTextContent());
-				} catch (NullPointerException e) { // If there is no duration, then it is a grace note
-					voice = 0;
+				} catch (NullPointerException e) { 
+					voice = -1;
 				}
 				String type, stem;
 				try {
