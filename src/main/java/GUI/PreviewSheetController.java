@@ -152,15 +152,17 @@ public class PreviewSheetController{
 		//Implement
 	}
 
-	public void handleTempo() {
-		
-		int tempo = Integer.parseInt(tempoField.getText());
-		mvc.setTempo(tempo);
-		
-	}
+//	public void handleTempo() {
+//		
+//		int tempo = Integer.parseInt(tempoField.getText());
+//		mvc.setTempo(tempo);
+//		
+//	}
 	
 	public void handlePlay() {
 		try {
+			int tempo = Integer.parseInt(tempoField.getText());
+			mvc.setTempo(tempo);
 			mvc.playMusic();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

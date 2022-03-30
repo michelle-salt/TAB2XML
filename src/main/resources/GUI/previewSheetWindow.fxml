@@ -78,7 +78,7 @@
 										<Insets bottom="5.0" left="0.0" right="1.5" top="5.0" />
 									</padding>
 								</Label>
-								<Button fx:id="tempoButton" mnemonicParsing="false" onAction="#handleTempo" prefHeight="25.0" prefWidth="42.0" text="Go" />
+								
 							</children>
 							
 						</HBox>
