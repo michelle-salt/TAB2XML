@@ -1,15 +1,28 @@
 package GUI;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
+import javafx.print.PageLayout;
+import javafx.print.PageOrientation;
+import javafx.print.Paper;
+import javafx.print.Printer;
+import javafx.print.Printer.MarginType;
+import javafx.print.PrinterJob;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Scale;
+import javafx.scene.transform.Translate;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import musicxml.parsing.*;
@@ -22,11 +35,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javafx.scene.canvas.*;
+
 import org.fxmisc.richtext.CodeArea;
 
 public class PreviewSheetController{
 
-	@FXML private Pane pane;
+	@FXML 
+	private Pane pane;
+	@FXML 
+ 	private AnchorPane anchorPane;
+ 	@FXML 
+ 	private Canvas canvas;
 	private MainViewController mvc;
 	public Window convertWindow;
 
@@ -35,9 +55,11 @@ public class PreviewSheetController{
 
 	@FXML public CodeArea mainText;
 
-	@FXML Button savePDFButton;
+	@FXML Button printButton;
 	@FXML Button playButton;
 	@FXML Button goToMeasureButton;
+	
+	BooleanProperty printButtonPressed = new SimpleBooleanProperty(false);
 	
 	public PreviewSheetController() {}
 
@@ -123,8 +145,32 @@ public class PreviewSheetController{
 	}
 
 	@FXML
-	void savePDFButtonHandle() {
-		mvc.savePDFButtonHandle();
+	public <printButtonPressed> void printHandle() {
+ 		//Set up a printer
+		Printer p = Printer.getDefaultPrinter();
+ 		//Set up Page Dialog
+ 		PrinterJob pj = PrinterJob.createPrinterJob();
+ 		PageLayout pl = p.createPageLayout(Paper.NA_LETTER, PageOrientation.PORTRAIT, MarginType.DEFAULT);
+ 		//Get the image of the GUI contents
+ 		WritableImage wi = anchorPane.snapshot(null, null);
+ 		//Load the image
+ 		ImageView v = new ImageView(wi);
+ 		//Dimensions of the Printable area
+ 		double w = pl.getPrintableWidth()/wi.getWidth();
+ 		double h = pl.getPrintableHeight()/wi.getHeight();
+ 		Scale s = new Scale(w, w);
+ 		v.getTransforms().add(s);
+ 		Window window = pane.getScene().getWindow();
+ 		//Print
+ 		if (pj != null && pj.showPrintDialog(window)) {
+ 			Translate t = new Translate(0, 0);
+ 			v.getTransforms().add(t);
+ 			for (int i = 0; i < Math.ceil(w/h); i++) {
+ 				t.setY((pl.getPrintableHeight()/w) * (-i));
+ 				pj.printPage(pl, v);
+ 			}
+ 			pj.endJob();
+ 		}
 	}
 
 	//Implements the "Go To Measure" button on the SheetMusic GUI
