@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
@@ -38,6 +39,7 @@ public class PreviewSheetController{
 	@FXML Button savePDFButton;
 	@FXML Button playButton;
 	@FXML Button goToMeasureButton;
+	@FXML TextField tempoField;
 	
 	public PreviewSheetController() {}
 
@@ -151,7 +153,10 @@ public class PreviewSheetController{
 	}
 
 	public void handleTempo() {
-		//Implement
+		
+		int tempo = Integer.parseInt(tempoField.getText());
+		mvc.setTempo(tempo);
+		
 	}
 	
 	public void handlePlay() {

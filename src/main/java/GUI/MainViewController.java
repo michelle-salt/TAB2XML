@@ -368,6 +368,14 @@ public class MainViewController extends Application {
 			logger.log(Level.SEVERE, "Failed to create new Window.", e);
 		}
 	}
+	
+	int tempo;
+	
+	public void setTempo(int tempo) {
+
+		this.tempo= tempo;
+		
+	}
 
 	@FXML
 	void playMusic() throws IOException {
@@ -375,6 +383,15 @@ public class MainViewController extends Application {
 		Parser parse = new Parser(converter.getMusicXML());
 		String instrument = parse.getInstrument();
 		ArrayList<Measure> measures = parse.getMeasures();
+		
+		if(this.tempo == 0) {
+			
+			this.tempo = 90; // default tempo
+			
+		}
+		
+		System.out.println(this.tempo);
+		System.out.println(instrument);
 		
 		if(instrument.equals("guitar") || instrument.equals("bass")) {
 			
@@ -394,7 +411,6 @@ public class MainViewController extends Application {
 
 		ArrayList<Measure> measures = parse.getMeasures();
 		ArrayList<String> measuresarray = new ArrayList<>(); // split measures into array
-		int tempo = 90;
 
 		for (int i = 0; i < parse.getNumMeasures(); i++) { // go through every measure
 
@@ -442,16 +458,16 @@ public class MainViewController extends Application {
 
 			}
 
-			measuresarray.add(measure);
-
 			if (parse.getNumMeasures() - i != 1) {
 				measure += " | "; // add space between notes to indicate measures
 			}
+			
+			measuresarray.add(measure);
 
 		}
 
-		String finalString = "T" + tempo + " V0 I[" + instrument + "] ";
-
+		String finalString = "T" + this.tempo + " V0 I[" + instrument + "] ";
+		System.out.println(measuresarray.size());
 		for (int i = 0; i < measuresarray.size(); i++) {
 
 			finalString += measuresarray.get(i);
@@ -484,7 +500,6 @@ public class MainViewController extends Application {
 
 		ArrayList<Measure> measures = parse.getMeasures();
 		ArrayList<String> measuresarray = new ArrayList<>(); // split measures into array
-		int tempo = 90;
 
 		for (int i = 0; i < parse.getNumMeasures(); i++) { // go through every measure
 
@@ -534,15 +549,15 @@ public class MainViewController extends Application {
 
 			}
 
-			measuresarray.add(measure);
-
 			if (parse.getNumMeasures() - i != 1) {
-				measure += " | "; // add space between notes to indicate measures
+				measure += "| "; // add space between notes to indicate measures
 			}
+			
+			measuresarray.add(measure);
 
 		}
 
-		String finalString = "T" + tempo + " V9 ";
+		String finalString = "T" + this.tempo + " V9 ";
 
 		for (int i = 0; i < measuresarray.size(); i++) {
 
