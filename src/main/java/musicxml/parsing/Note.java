@@ -5,10 +5,13 @@ public class Note {
 	private int voice; //Used if there is more than one instrument. Shouldn't make a difference since everything is supposed to be one instrument anyways
 	private char type; //maxima (M), long (L), breve (B), whole (W), half (H), quarter (Q), eighth (I), etc. (S, T, X, O, U, R, C)
 						//Z is used for if the type is incorrect
+	private double bendAlter;
+	private int numDots;
 	private boolean isChord; //If true, this note is a chord with the preceding note(s)
 	private boolean isGraceNote;
+	private boolean isRest;
 	
-	public Note(int duration, int voice, String noteType) {
+	public Note(int duration, int voice, String noteType, double bendAlter, int numDots) {
 		//isGraceNote defaults to false
 		isGraceNote = false;
 		//isChord defaults to false
@@ -16,6 +19,8 @@ public class Note {
 		//Set other values based on arguments passed
 		this.duration = duration;
 		this.voice = voice;
+		this.bendAlter = bendAlter;
+		this.numDots = numDots;
 		//Initialize the value of the type based on the input string, defaulting to 'Z' if it doesn't work
 		switch (noteType.toLowerCase()) {
 		case "maxima":	this.type = 'M'; break;
@@ -49,6 +54,14 @@ public class Note {
 		return type;
 	}
 	
+	public double getBendAlter() {
+		return bendAlter;
+	}
+	
+	public int getNumDots() {
+		return numDots;
+	}
+	
 	public boolean isChord() {
 		return isChord;
 	}
@@ -57,6 +70,10 @@ public class Note {
 		return isGraceNote;
 	}
 
+	public boolean isRest() {
+		return isRest;
+	}
+	
 	//Setter to indicate that the note is a chord
 	public void setChord() {
 		this.isChord = true;
@@ -66,7 +83,12 @@ public class Note {
 	public void setGraceNote() {
 		this.isGraceNote = true;
 	}
-		
+	
+	//Setter to indicate that the note is a rest
+	public void setRest() {
+		this.isRest = true;
+	}
+	
 	//Initialize a GuitarNote
 	private Pitch pitch; //Includes step, octave, and potentially alter
 	private int string; //The string the note is on
@@ -76,8 +98,8 @@ public class Note {
 	private Tied tied;
 	
 	//Inside here (the notes method, actually), add a method for each note value/sub-tag	
-	public Note(Pitch pitch, int duration, int voice, String noteType, int string, int fret, musicxml.parsing.Slur slur, musicxml.parsing.PullOff pullOff, Tied tied) {
-		this(duration, voice, noteType);
+	public Note(Pitch pitch, int duration, int voice, String noteType, int string, int fret, musicxml.parsing.Slur slur, musicxml.parsing.PullOff pullOff, Tied tied, double bendAlter, int numDots) {
+		this(duration, voice, noteType, bendAlter, numDots);
 		//Initialize all given variables
 		this.pitch = pitch;
 		this.string = string;
@@ -130,8 +152,8 @@ public class Note {
 
 	//Constructor for the DrumNotes
 	//Inside here (the notes method, actually), add a method for each note value/sub-tag	
-	public Note(Unpitched unpitched, int duration, String instrumentID, int voice, String noteType, String stem, String notehead) {
-		this(duration, voice, noteType);
+	public Note(Unpitched unpitched, int duration, String instrumentID, int voice, String noteType, String stem, String notehead, double bendAlter, int numDots) {
+		this(duration, voice, noteType, bendAlter, numDots);
 		//Initialize all given variables
 		this.unpitched = unpitched;
 		this.instrumentID = instrumentID;
@@ -165,7 +187,5 @@ public class Note {
 
 	public String getNotehead() {
 		return notehead;
-	}
-	
-	
+	}	
 }

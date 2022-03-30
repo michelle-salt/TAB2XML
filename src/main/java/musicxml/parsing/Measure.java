@@ -13,7 +13,7 @@ public class Measure {
 	private int measureNumber;
 	private Attributes attributes;
 	private ArrayList<Note> notes = new ArrayList<Note>();
-	private Barline barline;
+	private ArrayList<Barline> barlines = new ArrayList<Barline>();
 	private Direction direction;
 
 	public Measure(Document musicXML, int measureNumber, String instrument) {
@@ -41,8 +41,6 @@ public class Measure {
 		// Get nodes for current measure
 		Node currentMeasureParentNode = measureList.item(measureNumber - 1); //Subtract 1 since it starts from 0
 		NodeList noteList = currentMeasureParentNode.getChildNodes();
-
-		int noteCounter = 0;
 				
 		//Loop through every note in the measure
 		for (int i = 0; i < noteList.getLength(); i++) {
@@ -60,12 +58,12 @@ public class Measure {
 						try {
 							times = Integer.parseInt(eElement.getElementsByTagName("repeat").item(0).getAttributes().getNamedItem("times").getNodeValue());
 						} catch (NullPointerException e) {
-							barline = new Barline(location, barStyle, direction, 0);
+							//Do nothing since times is already 0
 						}
-						barline = new Barline(location, barStyle, direction, times);
+						barlines.add(new Barline(location, barStyle, direction, times));
 					} 
 					catch (NullPointerException e) {
-						barline = new Barline("", null, "", 0);
+						//Do nothing since we don't want to add a null value to the ArrayList
 					}
 				}
 				//Get Direction
@@ -81,6 +79,9 @@ public class Measure {
 					catch (NullPointerException e) {
 						direction = new Direction("", 0, 0, null);
 					}
+				}
+				if (direction == null) {
+					direction = new Direction("", 0, 0, null);
 				}
 			}
 		}
@@ -107,9 +108,14 @@ public class Measure {
 				 */
 				
 				//Get the step and octave from the 'unpitched' tag
-				char step = eElement.getElementsByTagName("display-step").item(0).getTextContent().charAt(0);
-				int octave = Integer.parseInt(eElement.getElementsByTagName("display-octave").item(0).getTextContent());
-				Unpitched unpitch = new Unpitched(step, octave);
+				Unpitched unpitch;
+				try {
+					char step = eElement.getElementsByTagName("display-step").item(0).getTextContent().charAt(0);
+					int octave = Integer.parseInt(eElement.getElementsByTagName("display-octave").item(0).getTextContent());
+					unpitch = new Unpitched(step, octave);
+				} catch (NullPointerException e) {
+					unpitch = new Unpitched('Z', -1);
+				}
 				
 				// Get the duration (if possible) or set it to 0 (if it's a grace note)
 				int duration;
@@ -120,12 +126,31 @@ public class Measure {
 				}
 				
 				//Get the instrument id
-				String instrumentID = eElement.getElementsByTagName("instrument").item(0).getAttributes().getNamedItem("id").getNodeValue();
+				String instrumentID = "none";
+				try {
+					instrumentID = eElement.getElementsByTagName("instrument").item(0).getAttributes().getNamedItem("id").getNodeValue();
+				} catch (NullPointerException e) { // If there is no duration, then it is a grace note
+					//Default has already been set
+				}
 
 				//Get voice, type, and stem
-				int voice = Integer.parseInt(eElement.getElementsByTagName("voice").item(0).getTextContent());
-				String type = eElement.getElementsByTagName("type").item(0).getTextContent();
-				String stem = eElement.getElementsByTagName("stem").item(0).getTextContent();
+				int voice;
+				try {
+					voice = Integer.parseInt(eElement.getElementsByTagName("voice").item(0).getTextContent());
+				} catch (NullPointerException e) { 
+					voice = -1;
+				}
+				String type, stem;
+				try {
+					type = eElement.getElementsByTagName("type").item(0).getTextContent();
+				} catch (NullPointerException e) { // If there is no duration, then it is a grace note
+					type = "non-existent";
+				}
+				try {
+					stem = eElement.getElementsByTagName("stem").item(0).getTextContent();
+				} catch (NullPointerException e) { // If there is no duration, then it is a grace note
+					stem = "non-existent";
+				}
 				
 				//Get notehead (since this is optional, set default to null)
 				String notehead = null;
@@ -135,7 +160,21 @@ public class Measure {
 					//Do nothing, since the default value is set to null
 				}
 				
-				this.notes.add(new Note(unpitch, duration, instrumentID, voice, type, stem, notehead));
+				double bendAlter = 0.0;
+				try {
+					bendAlter = Double.parseDouble(eElement.getElementsByTagName("bend-alter").item(0).getTextContent());
+				} catch (NullPointerException e) {
+					//Do nothing, since the default value is already set
+				}
+				
+				int numDots = 0;
+				try {
+					numDots = eElement.getElementsByTagName("dot").getLength();
+				} catch (NullPointerException | IndexOutOfBoundsException e) {
+					//Do nothing since the default is already set to 0
+				}
+				
+				this.notes.add(new Note(unpitch, duration, instrumentID, voice, type, stem, notehead, bendAlter, numDots));
 				
 				//-----------------------------------------------
 				try {
@@ -148,6 +187,13 @@ public class Measure {
 				try {
 					eElement.getElementsByTagName("grace").item(0).getTextContent();
 					this.notes.get(noteCounter).setGraceNote();
+				} catch (NullPointerException | IndexOutOfBoundsException e) {
+					// This means the note is not a grace note, and nothing has to be done
+				}
+				
+				try {
+					eElement.getElementsByTagName("rest").item(0).getTextContent();
+					this.notes.get(noteCounter).setChord();
 				} catch (NullPointerException | IndexOutOfBoundsException e) {
 					// This means the note is not a chord, and nothing has to be done
 				}
@@ -172,8 +218,17 @@ public class Measure {
 				Element eElement = (Element) currentNode;
 
 				Pitch pitch;
-				char step = eElement.getElementsByTagName("step").item(0).getTextContent().charAt(0);
-				int octave = Integer.parseInt(eElement.getElementsByTagName("octave").item(0).getTextContent());
+				char step = 'Z'; int octave = -1;
+				try {
+					step = eElement.getElementsByTagName("step").item(0).getTextContent().charAt(0);
+				} catch (NullPointerException e) {
+					//Default value has already been set
+				}
+				try {
+					octave = Integer.parseInt(eElement.getElementsByTagName("octave").item(0).getTextContent());
+				} catch (NullPointerException e) {
+					//Default value has already been set
+				}
 				try {
 					int alter = Integer.parseInt(eElement.getElementsByTagName("alter").item(0).getTextContent()); // Optional
 					pitch = new Pitch(step, octave, alter);
@@ -186,10 +241,28 @@ public class Measure {
 				 * pull off hammer slur dotted grace time modification slide key
 				 */
 
-				int voice = Integer.parseInt(eElement.getElementsByTagName("voice").item(0).getTextContent());
-				String type = eElement.getElementsByTagName("type").item(0).getTextContent();
-				int string = Integer.parseInt(eElement.getElementsByTagName("string").item(0).getTextContent());
-				int fret = Integer.parseInt(eElement.getElementsByTagName("fret").item(0).getTextContent());
+				int voice = -1, string = -1, fret = -1;
+				String type = "non-existent";
+				try {
+					voice = Integer.parseInt(eElement.getElementsByTagName("voice").item(0).getTextContent());
+				} catch (NullPointerException e) {
+					//Default value has already been set
+				}
+				try {
+					fret = Integer.parseInt(eElement.getElementsByTagName("fret").item(0).getTextContent());
+				} catch (NullPointerException e) {
+					//Default value has already been set
+				}
+				try {
+					string = Integer.parseInt(eElement.getElementsByTagName("string").item(0).getTextContent());
+				} catch (NullPointerException e) {
+					//Default value has already been set
+				}
+				try {
+					type = eElement.getElementsByTagName("type").item(0).getTextContent();
+				} catch (NullPointerException e) {
+					//Default value has already been set
+				}
 
 				//Get Slur
 				Slur slur = new Slur(0, null, null);
@@ -238,17 +311,31 @@ public class Measure {
 					try {
 						String tiedVal = eElement.getElementsByTagName("tied").item(a).getAttributes().item(0).getNodeValue();
 						switch (tiedVal.trim().toLowerCase()) {
-						case "stop": 		tied.setStop(true); break;
-						case "start": 		tied.setStart(true); break;
-						case "continue": 	tied.setCont(true); break;
-						case "let-ring": 	tied.setLetRing(true); break;
+						case "stop": 		tied.setStop(true); 	break;
+						case "start": 		tied.setStart(true); 	break;
+						case "continue": 	tied.setCont(true); 	break;
+						case "let-ring": 	tied.setLetRing(true); 	break;
 						}
 					} catch (NullPointerException e) {
 						//If it doesn't exist, nothing needs to be done
 					}
 				}
 				
-				this.notes.add(new Note(pitch, duration, voice, type, string, fret, slur, pullOff, tied));
+				double bendAlter = 0.0;
+				try {
+					bendAlter = Double.parseDouble(eElement.getElementsByTagName("bend-alter").item(0).getTextContent());
+				} catch (NullPointerException e) {
+					//Do nothing, since the default value is already set
+				}
+				
+				int numDots = 0;
+				try {
+					numDots = eElement.getElementsByTagName("dot").getLength();
+				} catch (NullPointerException | IndexOutOfBoundsException e) {
+					//Do nothing since the default is already set to 0
+				}
+				
+				this.notes.add(new Note(pitch, duration, voice, type, string, fret, slur, pullOff, tied, bendAlter, numDots));
 				
 				try {
 					eElement.getElementsByTagName("chord").item(0).getTextContent();
@@ -260,6 +347,13 @@ public class Measure {
 				try {
 					eElement.getElementsByTagName("grace").item(0).getTextContent();
 					this.notes.get(noteCounter).setGraceNote();
+				} catch (NullPointerException | IndexOutOfBoundsException e) {
+					// This means the note is not a grace note, and nothing has to be done
+				}
+				
+				try {
+					eElement.getElementsByTagName("rest").item(0).getTextContent();
+					this.notes.get(noteCounter).setChord();
 				} catch (NullPointerException | IndexOutOfBoundsException e) {
 					// This means the note is not a chord, and nothing has to be done
 				}
@@ -290,7 +384,7 @@ public class Measure {
 		return direction;
 	}
 	
-	public Barline getBarline() {
-		return barline;
+	public ArrayList<Barline> getBarlines() {
+		return barlines;
 	}
 }

@@ -1,45 +1,61 @@
 package GUI;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
+import javafx.print.PageLayout;
+import javafx.print.PageOrientation;
+import javafx.print.Paper;
+import javafx.print.Printer;
+import javafx.print.Printer.MarginType;
+import javafx.print.PrinterJob;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+<<<<<<< HEAD
 import javafx.scene.control.TextField;
+=======
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
+import javafx.scene.layout.AnchorPane;
+>>>>>>> f809123262ba1cc6398d4d989ae45b8326701870
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
+import javafx.scene.transform.Scale;
+import javafx.scene.transform.Translate;
 import javafx.stage.Window;
 import musicxml.parsing.*;
-import utility.Settings;
-
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javafx.scene.canvas.*;
+
 import org.fxmisc.richtext.CodeArea;
 
-public class PreviewSheetController{
+public class PreviewSheetController {
 
 	@FXML private Pane pane;
+	@FXML private AnchorPane anchorPane;
+ 	@FXML private Canvas canvas;
+ 	
 	private MainViewController mvc;
 	public Window convertWindow;
 
-	public File saveFile;
-	private static boolean isEditingSavedFile;
-
 	@FXML public CodeArea mainText;
 
-	@FXML Button savePDFButton;
+	@FXML Button printButton;
 	@FXML Button playButton;
 	@FXML Button goToMeasureButton;
 	@FXML TextField tempoField;
+	
+	BooleanProperty printButtonPressed = new SimpleBooleanProperty(false);
 	
 	public PreviewSheetController() {}
 
@@ -48,85 +64,37 @@ public class PreviewSheetController{
 	}
 
 	@FXML
-	private void handleCurrentSongSettings() {
-		mvc.handleCurrentSongSettings();
+	private void handleEditInput() {
+		mvc.convertWindow.hide();
 	}
 
 	@FXML
-	private void handleSystemDefaultSettings() {
-		mvc.handleSystemDefaultSettings();
-	}
-
-	@FXML
-	boolean handleSaveAs() {
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Save As PDF");
-		fileChooser.setInitialDirectory(new File(Settings.getInstance().outputFolder));
-		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PDF", "*.pdf"));
-		if (saveFile != null) {
-			fileChooser.setInitialFileName(saveFile.getName());
-			fileChooser.setInitialDirectory(new File(saveFile.getParent()));
-		}
-
-		File newSaveFile = fileChooser.showSaveDialog(MainApp.STAGE);
-		if (newSaveFile == null)
-			return false;
-		try {
-			FileWriter myWriter = new FileWriter(newSaveFile.getPath());
-			myWriter.write(mainText.getText());
-			myWriter.close();
-
-			saveFile = newSaveFile;
-			isEditingSavedFile = true;
-		} catch (IOException e) {
-			return false;
-		}
-		return true;
-	}
-
-	//TODO read the file.
-	@FXML
-	boolean handleSave() {
-		if (!isEditingSavedFile || saveFile == null || !saveFile.exists())
-			return this.handleSaveAs();
-		try {
-			FileWriter myWriter = new FileWriter(saveFile.getPath());
-			myWriter.write(mainText.getText());
-			myWriter.close();
-		} catch (IOException e) {
-			return false;
-		}
-		return true;
-	}
-
-	@FXML
-	private void handleCloseWindow() {
-		Alert alert = 
-				new Alert(
-						Alert.AlertType.CONFIRMATION,
-						"Choose your option",
-						ButtonType.CANCEL, ButtonType.NO, ButtonType.YES);
-		
-		alert.setTitle("Exit Preview Window");
-		alert.setHeaderText("This document is unsaved and will be overwritten. Do you want to save it first?");
-
-		Optional<ButtonType> option = alert.showAndWait();
-		if (option.get() == ButtonType.CANCEL) {
-			/* nothing */
-		}
-		if (option.get() == ButtonType.NO) {
-			mvc.convertWindow.hide();
-		}
-		if (option.get() == ButtonType.YES) {
-			/*
-			 * Implement the saving functionality.
-			 */
-		}
-	}
-
-	@FXML
-	void savePDFButtonHandle() {
-		mvc.savePDFButtonHandle();
+	public <printButtonPressed> void printHandle() {
+ 		//Set up a printer
+		Printer p = Printer.getDefaultPrinter();
+ 		//Set up Page Dialog
+ 		PrinterJob pj = PrinterJob.createPrinterJob();
+ 		PageLayout pl = p.createPageLayout(Paper.NA_LETTER, PageOrientation.PORTRAIT, MarginType.DEFAULT);
+ 		//Get the image of the GUI contents
+ 		WritableImage wi = anchorPane.snapshot(null, null);
+ 		//Load the image
+ 		ImageView v = new ImageView(wi);
+ 		//Dimensions of the Printable area
+ 		double w = pl.getPrintableWidth()/wi.getWidth();
+ 		double h = pl.getPrintableHeight()/wi.getHeight();
+ 		Scale s = new Scale(w, w);
+ 		v.getTransforms().add(s);
+ 		Window window = pane.getScene().getWindow();
+ 		//Print
+ 		if (pj != null && pj.showPrintDialog(window)) {
+ 			Translate t = new Translate(0, 0);
+ 			v.getTransforms().add(t);
+ 			for (int i = 0; i < Math.ceil(w/h); i++) {
+ 				t.setY((pl.getPrintableHeight()/w) * (-i));
+ 				pj.printPage(pl, v);
+ 			}
+ 			pj.endJob();
+ 		}
 	}
 
 	//Implements the "Go To Measure" button on the SheetMusic GUI
@@ -139,7 +107,6 @@ public class PreviewSheetController{
 		try {
 			mvc.playMusic();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -161,7 +128,6 @@ public class PreviewSheetController{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
 
 	//Draw the bar to mark the end of a Measure
 	//Must implement double bar and end bars soon?
@@ -324,26 +290,33 @@ public class PreviewSheetController{
 		else if (instrument.equalsIgnoreCase("Guitar")) {
 			endY = 60;
 		}
-		//Thinn line
-		barLines(x, y, instrument);
-		double thiccX, dotX;
+		
+		double thinX, dotX;
 		if (direction == 'l') {
-			thiccX = x - 5;
-			dotX = x + 7;
+			thinX = x + 5;
+			dotX = x + 12;
 		}
 		//Assumed to be right
 		else {
-			thiccX = x + 5;
-			dotX = x - 7;
+			thinX = x - 5;
+			dotX = x - 12;
+			
+			//Text
+			Text t = new Text(x - 25, y - 10, words);
+			t.setFont(Font.font("arial", 15));
+			//Add letter to pane
+			pane.getChildren().add(t);
 		}
+		//Thinn line
+		barLines(thinX, y, instrument);
 		//Thicc line
-		Line barLine = new Line(thiccX, y+1, thiccX, y + endY - 1);
+		Line barLine = new Line(x, y+1, x, y + endY - 1);
 		barLine.setStrokeWidth(4);
 		pane.getChildren().add(barLine);
 		//Circles
 		Ellipse dot1 = new Ellipse(dotX, (y+endY)/2 - 7, 3, 3);
 		Ellipse dot2 = new Ellipse(dotX, (y+endY)/2 + 7, 3, 3);
-
+				
 		pane.getChildren().add(dot1);
 		pane.getChildren().add(dot2);
 	}
@@ -379,9 +352,9 @@ public class PreviewSheetController{
 				timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 			}
 			
-//			System.out.println(p.getMeasures().get(i).getBarline().getLocation());
-//			if (p.getMeasures().get(i).getBarline().getLocation() ==  'l')
-//				drawRepeat(x-25, 0 + yStaff, 'l', "x7", p.getInstrument());
+			//First one is always left
+			if (p.getMeasures().get(i).getBarlines().size() > 0 && p.getMeasures().get(i).getBarlines().get(0).getLocation() ==  'l')
+				drawRepeat(x-25, 0 + yStaff, 'l', p.getMeasures().get(i).getDirection().getWords(), p.getInstrument());
 			
 			//Loop through all the notes in the current measure
 			for (int j = 0; j < noteList.size(); j++, x += 25)
@@ -446,9 +419,14 @@ public class PreviewSheetController{
 				}
 			}
 			//Dynamically draw a bar line (after each measure)
-			barLines(x, 0 + yStaff, p.getInstrument());
-//			if (p.getMeasures().get(i).getBarline().getLocation() ==  'r')
-//				drawRepeat(x, 0 + yStaff, 'r', "x7", p.getInstrument());
+			//Either first or second is right
+			if ((p.getMeasures().get(i).getBarlines().size() == 1 && p.getMeasures().get(i).getBarlines().get(0).getLocation() ==  'r') 
+				|| (p.getMeasures().get(i).getBarlines().size() > 1 && p.getMeasures().get(i).getBarlines().get(1).getLocation() ==  'r')) {
+				x += 25;
+				drawRepeat(x, 0 + yStaff, 'r', p.getMeasures().get(i).getDirection().getWords(), p.getInstrument());
+			} else {
+				barLines(x, 0 + yStaff, p.getInstrument());
+			}
 		}
 		
 	}

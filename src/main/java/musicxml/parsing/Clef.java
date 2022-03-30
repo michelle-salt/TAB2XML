@@ -3,11 +3,11 @@ package musicxml.parsing;
 public class Clef {
 
 	private String sign;
-	private int numLines;
+	private int lineValues;
 		
-	public Clef(String sign, int numLines) {
+	public Clef(String sign, int lineValues) {
 		this.sign = sign;
-		this.numLines = numLines;
+		this.lineValues = lineValues;
 	}
 	
 	//Getters
@@ -16,6 +16,6 @@ public class Clef {
 	}
 
 	public int getLineValues() {
-		return numLines;
+		return lineValues;
 	}
 }
