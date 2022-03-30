@@ -12,13 +12,10 @@ import javafx.print.PrinterJob;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-<<<<<<< HEAD
 import javafx.scene.control.TextField;
-=======
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
->>>>>>> f809123262ba1cc6398d4d989ae45b8326701870
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
@@ -128,6 +125,7 @@ public class PreviewSheetController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
 
 	//Draw the bar to mark the end of a Measure
 	//Must implement double bar and end bars soon?
