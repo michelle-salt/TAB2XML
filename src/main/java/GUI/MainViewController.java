@@ -89,7 +89,6 @@ public class MainViewController extends Application {
 	@FXML Button saveMXLButton;
 	@FXML Button showMXLButton;
 	@FXML Button previewButton;
-	@FXML Button savePDFButton;
 	@FXML Button goToline;
 	@FXML ComboBox<String> cmbScoreType;
 
@@ -348,21 +347,25 @@ public class MainViewController extends Application {
 			controller.setMainViewController(this);
 			controller.update();
 			convertWindow = this.openNewWindow(root, "Preview Sheet Music");
-		} catch (IOException e) {
-			Logger logger = Logger.getLogger(getClass().getName());
-			logger.log(Level.SEVERE, "Failed to create new Window.", e);
-		}
-	}
-	
-	@FXML
-	void savePDFButtonHandle() {		
-		Parent root;
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/saveMXLWindow.fxml"));
-			root = loader.load();
-			SaveMXLController controller = loader.getController();
-			controller.setMainViewController(this);
-			convertWindow = this.openNewWindow(root, "Save PDF");
+			convertWindow.setOnCloseRequest(event -> {
+				Alert alert = 
+						new Alert(
+								Alert.AlertType.CONFIRMATION,
+								"Choose your option",
+								ButtonType.NO, ButtonType.YES);
+
+				alert.setTitle("Exit Preview Window");
+				alert.setHeaderText("Are you sure you want to exit?");
+
+				Optional<ButtonType> option = alert.showAndWait();
+				if (option.get() == ButtonType.YES) {
+					convertWindow.hide();
+				}
+				if (option.get() == ButtonType.NO) {
+					/* nothing */
+					event.consume();
+				}
+			});
 		} catch (IOException e) {
 			Logger logger = Logger.getLogger(getClass().getName());
 			logger.log(Level.SEVERE, "Failed to create new Window.", e);

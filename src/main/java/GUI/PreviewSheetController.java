@@ -35,18 +35,14 @@ import javafx.scene.canvas.*;
 
 import org.fxmisc.richtext.CodeArea;
 
-public class PreviewSheetController{
+public class PreviewSheetController {
 
-	@FXML 
-	private Pane pane;
-	@FXML 
- 	private AnchorPane anchorPane;
- 	@FXML 
- 	private Canvas canvas;
+	@FXML private Pane pane;
+	@FXML private AnchorPane anchorPane;
+ 	@FXML private Canvas canvas;
+ 	
 	private MainViewController mvc;
 	public Window convertWindow;
-
-	public File saveFile;
 
 	@FXML public CodeArea mainText;
 
@@ -63,40 +59,8 @@ public class PreviewSheetController{
 	}
 
 	@FXML
-	private void handleCurrentSongSettings() {
-		mvc.handleCurrentSongSettings();
-	}
-
-	@FXML
-	private void handleSystemDefaultSettings() {
-		mvc.handleSystemDefaultSettings();
-	}
-
-	@FXML
 	private void handleEditInput() {
 		mvc.convertWindow.hide();
-		//Left the code for possible later implementation
-//		Alert alert = 
-//				new Alert(
-//						Alert.AlertType.CONFIRMATION,
-//						"Choose your option",
-//						ButtonType.CANCEL, ButtonType.NO, ButtonType.YES);
-//		
-//		alert.setTitle("Exit Preview Window");
-//		alert.setHeaderText("This document is unsaved and will be overwritten. Do you want to save it first?");
-//
-//		Optional<ButtonType> option = alert.showAndWait();
-//		if (option.get() == ButtonType.CANCEL) {
-//			/* nothing */
-//		}
-//		if (option.get() == ButtonType.NO) {
-//			mvc.convertWindow.hide();
-//		}
-//		if (option.get() == ButtonType.YES) {
-//			/*
-//			 * Implement the saving functionality.
-//			 */
-//		}
 	}
 
 	@FXML
