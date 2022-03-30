@@ -23,13 +23,9 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
-import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import musicxml.parsing.*;
-import utility.Settings;
-
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +47,6 @@ public class PreviewSheetController{
 	public Window convertWindow;
 
 	public File saveFile;
-	private static boolean isEditingSavedFile;
 
 	@FXML public CodeArea mainText;
 
@@ -78,70 +73,30 @@ public class PreviewSheetController{
 	}
 
 	@FXML
-	boolean handleSaveAs() {
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Save As PDF");
-		fileChooser.setInitialDirectory(new File(Settings.getInstance().outputFolder));
-		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PDF", "*.pdf"));
-		if (saveFile != null) {
-			fileChooser.setInitialFileName(saveFile.getName());
-			fileChooser.setInitialDirectory(new File(saveFile.getParent()));
-		}
-
-		File newSaveFile = fileChooser.showSaveDialog(MainApp.STAGE);
-		if (newSaveFile == null)
-			return false;
-		try {
-			FileWriter myWriter = new FileWriter(newSaveFile.getPath());
-			myWriter.write(mainText.getText());
-			myWriter.close();
-
-			saveFile = newSaveFile;
-			isEditingSavedFile = true;
-		} catch (IOException e) {
-			return false;
-		}
-		return true;
-	}
-
-	//TODO read the file.
-	@FXML
-	boolean handleSave() {
-		if (!isEditingSavedFile || saveFile == null || !saveFile.exists())
-			return this.handleSaveAs();
-		try {
-			FileWriter myWriter = new FileWriter(saveFile.getPath());
-			myWriter.write(mainText.getText());
-			myWriter.close();
-		} catch (IOException e) {
-			return false;
-		}
-		return true;
-	}
-
-	@FXML
-	private void handleCloseWindow() {
-		Alert alert = 
-				new Alert(
-						Alert.AlertType.CONFIRMATION,
-						"Choose your option",
-						ButtonType.CANCEL, ButtonType.NO, ButtonType.YES);
-		
-		alert.setTitle("Exit Preview Window");
-		alert.setHeaderText("This document is unsaved and will be overwritten. Do you want to save it first?");
-
-		Optional<ButtonType> option = alert.showAndWait();
-		if (option.get() == ButtonType.CANCEL) {
-			/* nothing */
-		}
-		if (option.get() == ButtonType.NO) {
-			mvc.convertWindow.hide();
-		}
-		if (option.get() == ButtonType.YES) {
-			/*
-			 * Implement the saving functionality.
-			 */
-		}
+	private void handleEditInput() {
+		mvc.convertWindow.hide();
+		//Left the code for possible later implementation
+//		Alert alert = 
+//				new Alert(
+//						Alert.AlertType.CONFIRMATION,
+//						"Choose your option",
+//						ButtonType.CANCEL, ButtonType.NO, ButtonType.YES);
+//		
+//		alert.setTitle("Exit Preview Window");
+//		alert.setHeaderText("This document is unsaved and will be overwritten. Do you want to save it first?");
+//
+//		Optional<ButtonType> option = alert.showAndWait();
+//		if (option.get() == ButtonType.CANCEL) {
+//			/* nothing */
+//		}
+//		if (option.get() == ButtonType.NO) {
+//			mvc.convertWindow.hide();
+//		}
+//		if (option.get() == ButtonType.YES) {
+//			/*
+//			 * Implement the saving functionality.
+//			 */
+//		}
 	}
 
 	@FXML
@@ -183,7 +138,6 @@ public class PreviewSheetController{
 		try {
 			mvc.playMusic();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
