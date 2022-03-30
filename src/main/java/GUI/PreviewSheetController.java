@@ -151,13 +151,6 @@ public class PreviewSheetController{
 	public void handleStopMusic() {
 		//Implement
 	}
-
-//	public void handleTempo() {
-//		
-//		int tempo = Integer.parseInt(tempoField.getText());
-//		mvc.setTempo(tempo);
-//		
-//	}
 	
 	public void handlePlay() {
 		try {
