@@ -27,7 +27,8 @@ public class CustomizeController {
     	justRadio.setToggleGroup(group);
     }
     
+    @FXML
     public void applyButton() {
-    	
+    	mvc.convertWindow.hide();
     }
  } 
