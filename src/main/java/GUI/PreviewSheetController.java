@@ -312,8 +312,8 @@ public class PreviewSheetController {
 		barLine.setStrokeWidth(4);
 		pane.getChildren().add(barLine);
 		//Circles
-		Ellipse dot1 = new Ellipse(dotX, (y+endY)/2 - 7, 3, 3);
-		Ellipse dot2 = new Ellipse(dotX, (y+endY)/2 + 7, 3, 3);
+		Ellipse dot1 = new Ellipse(dotX, (2*y+endY)/2 - 7, 3, 3);
+		Ellipse dot2 = new Ellipse(dotX, (2*y+endY)/2 + 7, 3, 3);
 				
 		pane.getChildren().add(dot1);
 		pane.getChildren().add(dot2);
