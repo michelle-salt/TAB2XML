@@ -20,6 +20,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
@@ -312,6 +313,12 @@ public class PreviewSheetController {
 		pane.getChildren().add(dot2);
 	}
 	
+	public void drawMeasureNumber(double y, int measureNumber) {
+		Text t = new Text(7, y - 10, Integer.toString(measureNumber));
+		t.setFont(Font.font("arial", FontPosture.ITALIC, 15));
+		pane.getChildren().add(t);
+	}
+	
 	//Update the SheetMusic GUI
 	public void update() throws IOException { 	
 		Parser p = new Parser(mvc.converter.getMusicXML());
@@ -338,6 +345,7 @@ public class PreviewSheetController {
 			if (xVerify > this.pane.getMaxWidth()) {
 				x = 100.0;
 				yStaff += 100;
+				drawMeasureNumber(yStaff, p.getMeasures().get(i).getMeasureNumber());
 				placeSheetLines(yStaff, p.getInstrument());
 				clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
 				timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
@@ -404,6 +412,7 @@ public class PreviewSheetController {
 					x = 100.0;
 					yStaff += 100;
 					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
+					drawMeasureNumber(yStaff, p.getMeasures().get(i).getMeasureNumber());
 					placeSheetLines(yStaff, p.getInstrument());
 					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
 					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
