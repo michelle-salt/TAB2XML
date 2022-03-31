@@ -135,13 +135,13 @@ public class PreviewSheetController {
 		int endY;
 		//Change the vertical length depending on the instrument
 		if (instrument.equalsIgnoreCase("Bass")) {
-			endY = 3*lineSpacing;
+			endY = 36;
 		} else if (instrument.equalsIgnoreCase("Drumset")) {
-			endY = 4*lineSpacing;
+			endY = 48;
 		}
 		//Assumed to be guitar
 		else {
-			endY = 5*lineSpacing;
+			endY = 60;
 		}
 
 		//Draw the bar line
@@ -167,8 +167,7 @@ public class PreviewSheetController {
 					//Add letter to pane
 					pane.getChildren().add(t);
 					//Increment vertical distance for next letter
-					//12 lineSpacing, 19 default
-					y += lineSpacing + 7;
+					y += 19;
 				}
 			} 
 			//Assumed to be bass
@@ -205,7 +204,7 @@ public class PreviewSheetController {
 	public void placeSheetLines(double y, String instrument) {	
 		if (instrument.equalsIgnoreCase("Bass")) {
 			//Draws 4 lines
-			for (int i = 1; i <= 4; i++, y+= lineSpacing) {
+			for (int i = 1; i <= 4; i++, y+= 12) {
 				DrawSheetLines sheetLine = new DrawSheetLines(0.0, y, this.pane.getMaxWidth(), y);
 				//Add lines to pane
 				pane.getChildren().add(sheetLine.getLine());
@@ -213,7 +212,7 @@ public class PreviewSheetController {
 		}
 		else if (instrument.equalsIgnoreCase("Drumset")) {
 			//Draws 5 lines
-			for (int i = 1; i <= 5; i++, y+= lineSpacing) {
+			for (int i = 1; i <= 5; i++, y+= 12) {
 				DrawSheetLines sheetLine = new DrawSheetLines(0.0, y, this.pane.getMaxWidth(), y);
 				//Add lines to pane
 				pane.getChildren().add(sheetLine.getLine());
@@ -221,7 +220,7 @@ public class PreviewSheetController {
 		}
 		else if (instrument.equalsIgnoreCase("Guitar")) {
 			//Draws 6 lines
-			for (int i = 1; i <= 6; i++, y+= lineSpacing) {
+			for (int i = 1; i <= 6; i++, y+= 12) {
 				DrawSheetLines sheetLine = new DrawSheetLines(0.0, y, this.pane.getMaxWidth(), y);
 				//Add lines to pane
 				pane.getChildren().add(sheetLine.getLine());
@@ -283,13 +282,13 @@ public class PreviewSheetController {
 		int endY;
 		//Change the vertical length depending on the instrument
 		if (instrument.equalsIgnoreCase("Bass")) {
-			endY = 3*lineSpacing;
+			endY = 36;
 		} else if (instrument.equalsIgnoreCase("Drumset")) {
-			endY = 4*lineSpacing;
+			endY = 48;
 		}
 		//Assumed to be guitar
 		else {
-			endY = 5*lineSpacing;
+			endY = 60;
 		}
 		
 		double thinX, dotX;
@@ -329,10 +328,8 @@ public class PreviewSheetController {
 	}
 	
 	//Default
-	//noteSpacing = 25, staffSpacing = 100, lineSpacing = 12
-	//line spacing also needs to update the staffSpacing
-	//Don't forget to fix repeats with all spacings
-	private int noteSpacing = 25, staffSpacing = 200, lineSpacing = 20;
+	//noteSpacing = 25, staffSpacing = 100
+	private int noteSpacing = 25, staffSpacing = 100;
 	
 	//Update the SheetMusic GUI
 	public void update() throws IOException { 
@@ -362,8 +359,8 @@ public class PreviewSheetController {
 				yStaff += staffSpacing;
 				drawMeasureNumber(yStaff, p.getMeasures().get(i).getMeasureNumber());
 				placeSheetLines(yStaff, p.getInstrument());
-				clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, lineSpacing*1.5+yStaff, p.getInstrument());
-				timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, lineSpacing*2.3+yStaff, p.getInstrument());
+				clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
+				timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 			}
 			
 			//First one is always left
@@ -388,15 +385,7 @@ public class PreviewSheetController {
 						switch (note.getUnpitched().getStep()) {
 						case 'A':
 							y = 1;
-							//This is the only note which will have a strikethrough in it
-							/* -12 --> -10
-							12 --> 20
-							-12+((20 - 12)/4)
-							-12+((lineSpacing - 12)/4)
-							*/
-							double test = (-12+((lineSpacing - 12)/4))+(y-1)*6+yStaff;
-//							double test = (-1*lineSpacing)+((y-1)*(lineSpacing/2))+yStaff;
-							Line strikethrough = new Line(x-2, test, x+12, test);
+							Line strikethrough = new Line(x-2, -12+(y-1)*6+yStaff, x+12, -12+(y-1)*6+yStaff);
 							pane.getChildren().add(strikethrough); break;
 						case 'G':	y = 2;	break;
 						case 'F':	y = 3;	break;
@@ -414,27 +403,21 @@ public class PreviewSheetController {
 						}
 					}
 					//Value retrieved through guess and check :))))
-					/*
-					 * 12 --> -7+(y-1)*6
-					 * 		(-0.58*lineSpacing)+(y-(0.083*lineSpacing))*(lineSpacing/2)
-					 * 20 --> (-0.75*lineSpacing)+y*(lineSpacing/2)
-					 * 		-15+y*10
-					 */
-					y = (-0.58*lineSpacing)+(y-(0.083*lineSpacing))*(lineSpacing/2); 
+					y = -7+(y-1)*6; 
 				} 
 				//Get the y value for each guitar or bass note
 				else {
 					//Figure out which string the note is on
 					int string = note.getString();
 					//Set the y coordinate based on the line
-					y = 5+(string-1)*lineSpacing; //Each staff line is 12 y-pixels apart
+					y = 5+(string-1)*12; //Each staff line is 12 y-pixels apart
 				}
 				//Draw the note
 				if (x < this.pane.getMaxWidth()) {
 					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
 					placeSheetLines(0, p.getInstrument());
-					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, lineSpacing*1.5+yStaff, p.getInstrument());
-					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, lineSpacing*2.3+yStaff, p.getInstrument());
+					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
+					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 				}
 				else {
 					x = 100.0;
@@ -442,8 +425,8 @@ public class PreviewSheetController {
 					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
 					drawMeasureNumber(yStaff, p.getMeasures().get(i).getMeasureNumber());
 					placeSheetLines(yStaff, p.getInstrument());
-					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, lineSpacing*1.5+yStaff, p.getInstrument());
-					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, lineSpacing*2.3+yStaff, p.getInstrument());
+					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
+					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 				}
 			}
 			//Dynamically draw a bar line (after each measure)
