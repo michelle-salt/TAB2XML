@@ -46,6 +46,9 @@ import org.fxmisc.richtext.CodeArea;
 
 public class PreviewSheetController {
 
+	//Default: noteSpacing = 25, staffSpacing = 100
+	private int noteSpacing = 25, staffSpacing = 100;
+	
 	@FXML private Pane pane;
 	@FXML private AnchorPane anchorPane;
  	@FXML private Canvas canvas;
@@ -327,10 +330,6 @@ public class PreviewSheetController {
 		pane.getChildren().add(t);
 	}
 	
-	//Default
-	//noteSpacing = 25, staffSpacing = 100
-	private int noteSpacing = 25, staffSpacing = 100;
-	
 	//Update the SheetMusic GUI
 	public void update() throws IOException { 
 		Parser p = new Parser(mvc.converter.getMusicXML());
@@ -467,5 +466,22 @@ public class PreviewSheetController {
 			Logger logger = Logger.getLogger(getClass().getName());
 			logger.log(Level.SEVERE, "Failed to create new Window.", e);
 		}
+	}
+
+	//Getters and setters for dynamic spacing
+	public int getNoteSpacing() {
+		return noteSpacing;
+	}
+
+	public int getStaffSpacing() {
+		return staffSpacing;
+	}
+
+	public void setNoteSpacing(int noteSpacing) {
+		this.noteSpacing = noteSpacing;
+	}
+
+	public void setStaffSpacing(int staffSpacing) {
+		this.staffSpacing = staffSpacing;
 	}
 }
