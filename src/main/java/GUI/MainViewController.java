@@ -372,26 +372,17 @@ public class MainViewController extends Application {
 		}
 	}
 	
-	int tempo;
-	
+	private int tempo;
 	public void setTempo(int tempo) {
-
-		this.tempo= tempo;
-		
+		this.tempo = tempo;
 	}
-
+	
 	@FXML
 	void playMusic() throws IOException {
 		
 		Parser parse = new Parser(converter.getMusicXML());
 		String instrument = parse.getInstrument();
 		ArrayList<Measure> measures = parse.getMeasures();
-		
-		if(this.tempo == 0) {
-			
-			this.tempo = 90; // default tempo
-			
-		}
 		
 		System.out.println(this.tempo);
 		System.out.println(instrument);

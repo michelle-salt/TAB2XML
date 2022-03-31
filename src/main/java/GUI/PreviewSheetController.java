@@ -94,14 +94,18 @@ public class PreviewSheetController {
  		}
 	}
 
-	//Implements the "Go To Measure" button on the SheetMusic GUI
 	public void handleGotoMeasure() {
-		//Implement - Duaa
-		//Check if it's a valid measure
+		
 	}
 	
 	public void handlePlayMusic() {
 		try {
+			if (tempoField.getText().isEmpty()) {
+				mvc.setTempo(100);
+			}
+			else {
+				mvc.setTempo(Integer.parseInt(tempoField.getText()));
+			}
 			mvc.playMusic();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -114,17 +118,6 @@ public class PreviewSheetController {
 	
 	public void handleStopMusic() {
 		//Implement
-	}
-	
-	public void handlePlay() {
-		try {
-			int tempo = Integer.parseInt(tempoField.getText());
-			mvc.setTempo(tempo);
-			mvc.playMusic();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	//Draw the bar to mark the end of a Measure
