@@ -3,6 +3,7 @@ package GUI;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.print.PageLayout;
 import javafx.print.PageOrientation;
 import javafx.print.Paper;
@@ -25,6 +26,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import musicxml.parsing.*;
 import java.io.File;
@@ -32,7 +35,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.*;
 
 import org.fxmisc.richtext.CodeArea;
@@ -429,5 +436,32 @@ public class PreviewSheetController {
 			}
 		}
 		
+	}
+	
+	private Window openNewWindow(Parent root, String windowName) {
+		Stage stage = new Stage();
+		stage.setTitle(windowName);
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.initOwner(MainApp.STAGE);
+		stage.setResizable(false);
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+		return scene.getWindow();
+	}
+	
+	@FXML
+	private void customizeHandle() throws IOException {
+		Parent root;
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/customizeGUI.fxml"));
+			root = loader.load();
+			CustomizeController controller = loader.getController();
+			controller.setPreviewSheetController(this);
+			convertWindow = this.openNewWindow(root, "Customize");
+		} catch (IOException e) {
+			Logger logger = Logger.getLogger(getClass().getName());
+			logger.log(Level.SEVERE, "Failed to create new Window.", e);
+		}
 	}
 }
