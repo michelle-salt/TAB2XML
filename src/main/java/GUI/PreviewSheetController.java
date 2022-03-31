@@ -29,6 +29,7 @@ import musicxml.parsing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,24 +37,28 @@ import javafx.scene.canvas.*;
 
 import org.fxmisc.richtext.CodeArea;
 
+import converter.Converter;
+
 public class PreviewSheetController {
 
 	@FXML private Pane pane;
 	@FXML private AnchorPane anchorPane;
- 	@FXML private Canvas canvas;
- 	
+	@FXML private Canvas canvas;
+
 	private MainViewController mvc;
 	public Window convertWindow;
+	public Converter converter;
 
 	@FXML public CodeArea mainText;
 
 	@FXML Button printButton;
 	@FXML Button playButton;
-	@FXML Button goToMeasureButton;
 	@FXML TextField tempoField;
-	
+	@FXML TextField goToMeasureField;
+	@FXML Button goToMeasureButton;
+
 	BooleanProperty printButtonPressed = new SimpleBooleanProperty(false);
-	
+
 	public PreviewSheetController() {}
 
 	public void setMainViewController(MainViewController mvcInput) {
@@ -67,37 +72,64 @@ public class PreviewSheetController {
 
 	@FXML
 	public <printButtonPressed> void printHandle() {
- 		//Set up a printer
+		//Set up a printer
 		Printer p = Printer.getDefaultPrinter();
- 		//Set up Page Dialog
- 		PrinterJob pj = PrinterJob.createPrinterJob();
- 		PageLayout pl = p.createPageLayout(Paper.NA_LETTER, PageOrientation.PORTRAIT, MarginType.DEFAULT);
- 		//Get the image of the GUI contents
- 		WritableImage wi = anchorPane.snapshot(null, null);
- 		//Load the image
- 		ImageView v = new ImageView(wi);
- 		//Dimensions of the Printable area
- 		double w = pl.getPrintableWidth()/wi.getWidth();
- 		double h = pl.getPrintableHeight()/wi.getHeight();
- 		Scale s = new Scale(w, w);
- 		v.getTransforms().add(s);
- 		Window window = pane.getScene().getWindow();
- 		//Print
- 		if (pj != null && pj.showPrintDialog(window)) {
- 			Translate t = new Translate(0, 0);
- 			v.getTransforms().add(t);
- 			for (int i = 0; i < Math.ceil(w/h); i++) {
- 				t.setY((pl.getPrintableHeight()/w) * (-i));
- 				pj.printPage(pl, v);
- 			}
- 			pj.endJob();
- 		}
+		//Set up Page Dialog
+		PrinterJob pj = PrinterJob.createPrinterJob();
+		PageLayout pl = p.createPageLayout(Paper.NA_LETTER, PageOrientation.PORTRAIT, MarginType.DEFAULT);
+		//Get the image of the GUI contents
+		WritableImage wi = anchorPane.snapshot(null, null);
+		//Load the image
+		ImageView v = new ImageView(wi);
+		//Dimensions of the Printable area
+		double w = pl.getPrintableWidth()/wi.getWidth();
+		double h = pl.getPrintableHeight()/wi.getHeight();
+		Scale s = new Scale(w, w);
+		v.getTransforms().add(s);
+		Window window = pane.getScene().getWindow();
+		//Print
+		if (pj != null && pj.showPrintDialog(window)) {
+			Translate t = new Translate(0, 0);
+			v.getTransforms().add(t);
+			for (int i = 0; i < Math.ceil(w/h); i++) {
+				t.setY((pl.getPrintableHeight()/w) * (-i));
+				pj.printPage(pl, v);
+			}
+			pj.endJob();
+		}
 	}
 
 	public void handleGotoMeasure() {
-		
+
+		// Get the text of the Go-To Measure Field.
+		if (!goToMeasureField.getText().isEmpty()) {
+			/*
+			 * There are 2 possible cases when the field is NOT empty:
+			 * 		1 - inputed measure is within the valid range.
+			 * 		2 - inputed measure is NOT within the valid range.
+			 * 
+			 *		Get the minimum and maximum measure to find the range.
+			 */
+//			if () { /* within range */
+//				
+//			}
+//			if () { /* outside range */
+//				Alert alert = new Alert(Alert.AlertType.ERROR, "Enter a valid measure"); // LATER: Get the valid measure range
+//				alert.setTitle("Go-To Measure");
+//				alert.setHeaderText("Invalid Measure!");
+//				alert.show();
+//			}
+		}
+
+		else { /* empty field */
+			Alert alert = new Alert(Alert.AlertType.ERROR, "Enter a valid measure");
+			alert.setTitle("Go-To Measure");
+			alert.setHeaderText("Go-To Measure Field is Empty!");
+			alert.show();
+		}
+
 	}
-	
+
 	public void handlePlayMusic() {
 		try {
 			if (tempoField.getText().isEmpty()) {
@@ -111,11 +143,11 @@ public class PreviewSheetController {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void handlePauseMusic() {
 		//Implement
 	}
-	
+
 	public void handleStopMusic() {
 		//Implement
 	}
@@ -225,25 +257,25 @@ public class PreviewSheetController {
 			beatsText.setFont(Font.font("cambria", FontWeight.BLACK, 40));
 			//Add number to pane
 			pane.getChildren().add(beatsText);
-			
+
 			//Increment vertical distance for next letter
 			y += 31;
-			
+
 			Text beatTypeText = new Text(x, y, Integer.toString(beatType));
 			beatTypeText.setFont(Font.font("cambria", FontWeight.BLACK, 40));
 			//Add number to pane
 			pane.getChildren().add(beatTypeText);
 		} else if (instrument.equalsIgnoreCase("drumset")) {
 			y -= 6;
-			
+
 			Text beatsText = new Text(x, y, Integer.toString(beats));
 			beatsText.setFont(Font.font("cambria", FontWeight.BLACK, 32));
 			//Add number to pane
 			pane.getChildren().add(beatsText);
-			
+
 			//Increment vertical distance for next letter
 			y += 26;
-			
+
 			Text beatTypeText = new Text(x, y, Integer.toString(beatType));
 			beatTypeText.setFont(Font.font("cambria", FontWeight.BLACK, 32));
 			//Add number to pane
@@ -252,22 +284,22 @@ public class PreviewSheetController {
 		//Assumed to be bass
 		else {
 			y -= 11;
-			
+
 			Text beatsText = new Text(x, y, Integer.toString(beats));
 			beatsText.setFont(Font.font("cambria", FontWeight.BLACK, 23));
 			//Add number to pane
 			pane.getChildren().add(beatsText);
-			
+
 			//Increment vertical distance for next letter
 			y += 19;
-			
+
 			Text beatTypeText = new Text(x, y, Integer.toString(beatType));
 			beatTypeText.setFont(Font.font("cambria", FontWeight.BLACK, 23));
 			//Add number to pane
 			pane.getChildren().add(beatTypeText);
 		}
 	}
-	
+
 	public void drawRepeat(double x, double y, char direction, String words, String instrument) {
 		//Set base length of the bar
 		int endY = 60;
@@ -281,7 +313,7 @@ public class PreviewSheetController {
 		else if (instrument.equalsIgnoreCase("Guitar")) {
 			endY = 60;
 		}
-		
+
 		double thinX, dotX;
 		if (direction == 'l') {
 			thinX = x + 5;
@@ -291,7 +323,7 @@ public class PreviewSheetController {
 		else {
 			thinX = x - 5;
 			dotX = x - 12;
-			
+
 			//Text
 			Text t = new Text(x - 25, y - 10, words);
 			t.setFont(Font.font("arial", 15));
@@ -307,11 +339,11 @@ public class PreviewSheetController {
 		//Circles
 		Ellipse dot1 = new Ellipse(dotX, (2*y+endY)/2 - 7, 3, 3);
 		Ellipse dot2 = new Ellipse(dotX, (2*y+endY)/2 + 7, 3, 3);
-				
+
 		pane.getChildren().add(dot1);
 		pane.getChildren().add(dot2);
 	}
-	
+
 	//Update the SheetMusic GUI
 	public void update() throws IOException { 	
 		Parser p = new Parser(mvc.converter.getMusicXML());
@@ -342,11 +374,11 @@ public class PreviewSheetController {
 				clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
 				timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 			}
-			
+
 			//First one is always left
 			if (p.getMeasures().get(i).getBarlines().size() > 0 && p.getMeasures().get(i).getBarlines().get(0).getLocation() ==  'l')
 				drawRepeat(x-25, 0 + yStaff, 'l', p.getMeasures().get(i).getDirection().getWords(), p.getInstrument());
-			
+
 			//Loop through all the notes in the current measure
 			for (int j = 0; j < noteList.size(); j++, x += 25)
 			{
@@ -412,13 +444,13 @@ public class PreviewSheetController {
 			//Dynamically draw a bar line (after each measure)
 			//Either first or second is right
 			if ((p.getMeasures().get(i).getBarlines().size() == 1 && p.getMeasures().get(i).getBarlines().get(0).getLocation() ==  'r') 
-				|| (p.getMeasures().get(i).getBarlines().size() > 1 && p.getMeasures().get(i).getBarlines().get(1).getLocation() ==  'r')) {
+					|| (p.getMeasures().get(i).getBarlines().size() > 1 && p.getMeasures().get(i).getBarlines().get(1).getLocation() ==  'r')) {
 				x += 25;
 				drawRepeat(x, 0 + yStaff, 'r', p.getMeasures().get(i).getDirection().getWords(), p.getInstrument());
 			} else {
 				barLines(x, 0 + yStaff, p.getInstrument());
 			}
 		}
-		
+
 	}
 }
