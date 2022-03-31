@@ -21,6 +21,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
@@ -45,6 +46,9 @@ import org.fxmisc.richtext.CodeArea;
 
 public class PreviewSheetController {
 
+	//Default: noteSpacing = 25, staffSpacing = 100
+	private int noteSpacing = 25, staffSpacing = 100;
+	
 	@FXML private Pane pane;
 	@FXML private AnchorPane anchorPane;
  	@FXML private Canvas canvas;
@@ -131,15 +135,15 @@ public class PreviewSheetController {
 	//Must implement double bar and end bars soon?
 	private void barLines(double x, double y, String instrument) {
 		//Set base length of the bar
-		int endY = 60;
+		int endY;
 		//Change the vertical length depending on the instrument
 		if (instrument.equalsIgnoreCase("Bass")) {
 			endY = 36;
-		}
-		else if (instrument.equalsIgnoreCase("Drumset")) {
+		} else if (instrument.equalsIgnoreCase("Drumset")) {
 			endY = 48;
 		}
-		else if (instrument.equalsIgnoreCase("Guitar")) {
+		//Assumed to be guitar
+		else {
 			endY = 60;
 		}
 
@@ -153,6 +157,7 @@ public class PreviewSheetController {
 		//Add bar to pane
 		pane.getChildren().add(bar);
 	}
+	
 	//Draw the Clef at the left-end of the Staff
 	private void clef(String symbol, double x, double y, String instrument) {
 		if (symbol.equalsIgnoreCase("TAB")) {
@@ -277,15 +282,15 @@ public class PreviewSheetController {
 	
 	public void drawRepeat(double x, double y, char direction, String words, String instrument) {
 		//Set base length of the bar
-		int endY = 60;
+		int endY;
 		//Change the vertical length depending on the instrument
 		if (instrument.equalsIgnoreCase("Bass")) {
 			endY = 36;
-		}
-		else if (instrument.equalsIgnoreCase("Drumset")) {
+		} else if (instrument.equalsIgnoreCase("Drumset")) {
 			endY = 48;
 		}
-		else if (instrument.equalsIgnoreCase("Guitar")) {
+		//Assumed to be guitar
+		else {
 			endY = 60;
 		}
 		
@@ -319,32 +324,39 @@ public class PreviewSheetController {
 		pane.getChildren().add(dot2);
 	}
 	
+	public void drawMeasureNumber(double y, int measureNumber) {
+		Text t = new Text(7, y - 10, Integer.toString(measureNumber));
+		t.setFont(Font.font("arial", FontPosture.ITALIC, 15));
+		pane.getChildren().add(t);
+	}
+	
 	//Update the SheetMusic GUI
-	public void update() throws IOException { 	
+	public void update() throws IOException { 
 		Parser p = new Parser(mvc.converter.getMusicXML());
 		//Get the list of measure from parser
 		List<Measure> measureList = p.getMeasures();
 		//Initialize x and y coordinates of where to draw notes
 		double x = 100.0, xVerify = 100, y = 0, yStaff = 0;			
 		//Iterate through each measure
-		for (int i = 0; i< measureList.size(); i++, x += 25)
+		for (int i = 0; i< measureList.size(); i++, x += noteSpacing)
 		{
 			//Get the current measure
 			Measure measure = measureList.get(i);
 			//Get the list of notes for each measure
 			ArrayList<Note> noteList = measure.getNotes();
 			xVerify = x;
-			for (int j = 0; j < noteList.size(); j++, xVerify += 25) {
+			for (int j = 0; j < noteList.size(); j++, xVerify += noteSpacing) {
 				//Get the current note
 				Note note = noteList.get(j);
 				//If it's a chord, draw the notes on the same line (x-coordinate)
 				if (note.isChord()) {
-					xVerify -= 25;
+					xVerify -= noteSpacing;
 				}
 			}
 			if (xVerify > this.pane.getMaxWidth()) {
 				x = 100.0;
-				yStaff += 100;
+				yStaff += staffSpacing;
+				drawMeasureNumber(yStaff, p.getMeasures().get(i).getMeasureNumber());
 				placeSheetLines(yStaff, p.getInstrument());
 				clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
 				timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
@@ -355,13 +367,13 @@ public class PreviewSheetController {
 				drawRepeat(x-25, 0 + yStaff, 'l', p.getMeasures().get(i).getDirection().getWords(), p.getInstrument());
 			
 			//Loop through all the notes in the current measure
-			for (int j = 0; j < noteList.size(); j++, x += 25)
+			for (int j = 0; j < noteList.size(); j++, x += noteSpacing)
 			{
 				//Get the current note
 				Note note = noteList.get(j);
 				//If it's a chord, draw the notes on the same line (x-coordinate)
 				if (note.isChord()) {
-					x -= 25;
+					x -= noteSpacing;
 				}
 				//Get the y value for each drum note
 				if (p.getInstrument().equals("drumset")) {
@@ -372,7 +384,6 @@ public class PreviewSheetController {
 						switch (note.getUnpitched().getStep()) {
 						case 'A':
 							y = 1;
-							//This is the only note which will have a strikethrough in it
 							Line strikethrough = new Line(x-2, -12+(y-1)*6+yStaff, x+12, -12+(y-1)*6+yStaff);
 							pane.getChildren().add(strikethrough); break;
 						case 'G':	y = 2;	break;
@@ -409,8 +420,9 @@ public class PreviewSheetController {
 				}
 				else {
 					x = 100.0;
-					yStaff += 100;
+					yStaff += staffSpacing;
 					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
+					drawMeasureNumber(yStaff, p.getMeasures().get(i).getMeasureNumber());
 					placeSheetLines(yStaff, p.getInstrument());
 					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
 					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
@@ -420,7 +432,7 @@ public class PreviewSheetController {
 			//Either first or second is right
 			if ((p.getMeasures().get(i).getBarlines().size() == 1 && p.getMeasures().get(i).getBarlines().get(0).getLocation() ==  'r') 
 				|| (p.getMeasures().get(i).getBarlines().size() > 1 && p.getMeasures().get(i).getBarlines().get(1).getLocation() ==  'r')) {
-				x += 25;
+				x += noteSpacing;
 				drawRepeat(x, 0 + yStaff, 'r', p.getMeasures().get(i).getDirection().getWords(), p.getInstrument());
 			} else {
 				barLines(x, 0 + yStaff, p.getInstrument());
@@ -454,5 +466,22 @@ public class PreviewSheetController {
 			Logger logger = Logger.getLogger(getClass().getName());
 			logger.log(Level.SEVERE, "Failed to create new Window.", e);
 		}
+	}
+
+	//Getters and setters for dynamic spacing
+	public int getNoteSpacing() {
+		return noteSpacing;
+	}
+
+	public int getStaffSpacing() {
+		return staffSpacing;
+	}
+
+	public void setNoteSpacing(int noteSpacing) {
+		this.noteSpacing = noteSpacing;
+	}
+
+	public void setStaffSpacing(int staffSpacing) {
+		this.staffSpacing = staffSpacing;
 	}
 }
