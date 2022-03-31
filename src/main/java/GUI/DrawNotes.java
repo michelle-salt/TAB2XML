@@ -105,6 +105,24 @@ public class DrawNotes {
 	public void printEighthPlusNote(int numFlags) {
 		printQuarterNote();
 //		drawFlag(numFlags);
-	}	
+	}
 	
+	//For test case purposes
+	public double getX() {
+		return this.x;
+	}
+	
+	public double getY() {
+		return this.y;
+	}
+	
+	public Pane getPane() {
+		return this.pane;
+	}
+	
+	public Note getNote() {
+		return this.note;
+	}
 }
+	
+
