@@ -81,29 +81,36 @@ public class PreviewSheetController {
 	public <printButtonPressed> void printHandle() {
  		//Set up a printer
 		Printer p = Printer.getDefaultPrinter();
- 		//Set up Page Dialog
- 		PrinterJob pj = PrinterJob.createPrinterJob();
- 		PageLayout pl = p.createPageLayout(Paper.NA_LETTER, PageOrientation.PORTRAIT, MarginType.DEFAULT);
- 		//Get the image of the GUI contents
- 		WritableImage wi = anchorPane.snapshot(null, null);
- 		//Load the image
- 		ImageView v = new ImageView(wi);
- 		//Dimensions of the Printable area
- 		double w = pl.getPrintableWidth()/wi.getWidth();
- 		double h = pl.getPrintableHeight()/wi.getHeight();
- 		Scale s = new Scale(w, w);
- 		v.getTransforms().add(s);
- 		Window window = pane.getScene().getWindow();
- 		//Print
- 		if (pj != null && pj.showPrintDialog(window)) {
- 			Translate t = new Translate(0, 0);
- 			v.getTransforms().add(t);
- 			for (int i = 0; i < Math.ceil(w/h); i++) {
- 				t.setY((pl.getPrintableHeight()/w) * (-i));
- 				pj.printPage(pl, v);
- 			}
- 			pj.endJob();
- 		}
+		if (p == null) {
+			Alert alert = new Alert(Alert.AlertType.ERROR, "You do not have a printer setup. Please set up a printer on this device to continue.");
+			alert.setTitle("Print");
+			alert.setHeaderText("Printing Error!");
+			alert.show();
+		} else {
+	 		//Set up Page Dialog
+	 		PrinterJob pj = PrinterJob.createPrinterJob();
+	 		PageLayout pl = p.createPageLayout(Paper.NA_LETTER, PageOrientation.PORTRAIT, MarginType.DEFAULT);
+	 		//Get the image of the GUI contents
+	 		WritableImage wi = anchorPane.snapshot(null, null);
+	 		//Load the image
+	 		ImageView v = new ImageView(wi);
+	 		//Dimensions of the Printable area
+	 		double w = pl.getPrintableWidth()/wi.getWidth();
+	 		double h = pl.getPrintableHeight()/wi.getHeight();
+	 		Scale s = new Scale(w, w);
+	 		v.getTransforms().add(s);
+	 		Window window = pane.getScene().getWindow();
+	 		//Print
+	 		if (pj != null && pj.showPrintDialog(window)) {
+	 			Translate t = new Translate(0, 0);
+	 			v.getTransforms().add(t);
+	 			for (int i = 0; i < Math.ceil(w/h); i++) {
+	 				t.setY((pl.getPrintableHeight()/w) * (-i));
+	 				pj.printPage(pl, v);
+	 			}
+	 			pj.endJob();
+	 		}
+		}
 	}
 
 	@FXML
