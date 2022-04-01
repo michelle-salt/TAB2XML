@@ -10,8 +10,9 @@ public class Note {
 	private boolean isChord; //If true, this note is a chord with the preceding note(s)
 	private boolean isGraceNote;
 	private boolean isRest;
+	private Tremolo tremolo;
 	
-	public Note(int duration, int voice, String noteType, double bendAlter, int numDots) {
+	public Note(int duration, int voice, String noteType, double bendAlter, int numDots, Tremolo tremolo) {
 		//isGraceNote defaults to false
 		isGraceNote = false;
 		//isChord defaults to false
@@ -21,6 +22,7 @@ public class Note {
 		this.voice = voice;
 		this.bendAlter = bendAlter;
 		this.numDots = numDots;
+		this.tremolo = tremolo;
 		//Initialize the value of the type based on the input string, defaulting to 'Z' if it doesn't work
 		switch (noteType.toLowerCase()) {
 		case "maxima":	this.type = 'M'; break;
@@ -62,6 +64,10 @@ public class Note {
 		return numDots;
 	}
 	
+	public Tremolo getTremolo() {
+		return tremolo;
+	}
+	
 	public boolean isChord() {
 		return isChord;
 	}
@@ -98,8 +104,8 @@ public class Note {
 	private Tied tied;
 	
 	//Inside here (the notes method, actually), add a method for each note value/sub-tag	
-	public Note(Pitch pitch, int duration, int voice, String noteType, int string, int fret, musicxml.parsing.Slur slur, musicxml.parsing.PullOff pullOff, Tied tied, double bendAlter, int numDots) {
-		this(duration, voice, noteType, bendAlter, numDots);
+	public Note(Pitch pitch, int duration, int voice, String noteType, int string, int fret, musicxml.parsing.Slur slur, musicxml.parsing.PullOff pullOff, Tied tied, double bendAlter, int numDots, Tremolo tremolo) {
+		this(duration, voice, noteType, bendAlter, numDots, tremolo);
 		//Initialize all given variables
 		this.pitch = pitch;
 		this.string = string;
@@ -152,8 +158,8 @@ public class Note {
 
 	//Constructor for the DrumNotes
 	//Inside here (the notes method, actually), add a method for each note value/sub-tag	
-	public Note(Unpitched unpitched, int duration, String instrumentID, int voice, String noteType, String stem, String notehead, double bendAlter, int numDots) {
-		this(duration, voice, noteType, bendAlter, numDots);
+	public Note(Unpitched unpitched, int duration, String instrumentID, int voice, String noteType, String stem, String notehead, double bendAlter, int numDots, Tremolo tremolo) {
+		this(duration, voice, noteType, bendAlter, numDots, tremolo);
 		//Initialize all given variables
 		this.unpitched = unpitched;
 		this.instrumentID = instrumentID;

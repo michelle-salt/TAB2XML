@@ -174,7 +174,21 @@ public class Measure {
 					//Do nothing since the default is already set to 0
 				}
 				
-				this.notes.add(new Note(unpitch, duration, instrumentID, voice, type, stem, notehead, bendAlter, numDots));
+				//Get the tremolo, if it exists
+				String tremType = null; int trem = 0;
+				try {
+					tremType = eElement.getElementsByTagName("tremolo").item(0).getAttributes().item(0).getNodeValue();
+				} catch (NullPointerException e) {
+					//Do nothing; the default value has alerady been set
+				}
+				try {
+					trem =Integer.parseInt(eElement.getElementsByTagName("tremolo").item(0).getTextContent());
+				} catch (NullPointerException e) {
+					//Do nothing; the default value has alerady been set
+				}
+				Tremolo tremolo = new Tremolo(tremType, trem);
+				
+				this.notes.add(new Note(unpitch, duration, instrumentID, voice, type, stem, notehead, bendAlter, numDots, tremolo));
 				
 				//-----------------------------------------------
 				try {
@@ -335,7 +349,21 @@ public class Measure {
 					//Do nothing since the default is already set to 0
 				}
 				
-				this.notes.add(new Note(pitch, duration, voice, type, string, fret, slur, pullOff, tied, bendAlter, numDots));
+				//Get the tremolo, if it exists
+				String tremType = null; int trem = 0;
+				try {
+					tremType = eElement.getElementsByTagName("tremolo").item(0).getAttributes().item(0).getNodeValue();
+				} catch (NullPointerException e) {
+					//Do nothing; the default value has alerady been set
+				}
+				try {
+					trem =Integer.parseInt(eElement.getElementsByTagName("tremolo").item(0).getTextContent());
+				} catch (NullPointerException e) {
+					//Do nothing; the default value has alerady been set
+				}
+				Tremolo tremolo = new Tremolo(tremType, trem);
+				
+				this.notes.add(new Note(pitch, duration, voice, type, string, fret, slur, pullOff, tied, bendAlter, numDots, tremolo));
 				
 				try {
 					eElement.getElementsByTagName("chord").item(0).getTextContent();
