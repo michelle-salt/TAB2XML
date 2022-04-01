@@ -60,8 +60,9 @@ public class PreviewSheetController {
 
 	@FXML Button printButton;
 	@FXML Button playButton;
-	@FXML Button goToMeasureButton;
 	@FXML TextField tempoField;
+	@FXML TextField goToMeasureField;
+	@FXML Button goToMeasureButton;
 	
 	BooleanProperty printButtonPressed = new SimpleBooleanProperty(false);
 	
@@ -105,10 +106,39 @@ public class PreviewSheetController {
  		}
 	}
 
+	@FXML
 	public void handleGotoMeasure() {
-		
+
+		// Get the text of the Go-To Measure Field.
+		if (!goToMeasureField.getText().isEmpty()) {
+			/*
+			 * There are 2 possible cases when the field is NOT empty:
+			 * 		1 - inputed measure is within the valid range.
+			 * 		2 - inputed measure is NOT within the valid range.
+			 * 
+			 *		Get the minimum and maximum measure to find the range.
+			 */
+//			if () { /* within range */
+//				
+//			}
+//			if () { /* outside range */
+//				Alert alert = new Alert(Alert.AlertType.ERROR, "Enter a valid measure"); // LATER: Get the valid measure range
+//				alert.setTitle("Go-To Measure");
+//				alert.setHeaderText("Invalid Measure!");
+//				alert.show();
+//			}
+		}
+
+		else { /* empty field */
+			Alert alert = new Alert(Alert.AlertType.ERROR, "Enter a valid measure");
+			alert.setTitle("Go-To Measure");
+			alert.setHeaderText("Empty Field!");
+			alert.show();
+		}
+
 	}
 	
+	@FXML
 	public void handlePlayMusic() {
 		try {
 			if (tempoField.getText().isEmpty()) {
