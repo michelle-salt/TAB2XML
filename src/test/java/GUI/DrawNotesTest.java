@@ -31,9 +31,9 @@ public class DrawNotesTest {
 		List<Measure> measureList = p.getMeasures();
 		
 		//Testing if DrawNotes methods are correct
-		Note guitarNote = new Note(2, 2, "eighth", 4.0, 5); // Initialized guitar note with random values for parameters
+		Note guitarNote = new Note(2, 2, "eighth", 4.0, 5, new Tremolo(null, 0)); // Initialized guitar note with random values for parameters
 		Unpitched pitch = new Unpitched('2', 5); // Initialized random pitch with random parameters for drum
-		Note drumNote = new Note(pitch, 2, "A2", 4, "eighth", "down", "B2", 5, 5); // Initialized drum note with random values for parameters
+		Note drumNote = new Note(pitch, 2, "A2", 4, "eighth", "down", "B2", 5, 5, new Tremolo(null, 0)); // Initialized drum note with random values for parameters
 		
 		Pane pane = new Pane(); // Initialized dummy pane
 		DrawNotes drawGuitarNote = new DrawNotes(pane, 40.0, 50.0, guitarNote, "guitar"); // Initialized dummy guitar note
