@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 
-<BorderPane fx:id="borderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="450.0" minWidth="640.0" prefHeight="700.0" prefWidth="1000.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.PreviewSheetController">
+<BorderPane fx:id="borderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="450.0" minWidth="640.0" prefHeight="700.0" prefWidth="1000.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.PreviewSheetController">
 	<center>
 		<AnchorPane prefHeight="200.0" prefWidth="666.0" BorderPane.alignment="CENTER">
 			<children>
@@ -81,20 +82,29 @@
 								<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 							</padding>
 							<children>
-								<Button fx:id="playMusic" layoutX="15.0" layoutY="15.0" mnemonicParsing="false" onAction="#handlePlayMusic" prefWidth="115.0" text="Play Music">
+								<Button fx:id="playMusic" layoutX="15.0" layoutY="15.0" mnemonicParsing="false" onAction="#handlePlayMusic" prefHeight="40.0" prefWidth="50.0">
 									<padding>
 										<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 									</padding>
+                           <graphic>
+                              <FontAwesomeIconView glyphName="PLAY" size="25" />
+                           </graphic>
 								</Button>
-								<Button fx:id="pauseMusic" layoutX="15.0" layoutY="15.0" mnemonicParsing="false" onAction="#handlePauseMusic" prefWidth="115.0" text="Pause Music">
+								<Button fx:id="pauseMusic" layoutX="15.0" layoutY="15.0" mnemonicParsing="false" onAction="#handlePauseMusic" prefHeight="40.0" prefWidth="50.0">
 									<padding>
 										<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 									</padding>
+                           <graphic>
+                              <FontAwesomeIconView glyphName="PAUSE" size="25" />
+                           </graphic>
 								</Button>
-								<Button fx:id="stopMusic" mnemonicParsing="false" onAction="#handleStopMusic" prefWidth="115.0" text="Stop Music">
+								<Button fx:id="stopMusic" mnemonicParsing="false" onAction="#handleStopMusic" prefHeight="40.0" prefWidth="50.0">
 									<padding>
 										<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 									</padding>
+                           <graphic>
+                              <FontAwesomeIconView glyphName="STOP" size="25" />
+                           </graphic>
 								</Button>
 							</children>
 						</HBox>
