@@ -48,13 +48,13 @@ import org.fxmisc.richtext.CodeArea;
 
 public class PreviewSheetController {
 
-	//Default: noteSpacing = 25, staffSpacing = 100
-	private int noteSpacing = 25, staffSpacing = 100;
-	
+	private int noteSpacing;
+	private int staffSpacing;
+
 	@FXML private Pane pane;
 	@FXML private AnchorPane anchorPane;
- 	@FXML private Canvas canvas;
- 	
+	@FXML private Canvas canvas;
+
 	private MainViewController mvc;
 	public Window convertWindow;
 
@@ -65,10 +65,23 @@ public class PreviewSheetController {
 	@FXML TextField tempoField;
 	@FXML TextField goToMeasureField;
 	@FXML Button goToMeasureButton;
-	
+
 	BooleanProperty printButtonPressed = new SimpleBooleanProperty(false);
+
+	public PreviewSheetController() { 
+		/* Set default noteSpacing to 25 and staffSpacing to 100 */
+		noteSpacing = 25;
+		staffSpacing = 100;
+	}
 	
-	public PreviewSheetController() {}
+	// Setters for dynamic spacing
+	public void setNoteSpacing(int noteSpacing) {
+		this.noteSpacing = noteSpacing;
+	}
+	
+	public void setStaffSpacing(int staffSpacing) {
+		this.staffSpacing = staffSpacing;
+	}
 
 	public void setMainViewController(MainViewController mvcInput) {
 		mvc = mvcInput;
@@ -81,7 +94,7 @@ public class PreviewSheetController {
 
 	@FXML
 	public <printButtonPressed> void printHandle() {
- 		//Set up a printer
+		//Set up a printer
 		Printer p = Printer.getDefaultPrinter();
 		if (p == null) {
 			Alert alert = new Alert(Alert.AlertType.ERROR, "You do not have a printer setup. Please set up a printer on this device to continue.");
@@ -92,45 +105,45 @@ public class PreviewSheetController {
 			 * Setup default printer if p is null. 
 			 */
 		} else {
-	 		//Set up Page Dialog
-	 		PrinterJob pj = PrinterJob.createPrinterJob();
-	 		PageLayout pl = p.createPageLayout(Paper.NA_LETTER, PageOrientation.PORTRAIT, MarginType.DEFAULT);
-	 		//Get the image of the GUI contents
-	 		WritableImage wi = anchorPane.snapshot(null, null);
-	 		//Load the image
-	 		ImageView v = new ImageView(wi);
-	 		//Dimensions of the Printable area
-	 		double w = pl.getPrintableWidth()/wi.getWidth();
-	 		double h = pl.getPrintableHeight()/wi.getHeight();
-	 		Scale s = new Scale(w, w);
-	 		v.getTransforms().add(s);
-	 		Window window = pane.getScene().getWindow();
-	 		//Print
-	 		if (pj != null && pj.showPrintDialog(window)) {
-	 			Translate t = new Translate(0, 0);
-	 			v.getTransforms().add(t);
-	 			for (int i = 0; i < Math.ceil(w/h); i++) {
-	 				t.setY((pl.getPrintableHeight()/w) * (-i));
-	 				pj.printPage(pl, v);
-	 			}
-	 			pj.endJob();
-	 		}
+			//Set up Page Dialog
+			PrinterJob pj = PrinterJob.createPrinterJob();
+			PageLayout pl = p.createPageLayout(Paper.NA_LETTER, PageOrientation.PORTRAIT, MarginType.DEFAULT);
+			//Get the image of the GUI contents
+			WritableImage wi = anchorPane.snapshot(null, null);
+			//Load the image
+			ImageView v = new ImageView(wi);
+			//Dimensions of the Printable area
+			double w = pl.getPrintableWidth()/wi.getWidth();
+			double h = pl.getPrintableHeight()/wi.getHeight();
+			Scale s = new Scale(w, w);
+			v.getTransforms().add(s);
+			Window window = pane.getScene().getWindow();
+			//Print
+			if (pj != null && pj.showPrintDialog(window)) {
+				Translate t = new Translate(0, 0);
+				v.getTransforms().add(t);
+				for (int i = 0; i < Math.ceil(w/h); i++) {
+					t.setY((pl.getPrintableHeight()/w) * (-i));
+					pj.printPage(pl, v);
+				}
+				pj.endJob();
+			}
 		}
 	}
 
 	@FXML
 	public void handleGotoMeasure() throws IOException {
-        String os = System.getProperty("os.name").toLowerCase();
-        String path = new File("").getAbsolutePath();
+		String os = System.getProperty("os.name").toLowerCase();
+		String path = new File("").getAbsolutePath();
 
-        if (os.contains("win")) {
-            path = path.concat("\\");
-        }
-        else {
-        	path = path.concat("/");
-        }
+		if (os.contains("win")) {
+			path = path.concat("\\");
+		}
+		else {
+			path = path.concat("/");
+		}
 		Parser p = new Parser(Files.readString(Paths.get(path.concat("musicXML.txt"))));
-		
+
 		/*
 		 * 	1 - non-empty field (either within range or out of range)
 		 * 	2 - empty field
@@ -146,14 +159,14 @@ public class PreviewSheetController {
 				alert.show();
 			}
 			else { /* valid measure */
-				
+
 			}
 		}
 		else {
 			/* nothing */
 		}
 	}
-	
+
 	@FXML
 	public void handlePlayMusic() {
 		try {
@@ -168,11 +181,11 @@ public class PreviewSheetController {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void handlePauseMusic() {
 		//Implement
 	}
-	
+
 	public void handleStopMusic() {
 		//Implement
 	}
@@ -203,7 +216,7 @@ public class PreviewSheetController {
 		//Add bar to pane
 		pane.getChildren().add(bar);
 	}
-	
+
 	//Draw the Clef at the left-end of the Staff
 	private void clef(String symbol, double x, double y, String instrument) {
 		if (symbol.equalsIgnoreCase("TAB")) {
@@ -283,25 +296,25 @@ public class PreviewSheetController {
 			beatsText.setFont(Font.font("cambria", FontWeight.BLACK, 40));
 			//Add number to pane
 			pane.getChildren().add(beatsText);
-			
+
 			//Increment vertical distance for next letter
 			y += 31;
-			
+
 			Text beatTypeText = new Text(x, y, Integer.toString(beatType));
 			beatTypeText.setFont(Font.font("cambria", FontWeight.BLACK, 40));
 			//Add number to pane
 			pane.getChildren().add(beatTypeText);
 		} else if (instrument.equalsIgnoreCase("drumset")) {
 			y -= 6;
-			
+
 			Text beatsText = new Text(x, y, Integer.toString(beats));
 			beatsText.setFont(Font.font("cambria", FontWeight.BLACK, 32));
 			//Add number to pane
 			pane.getChildren().add(beatsText);
-			
+
 			//Increment vertical distance for next letter
 			y += 26;
-			
+
 			Text beatTypeText = new Text(x, y, Integer.toString(beatType));
 			beatTypeText.setFont(Font.font("cambria", FontWeight.BLACK, 32));
 			//Add number to pane
@@ -310,22 +323,22 @@ public class PreviewSheetController {
 		//Assumed to be bass
 		else {
 			y -= 11;
-			
+
 			Text beatsText = new Text(x, y, Integer.toString(beats));
 			beatsText.setFont(Font.font("cambria", FontWeight.BLACK, 23));
 			//Add number to pane
 			pane.getChildren().add(beatsText);
-			
+
 			//Increment vertical distance for next letter
 			y += 19;
-			
+
 			Text beatTypeText = new Text(x, y, Integer.toString(beatType));
 			beatTypeText.setFont(Font.font("cambria", FontWeight.BLACK, 23));
 			//Add number to pane
 			pane.getChildren().add(beatTypeText);
 		}
 	}
-	
+
 	public void drawRepeat(double x, double y, char direction, String words, String instrument) {
 		//Set base length of the bar
 		int endY;
@@ -339,7 +352,7 @@ public class PreviewSheetController {
 		else {
 			endY = 60;
 		}
-		
+
 		double thinX, dotX;
 		if (direction == 'l') {
 			thinX = x + 5;
@@ -349,7 +362,7 @@ public class PreviewSheetController {
 		else {
 			thinX = x - 5;
 			dotX = x - 12;
-			
+
 			//Text
 			Text t = new Text(x - 25, y - 10, words);
 			t.setFont(Font.font("arial", 15));
@@ -365,19 +378,20 @@ public class PreviewSheetController {
 		//Circles
 		Ellipse dot1 = new Ellipse(dotX, (2*y+endY)/2 - 7, 3, 3);
 		Ellipse dot2 = new Ellipse(dotX, (2*y+endY)/2 + 7, 3, 3);
-				
+
 		pane.getChildren().add(dot1);
 		pane.getChildren().add(dot2);
 	}
-	
+
 	public void drawMeasureNumber(double y, int measureNumber) {
 		Text t = new Text(7, y - 10, Integer.toString(measureNumber));
 		t.setFont(Font.font("arial", FontPosture.ITALIC, 15));
 		pane.getChildren().add(t);
 	}
-	
+
 	//Update the SheetMusic GUI
 	public void update() throws IOException { 
+		this.pane.getChildren().clear();
 		Parser p = new Parser(mvc.converter.getMusicXML());
 		//Get the list of measure from parser
 		List<Measure> measureList = p.getMeasures();
@@ -407,11 +421,11 @@ public class PreviewSheetController {
 				clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
 				timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 			}
-			
+
 			//First one is always left
 			if (p.getMeasures().get(i).getBarlines().size() > 0 && p.getMeasures().get(i).getBarlines().get(0).getLocation() ==  'l')
 				drawRepeat(x-25, 0 + yStaff, 'l', p.getMeasures().get(i).getDirection().getWords(), p.getInstrument());
-			
+
 			//Loop through all the notes in the current measure
 			for (int j = 0; j < noteList.size(); j++, x += noteSpacing)
 			{
@@ -477,16 +491,16 @@ public class PreviewSheetController {
 			//Dynamically draw a bar line (after each measure)
 			//Either first or second is right
 			if ((p.getMeasures().get(i).getBarlines().size() == 1 && p.getMeasures().get(i).getBarlines().get(0).getLocation() ==  'r') 
-				|| (p.getMeasures().get(i).getBarlines().size() > 1 && p.getMeasures().get(i).getBarlines().get(1).getLocation() ==  'r')) {
+					|| (p.getMeasures().get(i).getBarlines().size() > 1 && p.getMeasures().get(i).getBarlines().get(1).getLocation() ==  'r')) {
 				x += noteSpacing;
 				drawRepeat(x, 0 + yStaff, 'r', p.getMeasures().get(i).getDirection().getWords(), p.getInstrument());
 			} else {
 				barLines(x, 0 + yStaff, p.getInstrument());
 			}
 		}
-		
+
 	}
-	
+
 	private Window openNewWindow(Parent root, String windowName) {
 		Stage stage = new Stage();
 		stage.setTitle(windowName);
@@ -498,7 +512,7 @@ public class PreviewSheetController {
 		stage.show();
 		return scene.getWindow();
 	}
-	
+
 	@FXML
 	private void customizeHandle() throws IOException {
 		Parent root;
@@ -513,8 +527,7 @@ public class PreviewSheetController {
 			logger.log(Level.SEVERE, "Failed to create new Window.", e);
 		}
 	}
-
-	//Getters and setters for dynamic spacing
+	
 	public int getNoteSpacing() {
 		return noteSpacing;
 	}
@@ -522,12 +535,5 @@ public class PreviewSheetController {
 	public int getStaffSpacing() {
 		return staffSpacing;
 	}
-
-	public void setNoteSpacing(int noteSpacing) {
-		this.noteSpacing = noteSpacing;
-	}
-
-	public void setStaffSpacing(int staffSpacing) {
-		this.staffSpacing = staffSpacing;
-	}
+	
 }

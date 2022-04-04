@@ -338,7 +338,7 @@ public class MainViewController extends Application {
 	}
 
 	@FXML
-	private void previewButtonHandle() throws Exception {
+	public void previewButtonHandle() throws Exception {
 		try {
 			Parent root;
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/previewSheetWindow.fxml"));
