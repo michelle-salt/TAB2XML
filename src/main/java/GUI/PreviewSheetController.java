@@ -73,23 +73,9 @@ public class PreviewSheetController {
 		noteSpacing = 25;
 		staffSpacing = 100;
 	}
-	
-	// Setters for dynamic spacing
-	public void setNoteSpacing(int noteSpacing) {
-		this.noteSpacing = noteSpacing;
-	}
-	
-	public void setStaffSpacing(int staffSpacing) {
-		this.staffSpacing = staffSpacing;
-	}
 
 	public void setMainViewController(MainViewController mvcInput) {
 		mvc = mvcInput;
-	}
-
-	@FXML
-	private void handleEditInput() {
-		mvc.convertWindow.hide();
 	}
 
 	@FXML
@@ -165,6 +151,11 @@ public class PreviewSheetController {
 		else {
 			/* nothing */
 		}
+	}
+	
+	@FXML
+	private void handleEditInput() {
+		mvc.convertWindow.hide();
 	}
 
 	@FXML
@@ -534,6 +525,15 @@ public class PreviewSheetController {
 
 	public int getStaffSpacing() {
 		return staffSpacing;
+	}
+	
+	// Setters for dynamic spacing
+	public void setNoteSpacing(int noteSpacing) {
+		this.noteSpacing = noteSpacing;
+	}
+	
+	public void setStaffSpacing(int staffSpacing) {
+		this.staffSpacing = staffSpacing;
 	}
 	
 }
