@@ -48,8 +48,10 @@ public class CustomizeController {
 			mvc.setStaffSpacing(Integer.parseInt(staffSpacingField.getText()));
 			mvc.update();
 		}
-		else { 
-			// nothing
+		else { /* default */
+			mvc.setNoteSpacing(25);
+			mvc.setStaffSpacing(100);
+			mvc.update();
 		}
 		mvc.convertWindow.hide();
 	}
