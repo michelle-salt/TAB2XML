@@ -10,20 +10,40 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="450.0" minWidth="640.0" prefHeight="700.0" prefWidth="1000.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.PreviewSheetController">
+<BorderPane fx:id="borderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="450.0" minWidth="640.0" prefHeight="700.0" prefWidth="1000.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.PreviewSheetController">
 	<center>
 		<AnchorPane prefHeight="200.0" prefWidth="666.0" BorderPane.alignment="CENTER">
 			<children>
 				<ScrollPane layoutX="28.0" layoutY="22.0" prefHeight="550.0" prefWidth="974.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="32.0">
 					<content>
-						<AnchorPane fx:id="anchorPane">
+						<AnchorPane fx:id="anchorPane" prefHeight="551.0" prefWidth="957.0" style="-fx-background-color: white;">
 							<children>
-								<Pane fx:id="pane" maxWidth="920.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="32.0" />
+                        <TextField alignment="CENTER" layoutX="101.0" layoutY="14.0" prefHeight="59.0" prefWidth="750.0" promptText="Title" style="-fx-background-color: white;">
+                           <font>
+                              <Font name="Arial Bold" size="40.0" />
+                           </font>
+                        </TextField>
+                        <TextField alignment="CENTER" layoutX="713.0" layoutY="70.0" prefHeight="31.0" prefWidth="230.0" promptText="Composer" style="-fx-background-color: white;">
+                           <font>
+                              <Font name="Arial" size="20.0" />
+                           </font>
+                        </TextField>
+								<Pane fx:id="pane" layoutX="24.0" layoutY="147.0" maxWidth="920.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="147.0" />
 							</children>
-						</AnchorPane>
+						</AnchorPane> 
 					</content>
 				</ScrollPane>
+				<!-- <ScrollPane layoutX="28.0" layoutY="22.0" prefHeight="550.0" prefWidth="974.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="32.0">
+					<content>
+            						<AnchorPane fx:id="anchorPane">
+            							<children>
+            								<Pane fx:id="pane" maxWidth="920.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="32.0" />
+            							</children>
+            						</AnchorPane>
+            					</content>
+            				</ScrollPane> -->
 				<AnchorPane layoutX="12.0" layoutY="614.0" prefHeight="52.0" prefWidth="977.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0">
 					<children>
 						<HBox layoutY="11.0" spacing="5.0" AnchorPane.rightAnchor="0.0">
@@ -57,7 +77,7 @@
 								<Button fx:id="goToMeasureButton" mnemonicParsing="false" onAction="#handleGotoMeasure" prefHeight="25.0" prefWidth="42.0" text="Go" />
 							</children>
 							
-							<children>
+            							<children>
 								<Label text="Tempo">
 									<padding>
 										<Insets bottom="5.0" left="20.0" right="2.0" top="5.0" />
@@ -70,9 +90,9 @@
 									</padding>
 								</Label>
 								
-							</children>
+            							</children>
 							
-						</HBox>
+            						</HBox>
 					</children>
 				</AnchorPane>
 				<AnchorPane layoutX="12.0" layoutY="450.0" prefHeight="30.0" prefWidth="977.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0">
