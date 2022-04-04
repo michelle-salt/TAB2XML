@@ -45,6 +45,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.*;
 
 import org.fxmisc.richtext.CodeArea;
+import org.jfugue.player.Player;
 
 public class PreviewSheetController {
 
@@ -158,16 +159,17 @@ public class PreviewSheetController {
 		mvc.convertWindow.hide();
 	}
 
+	String tempo;
 	@FXML
 	public void handlePlayMusic() {
 		try {
 			if (tempoField.getText().isEmpty()) {
-				mvc.setTempo(100);
+				tempo = "100";
 			}
 			else {
-				mvc.setTempo(Integer.parseInt(tempoField.getText()));
+				tempo = tempoField.getText();
 			}
-			mvc.playMusic();
+			playMusic();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -180,6 +182,220 @@ public class PreviewSheetController {
 	public void handleStopMusic() {
 		//Implement
 	}
+	
+	String seq;
+	
+	@FXML
+	void playMusic() throws IOException {
+		
+		Parser parse = new Parser(mvc.getMusicXML());
+		String instrument = parse.getInstrument();
+		ArrayList<Measure> measures = parse.getMeasures();
+		
+		System.out.println("Tempo: " + tempo);
+		System.out.println("instrument: " + instrument);
+		
+		if(instrument.equals("guitar") || instrument.equals("bass")) {
+			
+			GuitarBass(parse, instrument);
+			
+		}
+		
+		if(instrument.equals("drumset")) {
+			
+			Drum(parse,instrument);
+			
+		}
+
+	}
+	
+	private String finalString;
+	
+	void GuitarBass(Parser parse, String instrument) throws IOException {
+
+		ArrayList<Measure> measures = parse.getMeasures();
+		ArrayList<String> measuresarray = new ArrayList<>(); // split measures into array
+
+		for (int i = 0; i < parse.getNumMeasures(); i++) { // go through every measure
+
+			String measure = "";
+
+			ArrayList<Note> notesInMeasure = measures.get(i).getNotes();
+
+			for (int j = 0; j < measures.get(i).getNumNotes(); j++) { // go through all notes in specific measure
+
+				Pitch pitch = measures.get(i).getNotes().get(j).getPitch();
+				String altervalue = "";
+				char step = pitch.getStep();
+				int alter = pitch.getAlter();
+				int octave = pitch.getOctave();
+				char type = measures.get(i).getNotes().get(j).getType();
+
+				if (alter != 0) {
+					if (alter == 1) {
+						altervalue = "#"; // sharp accidental
+					}
+					if (alter == -1) {
+						altervalue = "b"; // flat accidental
+					}
+				} else {
+					altervalue = "";
+				}
+
+				if (measures.get(i).getNotes().get(j).getDuration() == 0) { // if note is a grace note
+					measure += step + altervalue + octave + "o-";
+					measure += " ";
+					measure += step + altervalue + octave + "-o";
+				} else {
+					measure += step + altervalue + octave + type;
+				}
+
+				if (measures.get(i).getNumNotes() - j != 1) {
+					if (measures.get(i).getNotes().get(j + 1).isChord()) { // if next note is also part of the chord
+						measure += "+";
+					} else {
+						measure += " "; // add a space to split up notes
+					}
+				} else { // add the tie thing around here i think
+					measure += " ";
+				}
+
+			}
+
+			if (parse.getNumMeasures() - i != 1) {
+				measure += " | "; // add space between notes to indicate measures
+			}
+			
+			measuresarray.add(measure);
+
+		}
+
+		String finalString = "T" + tempo + " V0 I[" + instrument + "] ";
+		
+		for (int i = 0; i < measuresarray.size(); i++) {
+
+			finalString += measuresarray.get(i);
+
+		}
+
+		Player player = new Player();		
+		setSeq(finalString);
+		
+		new Thread(() -> {
+            player.play(getSeq());
+        }).start();
+		System.out.println("during");
+		
+	}
+	
+	void Drum(Parser parse, String instrument) throws IOException {
+		
+		/*
+		   P1-I46 = Low Tom
+      	   P1-I43 = Closed Hi-Hat
+      	   P1-I42 = Low Floor Tom
+      	   P1-I48 = Low-Mid Tom
+      	   P1-I45 = Pedal Hi-Hat
+      	   P1-I47 = Open Hi-Hat
+      	   P1-I50 = Crash Cymbal 1
+      	   P1-I44 = High Floor Tom
+      	   P1-I39 = Snare
+      	   P1-I54 = Ride Bell
+      	   P1-I53 = Chinese Cymbal 1
+      	   P1-I36 = Bass Drum 1
+      	   P1-I52 = Ride Cymbal 1
+		 */
+
+		ArrayList<Measure> measures = parse.getMeasures();
+		ArrayList<String> measuresarray = new ArrayList<>(); // split measures into array
+
+		for (int i = 0; i < parse.getNumMeasures(); i++) { // go through every measure
+
+			String measure = "";
+			ArrayList<Note> notesInMeasure = measures.get(i).getNotes();
+
+			for (int j = 0; j < measures.get(i).getNumNotes(); j++) { // go through all notes in specific measure
+
+				String instrumentID = measures.get(i).getNotes().get(j).getInstrumentID();
+				char type = measures.get(i).getNotes().get(j).getType();
+				
+				switch(instrumentID) {
+				
+				case "P1-I46":	instrumentID = "[LO_TOM]"; break;
+				case "P1-I43":	instrumentID = "[CLOSED_HI_HAT]"; break;
+				case "P1-I42":	instrumentID = "[LO_FLOOR_TOM"; break;
+				case "P1-I48":	instrumentID = "[LO_MID_TOM]"; break;
+				case "P1-I45":	instrumentID = "[PEDAL_HI_HAT]"; break;
+				case "P1-I47":	instrumentID = "[OPEN_HI_HAT]"; break;
+				case "P1-I50":	instrumentID = "[CRASH_CYMBAL_1]"; break;
+				case "P1-I44":	instrumentID = "[HIGH_FLOOR_TOM]]"; break;
+				case "P1-I39":	instrumentID = "[ACOUSTIC_SNARE]"; break; // or [ELECTRIC_SNARE]
+				case "P1-I54":	instrumentID = "[RIDE_BELL]"; break;
+				case "P1-I53":	instrumentID = "[CHINESE_CYMBAL]"; break;
+				case "P1-I36":	instrumentID = "[BASS_DRUM]"; break;
+				case "P1-I52":	instrumentID = "[RIDE_CYMBAL_1]"; break;
+				
+				}
+
+				if (measures.get(i).getNotes().get(j).getDuration() == 0) { // if note is a grace note
+					measure += instrumentID + "o-";
+					measure += " ";
+					measure += instrumentID + "-o";
+				} else {
+					measure += instrumentID + type;
+				}
+
+				if (measures.get(i).getNumNotes() - j != 1) {
+					if (measures.get(i).getNotes().get(j + 1).isChord()) { // if next note is also part of the chord
+						measure += "+";
+					} else {
+						measure += " "; // add a space to split up notes
+					}
+				} else { // add the tie thing around here i think
+					measure += " ";
+				}
+
+			}
+
+			if (parse.getNumMeasures() - i != 1) {
+				measure += "| "; // add space between notes to indicate measures
+			}
+			
+			measuresarray.add(measure);
+
+		}
+
+		String finalString = "T" + tempo + " V9 ";
+
+		for (int i = 0; i < measuresarray.size(); i++) {
+
+			finalString += measuresarray.get(i);
+
+		}
+
+		Player player = new Player();
+		setSeq(finalString);
+		
+		new Thread(() -> {
+            player.play(getSeq());
+        }).start();
+		
+	}
+	
+	public void setSeq(String sequence) {
+		
+		seq = sequence;
+		
+	}
+	
+	public String getSeq() {
+		
+		System.out.println(finalString);
+		return seq;
+		
+	}
+	
+
 
 	//Draw the bar to mark the end of a Measure
 	//Must implement double bar and end bars soon?
