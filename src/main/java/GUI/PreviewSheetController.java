@@ -32,6 +32,8 @@ import javafx.stage.Window;
 import musicxml.parsing.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -86,6 +88,9 @@ public class PreviewSheetController {
 			alert.setTitle("Print");
 			alert.setHeaderText("Printing Error!");
 			alert.show();
+			/* 
+			 * Setup default printer if p is null. 
+			 */
 		} else {
 	 		//Set up Page Dialog
 	 		PrinterJob pj = PrinterJob.createPrinterJob();
@@ -114,35 +119,39 @@ public class PreviewSheetController {
 	}
 
 	@FXML
-	public void handleGotoMeasure() {
+	public void handleGotoMeasure() throws IOException {
+        String os = System.getProperty("os.name").toLowerCase();
+        String path = new File("").getAbsolutePath();
 
-		// Get the text of the Go-To Measure Field.
-		if (!goToMeasureField.getText().isEmpty()) {
-			/*
-			 * There are 2 possible cases when the field is NOT empty:
-			 * 		1 - inputed measure is within the valid range.
-			 * 		2 - inputed measure is NOT within the valid range.
-			 * 
-			 *		Get the minimum and maximum measure to find the range.
-			 */
-//			if () { /* within range */
-//				
-//			}
-//			if () { /* outside range */
-//				Alert alert = new Alert(Alert.AlertType.ERROR, "Enter a valid measure"); // LATER: Get the valid measure range
-//				alert.setTitle("Go-To Measure");
-//				alert.setHeaderText("Invalid Measure!");
-//				alert.show();
-//			}
+        if (os.contains("win")) {
+            path = path.concat("\\");
+        }
+        else {
+        	path = path.concat("/");
+        }
+		Parser p = new Parser(Files.readString(Paths.get(path.concat("musicXML.txt"))));
+		
+		/*
+		 * 	1 - non-empty field (either within range or out of range)
+		 * 	2 - empty field
+		 */
+		String field = goToMeasureField.getText();
+		int max = p.getNumMeasures();
+		if (!field.isEmpty()) { /* non-empty field */
+			if (Integer.parseInt(field) < 1 || Integer.parseInt(field) > max) {
+				Alert alert = new Alert(Alert.AlertType.ERROR, 
+						"The measure you entered is outside the valid range. Enter a measure betweeen 1 and " + max + ".");
+				alert.setTitle("Go-To Measure");
+				alert.setHeaderText("Invalid Measure!");
+				alert.show();
+			}
+			else { /* valid measure */
+				
+			}
 		}
-
-		else { /* empty field */
-			Alert alert = new Alert(Alert.AlertType.ERROR, "Enter a valid measure");
-			alert.setTitle("Go-To Measure");
-			alert.setHeaderText("Empty Field!");
-			alert.show();
+		else {
+			/* nothing */
 		}
-
 	}
 	
 	@FXML
