@@ -45,6 +45,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.*;
 
 import org.fxmisc.richtext.CodeArea;
+import org.jfugue.player.ManagedPlayer;
 import org.jfugue.player.Player;
 
 public class PreviewSheetController {
@@ -175,12 +176,29 @@ public class PreviewSheetController {
 		}
 	}
 
+	Player player = new Player();
+	ManagedPlayer mplayer = player.getManagedPlayer();
+	boolean pause = false;
+	
 	public void handlePauseMusic() {
-		//Implement
+		
+		if(!pause) {
+			
+			mplayer.pause();
+			pause = true;
+			
+		}else {
+			
+			mplayer.resume();
+			pause = false;
+			
+		}
 	}
 
 	public void handleStopMusic() {
-		//Implement
+		
+		mplayer.finish();
+		
 	}
 	
 	String seq;
@@ -257,7 +275,9 @@ public class PreviewSheetController {
 						measure += " "; // add a space to split up notes
 					}
 				} else { // add the tie thing around here i think
-					measure += " ";
+					
+					
+					
 				}
 
 			}
@@ -277,14 +297,12 @@ public class PreviewSheetController {
 			finalString += measuresarray.get(i);
 
 		}
-
-		Player player = new Player();		
+	
 		setSeq(finalString);
 		
 		new Thread(() -> {
             player.play(getSeq());
         }).start();
-		System.out.println("during");
 		
 	}
 	
@@ -352,7 +370,9 @@ public class PreviewSheetController {
 						measure += " "; // add a space to split up notes
 					}
 				} else { // add the tie thing around here i think
-					measure += " ";
+					
+					
+					
 				}
 
 			}
@@ -373,7 +393,6 @@ public class PreviewSheetController {
 
 		}
 
-		Player player = new Player();
 		setSeq(finalString);
 		
 		new Thread(() -> {
@@ -390,12 +409,10 @@ public class PreviewSheetController {
 	
 	public String getSeq() {
 		
-		System.out.println(finalString);
+		System.out.println("Sequence: " + seq);
 		return seq;
 		
 	}
-	
-
 
 	//Draw the bar to mark the end of a Measure
 	//Must implement double bar and end bars soon?
