@@ -188,7 +188,21 @@ public class Measure {
 				}
 				Tremolo tremolo = new Tremolo(tremType, trem);
 				
-				this.notes.add(new Note(unpitch, duration, instrumentID, voice, type, stem, notehead, bendAlter, numDots, tremolo));
+				//Get the time modification, if it exists
+				int actualNotes = -1; int normalNotes = -1;
+				try {
+					actualNotes = Integer.parseInt(eElement.getElementsByTagName("actual-notes").item(0).getTextContent());
+				} catch (NullPointerException e) {
+					//Do nothing; the default value has alerady been set
+				}
+				try {
+					normalNotes = Integer.parseInt(eElement.getElementsByTagName("normal-notes").item(0).getTextContent());
+				} catch (NullPointerException e) {
+					//Do nothing; the default value has alerady been set
+				}
+				TimeModification timeModification = new TimeModification(actualNotes, normalNotes);
+				
+				this.notes.add(new Note(unpitch, duration, instrumentID, voice, type, stem, notehead, bendAlter, numDots, tremolo, timeModification));
 				
 				//-----------------------------------------------
 				try {
@@ -370,7 +384,21 @@ public class Measure {
 				}
 				Tremolo tremolo = new Tremolo(tremType, trem);
 				
-				this.notes.add(new Note(pitch, duration, voice, type, string, fret, slur, pullOff, tied, bendAlter, numDots, tremolo));
+				//Get the time modification, if it exists
+				int actualNotes = -1; int normalNotes = -1;
+				try {
+					actualNotes = Integer.parseInt(eElement.getElementsByTagName("actual-notes").item(0).getTextContent());
+				} catch (NullPointerException e) {
+					//Do nothing; the default value has alerady been set
+				}
+				try {
+					normalNotes = Integer.parseInt(eElement.getElementsByTagName("normal-notes").item(0).getTextContent());
+				} catch (NullPointerException e) {
+					//Do nothing; the default value has alerady been set
+				}
+				TimeModification timeModification = new TimeModification(actualNotes, normalNotes);
+				
+				this.notes.add(new Note(pitch, duration, voice, type, string, fret, slur, pullOff, tied, bendAlter, numDots, tremolo, timeModification));
 				
 				try {
 					eElement.getElementsByTagName("chord").item(0).getTextContent();
