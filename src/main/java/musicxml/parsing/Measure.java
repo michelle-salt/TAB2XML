@@ -209,7 +209,14 @@ public class Measure {
 					eElement.getElementsByTagName("rest").item(0).getTextContent();
 					this.notes.get(noteCounter).setChord();
 				} catch (NullPointerException | IndexOutOfBoundsException e) {
-					// This means the note is not a chord, and nothing has to be done
+					// This means the note is not a rest, and nothing has to be done
+				}
+				
+				try {
+					eElement.getElementsByTagName("notehead").item(0).getAttributes().item(0).getNodeValue();
+					this.notes.get(noteCounter).setNoteheadParentheses();
+				} catch (NullPointerException | IndexOutOfBoundsException e) {
+					// This means the notehead does not have a parentheses, and nothing has to be done
 				}
 				noteCounter++;
 			}
@@ -383,7 +390,7 @@ public class Measure {
 					eElement.getElementsByTagName("rest").item(0).getTextContent();
 					this.notes.get(noteCounter).setChord();
 				} catch (NullPointerException | IndexOutOfBoundsException e) {
-					// This means the note is not a chord, and nothing has to be done
+					// This means the note is not a rest, and nothing has to be done
 				}
 				noteCounter++;
 			}

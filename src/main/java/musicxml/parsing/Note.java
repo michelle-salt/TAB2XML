@@ -151,6 +151,7 @@ public class Note {
 	private String instrumentID; //The id of each drum
 	private int stem; //0 for none, 1 for down, 2 double, 3 for up
 	private String notehead; //Stores many possible values; look at the official website to see what they are
+	private boolean noteheadParentheses;
 	
 //	//Idk if I still need this
 //	private musicxml.parsing.Slur slur; //Stores attributes of the slur (if found)
@@ -194,4 +195,13 @@ public class Note {
 	public String getNotehead() {
 		return notehead;
 	}	
+	
+	public boolean getNoteheadParentheses() {
+		return noteheadParentheses;
+	}
+	
+	//Setter
+	public void setNoteheadParentheses() {
+		this.noteheadParentheses = true;
+	}
 }
