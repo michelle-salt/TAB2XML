@@ -172,34 +172,38 @@ public class PreviewSheetController {
 
 	@FXML
 	private void handlePlayMusic() throws IOException {
-		if (mplayer.isFinished()) {
-			mplayer.reset(); // resets pause, playing, started and finish status in the ManagedPLayer class.
-		}
-		
-		if (mplayer.isPaused()) {
-			mplayer.resume();
-		}
-		if (!mplayer.isPaused()) { /* not paused - playing */
-			player = new Player();
-			mplayer = player.getManagedPlayer();
-			
-			// This processes all the measures and tempo details, then plays the String.
-			try {
-				String recording = this.getMeasureDetails(this.getTempoDetails(), this.getMeasureList());
-				play(recording);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}	
-		
-		// Switch the buttons everytime.
+		// Switch the buttons every time.
 		if (playButton.isVisible()) {
 			playButton.setVisible(false);
 			pauseButton.setVisible(true);
+			
+			if (mplayer.isStarted()) {
+				mplayer.resume();
+			} else if (!mplayer.isFinished()) {
+				mplayer.reset(); // resets pause, playing, started and finish status in the ManagedPayer class.
+				
+				player = new Player();
+				mplayer = player.getManagedPlayer();
+				
+				// This processes all the measures and tempo details, then plays the String.
+				try {
+					String recording = this.getMeasureDetails(this.getTempoDetails(), this.getMeasureList());
+					play(recording);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else if (mplayer.isFinished()) { 
+				playButton.setVisible(true);
+				pauseButton.setVisible(false);
+//				mplayer.finish();
+			}
+			
+			
 		}
-		else {
+		else { /* pauseButton is visible */
 			playButton.setVisible(true);
 			pauseButton.setVisible(false);
+			mplayer.pause();
 		}
 	}
 
@@ -207,7 +211,9 @@ public class PreviewSheetController {
 	public void handleStopMusic() {
 		playButton.setVisible(true);
 		pauseButton.setVisible(false);
-		mplayer.finish();
+		mplayer.reset();
+		player = new Player();
+		mplayer = player.getManagedPlayer();
 	}
 
 	private String getMeasureDetails(String tmp, ArrayList<String> list) {
