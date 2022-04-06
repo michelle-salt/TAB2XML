@@ -12,8 +12,12 @@ public class Note {
 	private boolean isRest;
 	private Tremolo tremolo;
 	private TimeModification timeModification;
+	private Slide slide;
+	private HammerOn hammerOn;
+	private boolean isNatural;
+	private boolean isArtificial;
 	
-	public Note(int duration, int voice, String noteType, double bendAlter, int numDots, Tremolo tremolo, TimeModification timeModification) {
+	public Note(int duration, int voice, String noteType, double bendAlter, int numDots, Tremolo tremolo, TimeModification timeModification, Slide slide, HammerOn hammerOn) {
 		//isGraceNote defaults to false
 		isGraceNote = false;
 		//isChord defaults to false
@@ -25,6 +29,8 @@ public class Note {
 		this.numDots = numDots;
 		this.tremolo = tremolo;
 		this.timeModification = timeModification;
+		this.slide = slide;
+		this.hammerOn = hammerOn;
 		//Initialize the value of the type based on the input string, defaulting to 'Z' if it doesn't work
 		switch (noteType.toLowerCase()) {
 		case "maxima":	this.type = 'M'; break;
@@ -74,6 +80,15 @@ public class Note {
 		return timeModification;
 	}
 	
+	public Slide getSlide() {
+		return slide;
+	}
+	
+	public HammerOn getHammerOn() {
+		return hammerOn;
+	}
+	
+	//Boolean getters
 	public boolean isChord() {
 		return isChord;
 	}
@@ -84,6 +99,14 @@ public class Note {
 
 	public boolean isRest() {
 		return isRest;
+	}
+	
+	public boolean isNatural() {
+		return isNatural;
+	}
+	
+	public boolean isArtificial() {
+		return isArtificial;
 	}
 	
 	//Setter to indicate that the note is a chord
@@ -101,6 +124,16 @@ public class Note {
 		this.isRest = true;
 	}
 	
+	//Setter to indicate that the note is artificial
+	public void setArtificial() {
+		this.isArtificial = true;
+	}
+	
+	//Setter to indicate that the note is natural
+	public void setNatural() {
+		this.isNatural = true;
+	}
+	
 	//Initialize a GuitarNote
 	private Pitch pitch; //Includes step, octave, and potentially alter
 	private int string; //The string the note is on
@@ -110,8 +143,8 @@ public class Note {
 	private Tied tied;
 	
 	//Inside here (the notes method, actually), add a method for each note value/sub-tag	
-	public Note(Pitch pitch, int duration, int voice, String noteType, int string, int fret, musicxml.parsing.Slur slur, musicxml.parsing.PullOff pullOff, Tied tied, double bendAlter, int numDots, Tremolo tremolo, TimeModification timeModification) {
-		this(duration, voice, noteType, bendAlter, numDots, tremolo, timeModification);
+	public Note(Pitch pitch, int duration, int voice, String noteType, int string, int fret, musicxml.parsing.Slur slur, musicxml.parsing.PullOff pullOff, Tied tied, double bendAlter, int numDots, Tremolo tremolo, TimeModification timeModification, Slide slide, HammerOn hammerOn) {
+		this(duration, voice, noteType, bendAlter, numDots, tremolo, timeModification, slide, hammerOn);
 		//Initialize all given variables
 		this.pitch = pitch;
 		this.string = string;
@@ -165,8 +198,8 @@ public class Note {
 
 	//Constructor for the DrumNotes
 	//Inside here (the notes method, actually), add a method for each note value/sub-tag	
-	public Note(Unpitched unpitched, int duration, String instrumentID, int voice, String noteType, String stem, String notehead, double bendAlter, int numDots, Tremolo tremolo, TimeModification timeModification) {
-		this(duration, voice, noteType, bendAlter, numDots, tremolo, timeModification);
+	public Note(Unpitched unpitched, int duration, String instrumentID, int voice, String noteType, String stem, String notehead, double bendAlter, int numDots, Tremolo tremolo, TimeModification timeModification, Slide slide, HammerOn hammerOn) {
+		this(duration, voice, noteType, bendAlter, numDots, tremolo, timeModification, slide, hammerOn);
 		//Initialize all given variables
 		this.unpitched = unpitched;
 		this.instrumentID = instrumentID;

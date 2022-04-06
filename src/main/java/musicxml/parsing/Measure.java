@@ -179,12 +179,12 @@ public class Measure {
 				try {
 					tremType = eElement.getElementsByTagName("tremolo").item(0).getAttributes().item(0).getNodeValue();
 				} catch (NullPointerException e) {
-					//Do nothing; the default value has alerady been set
+					//Do nothing; the default value has already been set
 				}
 				try {
 					trem =Integer.parseInt(eElement.getElementsByTagName("tremolo").item(0).getTextContent());
 				} catch (NullPointerException e) {
-					//Do nothing; the default value has alerady been set
+					//Do nothing; the default value has already been set
 				}
 				Tremolo tremolo = new Tremolo(tremType, trem);
 				
@@ -193,16 +193,49 @@ public class Measure {
 				try {
 					actualNotes = Integer.parseInt(eElement.getElementsByTagName("actual-notes").item(0).getTextContent());
 				} catch (NullPointerException e) {
-					//Do nothing; the default value has alerady been set
+					//Do nothing; the default value has already been set
 				}
 				try {
 					normalNotes = Integer.parseInt(eElement.getElementsByTagName("normal-notes").item(0).getTextContent());
 				} catch (NullPointerException e) {
-					//Do nothing; the default value has alerady been set
+					//Do nothing; the default value has already been set
 				}
 				TimeModification timeModification = new TimeModification(actualNotes, normalNotes);
 				
-				this.notes.add(new Note(unpitch, duration, instrumentID, voice, type, stem, notehead, bendAlter, numDots, tremolo, timeModification));
+				//Get the slide, if it exists
+				String slideType = null; int slideNum = -1;
+				try {
+					slideType = eElement.getElementsByTagName("slide").item(0).getAttributes().item(1).getNodeValue();
+				} catch (NullPointerException e) {
+					//Do nothing; the default value has already been set
+				}
+				try {
+					slideNum = Integer.parseInt(eElement.getElementsByTagName("slide").item(0).getAttributes().item(0).getNodeValue());
+				} catch (NullPointerException e) {
+					//Do nothing; the default value has already been set
+				}
+				Slide slide = new Slide(slideType, slideNum);
+				
+				//Get the hammer-on, if it exists
+				String hammerType = null, hammerVal = null; int hammerNum = -1;
+				try {
+					hammerNum = Integer.parseInt(eElement.getElementsByTagName("hammer-on").item(0).getAttributes().item(0).getNodeValue());
+				} catch (NullPointerException e) {
+					//Do nothing; the default value has already been set
+				}
+				try {
+					hammerType = eElement.getElementsByTagName("hammer-on").item(0).getAttributes().item(1).getNodeValue();
+				} catch (NullPointerException e) {
+					//Do nothing; the default value has already been set
+				}
+				try {
+					hammerVal = eElement.getElementsByTagName("hammer-on").item(0).getTextContent();
+				} catch (NullPointerException e) {
+					//Do nothing; the default value has already been set
+				}
+				HammerOn hammerOn = new HammerOn(hammerNum, hammerType, hammerVal);
+				
+				this.notes.add(new Note(unpitch, duration, instrumentID, voice, type, stem, notehead, bendAlter, numDots, tremolo, timeModification, slide, hammerOn));
 				
 				//-----------------------------------------------
 				try {
@@ -221,7 +254,7 @@ public class Measure {
 				
 				try {
 					eElement.getElementsByTagName("rest").item(0).getTextContent();
-					this.notes.get(noteCounter).setChord();
+					this.notes.get(noteCounter).setRest();
 				} catch (NullPointerException | IndexOutOfBoundsException e) {
 					// This means the note is not a rest, and nothing has to be done
 				}
@@ -231,6 +264,20 @@ public class Measure {
 					this.notes.get(noteCounter).setNoteheadParentheses();
 				} catch (NullPointerException | IndexOutOfBoundsException e) {
 					// This means the notehead does not have a parentheses, and nothing has to be done
+				}
+				
+				try {
+					eElement.getElementsByTagName("natural").item(0).getTextContent();
+					this.notes.get(noteCounter).setNatural();
+				} catch (NullPointerException | IndexOutOfBoundsException e) {
+					// This means the note is not natural, and nothing has to be done
+				}
+				
+				try {
+					eElement.getElementsByTagName("artificial").item(0).getTextContent();
+					this.notes.get(noteCounter).setArtificial();
+				} catch (NullPointerException | IndexOutOfBoundsException e) {
+					// This means the note is not artificial, and nothing has to be done
 				}
 				noteCounter++;
 			}
@@ -375,12 +422,12 @@ public class Measure {
 				try {
 					tremType = eElement.getElementsByTagName("tremolo").item(0).getAttributes().item(0).getNodeValue();
 				} catch (NullPointerException e) {
-					//Do nothing; the default value has alerady been set
+					//Do nothing; the default value has already been set
 				}
 				try {
 					trem =Integer.parseInt(eElement.getElementsByTagName("tremolo").item(0).getTextContent());
 				} catch (NullPointerException e) {
-					//Do nothing; the default value has alerady been set
+					//Do nothing; the default value has already been set
 				}
 				Tremolo tremolo = new Tremolo(tremType, trem);
 				
@@ -389,16 +436,49 @@ public class Measure {
 				try {
 					actualNotes = Integer.parseInt(eElement.getElementsByTagName("actual-notes").item(0).getTextContent());
 				} catch (NullPointerException e) {
-					//Do nothing; the default value has alerady been set
+					//Do nothing; the default value has already been set
 				}
 				try {
 					normalNotes = Integer.parseInt(eElement.getElementsByTagName("normal-notes").item(0).getTextContent());
 				} catch (NullPointerException e) {
-					//Do nothing; the default value has alerady been set
+					//Do nothing; the default value has already been set
 				}
 				TimeModification timeModification = new TimeModification(actualNotes, normalNotes);
 				
-				this.notes.add(new Note(pitch, duration, voice, type, string, fret, slur, pullOff, tied, bendAlter, numDots, tremolo, timeModification));
+				//Get the slide, if it exists
+				String slideType = null; int slideNum = -1;
+				try {
+					slideType = eElement.getElementsByTagName("slide").item(0).getAttributes().item(1).getNodeValue();
+				} catch (NullPointerException e) {
+					//Do nothing; the default value has already been set
+				}
+				try {
+					slideNum = Integer.parseInt(eElement.getElementsByTagName("slide").item(0).getAttributes().item(0).getNodeValue());
+				} catch (NullPointerException e) {
+					//Do nothing; the default value has already been set
+				}
+				Slide slide = new Slide(slideType, slideNum);
+				
+				//Get the hammer-on, if it exists
+				String hammerType = null, hammerVal = null; int hammerNum = -1;
+				try {
+					hammerNum = Integer.parseInt(eElement.getElementsByTagName("hammer-on").item(0).getAttributes().item(0).getNodeValue());
+				} catch (NullPointerException e) {
+					//Do nothing; the default value has already been set
+				}
+				try {
+					hammerType = eElement.getElementsByTagName("hammer-on").item(0).getAttributes().item(1).getNodeValue();
+				} catch (NullPointerException e) {
+					//Do nothing; the default value has already been set
+				}
+				try {
+					hammerVal = eElement.getElementsByTagName("hammer-on").item(0).getTextContent();
+				} catch (NullPointerException e) {
+					//Do nothing; the default value has already been set
+				}
+				HammerOn hammerOn = new HammerOn(hammerNum, hammerType, hammerVal);
+				
+				this.notes.add(new Note(pitch, duration, voice, type, string, fret, slur, pullOff, tied, bendAlter, numDots, tremolo, timeModification, slide, hammerOn));
 				
 				try {
 					eElement.getElementsByTagName("chord").item(0).getTextContent();
@@ -416,9 +496,23 @@ public class Measure {
 				
 				try {
 					eElement.getElementsByTagName("rest").item(0).getTextContent();
-					this.notes.get(noteCounter).setChord();
+					this.notes.get(noteCounter).setRest();
 				} catch (NullPointerException | IndexOutOfBoundsException e) {
 					// This means the note is not a rest, and nothing has to be done
+				}
+				
+				try {
+					eElement.getElementsByTagName("natural").item(0).getTextContent();
+					this.notes.get(noteCounter).setNatural();
+				} catch (NullPointerException | IndexOutOfBoundsException e) {
+					// This means the note is not natural, and nothing has to be done
+				}
+				
+				try {
+					eElement.getElementsByTagName("artificial").item(0).getTextContent();
+					this.notes.get(noteCounter).setArtificial();
+				} catch (NullPointerException | IndexOutOfBoundsException e) {
+					// This means the note is not artificial, and nothing has to be done
 				}
 				noteCounter++;
 			}
