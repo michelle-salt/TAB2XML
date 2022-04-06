@@ -12,9 +12,7 @@ import javafx.print.Printer.MarginType;
 import javafx.print.PrinterJob;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
@@ -32,13 +30,11 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import musicxml.parsing.*;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -715,19 +711,21 @@ public class PreviewSheetController {
 					//Set the y coordinate based on the line
 					y = 5+(string-1)*12; //Each staff line is 12 y-pixels apart
 				}
+				if (i == 0 && j == 0) {
+					placeSheetLines(yStaff, p.getInstrument());
+				}
 				//Draw the note
 				if (x < this.pane.getMaxWidth()) {
 					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
-					placeSheetLines(0, p.getInstrument());
 					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
 					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 				}
 				else {
 					x = 100.0;
 					yStaff += staffSpacing;
+					placeSheetLines(yStaff, p.getInstrument());
 					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
 					drawMeasureNumber(yStaff, p.getMeasures().get(i).getMeasureNumber());
-					placeSheetLines(yStaff, p.getInstrument());
 					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
 					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 				}
