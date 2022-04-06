@@ -5,6 +5,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -37,6 +38,14 @@ public class DrawNotes {
 	public void drawGuitarNote() {
 		String note = Integer.toString(this.note.getFret());
 		Text text = new Text(x, y, note);
+		int width = 12;
+		if (this.note.getFret() > 9) {
+			width += 8;
+		}
+		//Draws white rectangle behind notes to prevent line from going through
+		Rectangle r = new Rectangle(x-2, y-10, width, 15);
+		r.setFill(Color.WHITE);
+		pane.getChildren().add(r);
 		pane.getChildren().add(text);
 	}
 	

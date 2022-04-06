@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="450.0" minWidth="640.0" prefHeight="700.0" prefWidth="1000.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.PreviewSheetController">
+<BorderPane fx:id="borderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="450.0" minWidth="640.0" prefHeight="700.0" prefWidth="1000.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.PreviewSheetController">
 	<center>
 		<AnchorPane prefHeight="200.0" prefWidth="666.0" BorderPane.alignment="CENTER">
 			<children>
@@ -35,15 +35,6 @@
 						</AnchorPane> 
 					</content>
 				</ScrollPane>
-				<!-- <ScrollPane layoutX="28.0" layoutY="22.0" prefHeight="550.0" prefWidth="974.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="32.0">
-					<content>
-            						<AnchorPane fx:id="anchorPane">
-            							<children>
-            								<Pane fx:id="pane" maxWidth="920.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="32.0" />
-            							</children>
-            						</AnchorPane>
-            					</content>
-            				</ScrollPane> -->
 				<AnchorPane layoutX="12.0" layoutY="614.0" prefHeight="52.0" prefWidth="977.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0">
 					<children>
 						<HBox layoutY="11.0" spacing="5.0" AnchorPane.rightAnchor="0.0">
@@ -83,7 +74,7 @@
 										<Insets bottom="5.0" left="20.0" right="2.0" top="5.0" />
 									</padding>
 								</Label>
-								<TextField fx:id="tempoField" prefWidth="50.0" />
+								<TextField fx:id="tempoField" prefWidth="50.0" promptText="100" />
 								<Label text="BPM">
 									<padding>
 										<Insets bottom="5.0" left="0.0" right="1.5" top="5.0" />
@@ -97,37 +88,30 @@
 				</AnchorPane>
 				<AnchorPane layoutX="12.0" layoutY="450.0" prefHeight="30.0" prefWidth="977.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0">
 					<children>
-						<HBox layoutY="11.0" spacing="5.0" AnchorPane.topAnchor="1.5">
-							<padding>
-								<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-							</padding>
-							<children>
-								<Button fx:id="playMusic" layoutX="15.0" layoutY="15.0" mnemonicParsing="false" onAction="#handlePlayMusic" prefHeight="40.0" prefWidth="50.0">
+                  <Button fx:id="pauseButton" mnemonicParsing="false" onAction="#handlePlayMusic" prefHeight="40.0" prefWidth="50.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <graphic>
+                        <FontAwesomeIconView glyphName="PAUSE" size="25" />
+                     </graphic>
+                  </Button>
+								<Button fx:id="stopButton" layoutX="67.0" mnemonicParsing="false" onAction="#handleStopMusic" prefHeight="40.0" prefWidth="50.0">
 									<padding>
 										<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 									</padding>
-                           <graphic>
-                              <FontAwesomeIconView glyphName="PLAY" size="25" />
-                           </graphic>
+                     <graphic>
+                        <FontAwesomeIconView glyphName="STOP" size="25" />
+                     </graphic>
 								</Button>
-								<Button fx:id="pauseMusic" layoutX="15.0" layoutY="15.0" mnemonicParsing="false" onAction="#handlePauseMusic" prefHeight="40.0" prefWidth="50.0">
+								<Button fx:id="playButton" mnemonicParsing="false" onAction="#handlePlayMusic" prefHeight="40.0" prefWidth="50.0">
 									<padding>
 										<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 									</padding>
-                           <graphic>
-                              <FontAwesomeIconView glyphName="PAUSE" size="25" />
-                           </graphic>
+                     <graphic>
+                        <FontAwesomeIconView glyphName="PLAY" size="25" />
+                     </graphic>
 								</Button>
-								<Button fx:id="stopMusic" mnemonicParsing="false" onAction="#handleStopMusic" prefHeight="40.0" prefWidth="50.0">
-									<padding>
-										<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-									</padding>
-                           <graphic>
-                              <FontAwesomeIconView glyphName="STOP" size="25" />
-                           </graphic>
-								</Button>
-							</children>
-						</HBox>
 						<HBox layoutY="11.0" spacing="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.5">
 							<padding>
 								<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

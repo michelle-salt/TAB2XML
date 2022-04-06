@@ -12,7 +12,6 @@ import javafx.print.Printer.MarginType;
 import javafx.print.PrinterJob;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
@@ -36,7 +35,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,6 +45,8 @@ import javafx.scene.canvas.*;
 import org.fxmisc.richtext.CodeArea;
 import org.jfugue.player.ManagedPlayer;
 import org.jfugue.player.Player;
+
+import custom_exceptions.*;
 
 public class PreviewSheetController {
 
@@ -64,13 +64,25 @@ public class PreviewSheetController {
 
 	@FXML Button printButton;
 	@FXML Button playButton;
+	@FXML Button pauseButton;
 	@FXML TextField tempoField;
 	@FXML TextField goToMeasureField;
 	@FXML Button goToMeasureButton;
 
 	BooleanProperty printButtonPressed = new SimpleBooleanProperty(false);
 
+	private Player player;
+	private ManagedPlayer mplayer;
+	private static final String PLAY = "PLAY";
+	private static final String PAUSE = "PAUSE";
+	private static final String RESUME = "RESUME";
+	private String toggle = PLAY;
+
 	public PreviewSheetController() { 
+		/* Set player */
+		player = new Player();
+		mplayer = player.getManagedPlayer();
+
 		/* Set default noteSpacing to 25 and staffSpacing to 100 */
 		noteSpacing = 25;
 		staffSpacing = 100;
@@ -120,10 +132,9 @@ public class PreviewSheetController {
 	}
 
 	@FXML
-	public void handleGotoMeasure() throws IOException {
+	private void handleGotoMeasure() throws IOException {
 		String os = System.getProperty("os.name").toLowerCase();
 		String path = new File("").getAbsolutePath();
-
 		if (os.contains("win")) {
 			path = path.concat("\\");
 		}
@@ -132,213 +143,236 @@ public class PreviewSheetController {
 		}
 		Parser p = new Parser(Files.readString(Paths.get(path.concat("musicXML.txt"))));
 
-		/*
-		 * 	1 - non-empty field (either within range or out of range)
-		 * 	2 - empty field
-		 */
-		String field = goToMeasureField.getText();
-		int max = p.getNumMeasures();
-		if (!field.isEmpty()) { /* non-empty field */
-			if (Integer.parseInt(field) < 1 || Integer.parseInt(field) > max) {
-				Alert alert = new Alert(Alert.AlertType.ERROR, 
-						"The measure you entered is outside the valid range. Enter a measure betweeen 1 and " + max + ".");
-				alert.setTitle("Go-To Measure");
-				alert.setHeaderText("Invalid Measure!");
-				alert.show();
-			}
-			else { /* valid measure */
-
-			}
+		int measureNum = Integer.parseInt(goToMeasureField.getText());
+		int measureCount = p.getNumMeasures();
+		if (measureNum < 1 || measureNum > measureCount) {
+			Alert alert = new Alert(Alert.AlertType.ERROR, 
+					"The measure you entered is outside the valid range. Enter a measure betweeen 1 and " + measureCount + ".");
+			alert.setTitle("Go-To Measure");
+			alert.setHeaderText("Invalid Measure!");
+			alert.show();
 		}
 		else {
-			/* nothing */
+			goToMeasure(measureNum);
 		}
 	}
-	
+
+	private void goToMeasure(int number) {
+
+	}
+
 	@FXML
 	private void handleEditInput() {
 		mvc.convertWindow.hide();
 	}
 
-	String tempo;
 	@FXML
-	public void handlePlayMusic() {
-		try {
-			if (tempoField.getText().isEmpty()) {
-				tempo = "100";
+	private void handlePlayMusic() throws IOException {
+		// Switch the buttons every time.
+		if (playButton.isVisible()) {
+			playButton.setVisible(false);
+			pauseButton.setVisible(true);
+			
+			if (mplayer.isStarted()) {
+				mplayer.resume();
+			} else if (!mplayer.isFinished()) {
+				mplayer.reset(); // resets pause, playing, started and finish status in the ManagedPayer class.
+				
+				player = new Player();
+				mplayer = player.getManagedPlayer();
+				
+				// This processes all the measures and tempo details, then plays the String.
+				try {
+					String recording = this.getMeasureDetails(this.getTempoDetails(), this.getMeasureList());
+					play(recording);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else if (mplayer.isFinished()) { 
+				playButton.setVisible(true);
+				pauseButton.setVisible(false);
+//				mplayer.finish();
+			}
+			
+			
+		}
+		else { /* pauseButton is visible */
+			playButton.setVisible(true);
+			pauseButton.setVisible(false);
+			mplayer.pause();
+		}
+	}
+
+	@FXML
+	public void handleStopMusic() {
+		playButton.setVisible(true);
+		pauseButton.setVisible(false);
+		mplayer.reset();
+		player = new Player();
+		mplayer = player.getManagedPlayer();
+	}
+
+	private String getMeasureDetails(String tmp, ArrayList<String> list) {
+		String result = tmp;
+		for (String s: list) {
+			result += s;
+		}
+		return result;
+	}
+
+	private String getTempoDetails() throws InvalidInputException, UnrecognizedInstrumentException {
+		String result = "";
+
+		/* 
+		 * default 
+		 */
+		if (tempoField.getText().isEmpty()) {
+			if (getInstrument().equals("guitar") || getInstrument().equals("bass")) {
+				result += "T100 V0 I[" + this.getParser().getInstrument() + "] ";
+			}
+			else if (this.getInstrument().equals("drumset")) {
+				result += "T100 V9 ";
 			}
 			else {
-				tempo = tempoField.getText();
+				throw new UnrecognizedInstrumentException("Error: Instrument not supported");
 			}
-			playMusic();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	Player player = new Player();
-	ManagedPlayer mplayer = player.getManagedPlayer();
-	boolean pause = false;
-	
-	public void handlePauseMusic() {
-		
-		if(!pause) {
-			
-			mplayer.pause();
-			pause = true;
-			
-		}else {
-			
-			mplayer.resume();
-			pause = false;
-			
-		}
-	}
-
-	public void handleStopMusic() {
-		
-		mplayer.finish();
-		
-	}
-	
-	String seq;
-	
-	@FXML
-	void playMusic() throws IOException {
-		
-		Parser parse = new Parser(mvc.getMusicXML());
-		String instrument = parse.getInstrument();
-		ArrayList<Measure> measures = parse.getMeasures();
-		
-		System.out.println("Tempo: " + tempo);
-		System.out.println("instrument: " + instrument);
-		
-		if(instrument.equals("guitar") || instrument.equals("bass")) {
-			
-			GuitarBass(parse, instrument);
-			
-		}
-		
-		if(instrument.equals("drumset")) {
-			
-			Drum(parse,instrument);
-			
 		}
 
+		/* 
+		 * use input
+		 */
+		else if (!tempoField.getText().isEmpty() && Integer.parseInt(tempoField.getText()) > 0) {
+			if (getInstrument().equals("guitar") || getInstrument().equals("bass")) {
+				result += "T" + tempoField.getText() + " V0 I[" + this.getParser().getInstrument() + "] ";
+			}
+			else if (this.getInstrument().equals("drumset")) {
+				result += "T" + tempoField.getText() + " V9 ";
+			}
+			else {
+				throw new UnrecognizedInstrumentException("Error: Instrument not supported");
+			}
+		}
+
+		/*
+		 * invalid bpm
+		 */
+		else { /* <= 0 */
+			throw new InvalidInputException("Error: Invalid BPM, Do not proceed to play!");
+		}
+		return result;
 	}
-	
-	private String finalString;
-	
-	void GuitarBass(Parser parse, String instrument) throws IOException {
 
-		ArrayList<Measure> measures = parse.getMeasures();
-		ArrayList<String> measuresarray = new ArrayList<>(); // split measures into array
+	private void play(String record) {
+		System.out.println(record);
+		new Thread(() -> {
+			player.play(record);
+		}).start();
+	}
 
-		for (int i = 0; i < parse.getNumMeasures(); i++) { // go through every measure
+	private Parser getParser() {
+		return new Parser(mvc.getMusicXML());
+	}
 
+	private String getInstrument() {
+		return getParser().getInstrument();
+	}
+
+	private ArrayList<String> GuitarBass() throws IOException {
+		ArrayList<String> measureList = new ArrayList<>(); // split measures into array
+
+		int numOfMeasures = this.getParser().getNumMeasures();
+		ArrayList<Measure> measures = this.getParser().getMeasures();
+
+		for(int i = 0; i < numOfMeasures; i++) {
 			String measure = "";
 
-			ArrayList<Note> notesInMeasure = measures.get(i).getNotes();
+			int numOfNotes = measures.get(i).getNumNotes();
+			ArrayList<Note> notes = measures.get(i).getNotes();
 
-			for (int j = 0; j < measures.get(i).getNumNotes(); j++) { // go through all notes in specific measure
-
-				Pitch pitch = measures.get(i).getNotes().get(j).getPitch();
+			for (int j = 0; j < numOfNotes; j++) {
 				String altervalue = "";
-				char step = pitch.getStep();
-				int alter = pitch.getAlter();
-				int octave = pitch.getOctave();
-				char type = measures.get(i).getNotes().get(j).getType();
 
-				if (alter != 0) {
-					if (alter == 1) {
-						altervalue = "#"; // sharp accidental
-					}
-					if (alter == -1) {
-						altervalue = "b"; // flat accidental
-					}
-				} else {
+				Pitch pitch = notes.get(j).getPitch();
+				char type = notes.get(j).getType();
+
+				char step = pitch.getStep();
+				int octave = pitch.getOctave();
+
+				// Check alter.
+				if (pitch.getAlter() == 1) {
+					altervalue = "#";
+				}
+				else if (pitch.getAlter() == -1) {
+					altervalue = "b";
+				}
+				else {
 					altervalue = "";
 				}
 
-				if (measures.get(i).getNotes().get(j).getDuration() == 0) { // if note is a grace note
-					measure += step + altervalue + octave + "o-";
-					measure += " ";
+				// Check if note is a grace note.
+				if (notes.get(j).getDuration() == 0) {
+					measure += step + altervalue + octave + "o- ";
 					measure += step + altervalue + octave + "-o";
-				} else {
+				} 
+				else {
 					measure += step + altervalue + octave + type;
 				}
 
-				if (measures.get(i).getNumNotes() - j != 1) {
-					if (measures.get(i).getNotes().get(j + 1).isChord()) { // if next note is also part of the chord
+				// 
+				if (numOfNotes-j != 1) {
+					if (notes.get(j + 1).isChord()) { // if next note is also part of the chord
 						measure += "+";
-					} else {
+					} 
+					else {
 						measure += " "; // add a space to split up notes
 					}
-				} else { // add the tie thing around here i think
-					
-					
-					
+				} 
+				else { // add the tie thing around here i think
+
 				}
+			} // inner loop ends
 
-			}
-
-			if (parse.getNumMeasures() - i != 1) {
+			if (numOfMeasures-i != 1) {
 				measure += " | "; // add space between notes to indicate measures
 			}
-			
-			measuresarray.add(measure);
-
-		}
-
-		String finalString = "T" + tempo + " V0 I[" + instrument + "] ";
-		
-		for (int i = 0; i < measuresarray.size(); i++) {
-
-			finalString += measuresarray.get(i);
-
-		}
-	
-		setSeq(finalString);
-		
-		new Thread(() -> {
-            player.play(getSeq());
-        }).start();
-		
+			measureList.add(measure);
+		} // outer loop ends
+		return measureList;
 	}
-	
-	void Drum(Parser parse, String instrument) throws IOException {
-		
-		/*
-		   P1-I46 = Low Tom
-      	   P1-I43 = Closed Hi-Hat
-      	   P1-I42 = Low Floor Tom
-      	   P1-I48 = Low-Mid Tom
-      	   P1-I45 = Pedal Hi-Hat
-      	   P1-I47 = Open Hi-Hat
-      	   P1-I50 = Crash Cymbal 1
-      	   P1-I44 = High Floor Tom
-      	   P1-I39 = Snare
-      	   P1-I54 = Ride Bell
-      	   P1-I53 = Chinese Cymbal 1
-      	   P1-I36 = Bass Drum 1
-      	   P1-I52 = Ride Cymbal 1
-		 */
 
-		ArrayList<Measure> measures = parse.getMeasures();
-		ArrayList<String> measuresarray = new ArrayList<>(); // split measures into array
+	private ArrayList<String> Drum() throws IOException {
+		ArrayList<String> measureList = new ArrayList<>(); // split measures into array
 
-		for (int i = 0; i < parse.getNumMeasures(); i++) { // go through every measure
+		int numOfMeasures = this.getParser().getNumMeasures();
+		ArrayList<Measure> measures = this.getParser().getMeasures();
 
+		for (int i = 0; i < numOfMeasures; i++) { // go through every measure
 			String measure = "";
-			ArrayList<Note> notesInMeasure = measures.get(i).getNotes();
+
+			int numOfNotes = measures.get(i).getNumNotes();
+			ArrayList<Note> notes = measures.get(i).getNotes();
 
 			for (int j = 0; j < measures.get(i).getNumNotes(); j++) { // go through all notes in specific measure
+				String instrumentID = notes.get(j).getInstrumentID();
+				char type = notes.get(j).getType();
 
-				String instrumentID = measures.get(i).getNotes().get(j).getInstrumentID();
-				char type = measures.get(i).getNotes().get(j).getType();
-				
+				/*
+				   P1-I46 = Low Tom
+		      	   P1-I43 = Closed Hi-Hat
+		      	   P1-I42 = Low Floor Tom
+		      	   P1-I48 = Low-Mid Tom
+		      	   P1-I45 = Pedal Hi-Hat
+		      	   P1-I47 = Open Hi-Hat
+		      	   P1-I50 = Crash Cymbal 1
+		      	   P1-I44 = High Floor Tom
+		      	   P1-I39 = Snare
+		      	   P1-I54 = Ride Bell
+		      	   P1-I53 = Chinese Cymbal 1
+		      	   P1-I36 = Bass Drum 1
+		      	   P1-I52 = Ride Cymbal 1
+				 */
+
 				switch(instrumentID) {
-				
 				case "P1-I46":	instrumentID = "[LO_TOM]"; break;
 				case "P1-I43":	instrumentID = "[CLOSED_HI_HAT]"; break;
 				case "P1-I42":	instrumentID = "[LO_FLOOR_TOM"; break;
@@ -352,66 +386,54 @@ public class PreviewSheetController {
 				case "P1-I53":	instrumentID = "[CHINESE_CYMBAL]"; break;
 				case "P1-I36":	instrumentID = "[BASS_DRUM]"; break;
 				case "P1-I52":	instrumentID = "[RIDE_CYMBAL_1]"; break;
-				
 				}
 
-				if (measures.get(i).getNotes().get(j).getDuration() == 0) { // if note is a grace note
+				// Check if note is a grace note.
+				if (notes.get(j).getDuration() == 0) {
 					measure += instrumentID + "o-";
 					measure += " ";
 					measure += instrumentID + "-o";
-				} else {
+				} 
+				else {
 					measure += instrumentID + type;
 				}
 
+				// 
 				if (measures.get(i).getNumNotes() - j != 1) {
 					if (measures.get(i).getNotes().get(j + 1).isChord()) { // if next note is also part of the chord
 						measure += "+";
-					} else {
+					} 
+					else {
 						measure += " "; // add a space to split up notes
 					}
-				} else { // add the tie thing around here i think
-					
-					
-					
+				} 
+				else { // add the tie thing around here i think
+
 				}
+			} // end of inner loop
 
-			}
-
-			if (parse.getNumMeasures() - i != 1) {
+			if (numOfMeasures - i != 1) {
 				measure += "| "; // add space between notes to indicate measures
 			}
-			
-			measuresarray.add(measure);
+			measureList.add(measure);
+		} // end of outer loop
+		return measureList;
+	}	
 
+	private ArrayList<String> getMeasureList() {
+		ArrayList<String> result = new ArrayList<>();
+		try {
+			String instrument = this.getParser().getInstrument();
+			if (instrument.equals("guitar") || instrument.equals("bass")) {
+				result = GuitarBass();
+			}
+			else {
+				result = Drum();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-
-		String finalString = "T" + tempo + " V9 ";
-
-		for (int i = 0; i < measuresarray.size(); i++) {
-
-			finalString += measuresarray.get(i);
-
-		}
-
-		setSeq(finalString);
-		
-		new Thread(() -> {
-            player.play(getSeq());
-        }).start();
-		
-	}
-	
-	public void setSeq(String sequence) {
-		
-		seq = sequence;
-		
-	}
-	
-	public String getSeq() {
-		
-		System.out.println("Sequence: " + seq);
-		return seq;
-		
+		return result;
 	}
 
 	//Draw the bar to mark the end of a Measure
@@ -695,19 +717,21 @@ public class PreviewSheetController {
 					//Set the y coordinate based on the line
 					y = 5+(string-1)*12; //Each staff line is 12 y-pixels apart
 				}
+				if (i == 0 && j == 0) {
+					placeSheetLines(yStaff, p.getInstrument());
+				}
 				//Draw the note
 				if (x < this.pane.getMaxWidth()) {
 					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
-					placeSheetLines(0, p.getInstrument());
 					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
 					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 				}
 				else {
 					x = 100.0;
 					yStaff += staffSpacing;
+					placeSheetLines(yStaff, p.getInstrument());
 					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
 					drawMeasureNumber(yStaff, p.getMeasures().get(i).getMeasureNumber());
-					placeSheetLines(yStaff, p.getInstrument());
 					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
 					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 				}
@@ -751,7 +775,7 @@ public class PreviewSheetController {
 			logger.log(Level.SEVERE, "Failed to create new Window.", e);
 		}
 	}
-	
+
 	public int getNoteSpacing() {
 		return noteSpacing;
 	}
@@ -759,14 +783,14 @@ public class PreviewSheetController {
 	public int getStaffSpacing() {
 		return staffSpacing;
 	}
-	
+
 	// Setters for dynamic spacing
 	public void setNoteSpacing(int noteSpacing) {
 		this.noteSpacing = noteSpacing;
 	}
-	
+
 	public void setStaffSpacing(int staffSpacing) {
 		this.staffSpacing = staffSpacing;
 	}
-	
+
 }
