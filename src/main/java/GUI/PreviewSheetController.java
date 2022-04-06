@@ -50,6 +50,8 @@ import org.fxmisc.richtext.CodeArea;
 import org.jfugue.player.ManagedPlayer;
 import org.jfugue.player.Player;
 
+import custom_exceptions.*;
+
 public class PreviewSheetController {
 
 	private int noteSpacing;
@@ -66,20 +68,25 @@ public class PreviewSheetController {
 
 	@FXML Button printButton;
 	@FXML Button playButton;
+	@FXML Button pauseButton;
 	@FXML TextField tempoField;
 	@FXML TextField goToMeasureField;
 	@FXML Button goToMeasureButton;
 
 	BooleanProperty printButtonPressed = new SimpleBooleanProperty(false);
 
-	private Player player = new Player();
-	private ManagedPlayer mplayer = player.getManagedPlayer();
+	private Player player;
+	private ManagedPlayer mplayer;
 	private static final String PLAY = "PLAY";
 	private static final String PAUSE = "PAUSE";
 	private static final String RESUME = "RESUME";
 	private String toggle = PLAY;
 
 	public PreviewSheetController() { 
+		/* Set player */
+		player = new Player();
+		mplayer = player.getManagedPlayer();
+
 		/* Set default noteSpacing to 25 and staffSpacing to 100 */
 		noteSpacing = 25;
 		staffSpacing = 100;
@@ -165,72 +172,115 @@ public class PreviewSheetController {
 
 	@FXML
 	private void handlePlayMusic() throws IOException {
-		if (checkBPM()) {
-			if (toggle.equals(PLAY)) {
-				play(this.getMeasureList());
-				toggle = PAUSE;
+		if (mplayer.isFinished()) {
+			mplayer.reset(); // resets pause, playing, started and finish status in the ManagedPLayer class.
+		}
+		
+		if (mplayer.isPaused()) {
+			mplayer.resume();
+		}
+		if (!mplayer.isPaused()) { /* not paused - playing */
+			player = new Player();
+			mplayer = player.getManagedPlayer();
+			
+			// This processes all the measures and tempo details, then plays the String.
+			try {
+				String recording = this.getMeasureDetails(this.getTempoDetails(), this.getMeasureList());
+				play(recording);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			else if (toggle.equals(PAUSE)) {
-				mplayer.pause();
-				toggle = RESUME;
-			}
-			else { /* RESUME */
-				mplayer.resume();
-				toggle = PAUSE;
-			}
+		}	
+		
+		// Switch the buttons everytime.
+		if (playButton.isVisible()) {
+			playButton.setVisible(false);
+			pauseButton.setVisible(true);
 		}
 		else {
-			/* Invalid BPM */
+			playButton.setVisible(true);
+			pauseButton.setVisible(false);
 		}
 	}
 
 	@FXML
 	public void handleStopMusic() {
+		playButton.setVisible(true);
+		pauseButton.setVisible(false);
 		mplayer.finish();
+	}
+
+	private String getMeasureDetails(String tmp, ArrayList<String> list) {
+		String result = tmp;
+		for (String s: list) {
+			result += s;
+		}
+		return result;
+	}
+
+	private String getTempoDetails() throws InvalidInputException, UnrecognizedInstrumentException {
+		String result = "";
+
+		/* 
+		 * default 
+		 */
+		if (tempoField.getText().isEmpty()) {
+			if (getInstrument().equals("guitar") || getInstrument().equals("bass")) {
+				result += "T100 V0 I[" + this.getParser().getInstrument() + "] ";
+			}
+			else if (this.getInstrument().equals("drumset")) {
+				result += "T100 V9 ";
+			}
+			else {
+				throw new UnrecognizedInstrumentException("Error: Instrument not supported");
+			}
+		}
+
+		/* 
+		 * use input
+		 */
+		else if (!tempoField.getText().isEmpty() && Integer.parseInt(tempoField.getText()) > 0) {
+			if (getInstrument().equals("guitar") || getInstrument().equals("bass")) {
+				result += "T" + tempoField.getText() + " V0 I[" + this.getParser().getInstrument() + "] ";
+			}
+			else if (this.getInstrument().equals("drumset")) {
+				result += "T" + tempoField.getText() + " V9 ";
+			}
+			else {
+				throw new UnrecognizedInstrumentException("Error: Instrument not supported");
+			}
+		}
+
+		/*
+		 * invalid bpm
+		 */
+		else { /* <= 0 */
+			throw new InvalidInputException("Error: Invalid BPM, Do not proceed to play!");
+		}
+		return result;
+	}
+
+	private void play(String record) {
+		System.out.println(record);
+		new Thread(() -> {
+			player.play(record);
+		}).start();
 	}
 
 	private Parser getParser() {
 		return new Parser(mvc.getMusicXML());
 	}
 
-	private boolean checkBPM() {
-		if (!tempoField.getText().isEmpty()) {
-			if (Integer.parseInt(tempoField.getText()) < 0) {
-				return false;
-			}
-		}
-		return true; // is empty
+	private String getInstrument() {
+		return getParser().getInstrument();
 	}
 
-	private void play(String record) {
-		new Thread(() -> {
-			player.play(record);
-		}).start();
-	}
-
-	private String getMeasureList() {
-		String result = "";
-		try {
-			String instrument = this.getParser().getInstrument();
-			if (instrument.equals("guitar") || instrument.equals("bass")) {
-				result = GuitarBass();
-			}
-			else {
-				result = Drum();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-
-	private String GuitarBass() throws IOException {
-		String result = "";
+	private ArrayList<String> GuitarBass() throws IOException {
+		ArrayList<String> measureList = new ArrayList<>(); // split measures into array
 
 		int numOfMeasures = this.getParser().getNumMeasures();
 		ArrayList<Measure> measures = this.getParser().getMeasures();
 
-		ArrayList<String> measureList = new ArrayList<>(); // split measures into array
 		for(int i = 0; i < numOfMeasures; i++) {
 			String measure = "";
 
@@ -285,29 +335,14 @@ public class PreviewSheetController {
 			}
 			measureList.add(measure);
 		} // outer loop ends
-
-		// Set timing.
-		if (!tempoField.getText().isEmpty()) {
-			result += "T" + tempoField.getText() + " V0 I[" + this.getParser().getInstrument() + "] ";
-		}
-		else {
-			result += "T100 V0 I[" + this.getParser().getInstrument() + "] ";
-		}
-
-		// Complete the string.
-		for (String s: measureList) {
-			result += s;
-		}
-		return result;
+		return measureList;
 	}
 
-	private String Drum() throws IOException {
-		String result = "";
+	private ArrayList<String> Drum() throws IOException {
+		ArrayList<String> measureList = new ArrayList<>(); // split measures into array
 
 		int numOfMeasures = this.getParser().getNumMeasures();
 		ArrayList<Measure> measures = this.getParser().getMeasures();
-
-		ArrayList<String> measureList = new ArrayList<>(); // split measures into array
 
 		for (int i = 0; i < numOfMeasures; i++) { // go through every measure
 			String measure = "";
@@ -380,18 +415,21 @@ public class PreviewSheetController {
 			}
 			measureList.add(measure);
 		} // end of outer loop
+		return measureList;
+	}	
 
-		// Set timing.
-		if (!tempoField.getText().isEmpty()) {
-			result += "T" + tempoField.getText() + " V9 ";
-		}
-		else {
-			result += "T100" + " V9 ";
-		}
-
-		// Complete the string.
-		for (String s: measureList) {
-			result += s;
+	private ArrayList<String> getMeasureList() {
+		ArrayList<String> result = new ArrayList<>();
+		try {
+			String instrument = this.getParser().getInstrument();
+			if (instrument.equals("guitar") || instrument.equals("bass")) {
+				result = GuitarBass();
+			}
+			else {
+				result = Drum();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		return result;
 	}
