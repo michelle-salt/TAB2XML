@@ -77,6 +77,9 @@ public class PreviewSheetController {
 	private static final String PAUSE = "PAUSE";
 	private static final String RESUME = "RESUME";
 	private String toggle = PLAY;
+	
+	private ArrayList<NoteLocation> noteLocation = new ArrayList<NoteLocation>();
+	private ArrayList<MeasureLocation> measureLocation = new ArrayList<MeasureLocation>();
 
 	public PreviewSheetController() { 
 		/* Set player */
@@ -661,8 +664,10 @@ public class PreviewSheetController {
 					xVerify -= noteSpacing;
 				}
 			}
+			boolean newStaff = false;
 			//If the notes don't fit on the current staff, add a new staff
 			if (xVerify > this.pane.getMaxWidth()) {
+				newStaff = true;
 				x = 100.0;
 				yStaff += staffSpacing;
 				drawMeasureNumber(yStaff, p.getMeasures().get(i).getMeasureNumber());
@@ -672,8 +677,15 @@ public class PreviewSheetController {
 			}
 
 			//First repeat in the list is always the left repeat
-			if (p.getMeasures().get(i).getBarlines().size() > 0 && p.getMeasures().get(i).getBarlines().get(0).getLocation() ==  'l')
+			if (p.getMeasures().get(i).getBarlines().size() > 0 && p.getMeasures().get(i).getBarlines().get(0).getLocation() ==  'l') {
 				drawRepeat(x-25, 0 + yStaff, 'l', p.getMeasures().get(i).getDirection().getWords(), p.getInstrument());
+				//If no measureLocation exists yet, add a measure first
+				//This would only happen if this is the first measure, so a default value can be assumed
+				if (this.measureLocation.size() == 0) {
+					this.measureLocation.add(new MeasureLocation(90, p.getInstrument()));
+				}
+				this.measureLocation.get(i).setStartRepeat();
+			}
 
 			//Loop through all the notes in the current measure
 			for (int j = 0; j < noteList.size(); j++, x += noteSpacing)
@@ -747,7 +759,47 @@ public class PreviewSheetController {
 					|| (p.getMeasures().get(i).getBarlines().size() > 1 && p.getMeasures().get(i).getBarlines().get(1).getLocation() ==  'r')) {
 				x += noteSpacing;
 				drawRepeat(x, 0 + yStaff, 'r', p.getMeasures().get(i).getDirection().getWords(), p.getInstrument());
+				//If it's the first measure, add the first measure in the ArrayList
+				if (this.measureLocation.size() == 0) {
+					this.measureLocation.add(new MeasureLocation(90, p.getInstrument()));
+				} 
+				//Otherwise, if it's the first line on a staff, reset the startX value
+				else if (newStaff) {
+					this.measureLocation.get(i).setStartX(90);
+				}
+				//Can't be first measure
+				this.measureLocation.get(i).setEndRepeat();
+				this.measureLocation.get(i).setEndX(x);
+				this.measureLocation.get(i).setStartY(yStaff);
+				//Add a new instance of MeasureLocation for the next measure
+				//Indicate that this is the start of the next measure
+				this.measureLocation.add(new MeasureLocation(x, p.getInstrument()));
 			} else {
+				//If it's the first measure, add the first measure in the ArrayList
+				if (this.measureLocation.size() == 0) {
+					this.measureLocation.add(new MeasureLocation(90, p.getInstrument()));
+				} 
+				//Otherwise, if it's the first line on a staff, reset the startX value
+				else if (newStaff) {
+					this.measureLocation.get(i).setStartX(90);
+				}
+				//Add the current barline location as the end of the measure
+//				System.out.println("i: " + i);
+//				for (int k = 0; k < this.measureLocation.size(); k++) {
+//					System.out.println("k: " + k);
+//					System.out.println("start x: " + this.measureLocation.get(k).getStartX());
+//					System.out.println("instrument: " + this.measureLocation.get(k).getInstrument());
+//					System.out.println("start y: " + this.measureLocation.get(k).getStartY());
+//					System.out.println("end x: " + this.measureLocation.get(k).getEndX());
+//					System.out.println("start repeat: " + this.measureLocation.get(k).isStartRepeat());
+//					System.out.println("end repeat: " + this.measureLocation.get(k).isEndRepeat());
+//				}
+				this.measureLocation.get(i).setEndX(x);
+				this.measureLocation.get(i).setStartY(yStaff);
+				//Add a new instance of MeasureLocation for the next measure
+				//Indicate that this is the start of the next measure
+				this.measureLocation.add(new MeasureLocation(x, p.getInstrument()));
+				//Draw the barline
 				barLines(x, 0 + yStaff, p.getInstrument());
 			}
 		}
