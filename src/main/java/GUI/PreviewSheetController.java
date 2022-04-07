@@ -650,8 +650,10 @@ public class PreviewSheetController {
 			Measure measure = measureList.get(i);
 			//Get the list of notes for each measure
 			ArrayList<Note> noteList = measure.getNotes();
+			//Figure out if the measure should be drawn on a new line
+			//It should by default be drawn on the first line if this is the first measure
 			xVerify = x;
-			for (int j = 0; j < noteList.size(); j++, xVerify += noteSpacing) {
+			for (int j = 0; j < noteList.size() && i != 0; j++, xVerify += noteSpacing) {
 				//Get the current note
 				Note note = noteList.get(j);
 				//If it's a chord, draw the notes on the same line (x-coordinate)
@@ -659,6 +661,7 @@ public class PreviewSheetController {
 					xVerify -= noteSpacing;
 				}
 			}
+			//If the notes don't fit on the current staff, add a new staff
 			if (xVerify > this.pane.getMaxWidth()) {
 				x = 100.0;
 				yStaff += staffSpacing;
@@ -668,7 +671,7 @@ public class PreviewSheetController {
 				timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 			}
 
-			//First one is always left
+			//First repeat in the list is always the left repeat
 			if (p.getMeasures().get(i).getBarlines().size() > 0 && p.getMeasures().get(i).getBarlines().get(0).getLocation() ==  'l')
 				drawRepeat(x-25, 0 + yStaff, 'l', p.getMeasures().get(i).getDirection().getWords(), p.getInstrument());
 
@@ -717,15 +720,17 @@ public class PreviewSheetController {
 					//Set the y coordinate based on the line
 					y = 5+(string-1)*12; //Each staff line is 12 y-pixels apart
 				}
+				//Place staff lines for the first measure only
 				if (i == 0 && j == 0) {
 					placeSheetLines(yStaff, p.getInstrument());
 				}
-				//Draw the note
+				//Draw each note
 				if (x < this.pane.getMaxWidth()) {
 					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
 					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
 					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 				}
+				//If the note is the first of a new staff, draw the new staff lines and THEN the notes
 				else {
 					x = 100.0;
 					yStaff += staffSpacing;
@@ -736,8 +741,8 @@ public class PreviewSheetController {
 					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 				}
 			}
-			//Dynamically draw a bar line (after each measure)
-			//Either first or second is right
+			//Dynamically draw a bar line (after each measure) or a repeat line
+			//Either first or second repeat in list is the right repeat line
 			if ((p.getMeasures().get(i).getBarlines().size() == 1 && p.getMeasures().get(i).getBarlines().get(0).getLocation() ==  'r') 
 					|| (p.getMeasures().get(i).getBarlines().size() > 1 && p.getMeasures().get(i).getBarlines().get(1).getLocation() ==  'r')) {
 				x += noteSpacing;
