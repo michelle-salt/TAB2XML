@@ -57,13 +57,13 @@ public class PreviewSheetController {
 	@FXML private Canvas canvas;
 	@FXML public CodeArea mainText;
 
-	@FXML Button playButton;
-	@FXML Button pauseButton;
-	@FXML Button printButton;
-	@FXML Button goToMeasureButton;
-	
-	@FXML TextField goToMeasureField;
-	@FXML TextField tempoField;
+	@FXML private Button playButton;
+	@FXML private Button pauseButton;
+	@FXML private Button printButton;
+	@FXML private Button goToMeasureButton;
+
+	@FXML private TextField goToMeasureField;
+	@FXML private TextField tempoField;
 
 	BooleanProperty printButtonPressed = new SimpleBooleanProperty(false);
 	private int noteSpacing;
@@ -72,8 +72,8 @@ public class PreviewSheetController {
 	private Player player;
 	private ManagedPlayer mplayer;
 	private String currentTempoDetails;
-	
-	
+
+
 	/* 
 	 * Set default preview spacings.
 	 * Initialize the player.
@@ -81,7 +81,7 @@ public class PreviewSheetController {
 	public PreviewSheetController() { 
 		noteSpacing = 25;
 		staffSpacing = 100;
-		
+
 		player = new Player();
 		mplayer = player.getManagedPlayer();
 	}
@@ -126,7 +126,7 @@ public class PreviewSheetController {
 		}
 	}
 
-	
+
 	@FXML
 	private void handleGotoMeasure() throws IOException {
 		String os = System.getProperty("os.name").toLowerCase();
@@ -165,7 +165,7 @@ public class PreviewSheetController {
 		mvc.convertWindow.hide();
 	}
 
-	
+
 	/*
 	 * The visibility of the buttons should toggle after each button press.
 	 * 
@@ -185,47 +185,45 @@ public class PreviewSheetController {
 					 * and information about the inputed tempo and instrument,
 					 * outputs it into a String format, then plays the String.
 					 */
-					currentTempoDetails = this.getTempoDetails(); // record the currrent tempoDetails
+					currentTempoDetails = this.getTempoDetails(); // record the current tempoDetails
 					String recording = this.getMeasureDetails(currentTempoDetails, this.getMeasureList());
 					play(recording);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-			playButton.setVisible(false);
-			pauseButton.setVisible(true);
+			showPauseButton();
 		} else {
 			mplayer.pause();
-			playButton.setVisible(true);
-			pauseButton.setVisible(false);
+			showPlayButton();
 		}
 	}
 
 	@FXML
 	private void handleStopMusic() {
-		mplayer.reset();
-		player = new Player();
-		mplayer = player.getManagedPlayer();
-
+		reset();
+	}
+	
+	private void showPlayButton() {
 		playButton.setVisible(true);
 		pauseButton.setVisible(false);
 	}
-
 	
+	private void showPauseButton() {
+		playButton.setVisible(false);
+		pauseButton.setVisible(true);
+	}
+
+
 	/*
-	 * Check if the user has entered a new `tempo` value.
+	 * Reset the player if a new `tempo` value has been entered.
 	 * 
-	 * ONLY returns true when the `tempo` value has been changed. 
-	 * 
+	 * Comment the lines out to use disable this feature.
 	 */
 	@FXML
-	private boolean atTempoKeyPressed() throws InvalidInputException, UnrecognizedInstrumentException {
+	private void atTempoKeyPressed() throws InvalidInputException, UnrecognizedInstrumentException {
 		if (!this.getTempoDetails().equals(currentTempoDetails)) {
-			currentTempoDetails = this.getTempoDetails();
-			return true;
-		}
-		else {
-			return false;
+			reset();
 		}
 	}
 
@@ -284,9 +282,10 @@ public class PreviewSheetController {
 		}
 		return result;
 	}
-	
+
 	/*
-	 * 
+	 * Set the measureList of the instrument you want to add here. 
+	 * (e.g. result = Piano()).
 	 */
 	private ArrayList<String> getMeasureList() {
 		ArrayList<String> result = new ArrayList<>();
@@ -305,7 +304,7 @@ public class PreviewSheetController {
 	}
 
 	/*
-	 * Plays the String
+	 * Plays the String.
 	 */
 	private void play(String record) {
 		System.out.println(record);
@@ -314,7 +313,16 @@ public class PreviewSheetController {
 		}).start();
 	}
 
-	
+	/*
+	 * Resets the player.
+	 */
+	private void reset() {
+		mplayer.reset();
+		playButton.setVisible(true);
+		pauseButton.setVisible(false);
+	}
+
+
 	/*
 	 * Measure List for Guitar and Bass.
 	 */
@@ -381,7 +389,7 @@ public class PreviewSheetController {
 		return measureList;
 	}
 
-	
+
 	/*
 	 * Measure List for Drum.
 	 */
@@ -792,7 +800,7 @@ public class PreviewSheetController {
 			logger.log(Level.SEVERE, "Failed to create new Window.", e);
 		}
 	}
-	
+
 	private Window openNewWindow(Parent root, String windowName) {
 		Stage stage = new Stage();
 		stage.setTitle(windowName);
@@ -811,7 +819,7 @@ public class PreviewSheetController {
 	public int getNoteSpacing() {
 		return noteSpacing;
 	}
-	
+
 	public void setNoteSpacing(int noteSpacing) {
 		this.noteSpacing = noteSpacing;
 	}
@@ -819,11 +827,11 @@ public class PreviewSheetController {
 	public int getStaffSpacing() {
 		return staffSpacing;
 	}
-	
+
 	public void setStaffSpacing(int staffSpacing) {
 		this.staffSpacing = staffSpacing;
 	}
-	
+
 	/*
 	 * More Getters for easy access.
 	 */
@@ -834,5 +842,5 @@ public class PreviewSheetController {
 	private String getInstrument() {
 		return getParser().getInstrument();
 	}
-	
+
 }
