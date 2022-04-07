@@ -73,15 +73,13 @@ public class PreviewSheetController {
 
 	private Player player;
 	private ManagedPlayer mplayer;
-	private static final String PLAY = "PLAY";
-	private static final String PAUSE = "PAUSE";
-	private static final String RESUME = "RESUME";
-	private String toggle = PLAY;
+	private String currentTempoDetails;
 
 	public PreviewSheetController() { 
 		/* Set player */
 		player = new Player();
 		mplayer = player.getManagedPlayer();
+		currentTempoDetails = "null";
 
 		/* Set default noteSpacing to 25 and staffSpacing to 100 */
 		noteSpacing = 25;
@@ -93,7 +91,7 @@ public class PreviewSheetController {
 	}
 
 	@FXML
-	public <printButtonPressed> void printHandle() {
+	private <printButtonPressed> void printHandle() {
 		//Set up a printer
 		Printer p = Printer.getDefaultPrinter();
 		if (p == null) {
@@ -101,9 +99,6 @@ public class PreviewSheetController {
 			alert.setTitle("Print");
 			alert.setHeaderText("Printing Error!");
 			alert.show();
-			/* 
-			 * Setup default printer if p is null. 
-			 */
 		} else {
 			//Set up Page Dialog
 			PrinterJob pj = PrinterJob.createPrinterJob();
@@ -167,49 +162,65 @@ public class PreviewSheetController {
 	}
 
 	@FXML
-	private void handlePlayMusic() throws IOException {
-		// Switch the buttons every time.
+	private void handlePlayMusic() throws IOException, InvalidInputException, UnrecognizedInstrumentException {
+		/*
+		 * The visibility of the buttons should toggle after each button press.
+		 * 
+		 * The play button either starts a new `player`, or resumes from where it was last paused.
+		 * The pause button only pauses the `player`. 
+		 */
 		if (playButton.isVisible()) {
-			playButton.setVisible(false);
-			pauseButton.setVisible(true);
-			
 			if (mplayer.isStarted()) {
 				mplayer.resume();
-			} else if (!mplayer.isFinished()) {
-				mplayer.reset(); // resets pause, playing, started and finish status in the ManagedPayer class.
-				
+			} else {
 				player = new Player();
 				mplayer = player.getManagedPlayer();
-				
-				// This processes all the measures and tempo details, then plays the String.
-				try {
-					String recording = this.getMeasureDetails(this.getTempoDetails(), this.getMeasureList());
+				try { 
+					/* This retrieves the list of measures from the musicXML file, 
+					 * and information about the inputed tempo and instrument,
+					 * outputs it into a String format, then plays the String.
+					 */
+					currentTempoDetails = this.getTempoDetails(); // record the currrent tempoDetails
+					String recording = this.getMeasureDetails(currentTempoDetails, this.getMeasureList());
 					play(recording);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			} else if (mplayer.isFinished()) { 
-				playButton.setVisible(true);
-				pauseButton.setVisible(false);
-//				mplayer.finish();
 			}
-			
-			
-		}
-		else { /* pauseButton is visible */
+			playButton.setVisible(false);
+			pauseButton.setVisible(true);
+		} else {
+			mplayer.pause();
 			playButton.setVisible(true);
 			pauseButton.setVisible(false);
-			mplayer.pause();
 		}
 	}
 
 	@FXML
-	public void handleStopMusic() {
-		playButton.setVisible(true);
-		pauseButton.setVisible(false);
+	private void handleStopMusic() {
 		mplayer.reset();
 		player = new Player();
 		mplayer = player.getManagedPlayer();
+
+		playButton.setVisible(true);
+		pauseButton.setVisible(false);
+	}
+
+	/*
+	 * Check if the user has entered a new `tempo` value.
+	 * 
+	 * ONLY returns true when the `tempo` value has been changed. 
+	 * 
+	 */
+	@FXML
+	private boolean atTempoKeyPressed() throws InvalidInputException, UnrecognizedInstrumentException {
+		if (!this.getTempoDetails().equals(currentTempoDetails)) {
+			currentTempoDetails = this.getTempoDetails();
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	private String getMeasureDetails(String tmp, ArrayList<String> list) {
@@ -236,28 +247,25 @@ public class PreviewSheetController {
 			else {
 				throw new UnrecognizedInstrumentException("Error: Instrument not supported");
 			}
-		}
-
-		/* 
-		 * use input
-		 */
-		else if (!tempoField.getText().isEmpty() && Integer.parseInt(tempoField.getText()) > 0) {
-			if (getInstrument().equals("guitar") || getInstrument().equals("bass")) {
-				result += "T" + tempoField.getText() + " V0 I[" + this.getParser().getInstrument() + "] ";
+		} 
+		else {
+			if (tempoField.getText().charAt(0) == '-') {
+				throw new InvalidInputException("Error: negative number not allowed!");
 			}
-			else if (this.getInstrument().equals("drumset")) {
-				result += "T" + tempoField.getText() + " V9 ";
+			if (Integer.parseInt(tempoField.getText()) > 0) {
+				if (getInstrument().equals("guitar") || getInstrument().equals("bass")) {
+					result += "T" + tempoField.getText() + " V0 I[" + this.getParser().getInstrument() + "] ";
+				}
+				else if (this.getInstrument().equals("drumset")) {
+					result += "T" + tempoField.getText() + " V9 ";
+				}
+				else {
+					throw new UnrecognizedInstrumentException("Error: Instrument not supported");
+				}
 			}
-			else {
-				throw new UnrecognizedInstrumentException("Error: Instrument not supported");
+			else { /* <= 0 */
+				throw new InvalidInputException("Error: Invalid BPM, Do not proceed to play!");
 			}
-		}
-
-		/*
-		 * invalid bpm
-		 */
-		else { /* <= 0 */
-			throw new InvalidInputException("Error: Invalid BPM, Do not proceed to play!");
 		}
 		return result;
 	}
