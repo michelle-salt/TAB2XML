@@ -31,28 +31,30 @@ public class CustomizeController {
 		ToggleGroup group = new ToggleGroup();
 		leftRadio.setToggleGroup(group);
 		justRadio.setToggleGroup(group);
+		//In theory, this should work since mvc is initialized when the window pops up
+		//In practice, it doesn't
+		try {
+			leftRadio.setSelected(!mvc.getJustify());
+			justRadio.setSelected(mvc.getJustify());
+		} catch (NullPointerException e) {
+			leftRadio.setSelected(true);
+		}
 	}
 
 	@FXML
 	public <applyButtonPressed> void applyButton() throws IOException {
-		if (noteSpacingField.getText().isEmpty() && !staffSpacingField.getText().isEmpty()) {
+		if (!staffSpacingField.getText().isEmpty()) {
 			mvc.setStaffSpacing(Integer.parseInt(staffSpacingField.getText()));
-			mvc.update();
 		}
-		else if (staffSpacingField.getText().isEmpty() && !noteSpacingField.getText().isEmpty()) {
+		if (!noteSpacingField.getText().isEmpty()) {
 			mvc.setNoteSpacing(Integer.parseInt(noteSpacingField.getText()));
-			mvc.update();
 		}
-		else if (!staffSpacingField.getText().isEmpty() && !noteSpacingField.getText().isEmpty()) {
-			mvc.setNoteSpacing(Integer.parseInt(noteSpacingField.getText()));
-			mvc.setStaffSpacing(Integer.parseInt(staffSpacingField.getText()));
-			mvc.update();
+		if (justRadio.isSelected()) {
+			mvc.setJustify(true);
+		} else {
+			mvc.setJustify(false);
 		}
-		else { /* default */
-			mvc.setNoteSpacing(25);
-			mvc.setStaffSpacing(100);
-			mvc.update();
-		}
+		mvc.update();
 		mvc.convertWindow.hide();
 	}
 } 
