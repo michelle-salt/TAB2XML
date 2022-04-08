@@ -76,7 +76,7 @@ public class PreviewSheetController {
 	private static final String RESUME = "RESUME";
 	private String toggle = PLAY;
 	
-	private ArrayList<NoteLocation> noteLocation = new ArrayList<NoteLocation>();
+	private ArrayList<ArrayList<NoteLocation>> noteLocation = new ArrayList<ArrayList<NoteLocation>>();
 	private ArrayList<MeasureLocation> measureLocation = new ArrayList<MeasureLocation>();
 	private String currentTempoDetails;
 
@@ -690,6 +690,7 @@ public class PreviewSheetController {
 		//Iterate through each measure
 		for (int i = 0; i< measureList.size(); i++, x += noteSpacing)
 		{
+			this.noteLocation.add(new ArrayList<NoteLocation>());
 			//Get the current measure
 			Measure measure = measureList.get(i);
 			//Get the list of notes for each measure
@@ -779,6 +780,7 @@ public class PreviewSheetController {
 				}
 				//Draw each note
 				if (x < this.pane.getMaxWidth()) {
+					this.noteLocation.get(i).add(new NoteLocation(x, y + yStaff, note, p.getInstrument()));
 					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
 					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
 					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
@@ -788,6 +790,7 @@ public class PreviewSheetController {
 					x = 100.0;
 					yStaff += staffSpacing;
 					placeSheetLines(yStaff, p.getInstrument());
+					this.noteLocation.get(i).add(new NoteLocation(x, y + yStaff, note, p.getInstrument()));
 					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
 					drawMeasureNumber(yStaff, p.getMeasures().get(i).getMeasureNumber());
 					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
