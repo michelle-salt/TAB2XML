@@ -98,7 +98,6 @@ public class Parser {
 		}
 	}
 	
-	
 	public int getNumMeasures() {
 		return this.measures.size();
 	}

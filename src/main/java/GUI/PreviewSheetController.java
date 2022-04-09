@@ -12,13 +12,17 @@ import javafx.print.Printer.MarginType;
 import javafx.print.PrinterJob;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -65,20 +69,17 @@ public class PreviewSheetController {
 	@FXML private TextField goToMeasureField;
 	@FXML private TextField tempoField;
 
-	BooleanProperty printButtonPressed = new SimpleBooleanProperty(false);
 	private int noteSpacing;
 	private int staffSpacing;
 	private boolean justify;
 
 	private Player player;
 	private ManagedPlayer mplayer;
-	private static final String PLAY = "PLAY";
-	private static final String PAUSE = "PAUSE";
-	private static final String RESUME = "RESUME";
-	private String toggle = PLAY;
-	
-	private ArrayList<ArrayList<NoteLocation>> noteLocation = new ArrayList<ArrayList<NoteLocation>>();
-	private ArrayList<MeasureLocation> measureLocation = new ArrayList<MeasureLocation>();
+
+	BooleanProperty printButtonPressed;
+
+	private ArrayList<ArrayList<NoteLocation>> noteLocation;
+	private ArrayList<MeasureLocation> measureLocation;
 	private String currentTempoDetails;
 
 
@@ -92,6 +93,11 @@ public class PreviewSheetController {
 
 		player = new Player();
 		mplayer = player.getManagedPlayer();
+
+		printButtonPressed = new SimpleBooleanProperty(false);
+
+		noteLocation = new ArrayList<ArrayList<NoteLocation>>();
+		measureLocation = new ArrayList<MeasureLocation>();
 	}
 
 	public void setMainViewController(MainViewController mvcInput) {
@@ -147,25 +153,41 @@ public class PreviewSheetController {
 		}
 		Parser p = new Parser(Files.readString(Paths.get(path.concat("musicXML.txt"))));
 
-		int measureNum = Integer.parseInt(goToMeasureField.getText());
-		int measureCount = p.getNumMeasures();
-		if (measureNum < 1 || measureNum > measureCount) {
+		int number = Integer.parseInt(goToMeasureField.getText());
+		int max = p.getNumMeasures();
+		if (number < 1 || number > max) {
 			Alert alert = new Alert(Alert.AlertType.ERROR, 
-					"The measure you entered is outside the valid range. Enter a measure betweeen 1 and " + measureCount + ".");
+					"The measure you entered is outside the valid range. Enter a measure betweeen 1 and " + max + ".");
 			alert.setTitle("Go-To Measure");
 			alert.setHeaderText("Invalid Measure!");
 			alert.show();
 		}
 		else {
-			goToMeasure(measureNum);
+			goToMeasure(number);
 		}
 	}
 
-	/*
-	 * TODO
-	 */
-	private void goToMeasure(int number) {
+	private void goToMeasure(int num) throws IOException {
+		this.update();
 
+		double startX = measureLocation.get(num).getStartX();
+		double startY = measureLocation.get(num).getStartY();
+		double endX = measureLocation.get(num).getEndX();
+		
+		Rectangle rectangle = new Rectangle(startX, startY-10, endX-startX, 80);
+		rectangle.setFill(Color.TRANSPARENT);
+		rectangle.setStyle("-fx-stroke: blue;");
+		rectangle.setStrokeWidth(1.5);
+		pane.getChildren().add(rectangle);
+
+		Object obj = pane.getParent().getParent().getParent().getParent();
+		if (obj instanceof ScrollPane) 
+		{
+			ScrollPane scrollPane = (ScrollPane) obj;
+			double maxYOfRect = rectangle.getBoundsInLocal().getMaxY();
+			double maxYOfPane = pane.getBoundsInLocal().getMaxY();
+			scrollPane.setVvalue(maxYOfRect/maxYOfPane);
+		}
 	}
 
 	@FXML
@@ -211,12 +233,12 @@ public class PreviewSheetController {
 	private void handleStopMusic() {
 		reset();
 	}
-	
+
 	private void showPlayButton() {
 		playButton.setVisible(true);
 		pauseButton.setVisible(false);
 	}
-	
+
 	private void showPauseButton() {
 		playButton.setVisible(false);
 		pauseButton.setVisible(true);
@@ -679,7 +701,7 @@ public class PreviewSheetController {
 		t.setFont(Font.font("arial", FontPosture.ITALIC, 15));
 		pane.getChildren().add(t);
 	}
-	
+
 	private void leftAlign(Parser p, List<Measure> measureList) {
 		//Initialize x and y coordinates of where to draw notes
 		double x = 100.0, xVerify = 100, y = 0, yStaff = 0;			
@@ -824,16 +846,16 @@ public class PreviewSheetController {
 					this.measureLocation.get(i).setStartX(90);
 				}
 				//Add the current barline location as the end of the measure
-//						System.out.println("i: " + i);
-//						for (int k = 0; k < this.measureLocation.size(); k++) {
-//							System.out.println("k: " + k);
-//							System.out.println("start x: " + this.measureLocation.get(k).getStartX());
-//							System.out.println("instrument: " + this.measureLocation.get(k).getInstrument());
-//							System.out.println("start y: " + this.measureLocation.get(k).getStartY());
-//							System.out.println("end x: " + this.measureLocation.get(k).getEndX());
-//							System.out.println("start repeat: " + this.measureLocation.get(k).isStartRepeat());
-//							System.out.println("end repeat: " + this.measureLocation.get(k).isEndRepeat());
-//						}
+				//						System.out.println("i: " + i);
+				//						for (int k = 0; k < this.measureLocation.size(); k++) {
+				//							System.out.println("k: " + k);
+				//							System.out.println("start x: " + this.measureLocation.get(k).getStartX());
+				//							System.out.println("instrument: " + this.measureLocation.get(k).getInstrument());
+				//							System.out.println("start y: " + this.measureLocation.get(k).getStartY());
+				//							System.out.println("end x: " + this.measureLocation.get(k).getEndX());
+				//							System.out.println("start repeat: " + this.measureLocation.get(k).isStartRepeat());
+				//							System.out.println("end repeat: " + this.measureLocation.get(k).isEndRepeat());
+				//						}
 				this.measureLocation.get(i).setEndX(x);
 				this.measureLocation.get(i).setStartY(yStaff);
 				//Add a new instance of MeasureLocation for the next measure
@@ -844,7 +866,7 @@ public class PreviewSheetController {
 			}
 		}
 	}
- 
+
 	private void justify(Parser p, List<Measure> measureList) {
 		//Initialize x and y coordinates of where to draw notes
 		double x = 100, xVerify = 100, y = 0, yStaff = 0;	
@@ -880,7 +902,7 @@ public class PreviewSheetController {
 			if (endMeasure == 0) {
 				endMeasure = p.getNumMeasures();
 			}
-			
+
 			//Get the list of notes for each measure
 			ArrayList<Note> noteListTemp = measureList.get(endMeasure-1).getNotes();
 			//Figure out if the measure should be drawn on a new line
@@ -896,7 +918,7 @@ public class PreviewSheetController {
 					numNotesPerStaff++;
 				}
 			}
-			
+
 			//Get the new note spacing
 			justifyNoteSpacing = (int) (numNotesPerStaff/this.pane.getMaxWidth()); 
 			//Draw each note
@@ -916,7 +938,7 @@ public class PreviewSheetController {
 					}
 					this.measureLocation.get(i).setStartRepeat();
 				}
-	
+
 				//Loop through all the notes in the current measure
 				for (int j = 0; j < noteList.size(); j++, x += justifyNoteSpacing)
 				{
@@ -1029,11 +1051,11 @@ public class PreviewSheetController {
 			endMeasure = 0;
 		}
 	}
- 	
+
 	//Update the SheetMusic GUI
 	public void update() throws IOException { 
 		this.pane.getChildren().clear();
-		Parser p = new Parser(mvc.converter.getMusicXML());
+		Parser p = this.getParser();
 		//Get the list of measure from parser
 		List<Measure> measureList = p.getMeasures();
 		if (justify) 
@@ -1088,7 +1110,7 @@ public class PreviewSheetController {
 	public void setStaffSpacing(int staffSpacing) {
 		this.staffSpacing = staffSpacing;
 	}
-	
+
 	public boolean getJustify() {
 		return justify;
 	}
