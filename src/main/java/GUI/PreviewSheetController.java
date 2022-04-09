@@ -228,7 +228,17 @@ public class PreviewSheetController {
 		 */
 		if (tempoField.getText().isEmpty()) {
 			if (getInstrument().equals("guitar") || getInstrument().equals("bass")) {
-				result += "T100 V0 I[" + this.getParser().getInstrument() + "] ";
+				
+				if(getInstrument().equals("bass")) {
+					
+					result += "T100 V0 I[ACOUSTIC_BASS] ";
+					
+				}else {
+					
+					result += "T100 V0 I[GUITAR] ";
+					
+				}
+				
 			}
 			else if (this.getInstrument().equals("drumset")) {
 				result += "T100 V9 ";
@@ -239,7 +249,7 @@ public class PreviewSheetController {
 		}
 
 		/* 
-		 * use input
+		 * user input
 		 */
 		else if (!tempoField.getText().isEmpty() && Integer.parseInt(tempoField.getText()) > 0) {
 			if (getInstrument().equals("guitar") || getInstrument().equals("bass")) {
