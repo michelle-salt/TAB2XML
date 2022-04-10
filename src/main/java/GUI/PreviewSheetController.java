@@ -732,7 +732,7 @@ public void drawMeasureNumber(double y, int measureNumber) {
 
 private void leftAlign(List<Measure> measureList) {
 	// Initialize x and y coordinates of where to draw notes
-	double x = 100.0, xVerify = 100, y = 0, yStaff = 0;
+	double x = 100.0, xVerify = 100, y = 20, yStaff = 20;
 	// Iterate through each measure
 	for (int i = 0; i < measureList.size(); i++, x += noteSpacing) {
 		this.noteLocation.add(new ArrayList<NoteLocation>());
@@ -832,7 +832,7 @@ private void leftAlign(List<Measure> measureList) {
 			// Draw each note
 			if (x < this.pane.getMaxWidth()) {
 				this.noteLocation.get(i).add(new NoteLocation(x, y + yStaff, yStaff, note, instrument));
-				new DrawNotes(pane, x, y + yStaff, note, instrument);
+				new DrawNotes(pane, x, y + yStaff, note, instrument, yStaff);
 				clef(parser.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18 + yStaff, instrument);
 				timeSignature(parser.getMeasures().get(0).getAttributes().getTime().getBeats(),
 						parser.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28 + yStaff,
@@ -845,7 +845,7 @@ private void leftAlign(List<Measure> measureList) {
 				yStaff += staffSpacing;
 				placeSheetLines(yStaff, instrument);
 				this.noteLocation.get(i).add(new NoteLocation(x, y + yStaff, yStaff, note, instrument));
-				new DrawNotes(pane, x, y + yStaff, note, instrument);
+				new DrawNotes(pane, x, y + yStaff, note, instrument, yStaff);
 				drawMeasureNumber(yStaff, parser.getMeasures().get(i).getMeasureNumber());
 				clef(parser.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18 + yStaff, instrument);
 				timeSignature(parser.getMeasures().get(0).getAttributes().getTime().getBeats(),
@@ -906,7 +906,8 @@ private void leftAlign(List<Measure> measureList) {
 			this.measureLocation.add(new MeasureLocation(x, instrument));
 			// Draw the barline
 			barLines(x, 0 + yStaff, instrument);
-			new DrawBeams(pane, measure.getNotes(), this.noteLocation.get(i), noteSpacing);
+			if (!instrument.equalsIgnoreCase("drumset"))
+				new DrawBeams(pane, measure.getNotes(), this.noteLocation.get(i), noteSpacing);
 		}
 	}
 }
@@ -1042,7 +1043,7 @@ private void justify(List<Measure> measureList) {
 				// Draw each note
 				if (x < this.pane.getMaxWidth()) {
 					this.noteLocation.get(i).add(new NoteLocation(x, y + yStaff, yStaff, note, instrument));
-					new DrawNotes(pane, x, y + yStaff, note, instrument);
+					new DrawNotes(pane, x, y + yStaff, note, instrument, yStaff);
 					clef(parser.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18 + yStaff,
 							instrument);
 					timeSignature(parser.getMeasures().get(0).getAttributes().getTime().getBeats(),
@@ -1056,7 +1057,7 @@ private void justify(List<Measure> measureList) {
 					yStaff += staffSpacing;
 					placeSheetLines(yStaff, instrument);
 					this.noteLocation.get(i).add(new NoteLocation(x, y + yStaff, yStaff, note, instrument));
-					new DrawNotes(pane, x, y + yStaff, note, instrument);
+					new DrawNotes(pane, x, y + yStaff, note, instrument, yStaff);
 					drawMeasureNumber(yStaff, parser.getMeasures().get(i).getMeasureNumber());
 					clef(parser.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18 + yStaff,
 							instrument);

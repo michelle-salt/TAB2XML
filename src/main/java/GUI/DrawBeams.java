@@ -51,7 +51,7 @@ public class DrawBeams {
 		
 		ArrayList<Note> notesToBeam = new ArrayList<Note>();
 		ArrayList<NoteLocation> noteLocationToBeam = new ArrayList<NoteLocation>();
-		int numerator = 0, maxDenom = 0;
+		int numerator = 0;
 		for (int i = 0; i < this.noteWithoutChords.size(); i++) {
 			if (this.noteWithoutChords.get(i).getType() == 'H') {
 				//Flag and reset ArrayLists

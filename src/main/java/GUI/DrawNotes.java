@@ -16,13 +16,14 @@ public class DrawNotes {
 
 	@FXML 
 	private Pane pane;
-	private double x, y;
+	private double x, y, yStaff;
 	private Note note;
 	
-	public DrawNotes(Pane pane, double x, double y, Note note, String instrument) {
+	public DrawNotes(Pane pane, double x, double y, Note note, String instrument, double yStaff) {
 		this.pane = pane;
 		this.x = x;
 		this.y = y;
+		this.yStaff = yStaff;
 		this.note = note;
 		
 		if (instrument.equals("drumset")) {
@@ -56,7 +57,7 @@ public class DrawNotes {
 			Text text = new Text(x, y, "x");
 			text.setFont(Font.font("veranda", FontWeight.BLACK, 18));
 			pane.getChildren().add(text);
-			drawStem(x+9, y-8, y-35);
+			drawStem(x+9, y-8);
 		} 
 		//Print the type of note otherwise
 		else {
@@ -76,12 +77,12 @@ public class DrawNotes {
 			}
 			//Draw the stem for every note
 			//Will be changed later
-			drawStem(x+9, y-5, y-35);
+			drawStem(x+9, y-5);
 		}
 	}	
 	
-	public void drawStem(double x, double yStart, double yEnd) {
-		Line stem = new Line(x, yStart, x, yEnd);
+	public void drawStem(double x, double yStart) {
+		Line stem = new Line(x, yStart, x, yStaff - 40);
 		pane.getChildren().add(stem);
 	}
 	
