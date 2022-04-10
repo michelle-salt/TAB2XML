@@ -74,7 +74,7 @@
 										<Insets bottom="5.0" left="20.0" right="2.0" top="5.0" />
 									</padding>
 								</Label>
-								<TextField fx:id="tempoField" onKeyPressed="#atTempoKeyPressed" prefWidth="50.0" promptText="100" />
+								<TextField fx:id="tempoField" prefWidth="50.0" promptText="100" />
 								<Label text="BPM">
 									<padding>
 										<Insets bottom="5.0" left="0.0" right="1.5" top="5.0" />
@@ -96,7 +96,7 @@
                         <FontAwesomeIconView glyphName="PAUSE" size="25" />
                      </graphic>
                   </Button>
-								<Button fx:id="stopButton" layoutX="67.0" mnemonicParsing="false" onAction="#handleStopMusic" prefHeight="40.0" prefWidth="50.0">
+								<Button fx:id="stopButton" layoutX="60.0" mnemonicParsing="false" onAction="#handleStopMusic" prefHeight="40.0" prefWidth="50.0">
 									<padding>
 										<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 									</padding>
@@ -124,6 +124,22 @@
 								</Button>
                      </children>
 						</HBox>
+                  <Button fx:id="stepForwardButton" layoutX="179.0" mnemonicParsing="false" onAction="#handleStepForward" prefHeight="40.0" prefWidth="50.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <graphic>
+                        <FontAwesomeIconView glyphName="FORWARD" size="25" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="stepBackwardButton" layoutX="118.0" mnemonicParsing="false" onAction="#handleStepBackward" prefHeight="40.0" prefWidth="50.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <graphic>
+                        <FontAwesomeIconView glyphName="BACKWARD" size="25" />
+                     </graphic>
+                  </Button>
 					</children>
 				</AnchorPane>
 			</children>

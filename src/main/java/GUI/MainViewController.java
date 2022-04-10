@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -15,10 +14,6 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
-
-import javax.sound.midi.InvalidMidiDataException;
-import javax.sound.midi.MidiSystem;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
@@ -45,25 +40,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import musicxml.parsing.Measure;
-import musicxml.parsing.Note;
-//import musicxml.parsing.GuitarNote;
-import musicxml.parsing.Parser;
-import musicxml.parsing.Pitch;
-import nu.xom.ParsingException;
 import utility.Range;
 import utility.Settings;
-
-import org.jfugue.player.Player;
-import org.staccato.StaccatoParserListener;
-import org.xml.sax.SAXException;
-import org.jfugue.integration.MusicXmlParser;
-import org.jfugue.midi.MidiFileManager;
-import org.jfugue.midi.MidiParser;
-import org.jfugue.midi.MidiParserListener;
-import org.jfugue.pattern.Pattern;
-
-import converter.Converter;
 
 public class MainViewController extends Application {
 
@@ -359,6 +337,7 @@ public class MainViewController extends Application {
 
 				Optional<ButtonType> option = alert.showAndWait();
 				if (option.get() == ButtonType.YES) {
+					controller.getManagedPlayer().reset();
 					convertWindow.hide();
 				}
 				if (option.get() == ButtonType.NO) {

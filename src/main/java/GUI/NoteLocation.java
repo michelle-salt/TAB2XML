@@ -3,13 +3,14 @@ package GUI;
 import musicxml.parsing.Note;
 
 public class NoteLocation {
-	private double x, y;
+	private double x, y, staffY;
 	private Note note;
 	private String instrument;
 	
-	public NoteLocation(double x, double y, Note note, String instrument) {
+	public NoteLocation(double x, double y, double staffY, Note note, String instrument) {
 		this.x = x;
 		this.y = y;
+		this.staffY = staffY;
 		this.note = note;
 		this.instrument = instrument;
 	}
@@ -22,12 +23,16 @@ public class NoteLocation {
 	public double getY() {
 		return y;
 	}
+	
+	public double getStaffY() {
+		return staffY;
+	}
 
 	public Note getNote() {
 		return note;
 	}
 
-	public String instrument() {
+	public String getInstrument() {
 		return instrument;
 	}
 }
