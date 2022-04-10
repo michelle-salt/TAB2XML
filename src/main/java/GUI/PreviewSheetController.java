@@ -297,7 +297,8 @@ public class PreviewSheetController {
 
 				}
 
-			} else if (this.getInstrument().equals("drumset")) {
+			} else if (getInstrument().equals("drumset")) {
+				System.out.println("deafult");
 				result += "T100 V9 ";
 			} else {
 				throw new UnrecognizedInstrumentException("Error: Instrument not supported");
@@ -309,7 +310,21 @@ public class PreviewSheetController {
 		 */
 		else if (!tempoField.getText().isEmpty() && Integer.parseInt(tempoField.getText()) > 0) {
 			if (getInstrument().equals("guitar") || getInstrument().equals("bass")) {
-				result += "T" + tempoField.getText() + " V0 I[" + this.getParser().getInstrument() + "] ";
+
+				if (getInstrument().equals("bass")) {
+
+					result += "T" + tempoField.getText() + " V0 I[ACOUSTIC_BASS] ";
+
+				} else {
+
+					result += "T" + tempoField.getText() + " V0 I[GUITAR] ";
+
+				}
+
+			} else if (getInstrument().equals("drumset")) {
+				result += "T" + tempoField.getText() + " V9 ";
+			} else {
+				throw new UnrecognizedInstrumentException("Error: Instrument not supported");
 			}
 		} else {
 			if (tempoField.getText().charAt(0) == '-') {
@@ -329,7 +344,7 @@ public class PreviewSheetController {
 
 					}
 
-				} else if (this.getInstrument().equals("drumset")) {
+				} else if (getInstrument().equals("drumset")) {
 					result += "T" + tempoField.getText() + " V9 ";
 				} else {
 					throw new UnrecognizedInstrumentException("Error: Instrument not supported");
