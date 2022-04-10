@@ -53,41 +53,61 @@ public class DrawBeams {
 		ArrayList<NoteLocation> noteLocationToBeam = new ArrayList<NoteLocation>();
 		int numerator = 0, maxDenom = 0;
 		for (int i = 0; i < this.noteWithoutChords.size(); i++) {
-			numerator += getNoteTypeValue(this.noteWithoutChords.get(i).getType());
-			notesToBeam.add(this.noteWithoutChords.get(i));
-			noteLocationToBeam.add(this.notesWithoutChordsLocations.get(i));
-			
-			if (numerator/1024.0 == 0.25) {
-				beamTogether(notesToBeam, noteLocationToBeam);
+			if (this.noteWithoutChords.get(i).getType() == 'H') {
+				//Flag and reset ArrayLists
+				flagSeparately(notesToBeam, noteLocationToBeam);
 				numerator = 0;
 				notesToBeam = new ArrayList<Note>();
 				noteLocationToBeam = new ArrayList<NoteLocation>();
-			} else if (numerator/1024.0 > 0.25) {
-				//Check that each value (getting rid of first n values) doesn't work
-				boolean works = false;
-				for (int j = 0; j < notesToBeam.size(); j++) {
-					//Remove beginning note
-					numerator -= getNoteTypeValue(this.noteWithoutChords.get(j).getType());
-					notesToBeam.remove(this.noteWithoutChords.get(j));
-					noteLocationToBeam.remove(this.notesWithoutChordsLocations.get(j));
-					//Check if new set works
-					if (numerator/1024.0 == 0.25) {
-						beamTogether(notesToBeam, noteLocationToBeam);
-						numerator = 0;
-						notesToBeam = new ArrayList<Note>();
-						noteLocationToBeam = new ArrayList<NoteLocation>();
-						works = true;
-						break;
-					}
-				}
+				//Add note to ArrayList
+				notesToBeam.add(this.noteWithoutChords.get(i));
+				noteLocationToBeam.add(this.notesWithoutChordsLocations.get(i));
+				//Draw half line
+				NoteLocation note = noteLocationToBeam.get(0);
+				Line l = new Line(note.getX(), note.getStaffY() + 95, note.getX(), note.getStaffY() + 110);
+				pane.getChildren().add(l);
+				//Reset ArrayLists
+				notesToBeam = new ArrayList<Note>();
+				noteLocationToBeam = new ArrayList<NoteLocation>();
 				
-				if (!works) {
-	//				flagSeparately(notesToBeam, noteLocationToBeam);
+			} else {
+				numerator += getNoteTypeValue(this.noteWithoutChords.get(i).getType());
+				notesToBeam.add(this.noteWithoutChords.get(i));
+				noteLocationToBeam.add(this.notesWithoutChordsLocations.get(i));
+				
+				if (numerator/1024.0 == 0.25) {
+					beamTogether(notesToBeam, noteLocationToBeam);
 					numerator = 0;
 					notesToBeam = new ArrayList<Note>();
 					noteLocationToBeam = new ArrayList<NoteLocation>();
+				} else if (numerator/1024.0 > 0.25) {
+					//Check that each value (getting rid of first n values) doesn't work
+					boolean works = false;
+					for (int j = 0; j < notesToBeam.size(); j++) {
+						//Remove beginning note
+						numerator -= getNoteTypeValue(this.noteWithoutChords.get(j).getType());
+						notesToBeam.remove(this.noteWithoutChords.get(j));
+						noteLocationToBeam.remove(this.notesWithoutChordsLocations.get(j));
+						//Check if new set works
+						if (numerator/1024.0 == 0.25) {
+							beamTogether(notesToBeam, noteLocationToBeam);
+							numerator = 0;
+							notesToBeam = new ArrayList<Note>();
+							noteLocationToBeam = new ArrayList<NoteLocation>();
+							works = true;
+							break;
+						}
+					}
+					
+					if (!works) {
+						flagSeparately(notesToBeam, noteLocationToBeam);
+						numerator = 0;
+						notesToBeam = new ArrayList<Note>();
+						noteLocationToBeam = new ArrayList<NoteLocation>();
+					}
 				}
 			}
+			
 			
 			/*
 			 * For loop through every note
@@ -100,6 +120,7 @@ public class DrawBeams {
 			 * Also have a checker to make sure it doesn't draw beams if it's just one quarter/half/whole note
 			 */
 		}
+		flagSeparately(notesToBeam, noteLocationToBeam);
 	}
 	
 	//Returns the numerator of the value, assuming a denominator of 1024 (since that's the biggest value)
@@ -118,6 +139,31 @@ public class DrawBeams {
 		case 'C':	return 1;
 		}
 		return 0;
+	}
+	
+	private void flagSeparately(ArrayList<Note> notes, ArrayList<NoteLocation> noteLocation) {
+		for (int i = 0; i < noteLocation.size(); i++) {
+			//Add vertical lines underneath notes
+			NoteLocation note = noteLocation.get(i);
+			double x = note.getX(), y = note.getStaffY()+80;
+			Line l = new Line(x, y, x, y + 30);
+			pane.getChildren().add(l);
+			//Get number of flags needed
+			int numFlags = 0;
+			switch (note.getNote().getType()) {
+				case 'I':	numFlags = 1;		break;
+				case 'S':	numFlags = 2;		break;
+				case 'T':	numFlags = 3;		break;
+			}
+			
+			//Draw flag
+			y += 38; x -= 9;
+			for (int j = 0; j < numFlags; j++) {
+				Line flag = new Line(x+9, y-8, x+17, y-22);
+				pane.getChildren().add(flag);
+				y -= 5;
+			}
+		}
 	}
 	
 	private void beamTogether(ArrayList<Note> notes, ArrayList<NoteLocation> noteLocation) {
