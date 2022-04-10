@@ -32,7 +32,7 @@ public class NoteLocation {
 		return note;
 	}
 
-	public String instrument() {
+	public String getInstrument() {
 		return instrument;
 	}
 }

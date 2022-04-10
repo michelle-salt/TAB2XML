@@ -90,7 +90,7 @@ public class PreviewSheetController {
 	 */
 	public PreviewSheetController() {
 		noteSpacing = 25;
-		staffSpacing = 100;
+		staffSpacing = 150;
 
 		player = new Player();
 		mplayer = player.getManagedPlayer();
@@ -169,11 +169,11 @@ public class PreviewSheetController {
 		//		rectangle.setStyle("-fx-stroke: blue;");
 		//		rectangle.setStrokeWidth(1.5);
 		//		pane.getChildren().add(rectangle);
-		
+
 		if (instrument.equalsIgnoreCase("guitar")) {
-			
+
 		} else if (instrument.equalsIgnoreCase("drumset")) {
-			
+
 		}
 
 		double startX = this.noteLocation.get(num-1).get(1).getX();
@@ -223,7 +223,7 @@ public class PreviewSheetController {
 			player.play(recording);
 		}).start();
 	}
-	
+
 	public void listenforEndOfMusic() {
 		new Thread(() -> {
 			Platform.runLater(() -> {
@@ -916,6 +916,7 @@ public class PreviewSheetController {
 				this.measureLocation.add(new MeasureLocation(x, instrument));
 				// Draw the barline
 				barLines(x, 0 + yStaff, instrument);
+				new DrawBeams(pane, measure.getNotes(), this.noteLocation.get(i), noteSpacing);
 			}
 		}
 	}
@@ -1132,6 +1133,9 @@ public class PreviewSheetController {
 		}
 		// Get the list of measure from parser
 		List<Measure> measureList = parser.getMeasures();
+		//Reset Location lists
+		this.measureLocation = new ArrayList<MeasureLocation>();
+		this.noteLocation = new ArrayList<ArrayList<NoteLocation>>();
 		if (justify)
 			justify(measureList);
 		else
@@ -1151,7 +1155,7 @@ public class PreviewSheetController {
 		mplayer.reset();
 		playButton.setVisible(true);
 	}
-	
+
 	@FXML void handleStepForward() {
 		if (mplayer.getTickLength()-5000 > 5000) {
 			System.out.println("before : " + mplayer.getTickPosition());
@@ -1190,79 +1194,79 @@ public class PreviewSheetController {
 		}
 	}
 
-@FXML
-private void customizeHandle() throws IOException {
-	Parent root;
-	try {
-		FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/customizeGUI.fxml"));
-		root = loader.load();
-		CustomizeController controller = loader.getController();
-		controller.setPreviewSheetController(this);
-		convertWindow = this.openNewWindow(root, "Customize");
-	} catch (IOException e) {
-		Logger logger = Logger.getLogger(getClass().getName());
-		logger.log(Level.SEVERE, "Failed to create new Window.", e);
+	@FXML
+	private void customizeHandle() throws IOException {
+		Parent root;
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/customizeGUI.fxml"));
+			root = loader.load();
+			CustomizeController controller = loader.getController();
+			controller.setPreviewSheetController(this);
+			convertWindow = this.openNewWindow(root, "Customize");
+		} catch (IOException e) {
+			Logger logger = Logger.getLogger(getClass().getName());
+			logger.log(Level.SEVERE, "Failed to create new Window.", e);
+		}
 	}
-}
 
-private Window openNewWindow(Parent root, String windowName) {
-	Stage stage = new Stage();
-	stage.setTitle(windowName);
-	stage.initModality(Modality.APPLICATION_MODAL);
-	stage.initOwner(MainApp.STAGE);
-	stage.setResizable(false);
-	Scene scene = new Scene(root);
-	stage.setScene(scene);
-	stage.show();
-	return scene.getWindow();
-}
+	private Window openNewWindow(Parent root, String windowName) {
+		Stage stage = new Stage();
+		stage.setTitle(windowName);
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.initOwner(MainApp.STAGE);
+		stage.setResizable(false);
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+		return scene.getWindow();
+	}
 
-/*
- * Getters and Setters for spacing.
- */
-public int getNoteSpacing() {
-	return noteSpacing;
-}
+	/*
+	 * Getters and Setters for spacing.
+	 */
+	public int getNoteSpacing() {
+		return noteSpacing;
+	}
 
-public void setNoteSpacing(int noteSpacing) {
-	this.noteSpacing = noteSpacing;
-}
+	public void setNoteSpacing(int noteSpacing) {
+		this.noteSpacing = noteSpacing;
+	}
 
-public int getStaffSpacing() {
-	return staffSpacing;
-}
+	public int getStaffSpacing() {
+		return staffSpacing;
+	}
 
-public void setStaffSpacing(int staffSpacing) {
-	this.staffSpacing = staffSpacing;
-}
+	public void setStaffSpacing(int staffSpacing) {
+		this.staffSpacing = staffSpacing;
+	}
 
-public boolean getJustify() {
-	return justify;
-}
+	public boolean getJustify() {
+		return justify;
+	}
 
-public void setJustify(boolean justify) {
-	this.justify = justify;
-}
+	public void setJustify(boolean justify) {
+		this.justify = justify;
+	}
 
-/*
- * More Getters for easy access.
- */
-private void setParser() {
-	this.parser = new Parser(mvc.getMusicXML());
-}
+	/*
+	 * More Getters for easy access.
+	 */
+	private void setParser() {
+		this.parser = new Parser(mvc.getMusicXML());
+	}
 
-public ManagedPlayer getManagedPlayer() {
-	return mplayer;
-}
+	public ManagedPlayer getManagedPlayer() {
+		return mplayer;
+	}
 
-/*
- * Add instruments here.
- * Refer to the `getTempoDetails()` method to add the necessary tempo details for the newly added instrument. 
- */
-private void setInstrument() throws UnrecognizedInstrumentException {
-	instrument = parser.getInstrument();
-	if (!instrument.equalsIgnoreCase("guitar") && !instrument.equalsIgnoreCase("bass") && !instrument.equalsIgnoreCase("drumset"))
-		throw new UnrecognizedInstrumentException("Error: Instrument not supported");
-}
+	/*
+	 * Add instruments here.
+	 * Refer to the `getTempoDetails()` method to add the necessary tempo details for the newly added instrument. 
+	 */
+	private void setInstrument() throws UnrecognizedInstrumentException {
+		instrument = parser.getInstrument();
+		if (!instrument.equalsIgnoreCase("guitar") && !instrument.equalsIgnoreCase("bass") && !instrument.equalsIgnoreCase("drumset"))
+			throw new UnrecognizedInstrumentException("Error: Instrument not supported");
+	}
 
 }
