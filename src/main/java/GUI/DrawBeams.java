@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import musicxml.parsing.Note;
 
 //Draws all the beams in a measure at once
@@ -26,13 +27,14 @@ public class DrawBeams {
 	 */
 	private ArrayList<Note> notes, noteWithoutChords;
 	private ArrayList<NoteLocation> noteLocations, notesWithoutChordsLocations;
-	
+	private int noteSpacing;
 	private Pane pane;
 	
-	public DrawBeams(Pane pane, ArrayList<Note> notes, ArrayList<NoteLocation> noteLocations) {
+	public DrawBeams(Pane pane, ArrayList<Note> notes, ArrayList<NoteLocation> noteLocations, int noteSpacing) {
 		this.pane = pane;
 		this.notes = notes;
 		this.noteLocations = noteLocations;
+		this.noteSpacing = noteSpacing;
 		//Calculate which beams to draw
 		
 		//Get a list of all "notes" (exclude all chords) and their respective note locations
@@ -127,11 +129,132 @@ public class DrawBeams {
 		}
 	}
 	
+	//Method will run for quarter notes or lower
 	private void beamTogetherGuitar(ArrayList<Note> notes, ArrayList<NoteLocation> noteLocation) {
+		
 		for (int i = 0; i < noteLocation.size(); i++) {
+			//Add vertical lines underneath notes
 			NoteLocation note = noteLocation.get(i);
-			Line l = new Line(note.getX(), note.getStaffY() + 80, note.getX(), note.getStaffY() + 100);
+			Line l = new Line(note.getX(), note.getStaffY() + 80, note.getX(), note.getStaffY() + 110);
 			pane.getChildren().add(l);
+			
+			//Draw beams to connect lines
+//			Rectangle r = new Rectangle(l.getStartX(), note.getStaffY() + 100, noteSpacing, 5);
+//			pane.getChildren().add(r);
+			
+			//32nd is the highest example note we have
+			
+			//First note
+			if (i == 0) {
+				//Quarter
+				if (note.getNote().getType() == 'Q' ) {
+					//Don't beam
+					//Don't draw flag
+				} 
+				//Eighth
+				else if (note.getNote().getType() == 'I' ) {
+					draw8thBeam(l.getStartX(), note.getStaffY() + 107, noteSpacing/2);
+				}
+				//Sixteenth
+				else if (note.getNote().getType() == 'S' ) {
+					draw16thBeam(l.getStartX(), note.getStaffY() + 107, noteSpacing/2);
+				}
+				//Assumed to be 32nd
+				else {
+					draw32ndBeam(l.getStartX(), note.getStaffY() + 107, noteSpacing/2);
+				}
+			} 
+			//Last note
+			else if (i == noteLocation.size() - 1) {
+				//Quarter
+				if (note.getNote().getType() == 'Q' ) {
+					//Don't beam
+					//Don't draw flag
+				} 
+				//Eighth
+				else if (note.getNote().getType() == 'I' ) {
+					draw8thBeam(l.getStartX()-(noteSpacing/2)-1, note.getStaffY() + 107, (noteSpacing/2)+1);
+				}
+				//Sixteenth
+				else if (note.getNote().getType() == 'S' ) {
+					draw16thBeam(l.getStartX()-(noteSpacing/2)-1, note.getStaffY() + 107, (noteSpacing/2)+1);
+				}
+				//Assumed to be 32nd
+				else {
+					draw32ndBeam(l.getStartX()-(noteSpacing/2)-1, note.getStaffY() + 107, (noteSpacing/2)+1);
+				}
+			} 
+			//Other notes
+			else {
+				//Quarter
+				if (note.getNote().getType() == 'Q' ) {
+					//Don't beam
+					//Don't draw flag
+				} 
+				//Eighth
+				else if (note.getNote().getType() == 'I' ) {
+					//Beam forwards AND backwards always
+					draw8thBeam(l.getStartX()-(noteSpacing/2)-1, note.getStaffY() + 107, (noteSpacing/2)+1);
+					draw8thBeam(l.getStartX(), note.getStaffY() + 107, noteSpacing/2);
+				}
+				//Sixteenth
+				else if (note.getNote().getType() == 'S' ) {
+					//Check whether to beam backwards
+					if (noteLocation.get(i-1).getNote().getType() == 'S') {
+						draw16thBeam(l.getStartX()-(noteSpacing/2)-1, note.getStaffY() + 107, (noteSpacing/2)+1);
+					} else {
+						draw8thBeam(l.getStartX()-(noteSpacing/2)-1, note.getStaffY() + 107, (noteSpacing/2)+1);
+					}
+					
+					//Beam forwards always
+					draw16thBeam(l.getStartX(), note.getStaffY() + 107, noteSpacing/2);
+				}
+				//Assumed to be 32nd
+				else {
+					//Check whether to beam backwards
+					if (noteLocation.get(i-1).getNote().getType() == 'T') {
+						draw32ndBeam(l.getStartX()-(noteSpacing/2)-1, note.getStaffY() + 107, (noteSpacing/2)+1);
+					} else if (noteLocation.get(i-1).getNote().getType() == 'S') {
+						draw16thBeam(l.getStartX()-(noteSpacing/2)-1, note.getStaffY() + 107, (noteSpacing/2)+1);
+					} else {
+						draw8thBeam(l.getStartX()-(noteSpacing/2)-1, note.getStaffY() + 107, (noteSpacing/2)+1);
+					}
+					
+					//Beam forwards always
+					draw32ndBeam(l.getStartX(), note.getStaffY() + 107, noteSpacing/2);
+				}
+			}
+			
+			
+			
+			/*
+			 * Given 8, 32
+			 * Draw 8th beam half way (noteSpacing/2)
+			 * Move to next note
+			 * Draw 8th beam half way both ways (forward _and_ back)
+			 * Draw 16th + 32nd beams forwards only
+			 * 
+			 * Draw things backwards instead of forwards for last note in beam only
+			 */
+			
 		}
+	}
+	
+
+	public void draw8thBeam(double startX, double startY, int length) {
+		Rectangle r = new Rectangle(startX, startY, length, 4);
+		pane.getChildren().add(r);
+	}
+	
+	public void draw16thBeam(double startX, double startY, int length) {
+		draw8thBeam(startX, startY, length);
+		Rectangle r = new Rectangle(startX, startY-7, length, 4);
+		pane.getChildren().add(r);
+	}
+	
+	public void draw32ndBeam(double startX, double startY, int length) {
+		draw16thBeam(startX, startY, length);
+		Rectangle r = new Rectangle(startX, startY-14, length, 4);
+		pane.getChildren().add(r);
 	}
 }

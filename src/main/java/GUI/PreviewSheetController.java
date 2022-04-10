@@ -896,7 +896,7 @@ public class PreviewSheetController {
 				this.measureLocation.add(new MeasureLocation(x, instrument));
 				// Draw the barline
 				barLines(x, 0 + yStaff, instrument);
-				new DrawBeams(pane, measure.getNotes(), this.noteLocation.get(i));
+				new DrawBeams(pane, measure.getNotes(), this.noteLocation.get(i), noteSpacing);
 			}
 		}
 	}
