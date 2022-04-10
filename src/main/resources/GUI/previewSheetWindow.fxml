@@ -124,6 +124,14 @@
 								</Button>
                      </children>
 						</HBox>
+                  <Button fx:id="stepForwardButton" layoutX="133.0" mnemonicParsing="false" onAction="#handleStepForward" prefHeight="40.0" prefWidth="50.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <graphic>
+                        <FontAwesomeIconView glyphName="FORWARD" size="25" />
+                     </graphic>
+                  </Button>
 					</children>
 				</AnchorPane>
 			</children>
