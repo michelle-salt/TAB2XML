@@ -88,7 +88,7 @@ public class PreviewSheetController {
 	 */
 	public PreviewSheetController() {
 		noteSpacing = 25;
-		staffSpacing = 100;
+		staffSpacing = 150;
 
 		player = new Player();
 		mplayer = player.getManagedPlayer();
@@ -896,6 +896,7 @@ public class PreviewSheetController {
 				this.measureLocation.add(new MeasureLocation(x, instrument));
 				// Draw the barline
 				barLines(x, 0 + yStaff, instrument);
+				new DrawBeams(pane, measure.getNotes(), this.noteLocation.get(i));
 			}
 		}
 	}
@@ -1095,7 +1096,6 @@ public class PreviewSheetController {
 					// Draw the barline
 					barLines(x, 0 + yStaff, instrument);
 				}
-//				new DrawBeams(pane, measure.getNotes(), this.noteLocation.get(i));
 			}
 			startMeasure = endMeasure + 1;
 			endMeasure = 0;
@@ -1113,6 +1113,9 @@ public class PreviewSheetController {
 		}
 		// Get the list of measure from parser
 		List<Measure> measureList = parser.getMeasures();
+		//Reset Location lists
+		this.measureLocation = new ArrayList<MeasureLocation>();
+		this.noteLocation = new ArrayList<ArrayList<NoteLocation>>();
 		if (justify)
 			justify(measureList);
 		else
@@ -1208,7 +1211,6 @@ public class PreviewSheetController {
 	 */
 	private void setInstrument() throws UnrecognizedInstrumentException {
 		instrument = parser.getInstrument();
-		System.out.println(instrument);
 		if (!instrument.equalsIgnoreCase("guitar") && !instrument.equalsIgnoreCase("bass") && !instrument.equalsIgnoreCase("drumset"))
 			throw new UnrecognizedInstrumentException("Error: Instrument not supported");
 	}
