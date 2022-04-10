@@ -1,5 +1,6 @@
 package GUI;
 
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
@@ -60,6 +61,7 @@ public class PreviewSheetController {
 	@FXML private Button playButton;
 	@FXML private Button pauseButton;
 	@FXML private Button stepForwardButton;
+	@FXML private Button stepBackwardButton;
 	@FXML private Button printButton;
 	@FXML private Button goToMeasureButton;
 	@FXML private TextField goToMeasureField;
@@ -167,6 +169,12 @@ public class PreviewSheetController {
 		//		rectangle.setStyle("-fx-stroke: blue;");
 		//		rectangle.setStrokeWidth(1.5);
 		//		pane.getChildren().add(rectangle);
+		
+		if (instrument.equalsIgnoreCase("guitar")) {
+			
+		} else if (instrument.equalsIgnoreCase("drumset")) {
+			
+		}
 
 		double startX = this.noteLocation.get(num-1).get(1).getX();
 		double startY = this.noteLocation.get(num-1).get(1).getStaffY();
@@ -200,6 +208,7 @@ public class PreviewSheetController {
 				setMeasureList();
 				setMusicSequence();
 				playMusic(musicSequence);
+				listenforEndOfMusic();
 			}
 			playButton.setVisible(false);
 		} else {
@@ -212,6 +221,17 @@ public class PreviewSheetController {
 		System.out.println(recording);
 		new Thread(() -> {
 			player.play(recording);
+		}).start();
+	}
+	
+	public void listenforEndOfMusic() {
+		new Thread(() -> {
+			Platform.runLater(() -> {
+				if (mplayer.isFinished()) {
+					mplayer.reset();
+					playButton.setVisible(true);
+				}
+			});
 		}).start();
 	}
 
@@ -1131,84 +1151,118 @@ public class PreviewSheetController {
 		mplayer.reset();
 		playButton.setVisible(true);
 	}
-
+	
 	@FXML void handleStepForward() {
-
-	}
-
-	@FXML
-	private void customizeHandle() throws IOException {
-		Parent root;
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/customizeGUI.fxml"));
-			root = loader.load();
-			CustomizeController controller = loader.getController();
-			controller.setPreviewSheetController(this);
-			convertWindow = this.openNewWindow(root, "Customize");
-		} catch (IOException e) {
-			Logger logger = Logger.getLogger(getClass().getName());
-			logger.log(Level.SEVERE, "Failed to create new Window.", e);
+		if (mplayer.getTickLength()-5000 > 5000) {
+			System.out.println("before : " + mplayer.getTickPosition());
+			mplayer.seek(mplayer.getTickPosition()+5000);
+			try {
+				mplayer.pause(); Thread.sleep(1000); 
+				mplayer.resume();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			System.out.println("after : " + mplayer.getTickPosition());
+		}
+		if (mplayer.getTickPosition() >= mplayer.getTickLength()) {
+			mplayer.onEndOfTrack();
+			mplayer.reset();
+			playButton.setVisible(true);
 		}
 	}
 
-	private Window openNewWindow(Parent root, String windowName) {
-		Stage stage = new Stage();
-		stage.setTitle(windowName);
-		stage.initModality(Modality.APPLICATION_MODAL);
-		stage.initOwner(MainApp.STAGE);
-		stage.setResizable(false);
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
-		return scene.getWindow();
+	@FXML void handleStepBackward() {
+		if (mplayer.getTickLength()-5000 > 0) {
+			System.out.println("before : " + mplayer.getTickPosition());
+			mplayer.seek(mplayer.getTickPosition()-5000);
+			try {
+				mplayer.pause(); Thread.sleep(1000); 
+				mplayer.resume();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			System.out.println("after : " + mplayer.getTickPosition());
+		}
+		if (mplayer.getTickPosition() >= mplayer.getTickLength()) {
+			mplayer.onEndOfTrack();
+			mplayer.reset();
+			playButton.setVisible(true);
+		}
 	}
 
-	/*
-	 * Getters and Setters for spacing.
-	 */
-	public int getNoteSpacing() {
-		return noteSpacing;
+@FXML
+private void customizeHandle() throws IOException {
+	Parent root;
+	try {
+		FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GUI/customizeGUI.fxml"));
+		root = loader.load();
+		CustomizeController controller = loader.getController();
+		controller.setPreviewSheetController(this);
+		convertWindow = this.openNewWindow(root, "Customize");
+	} catch (IOException e) {
+		Logger logger = Logger.getLogger(getClass().getName());
+		logger.log(Level.SEVERE, "Failed to create new Window.", e);
 	}
+}
 
-	public void setNoteSpacing(int noteSpacing) {
-		this.noteSpacing = noteSpacing;
-	}
+private Window openNewWindow(Parent root, String windowName) {
+	Stage stage = new Stage();
+	stage.setTitle(windowName);
+	stage.initModality(Modality.APPLICATION_MODAL);
+	stage.initOwner(MainApp.STAGE);
+	stage.setResizable(false);
+	Scene scene = new Scene(root);
+	stage.setScene(scene);
+	stage.show();
+	return scene.getWindow();
+}
 
-	public int getStaffSpacing() {
-		return staffSpacing;
-	}
+/*
+ * Getters and Setters for spacing.
+ */
+public int getNoteSpacing() {
+	return noteSpacing;
+}
 
-	public void setStaffSpacing(int staffSpacing) {
-		this.staffSpacing = staffSpacing;
-	}
+public void setNoteSpacing(int noteSpacing) {
+	this.noteSpacing = noteSpacing;
+}
 
-	public boolean getJustify() {
-		return justify;
-	}
+public int getStaffSpacing() {
+	return staffSpacing;
+}
 
-	public void setJustify(boolean justify) {
-		this.justify = justify;
-	}
+public void setStaffSpacing(int staffSpacing) {
+	this.staffSpacing = staffSpacing;
+}
 
-	/*
-	 * More Getters for easy access.
-	 */
-	private void setParser() {
-		this.parser = new Parser(mvc.getMusicXML());
-	}
-	
-	public ManagedPlayer getManagedPlayer() {
-		return mplayer;
-	}
+public boolean getJustify() {
+	return justify;
+}
 
-	/*
-	 * Add instruments here.
-	 * Refer to the `getTempoDetails()` method to add the necessary tempo details for the newly added instrument. 
-	 */
-	private void setInstrument() throws UnrecognizedInstrumentException {
-		instrument = parser.getInstrument();
-		if (!instrument.equalsIgnoreCase("guitar") || !instrument.equalsIgnoreCase("bass") || !instrument.equalsIgnoreCase("drumset"))
-			throw new UnrecognizedInstrumentException("Error: Instrument not supported");
-	}
+public void setJustify(boolean justify) {
+	this.justify = justify;
+}
+
+/*
+ * More Getters for easy access.
+ */
+private void setParser() {
+	this.parser = new Parser(mvc.getMusicXML());
+}
+
+public ManagedPlayer getManagedPlayer() {
+	return mplayer;
+}
+
+/*
+ * Add instruments here.
+ * Refer to the `getTempoDetails()` method to add the necessary tempo details for the newly added instrument. 
+ */
+private void setInstrument() throws UnrecognizedInstrumentException {
+	instrument = parser.getInstrument();
+	if (!instrument.equalsIgnoreCase("guitar") && !instrument.equalsIgnoreCase("bass") && !instrument.equalsIgnoreCase("drumset"))
+		throw new UnrecognizedInstrumentException("Error: Instrument not supported");
+}
 
 }
