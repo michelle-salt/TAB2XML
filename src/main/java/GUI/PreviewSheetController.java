@@ -1196,13 +1196,9 @@ public class PreviewSheetController {
 	private void setParser() {
 		this.parser = new Parser(mvc.getMusicXML());
 	}
-
-	private String getTempo() {
-		return tempo;
-	}
-
-	private ArrayList<String> getMeasureList() {
-		return measureList;
+	
+	public ManagedPlayer getManagedPlayer() {
+		return mplayer;
 	}
 
 	/*

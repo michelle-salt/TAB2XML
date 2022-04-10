@@ -359,6 +359,7 @@ public class MainViewController extends Application {
 
 				Optional<ButtonType> option = alert.showAndWait();
 				if (option.get() == ButtonType.YES) {
+					controller.getManagedPlayer().reset();
 					convertWindow.hide();
 				}
 				if (option.get() == ButtonType.NO) {
