@@ -298,7 +298,6 @@ public class PreviewSheetController {
 				}
 
 			} else if (getInstrument().equals("drumset")) {
-				System.out.println("deafult");
 				result += "T100 V9 ";
 			} else {
 				throw new UnrecognizedInstrumentException("Error: Instrument not supported");
@@ -402,16 +401,19 @@ public class PreviewSheetController {
 		int repeatedMeasures = 0;
 
 		ArrayList<String> measureList = new ArrayList<>(); // split measures into array
+		
+		ArrayList<Measure> parser = this.getParser().getMeasures();
 
 		int numOfMeasures = this.getParser().getNumMeasures();
-		ArrayList<Measure> measures = this.getParser().getMeasures();
+		ArrayList<Measure> measures = parser;
 
 		for (int i = 0; i < numOfMeasures; i++) {
 			String measure = "";
+			
+			ArrayList<Barline> barLine = parser.get(i).getBarlines();			
 
 			// First repeat in the list is always the left repeat
-			if (this.getParser().getMeasures().get(i).getBarlines().size() > 0
-					&& this.getParser().getMeasures().get(i).getBarlines().get(0).getLocation() == 'l') {
+			if (barLine.size() > 0 && barLine.get(0).getLocation() == 'l') {
 
 				repeatedMeasures++;
 
@@ -464,10 +466,7 @@ public class PreviewSheetController {
 			measureList.add(measure);
 
 			// end of repeat section
-			if ((this.getParser().getMeasures().get(i).getBarlines().size() == 1
-					&& this.getParser().getMeasures().get(i).getBarlines().get(0).getLocation() == 'r')
-					|| (this.getParser().getMeasures().get(i).getBarlines().size() > 1
-							&& this.getParser().getMeasures().get(i).getBarlines().get(1).getLocation() == 'r')) {
+			if ((barLine.size() == 1 && barLine.get(0).getLocation() == 'r') || (barLine.size() > 1 && barLine.get(1).getLocation() == 'r')) {
 
 				ArrayList<String> repeatedSection = new ArrayList<>();
 				int size = measureList.size();
@@ -482,15 +481,15 @@ public class PreviewSheetController {
 
 				int repeats = 0;
 
-				if (this.getParser().getMeasures().get(i).getBarlines().get(0).getLocation() == 'r') {
+				if (barLine.get(0).getLocation() == 'r') {
 
-					repeats = this.getParser().getMeasures().get(i).getBarlines().get(0).getRepeatTimes();
+					repeats = barLine.get(0).getRepeatTimes();
 
 				}
 
-				if (this.getParser().getMeasures().get(i).getBarlines().get(1).getLocation() == 'r') {
+				if (barLine.get(1).getLocation() == 'r') {
 
-					repeats = this.getParser().getMeasures().get(i).getBarlines().get(1).getRepeatTimes();
+					repeats = barLine.get(1).getRepeatTimes();
 
 				}
 
@@ -524,16 +523,18 @@ public class PreviewSheetController {
 		int repeatedMeasures = 0;
 
 		ArrayList<String> measureList = new ArrayList<>(); // split measures into array
+		
+		ArrayList<Measure> parser = this.getParser().getMeasures();
 
 		int numOfMeasures = this.getParser().getNumMeasures();
-		ArrayList<Measure> measures = this.getParser().getMeasures();
+		ArrayList<Measure> measures = parser;
 
 		for (int i = 0; i < numOfMeasures; i++) { // go through every measure
 			String measure = "";
 
+			ArrayList<Barline> barLine = parser.get(i).getBarlines();	
 			// First repeat in the list is always the left repeat
-			if (this.getParser().getMeasures().get(i).getBarlines().size() > 0
-					&& this.getParser().getMeasures().get(i).getBarlines().get(0).getLocation() == 'l') {
+			if (barLine.size() > 0 && barLine.get(0).getLocation() == 'l') {
 
 				repeatedMeasures++;
 
@@ -561,7 +562,7 @@ public class PreviewSheetController {
 					instrumentID = "[CLOSED_HI_HAT]";
 					break;
 				case "P1-I42":
-					instrumentID = "[LO_FLOOR_TOM";
+					instrumentID = "[LO_FLOOR_TOM]";
 					break;
 				case "P1-I48":
 					instrumentID = "[LO_MID_TOM]";
@@ -576,7 +577,7 @@ public class PreviewSheetController {
 					instrumentID = "[CRASH_CYMBAL_1]";
 					break;
 				case "P1-I44":
-					instrumentID = "[HIGH_FLOOR_TOM]]";
+					instrumentID = "[HIGH_FLOOR_TOM]";
 					break;
 				case "P1-I39":
 					instrumentID = "[ACOUSTIC_SNARE]";
@@ -624,10 +625,7 @@ public class PreviewSheetController {
 			measureList.add(measure);
 
 			// end of repeat section
-			if ((this.getParser().getMeasures().get(i).getBarlines().size() == 1
-					&& this.getParser().getMeasures().get(i).getBarlines().get(0).getLocation() == 'r')
-					|| (this.getParser().getMeasures().get(i).getBarlines().size() > 1
-							&& this.getParser().getMeasures().get(i).getBarlines().get(1).getLocation() == 'r')) {
+			if ((barLine.size() == 1 && barLine.get(0).getLocation() == 'r') || (barLine.size() > 1 && barLine.get(1).getLocation() == 'r')) {
 
 				ArrayList<String> repeatedSection = new ArrayList<>();
 				int size = measureList.size();
@@ -642,13 +640,13 @@ public class PreviewSheetController {
 
 				int repeats = 0;
 
-				if (this.getParser().getMeasures().get(i).getBarlines().get(0).getLocation() == 'r') {
+				if (barLine.get(0).getLocation() == 'r') {
 
-					repeats = this.getParser().getMeasures().get(i).getBarlines().get(0).getRepeatTimes();
+					repeats = barLine.get(0).getRepeatTimes();
 
-				}else if (this.getParser().getMeasures().get(i).getBarlines().get(1).getLocation() == 'r') {
+				}else if (barLine.get(1).getLocation() == 'r') {
 
-					repeats = this.getParser().getMeasures().get(i).getBarlines().get(1).getRepeatTimes();
+					repeats = barLine.get(1).getRepeatTimes();
 
 				}
 
