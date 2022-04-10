@@ -19,7 +19,6 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -75,12 +74,12 @@ public class PreviewSheetController {
 
 	private Player player;
 	private ManagedPlayer mplayer;
+	private String currentTempoDetails;
 
 	BooleanProperty printButtonPressed;
 
 	private ArrayList<ArrayList<NoteLocation>> noteLocation;
 	private ArrayList<MeasureLocation> measureLocation;
-	private String currentTempoDetails;
 
 
 	/* 
@@ -173,7 +172,7 @@ public class PreviewSheetController {
 		double startX = measureLocation.get(num).getStartX();
 		double startY = measureLocation.get(num).getStartY();
 		double endX = measureLocation.get(num).getEndX();
-		
+
 		Rectangle rectangle = new Rectangle(startX, startY-10, endX-startX, 80);
 		rectangle.setFill(Color.TRANSPARENT);
 		rectangle.setStyle("-fx-stroke: blue;");
@@ -192,6 +191,7 @@ public class PreviewSheetController {
 
 	@FXML
 	private void handleEditInput() {
+		reset();
 		mvc.convertWindow.hide();
 	}
 
@@ -203,7 +203,7 @@ public class PreviewSheetController {
 	 * The pause button only pauses the `player`. 
 	 */
 	@FXML
-	private void handlePlayMusic() throws IOException, InvalidInputException, UnrecognizedInstrumentException {
+	private void handlePlayMusic() throws InvalidInputException, UnrecognizedInstrumentException {
 		if (playButton.isVisible()) {
 			if (mplayer.isStarted()) {
 				mplayer.resume();
@@ -218,7 +218,7 @@ public class PreviewSheetController {
 					currentTempoDetails = this.getTempoDetails(); // record the current tempoDetails
 					String recording = this.getMeasureDetails(currentTempoDetails, this.getMeasureList());
 					play(recording);
-				} catch (Exception e) {
+				} catch (InvalidInputException e) {
 					e.printStackTrace();
 				}
 			}
@@ -277,55 +277,53 @@ public class PreviewSheetController {
 	 * - Throws exception to unrecognized instruments, and invalid `tempoField` values.
 	 * 
 	 */
-	private String getTempoDetails() throws InvalidInputException, UnrecognizedInstrumentException {
+	private String getTempoDetails() throws InvalidInputException {
 		String result = "";
 
-		if (tempoField.getText().isEmpty()) {
-			if (getInstrument().equals("guitar") || getInstrument().equals("bass")) {
-				
-				if(getInstrument().equals("bass")) {
-					
-					result += "T100 V0 I[ACOUSTIC_BASS] ";
-					
-				}else {
-					
+		if (tempoField.getText().isEmpty()) 
+		{
+			try {
+				switch (this.getInstrument())
+				{
+				case "guitar":
 					result += "T100 V0 I[GUITAR] ";
-					
+					break;
+				case "bass":
+					result += "T100 V0 I[ACOUSTIC_BASS] ";
+					break;
+				case "drumset":
+					result += "T100 V9 ";
+					break;
 				}
-				
-			}
-			else if (this.getInstrument().equals("drumset")) {
-				result += "T100 V9 ";
-			}
-			else {
-				throw new UnrecognizedInstrumentException("Error: Instrument not supported");
+			} catch (UnrecognizedInstrumentException e) {
+				e.printStackTrace();
 			}
 		}
 
-		/* 
-		 * user input
-		 */
-		else if (!tempoField.getText().isEmpty() && Integer.parseInt(tempoField.getText()) > 0) {
-			if (getInstrument().equals("guitar") || getInstrument().equals("bass")) {
-				result += "T" + tempoField.getText() + " V0 I[" + this.getParser().getInstrument() + "] ";
+		else if (!tempoField.getText().isEmpty()) 
+		{
+			if (tempoField.getText().contains("-")) {
+				throw new InvalidInputException("Invalid input: Enter a positive number in the tempo field.");
 			}
-		} else {
-			if (tempoField.getText().charAt(0) == '-') {
-				throw new InvalidInputException("Error: negative number not allowed!");
-			}
-			if (Integer.parseInt(tempoField.getText()) > 0) {
-				if (getInstrument().equals("guitar") || getInstrument().equals("bass")) {
-					result += "T" + tempoField.getText() + " V0 I[" + this.getParser().getInstrument() + "] ";
+			int tempo = Integer.parseInt(tempoField.getText());
+			if (tempo > 0) 
+			{
+				try {
+					switch (this.getInstrument())
+					{
+					case "guitar":
+						result += "T" + tempo + " V0 I[GUITAR] ";
+						break;
+					case "bass":
+						result += "T" + tempo + " V0 I[ACOUSTIC_BASS] ";
+						break;
+					case "drumset":
+						result += "T" + tempo + " V9 ";
+						break;
+					}
+				} catch (UnrecognizedInstrumentException e) {
+					e.printStackTrace();
 				}
-				else if (this.getInstrument().equals("drumset")) {
-					result += "T" + tempoField.getText() + " V9 ";
-				}
-				else {
-					throw new UnrecognizedInstrumentException("Error: Instrument not supported");
-				}
-			}
-			else { /* <= 0 */
-				throw new InvalidInputException("Error: Invalid BPM, Do not proceed to play!");
 			}
 		}
 		return result;
@@ -354,7 +352,7 @@ public class PreviewSheetController {
 	/*
 	 * Plays the String.
 	 */
-	private void play(String record) {
+	public void play(String record) {
 		System.out.println(record);
 		new Thread(() -> {
 			player.play(record);
@@ -476,12 +474,12 @@ public class PreviewSheetController {
 				switch(instrumentID) {
 				case "P1-I46":	instrumentID = "[LO_TOM]"; break;
 				case "P1-I43":	instrumentID = "[CLOSED_HI_HAT]"; break;
-				case "P1-I42":	instrumentID = "[LO_FLOOR_TOM"; break;
+				case "P1-I42":	instrumentID = "[LO_FLOOR_TOM]"; break;
 				case "P1-I48":	instrumentID = "[LO_MID_TOM]"; break;
 				case "P1-I45":	instrumentID = "[PEDAL_HI_HAT]"; break;
 				case "P1-I47":	instrumentID = "[OPEN_HI_HAT]"; break;
 				case "P1-I50":	instrumentID = "[CRASH_CYMBAL_1]"; break;
-				case "P1-I44":	instrumentID = "[HIGH_FLOOR_TOM]]"; break;
+				case "P1-I44":	instrumentID = "[HIGH_FLOOR_TOM]"; break;
 				case "P1-I39":	instrumentID = "[ACOUSTIC_SNARE]"; break; // or [ELECTRIC_SNARE]
 				case "P1-I54":	instrumentID = "[RIDE_BELL]"; break;
 				case "P1-I53":	instrumentID = "[CHINESE_CYMBAL]"; break;
@@ -1144,8 +1142,21 @@ public class PreviewSheetController {
 		return new Parser(mvc.getMusicXML());
 	}
 
-	private String getInstrument() {
-		return getParser().getInstrument();
+	/*
+	 * Add instruments here.
+	 * Refer to the `getTempoDetails()` method to add the necessary tempo details for the newly added instrument. 
+	 */
+	private String getInstrument() throws UnrecognizedInstrumentException {
+		String result = "";
+		switch (this.getParser().getInstrument())
+		{
+		case "guitar": 	result += "guitar";		break;
+		case "bass": 	result += "bass";		break;
+		case "drumset":	result += "drumset";	break;
+		default:
+			throw new UnrecognizedInstrumentException("Error: Instrument not supported");	
+		}
+		return result;
 	}
 
 }
