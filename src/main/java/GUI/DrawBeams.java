@@ -42,7 +42,7 @@ public class DrawBeams {
 		this.noteWithoutChords = new ArrayList<Note>();
 		this.notesWithoutChordsLocations = new ArrayList<NoteLocation>();
 		for (int i = 0; i < this.notes.size(); i++) {
-			if (!this.notes.get(i).isChord()) {
+			if (!this.notes.get(i).isChord() && !this.notes.get(i).isGraceNote()) {
 				this.noteWithoutChords.add(this.notes.get(i));
 				this.notesWithoutChordsLocations.add(this.noteLocations.get(i));
 			}
@@ -53,12 +53,6 @@ public class DrawBeams {
 		ArrayList<NoteLocation> noteLocationToBeam = new ArrayList<NoteLocation>();
 		int numerator = 0, maxDenom = 0;
 		for (int i = 0; i < this.noteWithoutChords.size(); i++) {
-			//If the value is even, check if they can be beamed already
-//			numerator += getNoteTypeValue(this.noteWithoutChords.get(i).getType());
-//			int currDenom = 1024/getNoteTypeValue(this.noteWithoutChords.get(i).getType());
-//			if (currDenom > maxDenom)
-//				maxDenom = currDenom;
-//			int reducedNum = numerator/(1024/maxDenom);
 			numerator += getNoteTypeValue(this.noteWithoutChords.get(i).getType());
 			notesToBeam.add(this.noteWithoutChords.get(i));
 			noteLocationToBeam.add(this.notesWithoutChordsLocations.get(i));
@@ -69,13 +63,31 @@ public class DrawBeams {
 				notesToBeam = new ArrayList<Note>();
 				noteLocationToBeam = new ArrayList<NoteLocation>();
 			} else if (numerator/1024.0 > 0.25) {
-//				flagSeparately(notesToBeam, noteLocationToBeam);
-				numerator = 0;
-				notesToBeam = new ArrayList<Note>();
-				noteLocationToBeam = new ArrayList<NoteLocation>();
+				//Check that each value (getting rid of first n values) doesn't work
+				boolean works = false;
+				for (int j = 0; j < notesToBeam.size(); j++) {
+					//Remove beginning note
+					numerator -= getNoteTypeValue(this.noteWithoutChords.get(j).getType());
+					notesToBeam.remove(this.noteWithoutChords.get(j));
+					noteLocationToBeam.remove(this.notesWithoutChordsLocations.get(j));
+					//Check if new set works
+					if (numerator/1024.0 == 0.25) {
+						beamTogether(notesToBeam, noteLocationToBeam);
+						numerator = 0;
+						notesToBeam = new ArrayList<Note>();
+						noteLocationToBeam = new ArrayList<NoteLocation>();
+						works = true;
+						break;
+					}
+				}
+				
+				if (!works) {
+	//				flagSeparately(notesToBeam, noteLocationToBeam);
+					numerator = 0;
+					notesToBeam = new ArrayList<Note>();
+					noteLocationToBeam = new ArrayList<NoteLocation>();
+				}
 			}
-			
-//			if (numerator/maxDenom)
 			
 			/*
 			 * For loop through every note
@@ -87,19 +99,6 @@ public class DrawBeams {
 			 * 
 			 * Also have a checker to make sure it doesn't draw beams if it's just one quarter/half/whole note
 			 */
-			
-			//Add up values
-			//Get max denominator
-			//Divide numerator by opposite of GCD
-	
-			
-			
-//			1/8 + 1/16 + 1/8 = 5/16 = 320/1024
-//			(1024/x)=16 --> 1024/16 = 64
-//			(320/x)=320/64 = 5
-			
-			
-			//If the value is odd, beam the first two only and this third one will become the first of the next group
 		}
 	}
 	
