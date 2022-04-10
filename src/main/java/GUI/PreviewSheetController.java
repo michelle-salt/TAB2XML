@@ -444,17 +444,15 @@ public class PreviewSheetController {
 					measure += step + altervalue + octave + "-o";
 				} else {
 					
-					measure += step + altervalue + octave;	
+					measure += step + altervalue + octave + type;	
 					
 				}
 
 				if (numOfNotes - j != 1) {
 					if (notes.get(j + 1).isChord()) { // if next note is also part of the chord
 						measure += "+";
-					} else {
-							
-							measure += " "; // add a space to split up notes										
-						
+					} else {	
+						measure += " "; // add a space to split up notes											
 					}
 				}
 			} // inner loop ends
@@ -615,8 +613,7 @@ public class PreviewSheetController {
 					if (measures.get(i).getNotes().get(j + 1).isChord()) { // if next note is also part of the chord
 						measure += "+";
 					} else {
-						
-						measure = " ";
+						measure += " ";
 					}
 				}
 			} // end of inner loop
