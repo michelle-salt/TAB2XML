@@ -1095,6 +1095,7 @@ public class PreviewSheetController {
 					// Draw the barline
 					barLines(x, 0 + yStaff, instrument);
 				}
+//				new DrawBeams(pane, measure.getNotes(), this.noteLocation.get(i));
 			}
 			startMeasure = endMeasure + 1;
 			endMeasure = 0;
@@ -1207,7 +1208,8 @@ public class PreviewSheetController {
 	 */
 	private void setInstrument() throws UnrecognizedInstrumentException {
 		instrument = parser.getInstrument();
-		if (!instrument.equalsIgnoreCase("guitar") || !instrument.equalsIgnoreCase("bass") || !instrument.equalsIgnoreCase("drumset"))
+		System.out.println(instrument);
+		if (!instrument.equalsIgnoreCase("guitar") && !instrument.equalsIgnoreCase("bass") && !instrument.equalsIgnoreCase("drumset"))
 			throw new UnrecognizedInstrumentException("Error: Instrument not supported");
 	}
 
