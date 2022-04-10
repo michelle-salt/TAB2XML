@@ -55,28 +55,22 @@ public class PreviewSheetController {
 	private MainViewController mvc;
 	public Window convertWindow;
 
-	@FXML
-	private Pane pane;
-	@FXML
-	private AnchorPane anchorPane;
-	@FXML
-	private Canvas canvas;
-	@FXML
-	public CodeArea mainText;
+	@FXML private Pane pane;
+	@FXML private AnchorPane anchorPane;
+	@FXML private Canvas canvas;
+	@FXML public CodeArea mainText;
 
-	@FXML
-	private Button playButton;
-	@FXML
-	private Button pauseButton;
-	@FXML
-	private Button printButton;
-	@FXML
-	private Button goToMeasureButton;
+	@FXML private Button playButton;
+	@FXML private Button pauseButton;
+	@FXML private Button printButton;
+	@FXML private Button goToMeasureButton;
+	@FXML private TextField goToMeasureField;
+	@FXML private TextField tempoField;
 
-	@FXML
-	private TextField goToMeasureField;
-	@FXML
-	private TextField tempoField;
+	private Parser parser;
+	private String tempo;
+	private ArrayList<String> measureList;
+	private String musicSequence;
 
 	private int noteSpacing;
 	private int staffSpacing;
@@ -84,7 +78,6 @@ public class PreviewSheetController {
 
 	private Player player;
 	private ManagedPlayer mplayer;
-	private String currentTempoDetails;
 
 	BooleanProperty printButtonPressed;
 
@@ -173,16 +166,24 @@ public class PreviewSheetController {
 	}
 
 	private void goToMeasure(int num) throws IOException {
-		this.update();
+		update();
 
-		double startX = measureLocation.get(num).getStartX();
-		double startY = measureLocation.get(num).getStartY();
-		double endX = measureLocation.get(num).getEndX();
+		//		double startX = measureLocation.get(num).getStartX();
+		//		double startY = measureLocation.get(num).getStartY();
+		//		double endX = measureLocation.get(num).getEndX();
 
-		Rectangle rectangle = new Rectangle(startX, startY-10, endX-startX, 80);
+		//		Rectangle rectangle = new Rectangle(startX, startY-10, endX-startX, 80);
+		//		rectangle.setFill(Color.TRANSPARENT);
+		//		rectangle.setStyle("-fx-stroke: blue;");
+		//		rectangle.setStrokeWidth(1.5);
+		//		pane.getChildren().add(rectangle);
+
+		double startX = this.noteLocation.get(num-1).get(0).getX();
+		double startY = this.noteLocation.get(num-1).get(0).getY();
+
+		Rectangle rectangle = new Rectangle(startX-10, startY-30, 30, 90);
 		rectangle.setFill(Color.TRANSPARENT);
-		rectangle.setStyle("-fx-stroke: blue;");
-		rectangle.setStrokeWidth(1.5);
+		rectangle.setStyle("-fx-fill: blue; -fx-opacity: 0.5;");
 		pane.getChildren().add(rectangle);
 
 		Object obj = pane.getParent().getParent().getParent().getParent();
@@ -190,14 +191,8 @@ public class PreviewSheetController {
 			ScrollPane scrollPane = (ScrollPane) obj;
 			double maxYOfRect = rectangle.getBoundsInLocal().getMaxY();
 			double maxYOfPane = pane.getBoundsInLocal().getMaxY();
-			scrollPane.setVvalue(maxYOfRect / maxYOfPane);
+			scrollPane.setVvalue(maxYOfRect/maxYOfPane);
 		}
-	}
-
-	@FXML
-	private void handleEditInput() {
-		reset();
-		mvc.convertWindow.hide();
 	}
 
 	/*
@@ -212,163 +207,95 @@ public class PreviewSheetController {
 			if (mplayer.isStarted()) {
 				mplayer.resume();
 			} else {
-				player = new Player();
-				mplayer = player.getManagedPlayer();
 				try {
-					/*
-					 * This retrieves the list of measures from the musicXML file, and information
-					 * about the inputed tempo and instrument, outputs it into a String format, then
-					 * plays the String.
-					 */
-					currentTempoDetails = this.getTempoDetails(); // record the current tempoDetails
-					String recording = this.getMeasureDetails(currentTempoDetails, this.getMeasureList());
-					play(recording);
+					player = new Player();
+					mplayer = player.getManagedPlayer();
+					setTempo();
+					setMeasureList();
+					setMusicSequence();
+					playMusic(getMusicSequence());
 				} catch (InvalidInputException e) {
 					e.printStackTrace();
 				}
+				playButton.setVisible(false);
 			}
-			showPauseButton();
 		} else {
+			playButton.setVisible(true);
 			mplayer.pause();
-			showPlayButton();
 		}
 	}
 
-	@FXML
-	private void handleStopMusic() {
-		reset();
-	}
-
-	private void showPlayButton() {
-		playButton.setVisible(true);
-		pauseButton.setVisible(false);
-	}
-
-	private void showPauseButton() {
-		playButton.setVisible(false);
-		pauseButton.setVisible(true);
+	public void playMusic(String recording) {
+		System.out.println(recording);
+		new Thread(() -> {
+			player.play(recording);
+		}).start();
 	}
 
 	/*
-	 * Reset the player if a new `tempo` value has been entered.
-	 * 
-	 * Comment the lines out to use disable this feature.
+	 * Each instrument MUST have a default `tempo` to fall back to whenever the `tempoField` is empty.
+	 * The custom `tempo` MUST accept positive inputs ONLY. Any other inputs should throw an InvalidInputException. 
 	 */
-	@FXML
-	private void atTempoKeyPressed() throws InvalidInputException, UnrecognizedInstrumentException {
-		if (!this.getTempoDetails().equals(currentTempoDetails)) {
-			reset();
-		}
-	}
-
-	/*
-	 * Retrieves the tempoDetails and measureList, creates a String, adds them into
-	 * the String, then returns the String.
-	 */
-	private String getMeasureDetails(String tmp, ArrayList<String> list) {
-		String result = tmp;
-		for (String s : list) {
-			result += s;
-		}
-		return result;
-	}
-
-	/*
-	 * Sets the default `tempoDetails` String when `tempoField` is Empty. Otherwise,
-	 * it sets a custom `tempoDetails`. Then, outputs the final result as a String.
-	 * 
-	 * - Throws exception to unrecognized instruments, and invalid `tempoField`
-	 * values.
-	 * 
-	 */
-	private String getTempoDetails() throws InvalidInputException {
-		String result = "";
-
+	private void setTempo() throws InvalidInputException {
+		tempo = "";
 		if (tempoField.getText().isEmpty()) 
 		{
 			try {
-				switch (this.getInstrument())
+				switch (this.getInstrument()) 
 				{
-				case "guitar":
-					result += "T100 V0 I[GUITAR] ";
-					break;
-				case "bass":
-					result += "T100 V0 I[ACOUSTIC_BASS] ";
-					break;
-				case "drumset":
-					result += "T100 V9 ";
-					break;
+				case "guitar":	tempo += "T100 V0 I[GUITAR] "; 			break;
+				case "bass": 	tempo += "T100 V0 I[ACOUSTIC_BASS] ";	break;
+				case "drumset": tempo += "T100 V9 ";					break;
 				}
 			} catch (UnrecognizedInstrumentException e) {
 				e.printStackTrace();
 			}
-		}
-
+		} 
 		else if (!tempoField.getText().isEmpty()) 
 		{
-			if (tempoField.getText().contains("-")) {
+			if (tempoField.getText().contains("-")) 
+			{
 				throw new InvalidInputException("Invalid input: Enter a positive number in the tempo field.");
 			}
-			int tempo = Integer.parseInt(tempoField.getText());
-			if (tempo > 0) 
+			int bpm = Integer.parseInt(tempoField.getText());
+			if (bpm > 0) 
 			{
 				try {
 					switch (this.getInstrument())
 					{
-					case "guitar":
-						result += "T" + tempo + " V0 I[GUITAR] ";
-						break;
-					case "bass":
-						result += "T" + tempo + " V0 I[ACOUSTIC_BASS] ";
-						break;
-					case "drumset":
-						result += "T" + tempo + " V9 ";
-						break;
+					case "guitar": 	tempo += "T" + bpm + " V0 I[GUITAR] "; 			break;
+					case "bass": 	tempo += "T" + bpm + " V0 I[ACOUSTIC_BASS] "; 	break;
+					case "drumset": tempo += "T" + bpm + " V9 "; 					break;
 					}
 				} catch (UnrecognizedInstrumentException e) {
 					e.printStackTrace();
 				}
 			}
 		}
-		return result;
 	}
 
 	/*
-	 * Set the measureList of the instrument you want to add here. (e.g. result =
-	 * Piano()).
+	 * Set the measureList of the instrument you want to add here. 
+	 * (e.g. result = piano()).
 	 */
-	private ArrayList<String> getMeasureList() {
-		ArrayList<String> result = new ArrayList<>();
+	private void setMeasureList() {
 		try {
-			String instrument = this.getParser().getInstrument();
-			if (instrument.equals("guitar") || instrument.equals("bass")) {
-				result = GuitarBass();
-			} else {
-				result = Drum();
+			switch (this.getInstrument())
+			{
+			case "guitar": 	measureList = GuitarBass();	break;
+			case "bass": 	measureList = GuitarBass(); break;
+			case "drumset": measureList = Drum(); 		break;
 			}
-		} catch (IOException e) {
+		} catch (UnrecognizedInstrumentException | IOException e) {
 			e.printStackTrace();
 		}
-		return result;
 	}
 
-	/*
-	 * Plays the String.
-	 */
-	public void play(String record) {
-		System.out.println(record);
-		new Thread(() -> {
-			player.play(record);
-		}).start();
-	}
-
-	/*
-	 * Resets the player.
-	 */
-	private void reset() {
-		mplayer.reset();
-		playButton.setVisible(true);
-		pauseButton.setVisible(false);
+	private void setMusicSequence() {
+		musicSequence = tempo;
+		for (String ml : measureList) {
+			musicSequence += ml;
+		}
 	}
 
 	/*
@@ -380,15 +307,14 @@ public class PreviewSheetController {
 
 		ArrayList<String> measureList = new ArrayList<>(); // split measures into array
 
-		ArrayList<Measure> parser = this.getParser().getMeasures();
+		ArrayList<Measure> measures = getParser().getMeasures();
 
-		int numOfMeasures = this.getParser().getNumMeasures();
-		ArrayList<Measure> measures = parser;
+		int numOfMeasures = getParser().getNumMeasures();
 
 		for (int i = 0; i < numOfMeasures; i++) {
 			String measure = "";
 
-			ArrayList<Barline> barLine = parser.get(i).getBarlines();			
+			ArrayList<Barline> barLine = measures.get(i).getBarlines();			
 
 			// First repeat in the list is always the left repeat
 			if (barLine.size() > 0 && barLine.get(0).getLocation() == 'l') {
@@ -502,15 +428,14 @@ public class PreviewSheetController {
 
 		ArrayList<String> measureList = new ArrayList<>(); // split measures into array
 
-		ArrayList<Measure> parser = this.getParser().getMeasures();
+		ArrayList<Measure> measures = getParser().getMeasures();
 
-		int numOfMeasures = this.getParser().getNumMeasures();
-		ArrayList<Measure> measures = parser;
+		int numOfMeasures = getParser().getNumMeasures();
 
 		for (int i = 0; i < numOfMeasures; i++) { // go through every measure
 			String measure = "";
 
-			ArrayList<Barline> barLine = parser.get(i).getBarlines();	
+			ArrayList<Barline> barLine = measures.get(i).getBarlines();	
 			// First repeat in the list is always the left repeat
 			if (barLine.size() > 0 && barLine.get(0).getLocation() == 'l') {
 
@@ -1204,14 +1129,27 @@ public class PreviewSheetController {
 	// Update the SheetMusic GUI
 	public void update() throws IOException {
 		this.pane.getChildren().clear();
-		Parser p = this.getParser();
+		setParser();
 		// Get the list of measure from parser
-		List<Measure> measureList = p.getMeasures();
+		List<Measure> measureList = parser.getMeasures();
 		if (justify)
-			justify(p, measureList);
+			justify(parser, measureList);
 		else
-			leftAlign(p, measureList);
+			leftAlign(parser, measureList);
 
+	}
+
+	@FXML
+	private void handleEditInput() {
+		mplayer.reset();
+		playButton.setVisible(true);
+		mvc.convertWindow.hide();
+	}
+
+	@FXML
+	private void handleStopMusic() {
+		mplayer.reset();
+		playButton.setVisible(true);
 	}
 
 	@FXML
@@ -1271,8 +1209,24 @@ public class PreviewSheetController {
 	/*
 	 * More Getters for easy access.
 	 */
+	private void setParser() {
+		this.parser = new Parser(mvc.getMusicXML());
+	}
+
 	private Parser getParser() {
-		return new Parser(mvc.getMusicXML());
+		return this.parser;
+	}
+
+	private String getTempo() {
+		return tempo;
+	}
+
+	private ArrayList<String> getMeasureList() {
+		return measureList;
+	}
+
+	private String getMusicSequence() {
+		return musicSequence;
 	}
 
 	/*
@@ -1281,7 +1235,7 @@ public class PreviewSheetController {
 	 */
 	private String getInstrument() throws UnrecognizedInstrumentException {
 		String result = "";
-		switch (this.getParser().getInstrument())
+		switch (getParser().getInstrument())
 		{
 		case "guitar": 	result += "guitar";		break;
 		case "bass": 	result += "bass";		break;

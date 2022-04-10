@@ -74,7 +74,7 @@
 										<Insets bottom="5.0" left="20.0" right="2.0" top="5.0" />
 									</padding>
 								</Label>
-								<TextField fx:id="tempoField" onKeyPressed="#atTempoKeyPressed" prefWidth="50.0" promptText="100" />
+								<TextField fx:id="tempoField" prefWidth="50.0" promptText="100" />
 								<Label text="BPM">
 									<padding>
 										<Insets bottom="5.0" left="0.0" right="1.5" top="5.0" />
