@@ -316,8 +316,19 @@ public class PreviewSheetController {
 				throw new InvalidInputException("Error: negative number not allowed!");
 			}
 			if (Integer.parseInt(tempoField.getText()) > 0) {
+				
 				if (getInstrument().equals("guitar") || getInstrument().equals("bass")) {
-					result += "T" + tempoField.getText() + " V0 I[" + this.getParser().getInstrument() + "] ";
+
+					if (getInstrument().equals("bass")) {
+
+						result += "T" + tempoField.getText() + " V0 I[ACOUSTIC_BASS] ";
+
+					} else {
+
+						result += "T" + tempoField.getText() + " V0 I[GUITAR] ";
+
+					}
+
 				} else if (this.getInstrument().equals("drumset")) {
 					result += "T" + tempoField.getText() + " V9 ";
 				} else {
