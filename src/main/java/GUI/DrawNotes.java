@@ -1,10 +1,14 @@
 package GUI;
 
+import java.io.FileInputStream;
+
 import javafx.fxml.FXML;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.QuadCurve;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -18,13 +22,15 @@ public class DrawNotes {
 	private Pane pane;
 	private double x, y;
 	private Note note;
-	
-	public DrawNotes(Pane pane, double x, double y, Note note, String instrument) {
+	private int noteSpacing;
+
+	public DrawNotes(Pane pane, double x, double y, Note note, String instrument, int noteSpacing) {
 		this.pane = pane;
 		this.x = x;
 		this.y = y;
 		this.note = note;
-		
+		this.noteSpacing = noteSpacing;
+
 		if (instrument.equals("drumset")) {
 			this.drawDrumNote();
 		}
@@ -36,19 +42,46 @@ public class DrawNotes {
 
 	//Draws the number of each note, if the instrument is a guitar or bass
 	public void drawGuitarNote() {
-		String note = Integer.toString(this.note.getFret());
-		Text text = new Text(x, y, note);
-		int width = 12;
-		if (this.note.getFret() > 9) {
-			width += 8;
+		String note = "";
+
+		if(!this.note.isGraceNote()) {
+			note = Integer.toString(this.note.getFret());
+			Text text = new Text(x, y, note);
+			text.setFont(Font.font("arial", FontWeight.BLACK, 14));
+			int width = 12;
+
+			if (this.note.getFret() > 9) {
+				width += 8;
+			}
+			//Draws white rectangle behind notes to prevent line from going through
+			Rectangle r = new Rectangle(x-2, y-10, width, 15);
+			r.setFill(Color.WHITE);
+			pane.getChildren().add(r);
+			pane.getChildren().add(text);
 		}
-		//Draws white rectangle behind notes to prevent line from going through
-		Rectangle r = new Rectangle(x-2, y-10, width, 15);
-		r.setFill(Color.WHITE);
-		pane.getChildren().add(r);
-		pane.getChildren().add(text);
+		else {
+			note = Integer.toString(this.note.getFret());; 
+			  
+			Text text = new Text(x + 6, y, note);
+			text.setFont(Font.font("arial", FontWeight.BLACK, 9));
+			int width = 9;
+			//note  ------ note
+			QuadCurve quadcurve = new QuadCurve(x+10, y-9.5, ((noteSpacing)/2) + x+6, y-20, x + noteSpacing, y-9.5);
+			QuadCurve quadcurve2 = new QuadCurve(x+12, y-9.5, ((noteSpacing)/2) + x+6, y-16, x + noteSpacing - 2, y-9.5);
+			 quadcurve2.setFill(Color.WHITE);
+			if (this.note.getFret() > 9) {
+				width += 4;
+			}
+			//Draws white rectangle behind notes to prevent line from going through
+			Rectangle r = new Rectangle(x+5, y-10, width, 10);
+			r.setFill(Color.WHITE);
+			pane.getChildren().add(r);
+			pane.getChildren().add(text);
+			pane.getChildren().add(quadcurve);
+			pane.getChildren().add(quadcurve2);
+		}
 	}
-	
+
 	//Draws the notehead of each note, if the instrument is a drum
 	public void drawDrumNote() {
 		//Print the "x" if the notehead is an "x"
@@ -79,19 +112,19 @@ public class DrawNotes {
 			drawStem(x+9, y-5, y-35);
 		}
 	}	
-	
+
 	public void drawStem(double x, double yStart, double yEnd) {
 		Line stem = new Line(x, yStart, x, yEnd);
 		pane.getChildren().add(stem);
 	}
-	
+
 	public void printWholeNote() {
 		printQuarterNote();
 		Ellipse centre = new Ellipse(x+4, y-5, 2, 3);
 		centre.setFill(Color.WHITE);
 		pane.getChildren().add(centre);
 	}
-	
+
 	public void printHalfNote() {
 		printQuarterNote();
 		Ellipse centre = new Ellipse(x+4, y-5, 4.75, 1.6);
@@ -99,13 +132,13 @@ public class DrawNotes {
 		centre.setRotate(330);
 		pane.getChildren().add(centre);
 	}
-	
+
 	public void printQuarterNote() {
 		Ellipse ellipse = new Ellipse(x+4, y-5, 6, 4.25);
 		ellipse.setRotate(320);
 		pane.getChildren().add(ellipse);
 	}
-	
+
 	/* 
 	 * Draws the rest of the notes
 	 * The only difference between these notes is the number of flags, 
@@ -113,25 +146,25 @@ public class DrawNotes {
 	 */
 	public void printEighthPlusNote(int numFlags) {
 		printQuarterNote();
-//		drawFlag(numFlags);
+		//		drawFlag(numFlags);
 	}
-	
+
 	//For test case purposes
 	public double getX() {
 		return this.x;
 	}
-	
+
 	public double getY() {
 		return this.y;
 	}
-	
+
 	public Pane getPane() {
 		return this.pane;
 	}
-	
+
 	public Note getNote() {
 		return this.note;
 	}
 }
-	
+
 

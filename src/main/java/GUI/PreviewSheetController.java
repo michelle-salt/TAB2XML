@@ -799,7 +799,7 @@ public class PreviewSheetController {
 				//Draw each note
 				if (x < this.pane.getMaxWidth()) {
 					this.noteLocation.get(i).add(new NoteLocation(x, y + yStaff, note, p.getInstrument()));
-					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
+					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument(), this.noteSpacing);
 					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
 					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 				}
@@ -809,7 +809,7 @@ public class PreviewSheetController {
 					yStaff += staffSpacing;
 					placeSheetLines(yStaff, p.getInstrument());
 					this.noteLocation.get(i).add(new NoteLocation(x, y + yStaff, note, p.getInstrument()));
-					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
+					new DrawNotes(pane, x, y + yStaff, note, p.getInstrument(), this.noteSpacing);
 					drawMeasureNumber(yStaff, p.getMeasures().get(i).getMeasureNumber());
 					clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
 					timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
@@ -991,7 +991,7 @@ public class PreviewSheetController {
 					//Draw each note
 					if (x < this.pane.getMaxWidth()) {
 						this.noteLocation.get(i).add(new NoteLocation(x, y + yStaff, note, p.getInstrument()));
-						new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
+						new DrawNotes(pane, x, y + yStaff, note, p.getInstrument(), this.noteSpacing);
 						clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
 						timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
 					}
@@ -1001,7 +1001,7 @@ public class PreviewSheetController {
 						yStaff += staffSpacing;
 						placeSheetLines(yStaff, p.getInstrument());
 						this.noteLocation.get(i).add(new NoteLocation(x, y + yStaff, note, p.getInstrument()));
-						new DrawNotes(pane, x, y + yStaff, note, p.getInstrument());
+						new DrawNotes(pane, x, y + yStaff, note, p.getInstrument(), this.noteSpacing);
 						drawMeasureNumber(yStaff, p.getMeasures().get(i).getMeasureNumber());
 						clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
 						timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());

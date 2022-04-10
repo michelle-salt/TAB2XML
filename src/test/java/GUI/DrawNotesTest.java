@@ -35,8 +35,8 @@ public class DrawNotesTest {
 		Note drumNote = new Note(pitch, 2, "A2", 4, "eighth", "down", "B2", 5, 5, new Tremolo(null, 0), new TimeModification(-1, -1), new Slide(null, -1), new HammerOn(-1, null, null)); // Initialized drum note with random values for parameters
 		
 		Pane pane = new Pane(); // Initialized dummy pane
-		DrawNotes drawGuitarNote = new DrawNotes(pane, 40.0, 50.0, guitarNote, "guitar"); // Initialized dummy guitar note
-		DrawNotes drawDrumSetNote = new DrawNotes(pane, 60.0, 70.0, drumNote, "drumset"); // Initialized dummy drum note
+		DrawNotes drawGuitarNote = new DrawNotes(pane, 40.0, 50.0, guitarNote, "guitar", 15); // Initialized dummy guitar note
+		DrawNotes drawDrumSetNote = new DrawNotes(pane, 60.0, 70.0, drumNote, "drumset", 15); // Initialized dummy drum note
 		
 		//Testing if attributes for the draw notes methods are correct
 		assertEquals(40.0, drawGuitarNote.getX());
