@@ -443,18 +443,19 @@ public class PreviewSheetController {
 					measure += step + altervalue + octave + "o- ";
 					measure += step + altervalue + octave + "-o";
 				} else {
-					measure += step + altervalue + octave + type;
+					
+					measure += step + altervalue + octave;	
+					
 				}
 
-				//
 				if (numOfNotes - j != 1) {
 					if (notes.get(j + 1).isChord()) { // if next note is also part of the chord
 						measure += "+";
 					} else {
-						measure += " "; // add a space to split up notes
+							
+							measure += " "; // add a space to split up notes										
+						
 					}
-				} else { // add the tie thing around here i think
-
 				}
 			} // inner loop ends
 
@@ -601,19 +602,22 @@ public class PreviewSheetController {
 					measure += instrumentID + "o-";
 					measure += " ";
 					measure += instrumentID + "-o";
+				} else if (instrumentID == "none"){ // rest note
+					
+					measure += "R" + type;
+										
 				} else {
+					
 					measure += instrumentID + type;
 				}
 
-				//
 				if (measures.get(i).getNumNotes() - j != 1) {
 					if (measures.get(i).getNotes().get(j + 1).isChord()) { // if next note is also part of the chord
 						measure += "+";
 					} else {
-						measure += " "; // add a space to split up notes
+						
+						measure = " ";
 					}
-				} else { // add the tie thing around here i think
-
 				}
 			} // end of inner loop
 
