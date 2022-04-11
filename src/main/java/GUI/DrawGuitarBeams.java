@@ -8,7 +8,7 @@ import javafx.scene.shape.Rectangle;
 import musicxml.parsing.Note;
 
 //Draws all the beams in a measure at once
-public class DrawBeams {
+public class DrawGuitarBeams {
 	/*
 	 * Logic
 	 * Beam if there are enough of the same note
@@ -30,7 +30,7 @@ public class DrawBeams {
 	private int noteSpacing;
 	private Pane pane;
 	
-	public DrawBeams(Pane pane, ArrayList<Note> notes, ArrayList<NoteLocation> noteLocations, int noteSpacing) {
+	public DrawGuitarBeams(Pane pane, ArrayList<Note> notes, ArrayList<NoteLocation> noteLocations, int noteSpacing) {
 		this.pane = pane;
 		this.notes = notes;
 		this.noteLocations = noteLocations;
