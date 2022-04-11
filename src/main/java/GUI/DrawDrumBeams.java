@@ -30,7 +30,6 @@ package GUI;
  	private double noteSpacing;
  	private Pane pane;
 
- 	public DrawDrumBeams(Pane pane, ArrayList<Note> notes, ArrayList<NoteLocation> noteLocations, int noteSpacing) {
  	public DrawDrumBeams(Pane pane, ArrayList<Note> notes, ArrayList<NoteLocation> noteLocations, double noteSpacing) {
  		this.pane = pane;
  		this.notes = notes;
