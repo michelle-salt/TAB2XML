@@ -831,6 +831,7 @@ public class PreviewSheetController {
 						case 'G':	y = 9;	break;
 						case 'F':	y = 10;	break;
 						case 'E':	y = 11;	break;
+						case 'D':	y = 12;	break;
 						}
 					}
 					// Value retrieved through guess and check :))))
@@ -850,7 +851,8 @@ public class PreviewSheetController {
 				// Draw each note
 				if (x < this.pane.getMaxWidth()) {
 					this.noteLocation.get(i).add(new NoteLocation(x, y + yStaff, yStaff, note, instrument));
-					new DrawNotes(pane, x, y + yStaff, note, instrument, yStaff, noteSpacing);
+					if (!note.isRest())
+						new DrawNotes(pane, x, y + yStaff, note, instrument, yStaff, noteSpacing);
 					clef(parser.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18 + yStaff, instrument);
 					timeSignature(timeBeats, timeBeatType, 35, 28 + yStaff, instrument);
 				}
@@ -861,7 +863,8 @@ public class PreviewSheetController {
 					yStaff += staffSpacing;
 					placeSheetLines(yStaff, instrument);
 					this.noteLocation.get(i).add(new NoteLocation(x, y + yStaff, yStaff, note, instrument));
-					new DrawNotes(pane, x, y + yStaff, note, instrument, yStaff, noteSpacing);
+					if (!note.isRest())
+						new DrawNotes(pane, x, y + yStaff, note, instrument, yStaff, noteSpacing);
 					drawMeasureNumber(yStaff, parser.getMeasures().get(i).getMeasureNumber());
 					clef(parser.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18 + yStaff, instrument);
 					timeSignature(timeBeats, timeBeatType, 35, 28 + yStaff,	instrument);
