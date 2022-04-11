@@ -90,13 +90,6 @@ public class DrawNotes {
 			Text text = new Text(x, y, "x");
 			text.setFont(Font.font("veranda", FontWeight.BLACK, 18));
 			pane.getChildren().add(text);
-			if (!this.note.isGraceNote())
- 				drawStem(x+9, y-8);
-		} 
-		else if(this.note.getNotehead() != null && this.note.getNotehead().equalsIgnoreCase("x")) {
-			Text text = new Text(x, y, "x");
-			text.setFont(Font.font("veranda", FontWeight.BLACK, 18));
-			pane.getChildren().add(text);
 			drawStem(x+9, y-8);
 		}
 		//Print the type of note otherwise
@@ -117,12 +110,12 @@ public class DrawNotes {
 			}
 			//Draw the stem for every note
 			//Will be changed later
-			if (!this.note.isGraceNote())
+//			if (!this.note.isGraceNote())
  				drawStem(x+9, y-5);
 		}
 		if (this.note.isGraceNote() == true) {
-			QuadCurve quadcurve = new QuadCurve(x+6, y-2.5, ((noteSpacing)/2) + x+6, y+12, x + noteSpacing, y-2.5);
-			QuadCurve quadcurve2 = new QuadCurve(x+8, y-2.5, ((noteSpacing)/2) + x+6, y+8, x + noteSpacing - 2, y-2.5);
+			QuadCurve quadcurve = new QuadCurve(x+6, y-9, ((noteSpacing)/2) + x+6, y+10, x + noteSpacing, y-9);
+			QuadCurve quadcurve2 = new QuadCurve(x+8, y-9, ((noteSpacing)/2) + x+6, y+4, x + noteSpacing - 2, y-9);
 			quadcurve2.setFill(Color.WHITE);
 			pane.getChildren().add(quadcurve);
 			pane.getChildren().add(quadcurve2);
