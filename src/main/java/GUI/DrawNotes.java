@@ -90,7 +90,8 @@ public class DrawNotes {
 			Text text = new Text(x, y, "x");
 			text.setFont(Font.font("veranda", FontWeight.BLACK, 18));
 			pane.getChildren().add(text);
-			drawStem(x+9, y-8);
+			if (!this.note.isGraceNote())
+ 				drawStem(x+9, y-8);
 		} 
 		//Print the type of note otherwise
 		else {
@@ -110,7 +111,8 @@ public class DrawNotes {
 			}
 			//Draw the stem for every note
 			//Will be changed later
-			drawStem(x+9, y-5);
+			if (!this.note.isGraceNote())
+ 				drawStem(x+9, y-5);
 		}
 	}	
 	public void drawStem(double x, double yStart) {
