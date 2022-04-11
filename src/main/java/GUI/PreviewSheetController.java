@@ -1118,7 +1118,6 @@ public class PreviewSheetController {
 	}
 
 	@FXML void handleStepForward() {
-//		long s = player.getSequence(musicSequence).getMicrosecondLength(); System.out.println(s);
 		if (mplayer.getTickLength()-5000 > 5000) {
 						System.out.println("before : " + mplayer.getTickPosition());
 			mplayer.seek(mplayer.getTickPosition()+5000);
@@ -1128,7 +1127,6 @@ public class PreviewSheetController {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			//			System.out.println("after : " + mplayer.getTickPosition());
 		}
 		if (mplayer.getTickPosition() >= mplayer.getTickLength()) {
 			mplayer.onEndOfTrack();
@@ -1138,9 +1136,7 @@ public class PreviewSheetController {
 	}
 
 	@FXML void handleStepBackward() {
-		long s = player.getSequence(musicSequence).getMicrosecondLength(); System.out.println(s);
 		if (mplayer.getTickLength()-5000 > 0) {
-			//			System.out.println("before : " + mplayer.getTickPosition());
 			mplayer.seek(mplayer.getTickPosition()-5000);
 			try {
 				mplayer.pause(); Thread.sleep(1000); 
@@ -1148,7 +1144,6 @@ public class PreviewSheetController {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			//			System.out.println("after : " + mplayer.getTickPosition());
 		}
 		if (mplayer.getTickPosition() >= mplayer.getTickLength()) {
 			mplayer.onEndOfTrack();
