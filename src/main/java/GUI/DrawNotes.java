@@ -148,7 +148,7 @@ public class DrawNotes {
             for (int j = 0; j < numFlags; j++) {
                 Line flag = new Line(x+7, y-14, x, y-27);
                 pane.getChildren().add(flag);
-                y += 5;
+                y += 10;
             }
 		}
 		Line stem = new Line(x, yStart, x, top);
