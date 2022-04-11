@@ -6,6 +6,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import musicxml.parsing.Note;
 
 //Draws all the beams in a measure at once
@@ -53,6 +56,7 @@ public class DrawGuitarBeams {
 		ArrayList<Note> notesToBeam = new ArrayList<Note>();
 		ArrayList<NoteLocation> noteLocationToBeam = new ArrayList<NoteLocation>();
 		int numerator = 0;
+		int numActual = 0;
 		for (int i = 0; i < this.noteWithoutChords.size(); i++) {
 			if (this.noteWithoutChords.get(i).getType() == 'H') {
 				//Flag and reset ArrayLists
@@ -78,7 +82,21 @@ public class DrawGuitarBeams {
 					dotX += 6;
 				}				
 			} else {
-				numerator += getNoteTypeValue(this.noteWithoutChords.get(i).getType());
+				//If it's an actual actual note
+				if (this.noteWithoutChords.get(i).getTimeModification().getActualNotes() != -1) {
+					if (numActual == 2) {
+						numActual = 0;
+					} else {
+						numActual ++;
+						if (numActual == 1) {
+							this.notesWithoutChordsLocations.get(i).setActualNote(this.noteWithoutChords.get(i).getTimeModification().getActualNotes());
+						}
+					}
+				}
+				
+				if (this.noteWithoutChords.get(i).getTimeModification().getActualNotes() == -1 || numActual != 1) {
+						numerator += getNoteTypeValue(this.noteWithoutChords.get(i).getType());
+				}
 				notesToBeam.add(this.noteWithoutChords.get(i));
 				noteLocationToBeam.add(this.notesWithoutChordsLocations.get(i));
 				
@@ -205,6 +223,14 @@ public class DrawGuitarBeams {
 				dotX += 6;
 			}
 			
+			//Draw actual notes
+			if (noteLocation.get(i).getActualNote() != -1) {
+				String actual = Integer.toString(noteLocation.get(i).getActualNote());
+				Text t = new Text(note.getX() + 21, l.getEndY() + 15, actual);
+				t.setFont(Font.font("arial", FontWeight.BLACK, 13));
+				pane.getChildren().add(t);
+			}
+			
 			//Draw beams to connect lines
 			
 			//32nd is the highest example note we have
@@ -290,6 +316,7 @@ public class DrawGuitarBeams {
 				}
 			}
 			
+					
 			
 			
 			/*

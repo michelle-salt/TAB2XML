@@ -6,6 +6,7 @@ public class NoteLocation {
 	private double x, y, staffY;
 	private Note note;
 	private String instrument;
+	private int actualNote = -1;
 	
 	public NoteLocation(double x, double y, double staffY, Note note, String instrument) {
 		this.x = x;
@@ -34,5 +35,13 @@ public class NoteLocation {
 
 	public String getInstrument() {
 		return instrument;
+	}
+	
+	public int getActualNote() {
+		return actualNote;
+	}
+	
+	public void setActualNote(int actual) {
+		actualNote = actual;
 	}
 }
