@@ -62,7 +62,7 @@ public class Attributes {
 				} 
 				catch (NullPointerException e) {
 					//Default is 4, 4
-					time = new Time(4, 4);
+					time = new Time(-1, -1);
 				}
 				
 				break; // Since there's only one attribute tag

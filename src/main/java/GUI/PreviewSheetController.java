@@ -733,6 +733,13 @@ public class PreviewSheetController {
 	private void leftAlign(List<Measure> measureList) {
 		// Initialize x and y coordinates of where to draw notes
 		double x = 100.0, xVerify = 100, y = 20, yStaff = 20;
+		//Get the time and default to 4/4 if it doesn't exist
+		int timeBeats = measureList.get(0).getAttributes().getTime().getBeats();
+		int timeBeatType = measureList.get(0).getAttributes().getTime().getBeatType();
+		if (timeBeats == -1)
+			timeBeats = 4;
+		if (timeBeatType == -1)
+			timeBeatType = 4;
 		// Iterate through each measure
 		for (int i = 0; i < measureList.size(); i++, x += noteSpacing) {
 			this.noteLocation.add(new ArrayList<NoteLocation>());
@@ -752,17 +759,19 @@ public class PreviewSheetController {
 				}
 			}
 			boolean newStaff = false;
-			// If the notes don't fit on the current staff, add a new staff
-			if (xVerify > this.pane.getMaxWidth()) {
+			// If the notes don't fit on the current staff or the time signature of this measure is different than the previous, add a new staff
+			if (xVerify > this.pane.getMaxWidth() || (i != 0 && ((measure.getAttributes().getTime().getBeats() != timeBeats && measure.getAttributes().getTime().getBeats() != -1) || (measure.getAttributes().getTime().getBeatType() != timeBeatType && measure.getAttributes().getTime().getBeatType() != -1)))) {
 				newStaff = true;
 				x = 100.0;
 				yStaff += staffSpacing;
 				drawMeasureNumber(yStaff, parser.getMeasures().get(i).getMeasureNumber());
 				placeSheetLines(yStaff, instrument);
 				clef(parser.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18 + yStaff, instrument);
-				timeSignature(parser.getMeasures().get(0).getAttributes().getTime().getBeats(),
-						parser.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28 + yStaff,
-						instrument);
+				if ((measure.getAttributes().getTime().getBeats() != timeBeats && measure.getAttributes().getTime().getBeats() != -1) || (measure.getAttributes().getTime().getBeatType() != timeBeatType && measure.getAttributes().getTime().getBeatType() != -1)) {
+					timeBeats = measure.getAttributes().getTime().getBeats();
+					timeBeatType = measure.getAttributes().getTime().getBeatType();
+				}
+				timeSignature(timeBeats, timeBeatType, 35, 28 + yStaff, instrument);
 			}
 
 			// First repeat in the list is always the left repeat
@@ -834,9 +843,7 @@ public class PreviewSheetController {
 					this.noteLocation.get(i).add(new NoteLocation(x, y + yStaff, yStaff, note, instrument));
 					new DrawNotes(pane, x, y + yStaff, note, instrument, yStaff, noteSpacing);
 					clef(parser.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18 + yStaff, instrument);
-					timeSignature(parser.getMeasures().get(0).getAttributes().getTime().getBeats(),
-							parser.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28 + yStaff,
-							instrument);
+					timeSignature(timeBeats, timeBeatType, 35, 28 + yStaff, instrument);
 				}
 				// If the note is the first of a new staff, draw the new staff lines and THEN
 				// the notes
@@ -848,9 +855,7 @@ public class PreviewSheetController {
 					new DrawNotes(pane, x, y + yStaff, note, instrument, yStaff, noteSpacing);
 					drawMeasureNumber(yStaff, parser.getMeasures().get(i).getMeasureNumber());
 					clef(parser.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18 + yStaff, instrument);
-					timeSignature(parser.getMeasures().get(0).getAttributes().getTime().getBeats(),
-							parser.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28 + yStaff,
-							instrument);
+					timeSignature(timeBeats, timeBeatType, 35, 28 + yStaff,	instrument);
 				}
 			}
 			// Dynamically draw a bar line (after each measure) or a repeat line
@@ -886,19 +891,6 @@ public class PreviewSheetController {
 					this.measureLocation.get(i).setStartX(90);
 				}
 				// Add the current barline location as the end of the measure
-				// System.out.println("i: " + i);
-				// for (int k = 0; k < this.measureLocation.size(); k++) {
-				// System.out.println("k: " + k);
-				// System.out.println("start x: " + this.measureLocation.get(k).getStartX());
-				// System.out.println("instrument: " +
-				// this.measureLocation.get(k).getInstrument());
-				// System.out.println("start y: " + this.measureLocation.get(k).getStartY());
-				// System.out.println("end x: " + this.measureLocation.get(k).getEndX());
-				// System.out.println("start repeat: " +
-				// this.measureLocation.get(k).isStartRepeat());
-				// System.out.println("end repeat: " +
-				// this.measureLocation.get(k).isEndRepeat());
-				// }
 				this.measureLocation.get(i).setEndX(x);
 				this.measureLocation.get(i).setStartY(yStaff);
 				// Add a new instance of MeasureLocation for the next measure
@@ -913,6 +905,19 @@ public class PreviewSheetController {
 	}
 
 	private void justify(List<Measure> measureList) {
+		//Get a list of the number of notes without chords in each measure
+		ArrayList<Integer> notesWithoutChords = new ArrayList<Integer>();
+		for (int i = 0; i < measureList.size(); i++) {
+			notesWithoutChords.add(0);
+			for (int j = 0; j < measureList.get(i).getNumNotes(); j++) {
+				if (!measureList.get(i).getNotes().get(j).isChord()) {
+					notesWithoutChords.set(i, notesWithoutChords.get(i)+1);
+				}
+			}
+		}	
+	}
+	
+	private void justifyOrig(List<Measure> measureList) {
 		// Initialize x and y coordinates of where to draw notes
 		double x = 100, xVerify = 100, y = 0, yStaff = 0;
 		// These will indicate the first and last measure on each staff, inclusive
@@ -953,8 +958,7 @@ public class PreviewSheetController {
 
 			// Get the list of notes for each measure
 			ArrayList<Note> noteListTemp = measureList.get(endMeasure - 1).getNotes();
-			// Figure out if the measure should be drawn on a new line
-			// It should by default be drawn on the first line if this is the first measure
+			// Remove the notes of the last measure (which 
 			xVerify = x;
 			for (int j = 0; j < noteListTemp.size(); j++, xVerify += noteSpacing) {
 				// Get the current note
@@ -1112,191 +1116,7 @@ public class PreviewSheetController {
 			endMeasure = 0;
 		}
 	}
-
-	private void justify(Parser p, List<Measure> measureList) {
-		//Initialize x and y coordinates of where to draw notes
-		double x = 100, xVerify = 100, y = 0, yStaff = 0;	
-		//These will indicate the first and last measure on each staff, inclusive
-		int startMeasure = 1, endMeasure = 0, numNotesPerStaff = 0, justifyNoteSpacing;
-		while (startMeasure <= p.getNumMeasures()) {
-			//Calculate how many notes will be on each staff (by looping through as many measures as needed)
-			for (int i = startMeasure - 1; i< measureList.size(); i++, x += noteSpacing) {
-				//Get the current measure
-				Measure measure = measureList.get(i);
-				//Get the list of notes for each measure
-				ArrayList<Note> noteList = measure.getNotes();
-				//Figure out if the measure should be drawn on a new line
-				//It should by default be drawn on the first line if this is the first measure
-				xVerify = x;
-				for (int j = 0; j < noteList.size() && i != 0; j++, xVerify += noteSpacing) {
-					//Get the current note
-					Note note = noteList.get(j);
-					numNotesPerStaff++;
-					//If it's a chord, draw the notes on the same line (x-coordinate)
-					if (note.isChord()) {
-						xVerify -= noteSpacing;
-						numNotesPerStaff--;
-					}
-				}
-				//If the notes don't fit on the current staff mark the previous measure as the last one on the previous staff
-				if (xVerify > this.pane.getMaxWidth()) {
-					endMeasure = i; //Since i starts at 0, not 1
-					break;
-				}
-			}
-			//If the loop hasn't been broken out of, the last measure that exists is the last measure in the staff
-			if (endMeasure == 0) {
-				endMeasure = p.getNumMeasures();
-			}
-
-			//Get the list of notes for each measure
-			ArrayList<Note> noteListTemp = measureList.get(endMeasure-1).getNotes();
-			//Figure out if the measure should be drawn on a new line
-			//It should by default be drawn on the first line if this is the first measure
-			xVerify = x;
-			for (int j = 0; j < noteListTemp.size(); j++, xVerify += noteSpacing) {
-				//Get the current note
-				Note note = noteListTemp.get(j);
-				numNotesPerStaff--;
-				//If it's a chord, draw the notes on the same line (x-coordinate)
-				if (note.isChord()) {
-					xVerify -= noteSpacing;
-					numNotesPerStaff++;
-				}
-			}
-
-			//Get the new note spacing
-			justifyNoteSpacing = (int) (numNotesPerStaff/this.pane.getMaxWidth()); 
-			//Draw each note
-			for (int i = startMeasure - 1; i < endMeasure; i++, x += justifyNoteSpacing) {
-				this.noteLocation.add(new ArrayList<NoteLocation>());
-				//Get the current measure
-				Measure measure = measureList.get(i);
-				//Get the list of notes for each measure
-				ArrayList<Note> noteList = measure.getNotes();
-				//First repeat in the list is always the left repeat
-				if (p.getMeasures().get(i).getBarlines().size() > 0 && p.getMeasures().get(i).getBarlines().get(0).getLocation() ==  'l') {
-					drawRepeat(x-25, 0 + yStaff, 'l', p.getMeasures().get(i).getDirection().getWords(), p.getInstrument());
-					//If no measureLocation exists yet, add a measure first
-					//This would only happen if this is the first measure, so a default value can be assumed
-					if (this.measureLocation.size() == 0) {
-						this.measureLocation.add(new MeasureLocation(90, p.getInstrument()));
-					}
-					this.measureLocation.get(i).setStartRepeat();
-				}
-
-				//Loop through all the notes in the current measure
-				for (int j = 0; j < noteList.size(); j++, x += justifyNoteSpacing)
-				{
-					//Get the current note
-					Note note = noteList.get(j);
-					//If it's a chord, draw the notes on the same line (x-coordinate)
-					if (note.isChord()) {
-						x -= justifyNoteSpacing;
-					}
-					//Get the y value for each drum note
-					if (p.getInstrument().equals("drumset")) {
-						//The spacing of each note is based on the octave and step
-						//Each value represents one "space" above, with a space either being the line or the spaces between
-						//0 is the bottom line (going through the line), 1 is the space between the bottom two lines, etc.
-						if (note.getUnpitched().getOctave() == 5) {
-							switch (note.getUnpitched().getStep()) {
-							case 'A':
-								y = 1;
-								Line strikethrough = new Line(x-2, -12+(y-1)*6+yStaff, x+12, -12+(y-1)*6+yStaff);
-								pane.getChildren().add(strikethrough); break;
-							case 'G':	y = 2;	break;
-							case 'F':	y = 3;	break;
-							case 'E':	y = 4;	break;
-							case 'D':	y = 5;	break;
-							case 'C':	y = 6;	break;
-							}
-						} else if (note.getUnpitched().getOctave() == 4) {
-							switch (note.getUnpitched().getStep()) {
-							case 'B':	y = 7;	break;
-							case 'A':	y = 8;	break;
-							case 'G':	y = 9;	break;
-							case 'F':	y = 10;	break;
-							case 'E':	y = 11;	break;
-							}
-						}
-						//Value retrieved through guess and check :))))
-						y = -7+(y-1)*6; 
-					} 
-					//Get the y value for each guitar or bass note
-					else {
-						//Figure out which string the note is on
-						int string = note.getString();
-						//Set the y coordinate based on the line
-						y = 5+(string-1)*12; //Each staff line is 12 y-pixels apart
-					}
-					//Place staff lines for the first measure only
-					if (i == 0 && j == 0) {
-						placeSheetLines(yStaff, p.getInstrument());
-					}
-					//Draw each note
-					if (x < this.pane.getMaxWidth()) {
-						this.noteLocation.get(i).add(new NoteLocation(x, y + yStaff, yStaff, note, p.getInstrument()));
-						new DrawNotes(pane, x, y + yStaff, note, p.getInstrument(), yStaff, this.noteSpacing);
-						clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
-						timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
-					}
-					//If the note is the first of a new staff, draw the new staff lines and THEN the notes
-					else {
-						x = 100.0;
-						yStaff += staffSpacing;
-						placeSheetLines(yStaff, p.getInstrument());
-						this.noteLocation.get(i).add(new NoteLocation(x, y + yStaff, yStaff, note, p.getInstrument()));
-						new DrawNotes(pane, x, y + yStaff, note, p.getInstrument(), yStaff, this.noteSpacing);
-						drawMeasureNumber(yStaff, p.getMeasures().get(i).getMeasureNumber());
-						clef(p.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18+yStaff, p.getInstrument());
-						timeSignature(p.getMeasures().get(0).getAttributes().getTime().getBeats(), p.getMeasures().get(0).getAttributes().getTime().getBeatType(), 35, 28+yStaff, p.getInstrument());
-					}
-				}
-				//Dynamically draw a bar line (after each measure) or a repeat line
-				//Either first or second repeat in list is the right repeat line
-				if ((p.getMeasures().get(i).getBarlines().size() == 1 && p.getMeasures().get(i).getBarlines().get(0).getLocation() ==  'r') 
-						|| (p.getMeasures().get(i).getBarlines().size() > 1 && p.getMeasures().get(i).getBarlines().get(1).getLocation() ==  'r')) {
-					x += justifyNoteSpacing;
-					drawRepeat(x, 0 + yStaff, 'r', p.getMeasures().get(i).getDirection().getWords(), p.getInstrument());
-					//If it's the first measure, add the first measure in the ArrayList
-					if (this.measureLocation.size() == 0) {
-						this.measureLocation.add(new MeasureLocation(90, p.getInstrument()));
-					} 
-					//Otherwise, if it's the first line on a staff, reset the startX value
-					else if (i != 0 && i == startMeasure - 1) {
-						this.measureLocation.get(i).setStartX(90);
-					}
-					//Can't be first measure
-					this.measureLocation.get(i).setEndRepeat();
-					this.measureLocation.get(i).setEndX(x);
-					this.measureLocation.get(i).setStartY(yStaff);
-					//Add a new instance of MeasureLocation for the next measure
-					//Indicate that this is the start of the next measure
-					this.measureLocation.add(new MeasureLocation(x, p.getInstrument()));
-				} else {
-					//If it's the first measure, add the first measure in the ArrayList
-					if (this.measureLocation.size() == 0) {
-						this.measureLocation.add(new MeasureLocation(90, p.getInstrument()));
-					} 
-					//Otherwise, if it's the first line on a staff, reset the startX value
-					else if (i != 0 && i == startMeasure - 1) {
-						this.measureLocation.get(i).setStartX(90);
-					}
-					//Add the current barline location as the end of the measure
-					this.measureLocation.get(i).setEndX(x);
-					this.measureLocation.get(i).setStartY(yStaff);
-					//Add a new instance of MeasureLocation for the next measure
-					//Indicate that this is the start of the next measure
-					this.measureLocation.add(new MeasureLocation(x, p.getInstrument()));
-					//Draw the barline
-					barLines(x, 0 + yStaff, p.getInstrument());
-				}
-			}
-			startMeasure = endMeasure + 1;
-			endMeasure = 0;
-		}
-	}
+	
 	// Update the SheetMusic GUI
 	public void update() throws IOException {
 		this.pane.getChildren().clear();
