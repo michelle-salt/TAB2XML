@@ -1,6 +1,5 @@
 package GUI;
 
-import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
@@ -72,6 +71,7 @@ public class PreviewSheetController {
 	private String tempo;
 	private ArrayList<String> measureList;
 	private String musicSequence;
+	private ArrayList<ArrayList<String>> measureSequence;
 
 	private int noteSpacing;
 	private int staffSpacing;
@@ -1432,6 +1432,43 @@ public class PreviewSheetController {
 
 	public ManagedPlayer getManagedPlayer() {
 		return mplayer;
+	}
+	
+	private void setMeasureSequence() {
+//		String measures = "";
+//		for (String s : measureList) { 
+//			measures += s;
+//		}
+//		int count = measures.length() - measures.replaceAll(" ", "").length();
+//		String[] noteNumber = new String[count+1];
+//		
+//		
+//		for (int i = 0; i < noteNumber.length; i++) {
+//			noteNumber[i] = 
+//		}
+//		System.out.println("");
+//		
+//		
+//		
+//		String[] measureNumber = measures.split("|");
+//		for (int i = 0; i < 2; i++) {
+//			System.out.print(measureNumber[i].toString() + " ");
+//		}
+//		
+		
+		//measureSequence |-> 
+		
+		/*
+		 * measureNumber {0}
+		 * 			noteNumber {0}
+		 * 			noteNumber {1}
+		 * 			noteNumber {2}
+		 * 			.....
+		 * 
+		 * measureNumber {1}
+		 * 			noteNumber {0}
+		 * 				
+		 */
 	}
 
 	/*
