@@ -86,7 +86,6 @@ public class DrawNotes {
 		if(this.note.getTied().getStart() == true) {
 			note = Integer.toString(this.note.getFret());; 
 
-			System.out.println(lastNote);
 			double midX = ((noteSpacing)/2) + x+6, endX = x + noteSpacing + 2;
 			if (lastNote) {
 				midX = noteSpacing + x+6;
@@ -115,6 +114,22 @@ public class DrawNotes {
 				Ellipse dot = new Ellipse(dotX, y-5, 2, 2);
 				pane.getChildren().add(dot);
 				dotX += 6;
+			}
+			
+			if(this.note.getTied().getStart()) {
+				
+				double midX = ((noteSpacing)/2) + x+6, endX = x + noteSpacing + 2;
+				if (lastNote) {
+					midX = noteSpacing + x+6;
+					endX += noteSpacing;
+				}
+
+				QuadCurve quadcurve = new QuadCurve(x+10, y-5.5, midX, y-22, endX, y-5.5);
+				QuadCurve quadcurve2 = new QuadCurve(x+12, y-4.5, midX, y-18, endX - 2, y-4.5);
+				quadcurve2.setFill(Color.WHITE);
+							
+				pane.getChildren().add(quadcurve);
+				pane.getChildren().add(quadcurve2);
 			}
 		}
 		//Print the type of note otherwise
@@ -187,6 +202,7 @@ public class DrawNotes {
 			centre.setFill(Color.WHITE);
 			pane.getChildren().add(centre);
 		}
+		
 	}
 
 	public void printHalfNote() {
@@ -222,6 +238,21 @@ public class DrawNotes {
 			Ellipse dot = new Ellipse(dotX, y-5, 2, 2);
 			pane.getChildren().add(dot);
 			dotX += 6;
+		}
+		if(this.note.getTied().getStart()) {
+		
+			double midX = ((noteSpacing)/2) + x+6, endX = x + noteSpacing + 2;
+			if (lastNote) {
+				midX = noteSpacing + x+6;
+				endX += noteSpacing;
+			}
+
+			QuadCurve quadcurve = new QuadCurve(x+6, y-0.5, midX, y+22, endX, y-0.5);
+			QuadCurve quadcurve2 = new QuadCurve(x+8, y-0.5, midX, y+18, endX - 2, y-0.5);
+			quadcurve2.setFill(Color.WHITE);
+						
+			pane.getChildren().add(quadcurve);
+			pane.getChildren().add(quadcurve2);
 		}
 	}
 
