@@ -91,6 +91,12 @@ public class DrawNotes {
 			text.setFont(Font.font("veranda", FontWeight.BLACK, 18));
 			pane.getChildren().add(text);
 			drawStem(x+9, y-8);
+			double dotX = x+14;
+			for (int i = 0; i < this.note.getNumDots(); i++) {
+				Ellipse dot = new Ellipse(dotX, y-5, 2, 2);
+				pane.getChildren().add(dot);
+				dotX += 6;
+			}
 		}
 		//Print the type of note otherwise
 		else {
@@ -188,9 +194,15 @@ public class DrawNotes {
 			pane.getChildren().add(ellipse);
 		}
 		else {
-		Ellipse ellipse = new Ellipse(x+4, y-5, 6, 4.25);
-		ellipse.setRotate(320);
-		pane.getChildren().add(ellipse);
+			Ellipse ellipse = new Ellipse(x+4, y-5, 6, 4.25);
+			ellipse.setRotate(320);
+			pane.getChildren().add(ellipse);
+		}
+		double dotX = x+13;
+		for (int i = 0; i < this.note.getNumDots(); i++) {
+			Ellipse dot = new Ellipse(dotX, y-5, 2, 2);
+			pane.getChildren().add(dot);
+			dotX += 6;
 		}
 	}
 
