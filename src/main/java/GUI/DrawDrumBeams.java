@@ -27,10 +27,11 @@ package GUI;
  	 */
  	private ArrayList<Note> notes, noteWithoutChords;
  	private ArrayList<NoteLocation> noteLocations, notesWithoutChordsLocations;
- 	private int noteSpacing;
+ 	private double noteSpacing;
  	private Pane pane;
 
  	public DrawDrumBeams(Pane pane, ArrayList<Note> notes, ArrayList<NoteLocation> noteLocations, int noteSpacing) {
+ 	public DrawDrumBeams(Pane pane, ArrayList<Note> notes, ArrayList<NoteLocation> noteLocations, double noteSpacing) {
  		this.pane = pane;
  		this.notes = notes;
  		this.noteLocations = noteLocations;
@@ -308,18 +309,18 @@ package GUI;
  	}
 
 
- 	public void draw8thBeam(double startX, double startY, int length) {
+ 	public void draw8thBeam(double startX, double startY, double length) {
  		Rectangle r = new Rectangle(startX+9, startY-0.5, length, 4);
  		pane.getChildren().add(r);
  	}
 
- 	public void draw16thBeam(double startX, double startY, int length) {
+ 	public void draw16thBeam(double startX, double startY, double length) {
  		draw8thBeam(startX, startY, length);
  		Rectangle r = new Rectangle(startX+9, startY+6.5, length, 4);
  		pane.getChildren().add(r);
  	}
 
- 	public void draw32ndBeam(double startX, double startY, int length) {
+ 	public void draw32ndBeam(double startX, double startY, double length) {
  		draw16thBeam(startX, startY, length);
  		Rectangle r = new Rectangle(startX+9, startY+13.5, length, 4);
  		pane.getChildren().add(r);
