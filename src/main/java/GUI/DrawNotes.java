@@ -25,7 +25,7 @@ public class DrawNotes {
 	private double noteSpacing;
 	private boolean lastNote;
 
-	public DrawNotes(Pane pane, double x, double y, Note note, String instrument, double yStaff, double noteSpacing, boolean lastNote) {
+	public DrawNotes(Pane pane, double x, double y, Note note, String instrument, double yStaff, double noteSpacing, boolean lastNote, Note nextNote, double slideDistance) {
 		this.pane = pane;
 		this.x = x;
 		this.y = y;
@@ -34,6 +34,17 @@ public class DrawNotes {
 		this.noteSpacing = noteSpacing;
 		this.lastNote = lastNote;
 
+		//Draw slide if needed
+		if (nextNote != null && note.getSlide().getType() != null && note.getSlide().getType().equalsIgnoreCase("start")) {
+			if (note.getFret() < nextNote.getFret()) {
+				Line l = new Line(x + 9, y + 1, x + slideDistance - 3, y - 7);
+				pane.getChildren().add(l);
+			} else {
+				Line l = new Line(x + 18, y - 8, x + slideDistance - 1, y + 1);
+				pane.getChildren().add(l);
+			}
+		}
+		
 		if (instrument.equals("drumset")) {
 			this.drawDrumNote();
 		}

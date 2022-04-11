@@ -927,7 +927,20 @@ public class PreviewSheetController {
 					this.noteLocation.get(i).add(new NoteLocation(x, y + yStaff, yStaff, note, instrument));
 					if (!note.isRest()) {
 						boolean isLast = j == measure.getNumNotes() - 1 || (j == measure.getNumNotes() - 2 && measure.getNotes().get(measure.getNumNotes()-1).isChord());
-						new DrawNotes(pane, x, y + yStaff, note, instrument, yStaff, noteSpacing, isLast);
+						Note next = null;
+						//if the note is a slide
+						int notesPassed = 1;
+						if (note.getSlide().getNumber() != -1) {
+							//loop through next notes to find the stop (assuming it's in the same measure)
+							for (int k = j+1; k < measure.getNumNotes(); k++) {
+								if (measure.getNotes().get(k).getSlide().getType() != null && measure.getNotes().get(k).getSlide().getType().equalsIgnoreCase("stop")) {
+									next = measure.getNotes().get(k);
+									break;
+								}
+								notesPassed++;
+							}
+						}
+						new DrawNotes(pane, x, y + yStaff, note, instrument, yStaff, noteSpacing, isLast, next, notesPassed*noteSpacing);
 					}
 					clef(parser.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18 + yStaff, instrument);
 					timeSignature(timeBeats, timeBeatType, 35, 28 + yStaff, instrument);
@@ -941,7 +954,20 @@ public class PreviewSheetController {
 					this.noteLocation.get(i).add(new NoteLocation(x, y + yStaff, yStaff, note, instrument));
 					if (!note.isRest()) {
 						boolean isLast = j == measure.getNumNotes() - 1 || (j == measure.getNumNotes() - 2 && measure.getNotes().get(measure.getNumNotes()-1).isChord());
-						new DrawNotes(pane, x, y + yStaff, note, instrument, yStaff, noteSpacing, isLast);
+						Note next = null;
+						//if the note is a slide
+						int notesPassed = 1;
+						if (note.getSlide().getNumber() != -1) {
+							//loop through next notes to find the stop (assuming it's in the same measure)
+							for (int k = j+1; k < measure.getNumNotes(); k++) {
+								if (measure.getNotes().get(k).getSlide().getType() != null && measure.getNotes().get(k).getSlide().getType().equalsIgnoreCase("stop")) {
+									next = measure.getNotes().get(k);
+									break;
+								}
+								notesPassed++;
+							}
+						}
+						new DrawNotes(pane, x, y + yStaff, note, instrument, yStaff, noteSpacing, isLast, next, notesPassed*noteSpacing);
 					}
 					drawMeasureNumber(yStaff, parser.getMeasures().get(i).getMeasureNumber());
 					clef(parser.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18 + yStaff, instrument);
