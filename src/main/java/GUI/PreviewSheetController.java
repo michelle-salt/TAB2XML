@@ -734,13 +734,6 @@ public class PreviewSheetController {
 	}
 
 	private void leftAlign(List<Measure> measureList) {
-		printNotesInMeasures(measureList, 0, measureList.size()-1, noteSpacing, 20, false);		
-	}
-
-	//Start and end measure are inclusive
-	private void printNotesInMeasures(List<Measure> measureList, int startMeasure, int endMeasure, double noteSpacing, int currStaff, boolean drawNewStaff) {
-		// Initialize x and y coordinates of where to draw notes
-		double x = 100.0, xVerify = 100, y = 20, yStaff = currStaff;
 		//Get the time and default to 4/4 if it doesn't exist
 		int timeBeats = measureList.get(0).getAttributes().getTime().getBeats();
 		int timeBeatType = measureList.get(0).getAttributes().getTime().getBeatType();
@@ -748,6 +741,13 @@ public class PreviewSheetController {
 			timeBeats = 4;
 		if (timeBeatType == -1)
 			timeBeatType = 4;
+		printNotesInMeasures(measureList, 0, measureList.size()-1, noteSpacing, 20, false, timeBeats, timeBeatType);		
+	}
+
+	//Start and end measure are inclusive
+	private void printNotesInMeasures(List<Measure> measureList, int startMeasure, int endMeasure, double noteSpacing, int currStaff, boolean drawNewStaff, int timeBeats, int timeBeatType) {
+		// Initialize x and y coordinates of where to draw notes
+		double x = 100.0, xVerify = 100, y = 20, yStaff = currStaff;
 		// Iterate through each measure
 		for (int i = startMeasure; i <= endMeasure; i++, x += noteSpacing) {
 			this.noteLocation.add(new ArrayList<NoteLocation>());
@@ -951,15 +951,15 @@ public class PreviewSheetController {
 			if (sum + notesWithoutChords.get(i) > Math.floor(maxNotesPerStaff) ||
 					(measureList.get(i).getAttributes().getTime().getBeats() != timeBeats && measureList.get(i).getAttributes().getTime().getBeats() != -1) ||
 					(measureList.get(i).getAttributes().getTime().getBeatType() != timeBeatType && measureList.get(i).getAttributes().getTime().getBeatType() != -1)) {
-				if ((measureList.get(i).getAttributes().getTime().getBeats() != timeBeats && measureList.get(i).getAttributes().getTime().getBeats() != -1) ||
-					(measureList.get(i).getAttributes().getTime().getBeatType() != timeBeatType && measureList.get(i).getAttributes().getTime().getBeatType() != -1)) {
-					timeBeats = measureList.get(i).getAttributes().getTime().getBeats();
-					timeBeatType = measureList.get(i).getAttributes().getTime().getBeatType();
-				}
-				
 				endMeasure = i - 1;
 				double justifyNoteSpacing = (pane.getMaxWidth()-100.0)/(sum);
-				printNotesInMeasures(measureList, startMeasure, endMeasure, justifyNoteSpacing, currStaff, true);
+				printNotesInMeasures(measureList, startMeasure, endMeasure, justifyNoteSpacing, currStaff, true, timeBeats, timeBeatType);
+				//Rest time variables
+				if ((measureList.get(i).getAttributes().getTime().getBeats() != timeBeats && measureList.get(i).getAttributes().getTime().getBeats() != -1) ||
+						(measureList.get(i).getAttributes().getTime().getBeatType() != timeBeatType && measureList.get(i).getAttributes().getTime().getBeatType() != -1)) {
+					timeBeats = measureList.get(i).getAttributes().getTime().getBeats();
+					timeBeatType = measureList.get(i).getAttributes().getTime().getBeatType();
+				}				
 				//Add a new staff
 				currStaff += staffSpacing;
 				//Reset values
@@ -974,7 +974,7 @@ public class PreviewSheetController {
 			//Call left align but pass justifyNoteSpacing
 		}
 		double justifyNoteSpacing = (pane.getMaxWidth()-100.0)/(sum);
-		printNotesInMeasures(measureList, startMeasure, measureList.size()-1, justifyNoteSpacing, currStaff, true);		
+		printNotesInMeasures(measureList, startMeasure, measureList.size()-1, justifyNoteSpacing, currStaff, true, timeBeats, timeBeatType);		
 	}
 		
 	// Update the SheetMusic GUI
