@@ -37,14 +37,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.*;
-
 import org.fxmisc.richtext.CodeArea;
 import org.jfugue.player.ManagedPlayer;
 import org.jfugue.player.Player;
+import org.jfugue.player.SequencerManager;
 
 import custom_exceptions.*;
 
@@ -71,7 +70,6 @@ public class PreviewSheetController {
 	private String tempo;
 	private ArrayList<String> measureList;
 	private String musicSequence;
-	private ArrayList<ArrayList<String>> measureSequence;
 
 	private int noteSpacing;
 	private int staffSpacing;
@@ -84,6 +82,7 @@ public class PreviewSheetController {
 
 	private ArrayList<ArrayList<NoteLocation>> noteLocation;
 	private ArrayList<MeasureLocation> measureLocation;
+	private ArrayList<ArrayList<String>> noteValues;
 
 	/*
 	 * Set default preview spacings. Initialize the player.
@@ -99,7 +98,7 @@ public class PreviewSheetController {
 
 		noteLocation = new ArrayList<ArrayList<NoteLocation>>();
 		measureLocation = new ArrayList<MeasureLocation>();
-		measureSequence = new ArrayList<ArrayList<String>>();
+		noteValues = new ArrayList<ArrayList<String>>();
 	}
 
 	public void setMainViewController(MainViewController mvcInput) {
@@ -147,6 +146,7 @@ public class PreviewSheetController {
 	private void handleGotoMeasure() throws IOException {
 		int number = Integer.parseInt(goToMeasureField.getText());
 		if (number >= 1 && number <= parser.getNumMeasures()) {
+			update();
 			goToMeasure(number);
 		}
 		else if (number < 1 || number > parser.getNumMeasures()) {
@@ -159,35 +159,63 @@ public class PreviewSheetController {
 	}
 
 	private void goToMeasure(int num) throws IOException {
-		update();
+		double startX = measureLocation.get(num-1).getStartX();
+		double startY = measureLocation.get(num-1).getStartY();
+		double endX = measureLocation.get(num-1).getEndX();	
 
-		//		double startX = measureLocation.get(num).getStartX();
-		//		double startY = measureLocation.get(num).getStartY();
-		//		double endX = measureLocation.get(num).getEndX();
-
-		//				Rectangle rectangle = new Rectangle(startX, startY-10, endX-startX, 80);
-		//		rectangle.setFill(Color.TRANSPARENT);
-		//		rectangle.setStyle("-fx-stroke: blue;");
-		//		rectangle.setStrokeWidth(1.5);
-		//		pane.getChildren().add(rectangle);
-
+		Rectangle rectangle = null;
 		if (instrument.equalsIgnoreCase("guitar")) {
-
-		} else if (instrument.equalsIgnoreCase("drumset")) {
-
+			rectangle = new Rectangle(startX, startY-15, endX-startX, 90);
+			rectangle.setFill(Color.TRANSPARENT);
+			rectangle.setStyle("-fx-fill: #FFA500; -fx-opacity: 0.3;");	
+			//			rectangle.setStyle("-fx-stroke: blue;");
+			//			rectangle.setStrokeWidth(1.5);
+		}
+		else if (instrument.equalsIgnoreCase("drumset") || instrument.equalsIgnoreCase("bass")) {
+			rectangle = new Rectangle(startX, startY-45, endX-startX, 110);
+			rectangle.setFill(Color.TRANSPARENT);
+			rectangle.setStyle("-fx-fill: #FFA500; -fx-opacity: 0.3;");	
 		}
 
-		double startX = this.noteLocation.get(num-1).get(1).getX();
-		double startY = this.noteLocation.get(num-1).get(1).getStaffY();
-
-		Rectangle highlight = new Rectangle(startX-10, startY-30, 30, 90);
-		highlight.setStyle("-fx-fill: #1E90FF; -fx-opacity: 0.5;");
-		pane.getChildren().add(highlight);
-
+		pane.getChildren().add(rectangle);
 		Object obj = pane.getParent().getParent().getParent().getParent();
 		if (obj instanceof ScrollPane) {
 			ScrollPane scrollPane = (ScrollPane) obj;
-			scrollPane.setVvalue(highlight.getBoundsInLocal().getMaxY()/pane.getBoundsInLocal().getMaxY());
+			scrollPane.setVvalue(rectangle.getBoundsInLocal().getMaxY()/pane.getBoundsInLocal().getMaxY());
+		}
+	}
+
+	/*
+	 * highlight(int measureNumber, int noteNumber)
+	 */
+	private void highlight() throws IOException {
+		for (int i = 0; i < noteValues.size(); i++) {
+			for (int j = 0; j < noteValues.get(i).size(); j++) {
+				double startX = this.noteLocation.get(i).get(j).getX();
+				double startY = this.noteLocation.get(i).get(j).getStaffY();
+				update();
+				Rectangle highlight = null;
+
+				if (instrument.equalsIgnoreCase("guitar")) {
+					highlight = new Rectangle(startX-10, startY-30, 30, 90);
+					highlight.setStyle("-fx-fill: #1E90FF; -fx-opacity: 0.5;");
+				}
+				else if (instrument.equalsIgnoreCase("drumset")) {
+					highlight = new Rectangle(startX-10, startY-30, 30, 90);
+					highlight.setStyle("-fx-fill: #1E90FF; -fx-opacity: 0.5;");
+				}
+				else if (instrument.equalsIgnoreCase("bass")) {
+					highlight = new Rectangle(startX-10, startY-30, 30, 90);
+					highlight.setStyle("-fx-fill: #1E90FF; -fx-opacity: 0.5;");
+				}
+				pane.getChildren().add(highlight);
+				Object obj = pane.getParent().getParent().getParent().getParent();
+				if (obj instanceof ScrollPane) {
+
+					ScrollPane scrollPane = (ScrollPane) obj;
+					scrollPane.setVvalue(highlight.getBoundsInLocal().getMaxY()/pane.getBoundsInLocal().getMaxY());
+				}
+			}
 		}
 	}
 
@@ -198,7 +226,7 @@ public class PreviewSheetController {
 	 * last paused. The pause button only pauses the `player`.
 	 */
 	@FXML
-	private void handlePlayMusic() throws InvalidInputException, UnrecognizedInstrumentException {
+	private void handlePlayMusic() throws InvalidInputException, UnrecognizedInstrumentException, IOException {
 		if (playButton.isVisible()) {
 			if (mplayer.isStarted()) {
 				mplayer.resume();
@@ -208,7 +236,7 @@ public class PreviewSheetController {
 				setTempo();
 				setMeasureList();
 				setMusicSequence();
-				setMeasureSequence();
+				setNoteValues();
 				playMusic(musicSequence);
 			}
 			playButton.setVisible(false);
@@ -273,16 +301,62 @@ public class PreviewSheetController {
 			case "bass": 	measureList = GuitarBass(); break;
 			case "drumset": measureList = Drum(); 		break;
 			}	
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
+	/*
+	 * Combines the String `tempo` and the String `measureList` that has already been compiled
+	 * to form the final music sequence.
+	 */
 	private void setMusicSequence() {
 		musicSequence = tempo;
 		for (String ml : measureList) {
 			musicSequence += ml;
+		}
+	}
+
+	/*
+	 * Arranges a list of `measure numbers` that arranges a list of `note numbers`.
+	 * Each `note number` contain different information about their type, duration, and more ...
+	 * 
+	 * (e.g. [ [ E2I, B2I, E3I, G#3I, B3I, E4I, B3I, G#3I ], E4W+B3W+G#3W+E3W+B2W+E2W ]	)
+	 *			
+	 *			-	The above `measureList` has a total of 2 `measure numbers`, and a total of 9 `note numbers`.
+	 *			-	The first `measure number` has a total of 8 `note numbers`.
+	 *			- 	The second `measure number` has 1 `note number`.
+	 */
+	private void setNoteValues() {
+		String measures = "";
+		for (String s: measureList) {
+			measures += s;
+		}
+
+		int numberOfPipes = 1;		
+		for (int i = 0; i < measures.length(); i++) {
+			if (measures.charAt(i) == '|') {
+				numberOfPipes++;
+			}
+		}
+
+		String[] noteNum = measures.split(" | ");
+
+		int j = 0;
+		noteValues.add(new ArrayList<>());
+		for (int i = 0; i < numberOfPipes; i++) {
+			for ( ; j < noteNum.length; ) {
+				if (noteNum[j].equals("|")) {
+					noteValues.add(new ArrayList<String>());
+					j++;
+					break;
+				} 
+				else {
+					noteValues.get(i).add(noteNum[j]);
+				}
+				j++;
+			}
 		}
 	}
 
@@ -979,7 +1053,7 @@ public class PreviewSheetController {
 		double justifyNoteSpacing = (pane.getMaxWidth()-100.0)/(sum);
 		printNotesInMeasures(measureList, startMeasure, measureList.size()-1, justifyNoteSpacing, currStaff, true, timeBeats, timeBeatType);		
 	}
-		
+	
 	// Update the SheetMusic GUI
 	public void update() throws IOException {
 		this.pane.getChildren().clear();
@@ -1014,8 +1088,9 @@ public class PreviewSheetController {
 	}
 
 	@FXML void handleStepForward() {
+//		long s = player.getSequence(musicSequence).getMicrosecondLength(); System.out.println(s);
 		if (mplayer.getTickLength()-5000 > 5000) {
-			System.out.println("before : " + mplayer.getTickPosition());
+						System.out.println("before : " + mplayer.getTickPosition());
 			mplayer.seek(mplayer.getTickPosition()+5000);
 			try {
 				mplayer.pause(); Thread.sleep(1000); 
@@ -1023,7 +1098,7 @@ public class PreviewSheetController {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			System.out.println("after : " + mplayer.getTickPosition());
+			//			System.out.println("after : " + mplayer.getTickPosition());
 		}
 		if (mplayer.getTickPosition() >= mplayer.getTickLength()) {
 			mplayer.onEndOfTrack();
@@ -1033,8 +1108,9 @@ public class PreviewSheetController {
 	}
 
 	@FXML void handleStepBackward() {
+		long s = player.getSequence(musicSequence).getMicrosecondLength(); System.out.println(s);
 		if (mplayer.getTickLength()-5000 > 0) {
-			System.out.println("before : " + mplayer.getTickPosition());
+			//			System.out.println("before : " + mplayer.getTickPosition());
 			mplayer.seek(mplayer.getTickPosition()-5000);
 			try {
 				mplayer.pause(); Thread.sleep(1000); 
@@ -1042,7 +1118,7 @@ public class PreviewSheetController {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			System.out.println("after : " + mplayer.getTickPosition());
+			//			System.out.println("after : " + mplayer.getTickPosition());
 		}
 		if (mplayer.getTickPosition() >= mplayer.getTickLength()) {
 			mplayer.onEndOfTrack();
@@ -1115,61 +1191,9 @@ public class PreviewSheetController {
 	public ManagedPlayer getManagedPlayer() {
 		return mplayer;
 	}
-	
-	private void setMeasureSequence() {
-		String measures = "";
-		for (String s : measureList) { 
-			measures += s;
-		}
-		
-		String[] noteNumber = measures.split(" ");
-		
-		ArrayList<String> measureNotes = new ArrayList<>();
-		
-		int a = 0;
-		for(int b = 0; b < noteNumber.length; b++) {
-			
-			if(noteNumber[b].equals("|")) {
-			
-				measureSequence.add(measureNotes);
-				measureNotes = new ArrayList<>();
-				a++;
-				
-			}
-			else {
-				
-				measureNotes.add(noteNumber[b]);
-				
-			}
-			
-			if(b == noteNumber.length-1) {
-				
-				measureSequence.add(measureNotes);
-				measureNotes = new ArrayList<>();
-				
-			}
-			
-		}
-		
-		//measureSequence |-> 
-		
-		/*
-		 * measureNumber {0}
-		 * 			noteNumber {0}
-		 * 			noteNumber {1}
-		 * 			noteNumber {2}
-		 * 			.....
-		 * 
-		 * measureNumber {1}
-		 * 			noteNumber {0}
-		 * 				
-		 */
-			
-	}
 
 	/*
-	 * Add instruments here.
-	 * Refer to the `getTempoDetails()` method to add the necessary tempo details for the newly added instrument. 
+	 * Add support for instruments here.
 	 */
 	private void setInstrument() throws UnrecognizedInstrumentException {
 		instrument = parser.getInstrument();
