@@ -5,7 +5,11 @@ package GUI;
  import javafx.scene.layout.Pane;
  import javafx.scene.shape.Line;
  import javafx.scene.shape.Rectangle;
- import musicxml.parsing.Note;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import musicxml.parsing.Note;
 
  //Draws all the beams in a measure at once
  public class DrawDrumBeams {
@@ -51,10 +55,24 @@ package GUI;
 
  		ArrayList<Note> notesToBeam = new ArrayList<Note>();
  		ArrayList<NoteLocation> noteLocationToBeam = new ArrayList<NoteLocation>();
- 		int numerator = 0, firstIndex = 0;
+ 		int numerator = 0, firstIndex = 0, numActual = 0;
  		for (int i = 0; i < this.noteWithoutChords.size(); i++) {
  			if (!this.noteWithoutChords.get(i).isGraceNote()) {
- 				numerator += getNoteTypeValue(this.noteWithoutChords.get(i).getType());
+ 				//If it's an actual actual note
+				if (this.noteWithoutChords.get(i).getTimeModification().getActualNotes() != -1) {
+					if (numActual == 2) {
+						numActual = 0;
+					} else {
+						numActual ++;
+						if (numActual == 1) {
+							this.notesWithoutChordsLocations.get(i).setActualNote(this.noteWithoutChords.get(i).getTimeModification().getActualNotes());
+						}
+					}
+				}
+				
+				if (this.noteWithoutChords.get(i).getTimeModification().getActualNotes() == -1 || numActual != 1) {
+						numerator += getNoteTypeValue(this.noteWithoutChords.get(i).getType());
+				}
  				notesToBeam.add(this.noteWithoutChords.get(i));
  				noteLocationToBeam.add(this.notesWithoutChordsLocations.get(i));
 
@@ -171,6 +189,14 @@ package GUI;
  			//Add vertical lines underneath notes
  			NoteLocation note = noteLocation.get(i);
 
+ 			//Draw actual notes
+			if (noteLocation.get(i).getActualNote() != -1) {
+				String actual = Integer.toString(noteLocation.get(i).getActualNote());
+				Text t = new Text(note.getX() + 30, note.getStaffY() - 45, actual);
+				t.setFont(Font.font("arial", FontWeight.BLACK, FontPosture.ITALIC, 13));
+				pane.getChildren().add(t);
+			}
+ 			
  			//Draw beams to connect lines
 
  			//32nd is the highest example note we have

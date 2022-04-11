@@ -7,6 +7,7 @@ import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import musicxml.parsing.Note;
@@ -227,7 +228,7 @@ public class DrawGuitarBeams {
 			if (noteLocation.get(i).getActualNote() != -1) {
 				String actual = Integer.toString(noteLocation.get(i).getActualNote());
 				Text t = new Text(note.getX() + 21, l.getEndY() + 15, actual);
-				t.setFont(Font.font("arial", FontWeight.BLACK, 13));
+				t.setFont(Font.font("arial", FontWeight.BLACK, FontPosture.ITALIC, 13));
 				pane.getChildren().add(t);
 			}
 			
