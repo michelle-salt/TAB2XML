@@ -8,7 +8,7 @@ import javafx.scene.shape.Rectangle;
 import musicxml.parsing.Note;
 
 //Draws all the beams in a measure at once
-public class DrawGuitarBeams {
+public class DrawBeams {
 	/*
 	 * Logic
 	 * Beam if there are enough of the same note
@@ -30,7 +30,7 @@ public class DrawGuitarBeams {
 	private int noteSpacing;
 	private Pane pane;
 	
-	public DrawGuitarBeams(Pane pane, ArrayList<Note> notes, ArrayList<NoteLocation> noteLocations, int noteSpacing) {
+	public DrawBeams(Pane pane, ArrayList<Note> notes, ArrayList<NoteLocation> noteLocations, int noteSpacing) {
 		this.pane = pane;
 		this.notes = notes;
 		this.noteLocations = noteLocations;
@@ -167,7 +167,11 @@ public class DrawGuitarBeams {
 	}
 	
 	private void beamTogether(ArrayList<Note> notes, ArrayList<NoteLocation> noteLocation) {
-		beamTogetherGuitar(notes, noteLocation);
+		if (noteLocation.get(0).getInstrument().equalsIgnoreCase("drumset")) {
+//			beamTogetherDrums(notes, noteLocation);
+		} else {
+			beamTogetherGuitar(notes, noteLocation);
+		}
 	}
 	
 	//Method will run for quarter notes or lower
