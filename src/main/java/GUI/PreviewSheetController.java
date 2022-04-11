@@ -925,8 +925,10 @@ public class PreviewSheetController {
 				// Draw each note
 				if (x < this.pane.getMaxWidth()) {
 					this.noteLocation.get(i).add(new NoteLocation(x, y + yStaff, yStaff, note, instrument));
-					if (!note.isRest())
-						new DrawNotes(pane, x, y + yStaff, note, instrument, yStaff, noteSpacing);
+					if (!note.isRest()) {
+						boolean isLast = j == measure.getNumNotes() - 1 || (j == measure.getNumNotes() - 2 && measure.getNotes().get(measure.getNumNotes()-1).isChord());
+						new DrawNotes(pane, x, y + yStaff, note, instrument, yStaff, noteSpacing, isLast);
+					}
 					clef(parser.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18 + yStaff, instrument);
 					timeSignature(timeBeats, timeBeatType, 35, 28 + yStaff, instrument);
 				}
@@ -937,8 +939,10 @@ public class PreviewSheetController {
 					yStaff += staffSpacing;
 					placeSheetLines(yStaff, instrument);
 					this.noteLocation.get(i).add(new NoteLocation(x, y + yStaff, yStaff, note, instrument));
-					if (!note.isRest())
-						new DrawNotes(pane, x, y + yStaff, note, instrument, yStaff, noteSpacing);
+					if (!note.isRest()) {
+						boolean isLast = j == measure.getNumNotes() - 1 || (j == measure.getNumNotes() - 2 && measure.getNotes().get(measure.getNumNotes()-1).isChord());
+						new DrawNotes(pane, x, y + yStaff, note, instrument, yStaff, noteSpacing, isLast);
+					}
 					drawMeasureNumber(yStaff, parser.getMeasures().get(i).getMeasureNumber());
 					clef(parser.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18 + yStaff, instrument);
 					timeSignature(timeBeats, timeBeatType, 35, 28 + yStaff,	instrument);

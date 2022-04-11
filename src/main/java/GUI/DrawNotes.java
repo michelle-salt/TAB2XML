@@ -23,14 +23,16 @@ public class DrawNotes {
 	private double x, y, yStaff;
 	private Note note;
 	private double noteSpacing;
+	private boolean lastNote;
 
-	public DrawNotes(Pane pane, double x, double y, Note note, String instrument, double yStaff, double noteSpacing) {
+	public DrawNotes(Pane pane, double x, double y, Note note, String instrument, double yStaff, double noteSpacing, boolean lastNote) {
 		this.pane = pane;
 		this.x = x;
 		this.y = y;
 		this.yStaff = yStaff;
 		this.note = note;
 		this.noteSpacing = noteSpacing;
+		this.lastNote = lastNote;
 
 		if (instrument.equals("drumset")) {
 			this.drawDrumNote();
@@ -59,7 +61,7 @@ public class DrawNotes {
 			r.setFill(Color.WHITE);
 			pane.getChildren().add(r);
 			pane.getChildren().add(text);
-		}
+		} 
 		else {
 			note = Integer.toString(this.note.getFret());; 
 
@@ -78,6 +80,23 @@ public class DrawNotes {
 			r.setFill(Color.WHITE);
 			pane.getChildren().add(r);
 			pane.getChildren().add(text);
+			pane.getChildren().add(quadcurve);
+			pane.getChildren().add(quadcurve2);
+		}
+		if(this.note.getTied().getStart() == true) {
+			note = Integer.toString(this.note.getFret());; 
+
+			System.out.println(lastNote);
+			double midX = ((noteSpacing)/2) + x+6, endX = x + noteSpacing + 2;
+			if (lastNote) {
+				midX = noteSpacing + x+6;
+				endX += noteSpacing;
+			}
+
+			QuadCurve quadcurve = new QuadCurve(x+6, y-9.5, midX, y-22, endX, y-9.5);
+			QuadCurve quadcurve2 = new QuadCurve(x+8, y-9.5, midX, y-18, endX - 2, y-9.5);
+			quadcurve2.setFill(Color.WHITE);
+						
 			pane.getChildren().add(quadcurve);
 			pane.getChildren().add(quadcurve2);
 		}
