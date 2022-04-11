@@ -42,7 +42,7 @@ class TimeTest {
 		assertEquals(7, money.getMeasures().get(0).getAttributes().getTime().getBeats());
 		//Verify that the value for all other measures don't exist and default to 0
 		for (int i = 1; i < money.getNumMeasures(); i++) {
-			assertEquals(4, money.getMeasures().get(i).getAttributes().getTime().getBeats());
+			assertEquals(-1, money.getMeasures().get(i).getAttributes().getTime().getBeats());
 		}
 //		assertFalse(false);
 	}
@@ -53,7 +53,7 @@ class TimeTest {
 		assertEquals(4, money.getMeasures().get(0).getAttributes().getTime().getBeatType());
 		//Verify that the value for all other measures don't exist and default to 0
 		for (int i = 1; i < money.getNumMeasures(); i++) {
-			assertEquals(4, money.getMeasures().get(i).getAttributes().getTime().getBeatType());
+			assertEquals(-1, money.getMeasures().get(i).getAttributes().getTime().getBeatType());
 		}
 	}
 }
