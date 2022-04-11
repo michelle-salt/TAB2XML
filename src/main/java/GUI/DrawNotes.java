@@ -22,9 +22,9 @@ public class DrawNotes {
 	private Pane pane;
 	private double x, y, yStaff;
 	private Note note;
-	private int noteSpacing;
+	private double noteSpacing;
 
-	public DrawNotes(Pane pane, double x, double y, Note note, String instrument, double yStaff, int noteSpacing) {
+	public DrawNotes(Pane pane, double x, double y, Note note, String instrument, double yStaff, double noteSpacing) {
 		this.pane = pane;
 		this.x = x;
 		this.y = y;
