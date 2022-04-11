@@ -161,7 +161,7 @@ public class DrawGuitarBeams {
 			for (int j = 0; j < numFlags; j++) {
 				Line flag = new Line(x+9, y-8, x+17, y-22);
 				pane.getChildren().add(flag);
-				y -= 5;
+				y -= 10;
 			}
 		}
 	}

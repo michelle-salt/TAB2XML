@@ -154,7 +154,7 @@ package GUI;
  				if (!note.getNote().isGraceNote()) {
  					Line flag = new Line(x+7, y-8, x, y-20);
  					pane.getChildren().add(flag);
- 					y += 5;
+ 					y += 10;
  				}
  			}
  		}
