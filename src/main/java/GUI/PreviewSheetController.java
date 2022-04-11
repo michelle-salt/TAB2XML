@@ -951,6 +951,12 @@ public class PreviewSheetController {
 			if (sum + notesWithoutChords.get(i) > Math.floor(maxNotesPerStaff) ||
 					(measureList.get(i).getAttributes().getTime().getBeats() != timeBeats && measureList.get(i).getAttributes().getTime().getBeats() != -1) ||
 					(measureList.get(i).getAttributes().getTime().getBeatType() != timeBeatType && measureList.get(i).getAttributes().getTime().getBeatType() != -1)) {
+				if ((measureList.get(i).getAttributes().getTime().getBeats() != timeBeats && measureList.get(i).getAttributes().getTime().getBeats() != -1) ||
+					(measureList.get(i).getAttributes().getTime().getBeatType() != timeBeatType && measureList.get(i).getAttributes().getTime().getBeatType() != -1)) {
+					timeBeats = measureList.get(i).getAttributes().getTime().getBeats();
+					timeBeatType = measureList.get(i).getAttributes().getTime().getBeatType();
+				}
+				
 				endMeasure = i - 1;
 				double justifyNoteSpacing = (pane.getMaxWidth()-100.0)/(sum);
 				printNotesInMeasures(measureList, startMeasure, endMeasure, justifyNoteSpacing, currStaff, true);
