@@ -99,6 +99,7 @@ public class PreviewSheetController {
 
 		noteLocation = new ArrayList<ArrayList<NoteLocation>>();
 		measureLocation = new ArrayList<MeasureLocation>();
+		measureSequence = new ArrayList<ArrayList<String>>();
 	}
 
 	public void setMainViewController(MainViewController mvcInput) {
@@ -207,6 +208,7 @@ public class PreviewSheetController {
 				setTempo();
 				setMeasureList();
 				setMusicSequence();
+				setMeasureSequence();
 				playMusic(musicSequence);
 			}
 			playButton.setVisible(false);
@@ -270,7 +272,8 @@ public class PreviewSheetController {
 			case "guitar":
 			case "bass": 	measureList = GuitarBass(); break;
 			case "drumset": measureList = Drum(); 		break;
-			}
+			}	
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -482,7 +485,7 @@ public class PreviewSheetController {
 			} // end of inner loop
 
 			if (numOfMeasures - i != 1) {
-				measure += "| "; // add space between notes to indicate measures
+				measure += " | "; // add space between notes to indicate measures
 			}
 			measureList.add(measure);
 
@@ -1255,26 +1258,39 @@ public class PreviewSheetController {
 	}
 	
 	private void setMeasureSequence() {
-//		String measures = "";
-//		for (String s : measureList) { 
-//			measures += s;
-//		}
-//		int count = measures.length() - measures.replaceAll(" ", "").length();
-//		String[] noteNumber = new String[count+1];
-//		
-//		
-//		for (int i = 0; i < noteNumber.length; i++) {
-//			noteNumber[i] = 
-//		}
-//		System.out.println("");
-//		
-//		
-//		
-//		String[] measureNumber = measures.split("|");
-//		for (int i = 0; i < 2; i++) {
-//			System.out.print(measureNumber[i].toString() + " ");
-//		}
-//		
+		String measures = "";
+		for (String s : measureList) { 
+			measures += s;
+		}
+		
+		String[] noteNumber = measures.split(" ");
+		
+		ArrayList<String> measureNotes = new ArrayList<>();
+		
+		int a = 0;
+		for(int b = 0; b < noteNumber.length; b++) {
+			
+			if(noteNumber[b].equals("|")) {
+			
+				measureSequence.add(measureNotes);
+				measureNotes = new ArrayList<>();
+				a++;
+				
+			}
+			else {
+				
+				measureNotes.add(noteNumber[b]);
+				
+			}
+			
+			if(b == noteNumber.length-1) {
+				
+				measureSequence.add(measureNotes);
+				measureNotes = new ArrayList<>();
+				
+			}
+			
+		}
 		
 		//measureSequence |-> 
 		
@@ -1289,6 +1305,7 @@ public class PreviewSheetController {
 		 * 			noteNumber {0}
 		 * 				
 		 */
+			
 	}
 
 	/*
