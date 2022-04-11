@@ -3,12 +3,13 @@ package GUI;
 import java.util.ArrayList;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import musicxml.parsing.Note;
 
 //Draws all the beams in a measure at once
-public class DrawBeams {
+public class DrawGuitarBeams {
 	/*
 	 * Logic
 	 * Beam if there are enough of the same note
@@ -27,10 +28,10 @@ public class DrawBeams {
 	 */
 	private ArrayList<Note> notes, noteWithoutChords;
 	private ArrayList<NoteLocation> noteLocations, notesWithoutChordsLocations;
-	private int noteSpacing;
+	private double noteSpacing;
 	private Pane pane;
 	
-	public DrawBeams(Pane pane, ArrayList<Note> notes, ArrayList<NoteLocation> noteLocations, int noteSpacing) {
+	public DrawGuitarBeams(Pane pane, ArrayList<Note> notes, ArrayList<NoteLocation> noteLocations, double noteSpacing) {
 		this.pane = pane;
 		this.notes = notes;
 		this.noteLocations = noteLocations;
@@ -45,7 +46,7 @@ public class DrawBeams {
 			if (!this.notes.get(i).isChord() && !this.notes.get(i).isGraceNote()) {
 				this.noteWithoutChords.add(this.notes.get(i));
 				this.notesWithoutChordsLocations.add(this.noteLocations.get(i));
-			}
+			} 
 		}	
 		
 		
@@ -70,6 +71,12 @@ public class DrawBeams {
 				notesToBeam = new ArrayList<Note>();
 				noteLocationToBeam = new ArrayList<NoteLocation>();
 				
+				double dotX = l.getEndX() + 7;
+				for (int j = 0; j < this.notesWithoutChordsLocations.get(i).getNote().getNumDots(); j++) {
+					Ellipse dot = new Ellipse(dotX, l.getStartY() + 3, 2, 2);
+					pane.getChildren().add(dot);
+					dotX += 6;
+				}				
 			} else {
 				numerator += getNoteTypeValue(this.noteWithoutChords.get(i).getType());
 				notesToBeam.add(this.noteWithoutChords.get(i));
@@ -148,6 +155,14 @@ public class DrawBeams {
 			double x = note.getX(), y = note.getStaffY()+80;
 			Line l = new Line(x, y, x, y + 30);
 			pane.getChildren().add(l);
+			
+			double dotX = l.getEndX() + 7;
+			for (int j = 0; j < noteLocation.get(i).getNote().getNumDots(); j++) {
+				Ellipse dot = new Ellipse(dotX, l.getStartY() + 3, 2, 2);
+				pane.getChildren().add(dot);
+				dotX += 6;
+			}
+			
 			//Get number of flags needed
 			int numFlags = 0;
 			switch (note.getNote().getType()) {
@@ -161,7 +176,7 @@ public class DrawBeams {
 			for (int j = 0; j < numFlags; j++) {
 				Line flag = new Line(x+9, y-8, x+17, y-22);
 				pane.getChildren().add(flag);
-				y -= 5;
+				y -= 10;
 			}
 		}
 	}
@@ -183,9 +198,14 @@ public class DrawBeams {
 			Line l = new Line(note.getX(), note.getStaffY() + 80, note.getX(), note.getStaffY() + 110);
 			pane.getChildren().add(l);
 			
+			double dotX = l.getEndX() + 7;
+			for (int j = 0; j < noteLocation.get(i).getNote().getNumDots(); j++) {
+				Ellipse dot = new Ellipse(dotX, l.getStartY() + 3, 2, 2);
+				pane.getChildren().add(dot);
+				dotX += 6;
+			}
+			
 			//Draw beams to connect lines
-//			Rectangle r = new Rectangle(l.getStartX(), note.getStaffY() + 100, noteSpacing, 5);
-//			pane.getChildren().add(r);
 			
 			//32nd is the highest example note we have
 			
@@ -286,18 +306,18 @@ public class DrawBeams {
 	}
 	
 
-	public void draw8thBeam(double startX, double startY, int length) {
+	public void draw8thBeam(double startX, double startY, double length) {
 		Rectangle r = new Rectangle(startX, startY, length, 4);
 		pane.getChildren().add(r);
 	}
 	
-	public void draw16thBeam(double startX, double startY, int length) {
+	public void draw16thBeam(double startX, double startY, double length) {
 		draw8thBeam(startX, startY, length);
 		Rectangle r = new Rectangle(startX, startY-7, length, 4);
 		pane.getChildren().add(r);
 	}
 	
-	public void draw32ndBeam(double startX, double startY, int length) {
+	public void draw32ndBeam(double startX, double startY, double length) {
 		draw16thBeam(startX, startY, length);
 		Rectangle r = new Rectangle(startX, startY-14, length, 4);
 		pane.getChildren().add(r);
