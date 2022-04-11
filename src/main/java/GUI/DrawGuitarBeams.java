@@ -3,6 +3,7 @@ package GUI;
 import java.util.ArrayList;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import musicxml.parsing.Note;
@@ -45,7 +46,7 @@ public class DrawGuitarBeams {
 			if (!this.notes.get(i).isChord() && !this.notes.get(i).isGraceNote()) {
 				this.noteWithoutChords.add(this.notes.get(i));
 				this.notesWithoutChordsLocations.add(this.noteLocations.get(i));
-			}
+			} 
 		}	
 		
 		
@@ -70,6 +71,12 @@ public class DrawGuitarBeams {
 				notesToBeam = new ArrayList<Note>();
 				noteLocationToBeam = new ArrayList<NoteLocation>();
 				
+				double dotX = l.getEndX() + 7;
+				for (int j = 0; j < this.notesWithoutChordsLocations.get(i).getNote().getNumDots(); j++) {
+					Ellipse dot = new Ellipse(dotX, l.getStartY() + 3, 2, 2);
+					pane.getChildren().add(dot);
+					dotX += 6;
+				}				
 			} else {
 				numerator += getNoteTypeValue(this.noteWithoutChords.get(i).getType());
 				notesToBeam.add(this.noteWithoutChords.get(i));
@@ -148,6 +155,14 @@ public class DrawGuitarBeams {
 			double x = note.getX(), y = note.getStaffY()+80;
 			Line l = new Line(x, y, x, y + 30);
 			pane.getChildren().add(l);
+			
+			double dotX = l.getEndX() + 7;
+			for (int j = 0; j < noteLocation.get(i).getNote().getNumDots(); j++) {
+				Ellipse dot = new Ellipse(dotX, l.getStartY() + 3, 2, 2);
+				pane.getChildren().add(dot);
+				dotX += 6;
+			}
+			
 			//Get number of flags needed
 			int numFlags = 0;
 			switch (note.getNote().getType()) {
@@ -183,9 +198,14 @@ public class DrawGuitarBeams {
 			Line l = new Line(note.getX(), note.getStaffY() + 80, note.getX(), note.getStaffY() + 110);
 			pane.getChildren().add(l);
 			
+			double dotX = l.getEndX() + 7;
+			for (int j = 0; j < noteLocation.get(i).getNote().getNumDots(); j++) {
+				Ellipse dot = new Ellipse(dotX, l.getStartY() + 3, 2, 2);
+				pane.getChildren().add(dot);
+				dotX += 6;
+			}
+			
 			//Draw beams to connect lines
-//			Rectangle r = new Rectangle(l.getStartX(), note.getStaffY() + 100, noteSpacing, 5);
-//			pane.getChildren().add(r);
 			
 			//32nd is the highest example note we have
 			
