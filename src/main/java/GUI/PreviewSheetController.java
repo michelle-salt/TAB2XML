@@ -902,8 +902,11 @@ public class PreviewSheetController {
 				// Draw the barline
 				barLines(x, 0 + yStaff, instrument);
 				if (!instrument.equalsIgnoreCase("drumset"))
-					new DrawBeams(pane, measure.getNotes(), this.noteLocation.get(i), noteSpacing);
+					new DrawGuitarBeams(pane, measure.getNotes(), this.noteLocation.get(i), noteSpacing);
+				else 
+					new DrawDrumBeams(pane, measure.getNotes(), this.noteLocation.get(i), noteSpacing);
 			}
+			
 		}
 	}
 
