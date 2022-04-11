@@ -933,10 +933,21 @@ public class PreviewSheetController {
 		int sum = 0, startMeasure = 0, endMeasure = -1, currStaff = 20-staffSpacing;
 		if (measureList.get(0).getBarlines().size() != 0)
 			sum = 1;
+		
+		//Get the time and default to 4/4 if it doesn't exist
+		int timeBeats = measureList.get(0).getAttributes().getTime().getBeats();
+		int timeBeatType = measureList.get(0).getAttributes().getTime().getBeatType();
+		if (timeBeats == -1)
+			timeBeats = 4;
+		if (timeBeatType == -1)
+			timeBeatType = 4;
+
 		//Loop through every measure and print notes
 		for (int i = 0; i < measureList.size(); i++) {
 			//Get which measures are needed in each staff
-			if (sum + notesWithoutChords.get(i) > Math.floor(maxNotesPerStaff)) {
+			if (sum + notesWithoutChords.get(i) > Math.floor(maxNotesPerStaff) ||
+					(measureList.get(i).getAttributes().getTime().getBeats() != timeBeats && measureList.get(i).getAttributes().getTime().getBeats() != -1) ||
+					(measureList.get(i).getAttributes().getTime().getBeatType() != timeBeatType && measureList.get(i).getAttributes().getTime().getBeatType() != -1)) {
 				endMeasure = i - 1;
 				double justifyNoteSpacing = (pane.getMaxWidth()-100.0)/(sum);
 				printNotesInMeasures(measureList, startMeasure, endMeasure, justifyNoteSpacing, currStaff, true);
