@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.QuadCurve;
@@ -34,6 +35,21 @@ public class DrawNotes {
 		this.noteSpacing = noteSpacing;
 		this.lastNote = lastNote;
 
+		//Draw bend if needed
+		if (note.getBendAlter() != 0) {
+			//Draw curve
+			CubicCurve curve1 = new CubicCurve(x, y, x + (noteSpacing/2), y -3, x + noteSpacing - 7, yStaff, x + noteSpacing - 7, yStaff - 5);
+		    curve1.setStroke(Color.BLACK);
+		    curve1.setStrokeWidth(1);
+		    curve1.setFill(null);
+		    pane.getChildren().add(curve1);
+		    //Write number
+		    Text text = new Text(x + noteSpacing - 10, yStaff - 10, Double.toString(note.getBendAlter()/2));
+			text.setFont(Font.font("arial", 10));
+			pane.getChildren().add(text);
+		}
+		
+		
 		//Draw slide if needed
 		if (nextNote != null && note.getSlide().getType() != null && note.getSlide().getType().equalsIgnoreCase("start")) {
 			if (note.getFret() < nextNote.getFret()) {
