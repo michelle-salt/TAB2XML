@@ -235,7 +235,24 @@ public class Measure {
 				}
 				HammerOn hammerOn = new HammerOn(hammerNum, hammerType, hammerVal);
 				
-				this.notes.add(new Note(unpitch, duration, instrumentID, voice, type, stem, notehead, bendAlter, numDots, tremolo, timeModification, slide, hammerOn));
+				//Get the tied values, if they exist
+				Tied tied = new Tied();
+				//There are 4 possible values for tied, so we loop through this 4 times
+				for (int a = 0; a < 4; a++) {
+					try {
+						String tiedVal = eElement.getElementsByTagName("tied").item(a).getAttributes().item(0).getNodeValue();
+						switch (tiedVal.trim().toLowerCase()) {
+						case "stop": 		tied.setStop(true); 	break;
+						case "start": 		tied.setStart(true); 	break;
+						case "continue": 	tied.setCont(true); 	break;
+						case "let-ring": 	tied.setLetRing(true); 	break;
+						}
+					} catch (NullPointerException e) {
+						//If it doesn't exist, nothing needs to be done
+					}
+				}
+				
+				this.notes.add(new Note(unpitch, duration, instrumentID, voice, type, stem, notehead, bendAlter, numDots, tremolo, timeModification, slide, hammerOn, tied));
 				
 				//-----------------------------------------------
 				try {

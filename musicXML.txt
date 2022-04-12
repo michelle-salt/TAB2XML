@@ -12,7 +12,7 @@
   <part id="P1">
     <measure number="1">
       <attributes>
-        <divisions>16</divisions>
+        <divisions>32</divisions>
         <key>
           <fifths>0</fifths>
         </key>
@@ -23,7 +23,11 @@
         <staff-details>
           <staff-lines>6</staff-lines>
           <staff-tuning line="1">
+<<<<<<< HEAD
             <tuning-step>E</tuning-step>
+=======
+            <tuning-step>D</tuning-step>
+>>>>>>> develop
             <tuning-octave>2</tuning-octave>
           </staff-tuning>
           <staff-tuning line="2">
@@ -50,44 +54,131 @@
       </attributes>
       <note>
         <pitch>
+<<<<<<< HEAD
           <step>E</step>
           <octave>2</octave>
         </pitch>
         <duration>8</duration>
+=======
+          <step>D</step>
+          <octave>3</octave>
+        </pitch>
+        <duration>16</duration>
+>>>>>>> develop
         <voice>1</voice>
         <type>eighth</type>
         <notations>
           <technical>
+<<<<<<< HEAD
             <string>6</string>
             <fret>0</fret>
+=======
+            <string>5</string>
+            <fret>5</fret>
           </technical>
         </notations>
       </note>
       <note>
+        <grace/>
+        <pitch>
+          <step>G</step>
+          <alter>1</alter>
+          <octave>4</octave>
+        </pitch>
+        <voice>1</voice>
+        <type>16th</type>
+        <stem>none</stem>
+        <notations>
+          <slur number="2" placement="above" type="start"/>
+          <technical>
+            <string>1</string>
+            <fret>4</fret>
+          </technical>
+        </notations>
+      </note>
+      <note>
+        <grace/>
+        <pitch>
+          <step>G</step>
+          <alter>1</alter>
+          <octave>5</octave>
+        </pitch>
+        <voice>1</voice>
+        <type>16th</type>
+        <stem>none</stem>
+        <notations>
+          <slur number="2" type="stop"/>
+          <slur number="4" placement="above" type="start"/>
+          <technical>
+            <string>1</string>
+            <fret>16</fret>
+          </technical>
+        </notations>
+      </note>
+      <note>
+        <pitch>
+          <step>A</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>16</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <notations>
+          <slur number="4" type="stop"/>
+          <technical>
+            <string>1</string>
+            <fret>5</fret>
+>>>>>>> develop
+          </technical>
+        </notations>
+      </note>
+      <note>
+<<<<<<< HEAD
         <pitch>
           <step>B</step>
           <octave>2</octave>
         </pitch>
         <duration>8</duration>
+=======
+        <chord/>
+        <pitch>
+          <step>E</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>16</duration>
+>>>>>>> develop
         <voice>1</voice>
         <type>eighth</type>
         <notations>
           <technical>
+<<<<<<< HEAD
             <string>5</string>
             <fret>2</fret>
+=======
+            <string>2</string>
+            <fret>5</fret>
+>>>>>>> develop
           </technical>
         </notations>
       </note>
       <note>
         <pitch>
+<<<<<<< HEAD
           <step>E</step>
           <octave>3</octave>
         </pitch>
         <duration>8</duration>
+=======
+          <step>F</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>16</duration>
+>>>>>>> develop
         <voice>1</voice>
         <type>eighth</type>
         <notations>
           <technical>
+<<<<<<< HEAD
             <string>4</string>
             <fret>2</fret>
           </technical>
@@ -106,41 +197,72 @@
           <technical>
             <string>3</string>
             <fret>1</fret>
+=======
+            <string>2</string>
+            <fret>6</fret>
+>>>>>>> develop
           </technical>
         </notations>
       </note>
       <note>
+<<<<<<< HEAD
         <pitch>
           <step>B</step>
           <octave>3</octave>
         </pitch>
         <duration>8</duration>
+=======
+        <chord/>
+        <pitch>
+          <step>F</step>
+          <octave>3</octave>
+        </pitch>
+        <duration>16</duration>
+>>>>>>> develop
         <voice>1</voice>
         <type>eighth</type>
         <notations>
           <technical>
+<<<<<<< HEAD
             <string>2</string>
             <fret>0</fret>
+=======
+            <string>5</string>
+            <fret>8</fret>
+>>>>>>> develop
           </technical>
         </notations>
       </note>
       <note>
         <pitch>
+<<<<<<< HEAD
           <step>E</step>
           <octave>4</octave>
         </pitch>
         <duration>8</duration>
+=======
+          <step>A</step>
+          <octave>3</octave>
+        </pitch>
+        <duration>16</duration>
+>>>>>>> develop
         <voice>1</voice>
         <type>eighth</type>
         <notations>
           <technical>
+<<<<<<< HEAD
             <string>1</string>
             <fret>0</fret>
+=======
+            <string>4</string>
+            <fret>7</fret>
+>>>>>>> develop
           </technical>
         </notations>
       </note>
       <note>
         <pitch>
+<<<<<<< HEAD
           <step>B</step>
           <octave>3</octave>
         </pitch>
@@ -151,17 +273,36 @@
           <technical>
             <string>2</string>
             <fret>0</fret>
+=======
+          <step>G</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>8</duration>
+        <voice>1</voice>
+        <type>16th</type>
+        <notations>
+          <technical>
+            <string>2</string>
+            <fret>8</fret>
+>>>>>>> develop
           </technical>
         </notations>
       </note>
       <note>
+<<<<<<< HEAD
         <pitch>
           <step>G</step>
           <alter>1</alter>
+=======
+        <chord/>
+        <pitch>
+          <step>E</step>
+>>>>>>> develop
           <octave>3</octave>
         </pitch>
         <duration>8</duration>
         <voice>1</voice>
+<<<<<<< HEAD
         <type>eighth</type>
         <notations>
           <technical>
@@ -190,12 +331,127 @@
           <technical>
             <string>1</string>
             <fret>0</fret>
+=======
+        <type>16th</type>
+        <notations>
+          <technical>
+            <string>5</string>
+            <fret>7</fret>
+          </technical>
+        </notations>
+      </note>
+      <note>
+        <pitch>
+          <step>A</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>8</duration>
+        <voice>1</voice>
+        <type>16th</type>
+        <notations>
+          <technical>
+            <string>1</string>
+            <fret>5</fret>
+          </technical>
+        </notations>
+      </note>
+      <note>
+        <pitch>
+          <step>A</step>
+          <alter>1</alter>
+          <octave>4</octave>
+        </pitch>
+        <duration>8</duration>
+        <voice>1</voice>
+        <type>16th</type>
+        <notations>
+          <technical>
+            <string>1</string>
+            <fret>6</fret>
+          </technical>
+        </notations>
+      </note>
+      <note>
+        <pitch>
+          <step>A</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>8</duration>
+        <voice>1</voice>
+        <type>16th</type>
+        <notations>
+          <technical>
+            <string>1</string>
+            <fret>5</fret>
+          </technical>
+        </notations>
+      </note>
+      <note>
+        <pitch>
+          <step>A</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>16</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <notations>
+          <technical>
+            <string>1</string>
+            <fret>5</fret>
           </technical>
         </notations>
       </note>
       <note>
         <chord/>
         <pitch>
+          <step>D</step>
+          <octave>2</octave>
+        </pitch>
+        <duration>16</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <notations>
+          <technical>
+            <string>6</string>
+            <fret>0</fret>
+          </technical>
+        </notations>
+      </note>
+      <note>
+        <pitch>
+          <step>A</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>8</duration>
+        <voice>1</voice>
+        <type>16th</type>
+        <notations>
+          <technical>
+            <string>1</string>
+            <fret>5</fret>
+          </technical>
+        </notations>
+      </note>
+      <note>
+        <pitch>
+          <step>F</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>8</duration>
+        <voice>1</voice>
+        <type>16th</type>
+        <notations>
+          <technical>
+            <string>2</string>
+            <fret>6</fret>
+>>>>>>> develop
+          </technical>
+        </notations>
+      </note>
+      <note>
+        <chord/>
+        <pitch>
+<<<<<<< HEAD
           <step>B</step>
           <octave>3</octave>
         </pitch>
@@ -271,6 +527,18 @@
           <technical>
             <string>6</string>
             <fret>0</fret>
+=======
+          <step>A</step>
+          <octave>3</octave>
+        </pitch>
+        <duration>8</duration>
+        <voice>1</voice>
+        <type>16th</type>
+        <notations>
+          <technical>
+            <string>4</string>
+            <fret>7</fret>
+>>>>>>> develop
           </technical>
         </notations>
       </note>
