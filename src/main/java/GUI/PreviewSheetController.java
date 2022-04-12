@@ -941,6 +941,8 @@ public class PreviewSheetController {
 							}
 						}
 						new DrawNotes(pane, x, y + yStaff, note, instrument, yStaff, noteSpacing, isLast, next, notesPassed*noteSpacing);
+					} else {
+						new DrawRests(pane, x, y + yStaff, note, yStaff);
 					}
 					clef(parser.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18 + yStaff, instrument);
 					timeSignature(timeBeats, timeBeatType, 35, 28 + yStaff, instrument);
@@ -968,6 +970,8 @@ public class PreviewSheetController {
 							}
 						}
 						new DrawNotes(pane, x, y + yStaff, note, instrument, yStaff, noteSpacing, isLast, next, notesPassed*noteSpacing);
+					} else {
+						new DrawRests(pane, x, y + yStaff, note, yStaff);
 					}
 					drawMeasureNumber(yStaff, parser.getMeasures().get(i).getMeasureNumber());
 					clef(parser.getMeasures().get(0).getAttributes().getClef().getSign(), 6, 18 + yStaff, instrument);
