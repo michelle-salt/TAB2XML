@@ -1,6 +1,7 @@
 package GUI;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -32,5 +33,12 @@ public class DrawRests {
 			pane.getChildren().add(c);
 		}
 		//No other rests are given
+
+		double dotX = x-10;
+		for (int i = 0; i < note.getNumDots(); i++) {
+			Ellipse dot = new Ellipse(dotX, yStaff+30, 2, 2);
+			pane.getChildren().add(dot);
+			dotX += 6;
+		}
 	}
 }
