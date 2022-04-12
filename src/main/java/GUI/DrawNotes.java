@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.QuadCurve;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -217,6 +218,12 @@ public class DrawNotes {
 			quadcurve2.setFill(Color.WHITE);
 			pane.getChildren().add(quadcurve);
 			pane.getChildren().add(quadcurve2);
+		}
+		y -= 30;
+		//Draw tremolo as needed
+		if (note.getTremolo().getValue() != 0) {
+			Polygon parallelogram = new Polygon(new double[]{(double)x, (double)y, (double)x+15, (double)y-15, (double)x+15, (double)y-7.5, (double)x, (double)y+7.5});
+			pane.getChildren().add(parallelogram);
 		}
 	}	
 	public void drawStem(double x, double yStart) {
