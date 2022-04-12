@@ -198,16 +198,15 @@ public class Note {
 
 	//Constructor for the DrumNotes
 	//Inside here (the notes method, actually), add a method for each note value/sub-tag	
-	public Note(Unpitched unpitched, int duration, String instrumentID, int voice, String noteType, String stem, String notehead, double bendAlter, int numDots, Tremolo tremolo, TimeModification timeModification, Slide slide, HammerOn hammerOn, Tied tied) {
+	public Note(Unpitched unpitched, int duration, String instrumentID, int voice, String noteType, String stem, String notehead, double bendAlter, int numDots, Tremolo tremolo, TimeModification timeModification, Slide slide, HammerOn hammerOn, Tied tied, musicxml.parsing.Slur slur, musicxml.parsing.PullOff pullOff) {
 		this(duration, voice, noteType, bendAlter, numDots, tremolo, timeModification, slide, hammerOn);
 		//Initialize all given variables
 		this.unpitched = unpitched;
 		this.instrumentID = instrumentID;
 		this.notehead = notehead;
 		this.tied = tied;
-		
-//		this.slur = slur;
-//		this.pullOff = pullOff;
+		this.slur = slur;
+		this.pullOff = pullOff;
 
 		//0 for none, 1 for down, 2 double, 3 for up. Default is -1 if no other match is found
 		switch (stem.toLowerCase()) {

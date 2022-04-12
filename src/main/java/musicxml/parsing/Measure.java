@@ -252,7 +252,39 @@ public class Measure {
 					}
 				}
 				
-				this.notes.add(new Note(unpitch, duration, instrumentID, voice, type, stem, notehead, bendAlter, numDots, tremolo, timeModification, slide, hammerOn, tied));
+				//Get Slur
+				Slur slur = new Slur(0, null, null);
+				if (eElement.getElementsByTagName("slur").item(0) != null) { //Changed "number" to "slur". Will verify if this works later
+					String slurPlace, slurType;
+					int slurNum = Integer.parseInt(eElement.getElementsByTagName("slur").item(0).getAttributes().item(0).getNodeValue());
+					if (eElement.getElementsByTagName("slur").item(0).getAttributes().item(1).getNodeName().equals("placement")) {
+						slurPlace = eElement.getElementsByTagName("slur").item(0).getAttributes().item(1).getNodeValue();
+						slurType = eElement.getElementsByTagName("slur").item(0).getAttributes().item(2).getNodeValue();
+					} 
+					//Placement does not exist and should be set to null
+					else {
+						slurPlace = null;
+						slurType = eElement.getElementsByTagName("slur").item(0).getAttributes().item(1).getNodeValue();
+					}
+					
+					slur = new Slur(slurNum, slurPlace, slurType);
+				}
+
+				//Get Pull-Off
+				PullOff pullOff = new PullOff(0, null, null);
+				if (eElement.getElementsByTagName("pull-off").item(0) != null) {
+					int pullOffNum = Integer.parseInt(eElement.getElementsByTagName("pull-off").item(0).getAttributes().item(0).getNodeValue());
+					String pullOffType = eElement.getElementsByTagName("pull-off").item(0).getAttributes().item(1).getNodeValue();
+					String pullOffVal;
+					try {
+						pullOffVal = eElement.getElementsByTagName("pull-off").item(0).getTextContent();
+					} catch (NullPointerException e) {
+						pullOffVal = null;
+					}
+					pullOff = new PullOff(pullOffNum, pullOffType, pullOffVal);
+				} 
+				
+				this.notes.add(new Note(unpitch, duration, instrumentID, voice, type, stem, notehead, bendAlter, numDots, tremolo, timeModification, slide, hammerOn, tied, slur, pullOff));
 				
 				//-----------------------------------------------
 				try {
