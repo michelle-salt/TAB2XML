@@ -106,7 +106,7 @@ public class DrawNotes {
 			QuadCurve quadcurve = new QuadCurve(x+6, y-9.5, midX, y-22, endX, y-9.5);
 			QuadCurve quadcurve2 = new QuadCurve(x+8, y-9.5, midX, y-18, endX - 2, y-9.5);
 			quadcurve2.setFill(Color.WHITE);
-						
+
 			pane.getChildren().add(quadcurve);
 			pane.getChildren().add(quadcurve2);
 		}
@@ -122,7 +122,7 @@ public class DrawNotes {
 			QuadCurve quadcurve = new QuadCurve(x+6, y-9.5, midX, y-22, endX, y-9.5);
 			QuadCurve quadcurve2 = new QuadCurve(x+8, y-9.5, midX, y-18, endX - 2, y-9.5);
 			quadcurve2.setFill(Color.WHITE);
-						
+
 			pane.getChildren().add(quadcurve);
 			pane.getChildren().add(quadcurve2);
 		}
@@ -142,9 +142,9 @@ public class DrawNotes {
 				pane.getChildren().add(dot);
 				dotX += 6;
 			}
-			
+
 			if(this.note.getTied().getStart()) {
-				
+
 				double midX = ((noteSpacing)/2) + x+6, endX = x + noteSpacing + 2;
 				if (lastNote) {
 					midX = noteSpacing + x+6;
@@ -154,12 +154,12 @@ public class DrawNotes {
 				QuadCurve quadcurve = new QuadCurve(x+10, y-5.5, midX, y-22, endX, y-5.5);
 				QuadCurve quadcurve2 = new QuadCurve(x+12, y-4.5, midX, y-18, endX - 2, y-4.5);
 				quadcurve2.setFill(Color.WHITE);
-							
+
 				pane.getChildren().add(quadcurve);
 				pane.getChildren().add(quadcurve2);
 			}
-if(this.note.getTied().getStart()) {
-				
+			if(this.note.getTied().getStart()) {
+
 				double midX = ((noteSpacing)/2) + x+6, endX = x + noteSpacing + 2;
 				if (lastNote) {
 					midX = noteSpacing + x+6;
@@ -169,7 +169,7 @@ if(this.note.getTied().getStart()) {
 				QuadCurve quadcurve = new QuadCurve(x+10, y-5.5, midX, y-22, endX, y-5.5);
 				QuadCurve quadcurve2 = new QuadCurve(x+12, y-4.5, midX, y-18, endX - 2, y-4.5);
 				quadcurve2.setFill(Color.WHITE);
-							
+
 				pane.getChildren().add(quadcurve);
 				pane.getChildren().add(quadcurve2);
 			}
@@ -192,8 +192,8 @@ if(this.note.getTied().getStart()) {
 			}
 			//Draw the stem for every note
 			//Will be changed later
-//			if (!this.note.isGraceNote())
- 				drawStem(x+9, y-5);
+			//			if (!this.note.isGraceNote())
+			drawStem(x+9, y-5);
 		}
 		if (this.note.isGraceNote() == true) {
 			QuadCurve quadcurve = new QuadCurve(x+6, y-9, ((noteSpacing)/2) + x+6, y+10, x + noteSpacing, y-9);
@@ -211,22 +211,22 @@ if(this.note.getTied().getStart()) {
 			top = yStart - 20;
 			//Draw flags
 			//Add vertical lines underneath notes
-//			NoteLocation note = noteLocation.get(i);
+			//			NoteLocation note = noteLocation.get(i);
 			double xNew = x, yNew = yStart;
 			//Get number of flags needed
 			int numFlags = 0;
 			switch (this.note.getType()) {
-				case 'I':	numFlags = 1;		break;
-				case 'S':	numFlags = 2;		break;
-				case 'T':	numFlags = 3;		break;
+			case 'I':	numFlags = 1;		break;
+			case 'S':	numFlags = 2;		break;
+			case 'T':	numFlags = 3;		break;
 			}
-			
+
 			//Draw flag
-            for (int j = 0; j < numFlags; j++) {
-                Line flag = new Line(x+7, y-14, x, y-27);
-                pane.getChildren().add(flag);
-                y += 10;
-            }
+			for (int j = 0; j < numFlags; j++) {
+				Line flag = new Line(x+7, y-14, x, y-27);
+				pane.getChildren().add(flag);
+				y += 10;
+			}
 		}
 		Line stem = new Line(x, yStart, x, top);
 		pane.getChildren().add(stem);
@@ -244,7 +244,7 @@ if(this.note.getTied().getStart()) {
 			centre.setFill(Color.WHITE);
 			pane.getChildren().add(centre);
 		}
-		
+
 	}
 
 	public void printHalfNote() {
@@ -257,10 +257,10 @@ if(this.note.getTied().getStart()) {
 
 		}
 		else {
-		Ellipse centre = new Ellipse(x+4, y-5, 4.75, 1.6);
-		centre.setFill(Color.WHITE);
-		centre.setRotate(330);
-		pane.getChildren().add(centre);
+			Ellipse centre = new Ellipse(x+4, y-5, 4.75, 1.6);
+			centre.setFill(Color.WHITE);
+			centre.setRotate(330);
+			pane.getChildren().add(centre);
 		}
 	}
 
@@ -282,7 +282,7 @@ if(this.note.getTied().getStart()) {
 			dotX += 6;
 		}
 		if(this.note.getTied().getStart()) {
-		
+
 			double midX = ((noteSpacing)/2) + x+6, endX = x + noteSpacing + 2;
 			if (lastNote) {
 				midX = noteSpacing + x+6;
@@ -292,7 +292,7 @@ if(this.note.getTied().getStart()) {
 			QuadCurve quadcurve = new QuadCurve(x+6, y-0.5, midX, y+22, endX, y-0.5);
 			QuadCurve quadcurve2 = new QuadCurve(x+8, y-0.5, midX, y+18, endX - 2, y-0.5);
 			quadcurve2.setFill(Color.WHITE);
-						
+
 			pane.getChildren().add(quadcurve);
 			pane.getChildren().add(quadcurve2);
 		}
