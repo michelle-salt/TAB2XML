@@ -294,6 +294,14 @@ public class DrawNotes {
 			pane.getChildren().add(ellipse);
 		}
 		else {
+			if(this.note.getNoteheadParentheses()) {
+				Text text = new Text(x-8, y-1, "(");
+				Text text2 = new Text(x+12, y-1, ")");
+				text.setFont(Font.font("veranda", FontWeight.BLACK, 14));
+				text2.setFont(Font.font("veranda", FontWeight.BLACK, 14));
+				pane.getChildren().add(text);
+				pane.getChildren().add(text2);
+			}
 			Ellipse ellipse = new Ellipse(x+4, y-5, 6, 4.25);
 			ellipse.setRotate(320);
 			pane.getChildren().add(ellipse);
